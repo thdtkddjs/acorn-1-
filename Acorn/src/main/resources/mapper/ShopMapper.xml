@@ -26,7 +26,7 @@
 	
 	<update id="update" parameterType="shopDto">
 		update board_shop
-		set title=#{title}, content=#{content}, categorie=#{categorie}, telNum=#{telNum}, addr=#{addr}, latitude=#{latitude}, longtitude=#{longtitude}
+		set title=#{title}, content=#{content}, imagePath=#{imagePath}, categorie=#{categorie}, telNum=#{telNum}, addr=#{addr}
 		where num=#{num}
 	</update>
 	
