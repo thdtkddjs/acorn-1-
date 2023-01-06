@@ -1,6 +1,10 @@
 package com.gura.acorn.shop.service;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gura.acorn.shop.dto.ShopDto;
 
@@ -12,7 +16,7 @@ public interface ShopService {
 	//가게 등록(등록, 수정, 삭제 는 우선 관리자만 할 수 있도록?)
 	public void saveContent(ShopDto dto);
 	//가게 정보 수정
-	public void updateContent(ShopDto dto);
+	public void updateContent(ShopDto dto, HttpServletRequest request);
 	//가게 삭제
 	public void deleteContent(int num, HttpServletRequest request);
 	//가게 정보 수정 시 필요한 정보 불러오기
@@ -21,6 +25,8 @@ public interface ShopService {
 	public void addLikeCount(int num);
 	//좋아요 증가
 	public void addDislikeCount(int num);
+	//섬네일 저장하는 메소드
+	public Map<String, Object> saveImagePath(HttpServletRequest request, MultipartFile mFile);
 	
 	
 	/*
