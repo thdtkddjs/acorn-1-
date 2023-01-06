@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,13 +15,14 @@
         grid-template-areas:
 		"header header header"
         "banner banner banner"
-		"   a    main    b   "
+		"search main main"
 		"  bot   bot   bot  ";
 
         grid-template-columns: 1fr 2fr 1fr;
         box-shadow: 0px 5px 20px 0px grey;
 	    border-right: thin;
-        z-index: 3;
+        z-index: 1;
+        min-width: 1320px;
     }
     .header{
         grid-area: header;
@@ -37,17 +36,23 @@
         background-color: skyblue;
     }
     .side_menu_a {
-        grid-area: a;
+        grid-area: search;
         width : 100%;
         text-align: center;
         background-color: lightgray;
     }
-    .main_content{
+    .search_menu{
+        grid-area: search;
+        box-shadow: 2px 2px 3px 0px grey;
+        background-color: white;
+        z-index: 3;
+        position: relative;
+    }
+    .search_result{
         grid-area: main;
         width: 100%;
         height: 680px;
         text-align: center;
-        background-color: lightcoral;
     }
     .side_menu_b {
         grid-area: b;
@@ -69,21 +74,159 @@
     .bottom{
        grid-area : bot; 
     }
-
+    .search_bar{
+        border: 3px solid;
+        border-color: rgb(64, 219, 43);
+        border-radius: 5px;
+        margin: 10px;
+        width: 290px;
+    }
+    .search_bar>form>input{
+        width: 250px;
+        margin : 10px;
+        border: none;
+        font-size: large;
+    }
+    .suggest_menu>.card{
+        margin-left: 10px;
+    }
+    #map{
+        z-index: 2;
+    }
+    .suggest_menu{
+        height : 600px; 
+        overflow: scroll; 
+        -ms-overflow-style: none;
+    }
+    .suggest_menu::-webkit-scrollbar{
+        display:none;
+    }
+    .fold_btn{
+        position: absolute;
+        left : 300px;
+        top : 150px;
+        z-index: 5;
+    }
+    .open_btn{
+        position: absolute;
+        left : 200px;
+        top : 150px;
+        z-index: 5;
+    }
+    
 </style>
 <body>
 
     <div class="container">
+        
         <div class="header">로그인 된 사용자 아이디 표시</div>
         <div class="main_banner">메인 배너 표시</div>
-        <div class="side_menu_a">side A</div>
-        <div class="main_content">main content</div>
-        <div class="side_menu_b">side B</div>
+        <button class="fold_btn" onclick="fold_menu()"> ◀ </button>
+        <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
+        <div class="search_menu">
+            <div class="search_bar">
+                <form action="">
+                    <input type="text" placeholder="가게 명을 입력하세요...">
+                </form>
+            </div>
+            
+            
+            <hr>
+            <div class="suggest_menu">
+                
+
+                <h5> @@ 님을 위한 오늘의 추천</h5>
+                <div class="card" style="width: 18rem;">
+                    <img src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220310_48%2F1646883669558peXxc_JPEG%2F20220310_124026.jpg&type=f&size=340x180" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">이름 모를 고기집</h5>
+                      <p class="card-text">고기가 친절하고 사장님이 두툼해요</p>
+                      <a href="#" class="btn btn-primary">가게 정보 보기</a>
+                    </div>
+                </div>
+                <br>
+                <div class="card" style="width: 18rem;">
+                    <img src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20221029_181%2F1667024668973m4CdD_JPEG%2FKakaoTalk_20221028_142533135_01.jpg&type=f&size=340x180" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">이름 모를 고기집</h5>
+                      <p class="card-text">마블링이 친절하고 사장님이 선명해요</p>
+                      <a href="#" class="btn btn-primary">가게 정보 보기</a>
+                    </div>
+                </div>
+                <br>
+                <div class="card" style="width: 18rem;">
+                    <img src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20221029_181%2F1667024668973m4CdD_JPEG%2FKakaoTalk_20221028_142533135_01.jpg&type=f&size=340x180" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">이름 모를 고기집</h5>
+                      <p class="card-text">마블링이 친절하고 사장님이 선명해요</p>
+                      <a href="#" class="btn btn-primary">가게 정보 보기</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="search_result">
+            <div id="map" style="width: 972px; height: 700px;  float: right;"></div>
+            
+        </div>
         <div class="bottom">　</div>
 
 
+        
+    </div>        
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9xl3ekksy5"></script>
+    <script>
+        let markerInfo = [
+            '<div class="marker_info">',
+            '   <h5><a href="http://naver.com">에이콘 아카데미</a></h5>',
+            '   <p>서울특별시 강남구 테헤란로 124 삼원타워 5층 <br>',
+            '       <img src="http://acornacademy.co.kr/mobile/img/logo.png" height="55" alt="에이콘" /><br>',
+            '   </p>',
+            '</div>'
+        ].join('');
 
-    </div>
+        let map = new naver.maps.Map('map', {
+            center : new naver.maps.LatLng(37.498778, 127.031662),
+            zoom : 18
+        });
+
+        let marker = new naver.maps.Marker({
+            position : new naver.maps.LatLng(37.498778, 127.031662),
+            map: map
+        });
+
+        let infowindow = new naver.maps.InfoWindow({
+            content: markerInfo
+        });
+
+        naver.maps.Event.addListener(marker, "click", function(e) {
+            if (infowindow.getMap()) {
+                infowindow.close();
+            } else {
+                infowindow.open(map, marker);
+            }
+        });
+
+        function fold_menu() {
+            document.querySelector(".search_bar").style.display ="none";
+            document.querySelector(".search_menu").style.display ="none";
+            document.querySelector("#map").style.width ="1296px";
+            document.querySelector("#map").style.height ="700px";
+            document.querySelector(".open_btn").style.removeProperty("display");
+            document.querySelector(".fold_btn").style.display="none";
+        };
+
+        function open_menu() {
+            document.querySelector(".search_bar").style.removeProperty("display");
+            document.querySelector(".search_menu").style.removeProperty("display");
+            document.querySelector("#map").style.width ="972px";
+            document.querySelector("#map").style.height ="700px";
+            document.querySelector(".fold_btn").style.removeProperty("display");
+            document.querySelector(".open_btn").style.display="none";
+        };
+
+
+    </script>        
     <div class="footer">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
           <symbol id="bootstrap" viewBox="0 0 118 94">
