@@ -1,5 +1,8 @@
 package com.gura.acorn.shop.dto;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("shopDto")
 public class ShopDto {
 	   private int num;
 	   private String title;
