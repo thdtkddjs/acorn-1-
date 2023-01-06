@@ -37,4 +37,4 @@
 		DELETE FROM users
 		WHERE id=#{id}
 	</delete>	
-</mapper>
+</mapper> 
