@@ -81,7 +81,7 @@ public class ShopServiceImpl implements ShopService{
 			} // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다.
 		}
 		
-		// 파일 목록을 select 해 온다.(검색 키워드가 있는경우 키워드에 부합하는 전체 글)
+		// 목록을 select 해 온다.(검색 키워드가 있는경우 키워드에 부합하는 전체 글)
 		List<ShopDto> list = shopDao.getList(dto);
 		// 전체 글의 갯수(검색 키워드가 있는경우 키워드에 부합하는 전체 글의 개수)
 		int totalRow = shopDao.getCount(dto);
@@ -106,10 +106,12 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("encodedK", encodedK);
 		request.setAttribute("totalRow", totalRow);
 		request.setAttribute("condition", condition);
+
 	}
 
 	@Override
 	public void getDetail(HttpServletRequest request) {
+
 		//보여줄 글 번호를 읽어오기
 		int num = Integer.parseInt(request.getParameter("num"));
 		
@@ -177,11 +179,13 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("totalRow", totalRow);
 		request.setAttribute("commentList", commentList);
 		request.setAttribute("totalPageCount", totalPageCount);
+
 	}
 
 	@Override
 	public void saveContent(ShopDto dto) {
 		shopDao.insert(dto);
+    
 		/*
 		 * 아래의 등록, 수정, 삭제의 경우
 		 * 가게리스트 페이지에서 관리자계정으로 로그인 시에만
@@ -192,8 +196,7 @@ public class ShopServiceImpl implements ShopService{
 
 	@Override
 	public void updateContent(ShopDto dto, HttpServletRequest request) {
-		shopDao.update(dto);
-		
+		shopDao.update(dto);	
 	}
 
 	@Override
