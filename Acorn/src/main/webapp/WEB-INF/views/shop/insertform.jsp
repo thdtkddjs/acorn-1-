@@ -28,48 +28,55 @@
 <body>
 <div class="container">
    <h1>상점 신규 등록</h1>
-   <form action="insert" method="post" id="insertForm">
+   <form action="${pageContext.request.contextPath}/shop/insert" method="post">
    	  <!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
-  	  <input type="hidden" name="imagePath" 
-     		value="${ empty dto.imagePath ? 'empty' : dto.imagePath }"/>
+  	  <input type="hidden" name="imagePath" value="empty"/>
+      
       <!-- 점포명 input -->
       <div class="mb-3">
          <label class="form-label" for="title">점포명</label>
          <input class="form-control" type="text" name="title" id="title"/>
       </div>
-      <!-- 카테고리 input -->
-      <div class="mb-3">
-         <label class="form-label" for="categorie">카테고리</label>
-         <input class="form-control" type="text" name="categorie" id="categorie"/>
-      </div>
-      <!-- 번호 input -->
-      <div class="mb-3">
-         <label class="form-label" for="telNum">전화번호</label>
-         <input class="form-control" type="text" name="telNum" id="telNum"/>
-      </div>
-      <!-- 주소 input -->
-      <div class="mb-3">
-         <label class="form-label" for="addr">주소</label>
-         <input class="form-control" type="text" name="addr" id="addr"/>
-      </div>
-      <!-- smart editor를 이용하는 content input -->
-      <div class="mb-3">
-         <label class="form-label" for="content">내용</label>
-         <textarea class="form-control"  name="content" id="content"></textarea>
-      </div>
+      
       <a id="profileLink" href="javascript:">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
           <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
         </svg>
       </a>
+      
+      <!-- 카테고리 input -->
+      <div class="mb-3">
+         <label class="form-label" for="categorie">카테고리</label>
+         <input class="form-control" type="text" name="categorie" id="categorie"/>
+      </div>
+      
+      <!-- 번호 input -->
+      <div class="mb-3">
+         <label class="form-label" for="telNum">전화번호</label>
+         <input class="form-control" type="text" name="telNum" id="telNum"/>
+      </div>
+      
+      <!-- 주소 input -->
+      <div class="mb-3">
+         <label class="form-label" for="addr">주소</label>
+         <input class="form-control" type="text" name="addr" id="addr"/>
+      </div>
+      
+      <!-- smart editor를 이용하는 content input -->
+      <div class="mb-3">
+         <label class="form-label" for="content">내용</label>
+         <textarea class="form-control"  name="content" id="content"></textarea>
+      </div>
+   
       <button class="btn btn-primary" type="submit">저장</button>
-      <!-- 이미지 등록용 숨겨진 form -->
-      <form id="imageForm" action="${pageContext.request.contextPath}/gallery/profile_upload" method="get" enctype="multipart/form-data">
-         프로필 사진
-         <input type="file" id="image" name="image" accept=".jpg, .png, .gif"/>
-         <button type="submit">업로드</button>
-      </form>
+   </form>
+   
+   <!-- 이미지 등록용 숨겨진 form -->
+   <form id="imageForm" action="${pageContext.request.contextPath}/shop/image_upload" method="post" enctype="multipart/form-data">
+      프로필 사진
+      <input type="file" id="image" name="image" accept=".jpg, .png, .gif, .jpeg"/>
+      <button type="submit">업로드</button>
    </form>
 </div>
 	<%--
@@ -122,30 +129,23 @@
 	      alert(sHTML);
 	   }
 	
+	   function submitContents(elClickedObj) {
+			//SmartEditor 에 의해 만들어진(작성한글) 내용이 textarea 의 value 가 되도록 한다. 
+			oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+			
+			// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
+			
+			try {
+				//폼 제출하기 
+				elClickedObj.form.submit();
+			} catch(e) {}
+		}
 	   
 	   function setDefaultFont() {
 	      var sDefaultFont = '궁서';
 	      var nFontSize = 24;
 	      oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
 	   }
-	   
-	   //폼에 submit 이벤트가 일어났을때 실행할 함수 등록
-	   document.querySelector("#insertForm")
-	      .addEventListener("submit", function(e){
-	         //에디터에 입력한 내용이 textarea 의 value 값이 될수 있도록 변환한다. 
-	         oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-	         //textarea 이외에 입력한 내용을 여기서 검증하고 
-	         const title=document.querySelector("#title").value;
-	         
-	         //만일 폼 제출을 막고 싶으면  
-	         //e.preventDefault();
-	         //을 수행하게 해서 폼 제출을 막아준다.
-	         if(title.length < 5){
-	            alert("제목을 5글자 이상 입력하세요!");
-	            e.preventDefault();
-	         }
-	         
-	      });
 	</script>
    <script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
    <script>
@@ -168,7 +168,7 @@
          .then(function(data){
             console.log(data);
             // input name="profile" 요소의 value 값으로 이미지 경로 넣어주기
-            document.querySelector("input[name=imagePath]").value=data.imagePath;
+            document.querySelector("input[name=imagePath]").value = data.imagePath;
             
             // img 요소를 문자열로 작성한 다음 
             let img=`<img id="profileImage" 
