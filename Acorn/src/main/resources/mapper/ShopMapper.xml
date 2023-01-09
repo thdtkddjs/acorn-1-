@@ -59,7 +59,8 @@
       FROM
          (SELECT result1.*, ROWNUM AS rnum
          FROM
-            (SELECT num,title,content,imagePath,categorie, reviewCount,likeCount,dislikeCount,telNum,addr,latitude,longitude
+            (SELECT num,title,content,imagePath,categorie,
+      			reviewCount,likeCount,dislikeCount,telNum,addr,latitude,longitude
       		from board_shop
             <include refid="searchCondition"/>
             ORDER BY num DESC) result1)
