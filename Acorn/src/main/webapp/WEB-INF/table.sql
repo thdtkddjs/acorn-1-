@@ -16,18 +16,18 @@ CREATE TABLE board_shop(
     categorie VARCHAR2(100), -- 음식 분류
     reviewCount NUMBER, -- 리뷰/댓글 개수
     likeCount NUMBER, -- 좋아요 개수
-	dislikeCount NUMBER, -- 싫어요 개수 (추후 평점시스템으로 변경할경우 삭제)
-	telNum VARCHAR2(20), -- 가게 전화번호
-	addr VARCHAR2(50), --  주소(불필요시 추후 삭제)
-	latitude NUMBER, -- 위도(불필요시 추후 삭제)
-	longitude NUMBER -- 경도(불필요시 추후 삭제)
+    dislikeCount NUMBER, -- 싫어요 개수 (추후 평점시스템으로 변경할경우 삭제)
+    telNum VARCHAR2(20), -- 가게 전화번호
+    addr VARCHAR2(50), --  주소(불필요시 추후 삭제)
+    latitude NUMBER, -- 위도(불필요시 추후 삭제)
+    longitude NUMBER -- 경도(불필요시 추후 삭제)
 );
 
 -- 게시들의 번호를 얻어낼 시퀀스
 CREATE SEQUENCE board_shop_seq;
 
 -- 댓글을 지정할 테이블
-CREATE TABLE board_food_review( -- 테이블명 추후 변경 예정
+CREATE TABLE board_shop_review( -- 테이블명 추후 변경 예정
     num NUMBER PRIMARY KEY, -- 리뷰의 글 번호
     writer VARCHAR2(100), -- 리뷰의 작성자 아이디
     content VARCHAR2(500), -- 리뷰 내용
@@ -36,8 +36,8 @@ CREATE TABLE board_food_review( -- 테이블명 추후 변경 예정
     ref_group NUMBER, 
     review_group NUMBER,
     deleted CHAR(3) DEFAULT 'no', --  리뷰 삭제여부
-    grade CHAR(3) DEFAULT 'no', -- 평점 작성 여부
+    grade CHAR(3) DEFAULT 'no', -- 평점 작성 여부(필요시 다른 테이블로 이동)
     regdate DATE
 );
 -- 댓글의 글번호를 얻어낼 시퀀스
-CREATE SEQUENCE board_food_review_seq;
+CREATE SEQUENCE board_shop_review_seq;
