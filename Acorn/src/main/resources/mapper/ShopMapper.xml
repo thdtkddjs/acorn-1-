@@ -32,7 +32,7 @@
 	
 	<select id="getCount" parameterType="ShopDto" resultType="int">
       SELECT NVL(MAX(ROWNUM), 0)
-      FROM board_cafe
+      FROM board_shop
       <include refid="searchCondition"/>
     </select>   
 
@@ -53,21 +53,20 @@
 		set dislikeCount=dislikeCount+1
 		where num=#{num}
 	</update>
-      <select id="getList" resultType="shopDto">
+	<select id="getList" resultType="shopDto">
       
       SELECT *
       FROM
          (SELECT result1.*, ROWNUM AS rnum
          FROM
-            (SELECT select num,title,content,imagePath,categorie,
-      			reviewCount,likeCount,dislikeCount,telNum,addr,latitude,longitude
+            (SELECT num,title,content,imagePath,categorie, reviewCount,likeCount,dislikeCount,telNum,addr,latitude,longitude
       		from board_shop
             <include refid="searchCondition"/>
             ORDER BY num DESC) result1)
       <![CDATA[ 
       WHERE rnum >= #{startRowNum} AND rnum <= #{endRowNum}
       ]]>
-   </select>
+	</select>
    <select id="getData" parameterType="int" resultType="shopDto">
    		select num,title,content,imagePath,categorie,
       		reviewCount,likeCount,dislikeCount,telNum,addr,latitude,longitude
