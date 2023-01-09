@@ -6,9 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>/views/shop/list.jsp</title>
+<title>/views/shop/update.jsp</title>
 </head>
 <body>
-
+	<script>
+		alert("게시글이 수정되었습니다.")
+		location.href="${pageContext.request.contextPath}/";
+	</script>
 </body>
 </html>

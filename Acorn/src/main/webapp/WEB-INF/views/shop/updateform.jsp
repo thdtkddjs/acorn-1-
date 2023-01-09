@@ -28,10 +28,11 @@
 <body>
 <div class="container">
    <h1>상점 정보 변경 요청폼</h1>
-   <form action="insert" method="post" id="insertForm">
+   <form action="${pageContext.request.contextPath}/shop/update" method="Get">
    	  <!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
   	  <input type="hidden" name="imagePath" 
      		value="${ empty dto.imagePath ? 'empty' : dto.imagePath }"/>
+      <input type="hidden" name="num" value="${dto.num }" />
       <!-- 점포명 input -->
       <div class="mb-3">
          <label class="form-label" for="title">점포명</label>
@@ -72,11 +73,13 @@
       </a>
       <button class="btn btn-primary" type="submit">저장</button>
       <!-- 이미지 등록용 숨겨진 form -->
-      <form id="imageForm" action="${pageContext.request.contextPath}/gallery/profile_upload" method="get" enctype="multipart/form-data">
-         프로필 사진
-         <input type="file" id="image" name="image" accept=".jpg, .png, .gif"/>
-         <button type="submit">업로드</button>
-      </form>
+
+   </form>
+   
+   <form id="imageForm" action="${pageContext.request.contextPath}/shop/image_upload" method="post" enctype="multipart/form-data">
+      프로필 사진
+      <input type="file" id="image" name="image" accept=".jpg, .png, .gif, .jpeg"/>
+      <button type="submit">업로드</button>
    </form>
 </div>
 	<%--
@@ -137,20 +140,20 @@
 	   }
 	   
 	   //폼에 submit 이벤트가 일어났을때 실행할 함수 등록
-	   document.querySelector("#insertForm")
+	   document.querySelector("#updateForm")
 	      .addEventListener("submit", function(e){
 	         //에디터에 입력한 내용이 textarea 의 value 값이 될수 있도록 변환한다. 
 	         oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 	         //textarea 이외에 입력한 내용을 여기서 검증하고 
 	         const title=document.querySelector("#title").value;
 	         
-	         //만일 폼 제출을 막고 싶으면  
-	         //e.preventDefault();
-	         //을 수행하게 해서 폼 제출을 막아준다.
-	         if(title.length < 5){
-	            alert("제목을 5글자 이상 입력하세요!");
-	            e.preventDefault();
-	         }
+// 	         //만일 폼 제출을 막고 싶으면  
+// 	         //e.preventDefault();
+// 	         //을 수행하게 해서 폼 제출을 막아준다.
+// 	         if(title.length < 5){
+// 	            alert("제목을 5글자 이상 입력하세요!");
+// 	            e.preventDefault();
+// 	         }
 	         
 	      });
 	</script>

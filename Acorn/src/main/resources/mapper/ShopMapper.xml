@@ -32,7 +32,7 @@
 	
 	<select id="getCount" parameterType="ShopDto" resultType="int">
       SELECT NVL(MAX(ROWNUM), 0)
-      FROM board_cafe
+      FROM board_shop
       <include refid="searchCondition"/>
     </select>   
 

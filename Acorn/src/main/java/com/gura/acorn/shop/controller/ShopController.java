@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -67,6 +68,7 @@ public class ShopController {
 	@GetMapping("/shop/update")
 	public String update(ShopDto dto, HttpServletRequest request) {
 		service.updateContent(dto, request);
+		System.out.println(dto.getContent()+"  "+dto.getNum());
 		return "shop/update";
 	}
 	
