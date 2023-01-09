@@ -68,7 +68,6 @@ public class ShopController {
 	@GetMapping("/shop/update")
 	public String update(ShopDto dto, HttpServletRequest request) {
 		service.updateContent(dto, request);
-		System.out.println(dto.getContent()+"  "+dto.getNum());
 		return "shop/update";
 	}
 	
