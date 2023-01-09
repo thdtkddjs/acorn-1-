@@ -24,6 +24,13 @@ public class UsersController {
 	@Autowired
 	private UsersService service;
 	
+	@RequestMapping("/users/list")
+	public String getList(HttpServletRequest request) {
+		service.getList(request);
+		
+		return "users/list";
+	}
+	
 	/*
 	 *  GET 방식 /users/signup_form 요청을 처리할 메소드 
 	 *  - 요청방식이 다르면 실행되지 않는다. 
