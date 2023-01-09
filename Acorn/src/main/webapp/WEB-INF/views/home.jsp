@@ -14,6 +14,11 @@
 	            <a href="${pageContext.request.contextPath}/users/loginform">로그인</a>
 	            <a href="${pageContext.request.contextPath}/users/signup_form">회원가입</a>
          	</c:when>
+	        <c:when test="${sessionScope.id eq 'manager' }">
+	        	<a href="${pageContext.request.contextPath}/users/info">${sessionScope.id }</a> 로그인중... 
+	            <a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>
+	        	<a href="${pageContext.request.contextPath}/users/list">회원 목록</a>
+	        </c:when>
 	        <c:otherwise>
 	            <p>
 	               <a href="${pageContext.request.contextPath}/users/info">${sessionScope.id }</a> 로그인중... 
