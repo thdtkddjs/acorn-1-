@@ -158,10 +158,10 @@
 				</c:choose>
 				<c:forEach var="tmp" items="${list }">
 					<div class="card" style="width: 18rem;">
-	                    <img src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220310_48%2F1646883669558peXxc_JPEG%2F20220310_124026.jpg&type=f&size=340x180" class="card-img-top" alt="...">
+	                    <img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
-	                    	<p class="card-text">${tmp.content} }</p>
+	                    	<p class="card-text">${tmp.content }</p>
 	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary">가게 정보 보기</a>
 	                    </div>
 	                </div>

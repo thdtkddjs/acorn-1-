@@ -27,6 +27,12 @@ public class ShopController {
 	
 	//인덱스 페이지부터 가게리스트를 받을예정 ( 홈컨트롤러에서 리스트 불러오기 필요 ) > 나중에 필요하다면 리스트에 관련된 컨트롤러 추가
 	
+	@GetMapping("/index")
+	public String list(HttpServletRequest request) {
+		service.getList(request);
+		return "index";
+	}
+	
 	//글 작성폼 이동
 	@GetMapping("/shop/insertform")
 	public String insertform() {
