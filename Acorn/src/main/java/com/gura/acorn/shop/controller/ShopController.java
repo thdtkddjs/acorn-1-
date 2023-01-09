@@ -43,6 +43,19 @@ public class ShopController {
 		return "shop/insert";
 	}
 	
+	@RequestMapping("/index/")
+	public String index(HttpServletRequest request) {
+		service.getList(request);
+
+		return "index";
+	}
+	@RequestMapping("/shop/list")
+	public String list(HttpServletRequest request) {
+		service.getList(request);
+		
+		return "shop/list";
+	}
+	
 	//글 섬네일 등록을 위한 메소드
 	@ResponseBody
 	@RequestMapping(value = "/shop/image_upload", method = RequestMethod.POST)
@@ -54,7 +67,9 @@ public class ShopController {
 	//가게정보 상세보기
 	@GetMapping("/shop/detail")
 	public String detail(HttpServletRequest request) {
+		service.getList(request);
 		service.getDetail(request);
+		service.getData(request);
 		return "shop/detail";
 	}
 	
