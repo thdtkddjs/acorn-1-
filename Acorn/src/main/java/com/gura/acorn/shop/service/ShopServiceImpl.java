@@ -1,15 +1,17 @@
 package com.gura.acorn.shop.service;
 
-import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.gura.acorn.shop.dao.ShopDao;
 import com.gura.acorn.shop.dto.ShopDto;
+import com.gura.acorn.shop.dto.ShopReviewDto;
 
 @Service
 public class ShopServiceImpl implements ShopService{
@@ -94,11 +96,6 @@ public class ShopServiceImpl implements ShopService{
 		
 	}
 
-	@Override
-	public void updateContent(ShopDto dto) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void deleteContent(int num, HttpServletRequest request) {
@@ -122,6 +119,48 @@ public class ShopServiceImpl implements ShopService{
 
 	@Override
 	public void addDislikeCount(int num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateContent(ShopDto dto, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<String, Object> saveImagePath(HttpServletRequest request, MultipartFile mFile) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void countReview(int num) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveReview(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteReview(HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateReview(ShopReviewDto dto) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moreReviewList(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		
 	}
