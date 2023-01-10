@@ -196,6 +196,7 @@ public class ShopServiceImpl implements ShopService{
 
 	@Override
 	public void updateContent(ShopDto dto, HttpServletRequest request) {
+		dto.setNum(Integer.parseInt(request.getParameter("num")));
 		shopDao.update(dto);	
 	}
 
