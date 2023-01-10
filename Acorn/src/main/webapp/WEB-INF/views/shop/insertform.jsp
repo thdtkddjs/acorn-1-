@@ -28,7 +28,7 @@
 <body>
 <div class="container">
    <h1>상점 신규 등록</h1>
-   <form action="${pageContext.request.contextPath}/shop/insert" method="post">
+   <form action="${pageContext.request.contextPath}/shop/insert" method="post" id="insertForm">
    	  <!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
   	  <input type="hidden" name="imagePath" value="empty"/>
       
@@ -146,6 +146,16 @@
 	      var nFontSize = 24;
 	      oEditors.getById["content"].setDefaultFont(sDefaultFont, nFontSize);
 	   }
+	   
+	   //폼에 submit 이벤트가 일어났을때 실행할 함수 등록
+	   document.querySelector("#insertForm")
+	      .addEventListener("submit", function(e){
+	         //에디터에 입력한 내용이 textarea 의 value 값이 될수 있도록 변환한다. 
+	         oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
+	         //textarea 이외에 입력한 내용을 여기서 검증하고 (필요는 없지만 그냥 냅둡니다.)
+	         const title=document.querySelector("#title").value;
+	         
+	      });
 	</script>
    <script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
    <script>
