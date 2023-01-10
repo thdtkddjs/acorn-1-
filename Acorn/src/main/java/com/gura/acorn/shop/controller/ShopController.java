@@ -30,6 +30,12 @@ public class ShopController {
 	
 	//인덱스 페이지부터 가게리스트를 받을예정 ( 홈컨트롤러에서 리스트 불러오기 필요 ) > 나중에 필요하다면 리스트에 관련된 컨트롤러 추가
 	
+	@GetMapping("/index")
+	public String list(HttpServletRequest request) {
+		service.getList(request);
+		return "index";
+	}
+	
 	//글 작성폼 이동
 	@GetMapping("/shop/insertform")
 	public String insertform() {
@@ -51,12 +57,7 @@ public class ShopController {
 		service.getList(request);
 		return "index";
 	}
-	@RequestMapping("/shop/list")
-	public String list(HttpServletRequest request) {
-		service.getList(request);
-		
-		return "shop/list";
-	}
+
 	
 	//글 섬네일 등록을 위한 메소드
 	@ResponseBody
@@ -69,6 +70,7 @@ public class ShopController {
 	//가게정보 상세보기
 	@GetMapping("/shop/detail")
 	public String detail(HttpServletRequest request) {
+		service.getList(request);
 		service.getDetail(request);
 		return "shop/detail";
 	}

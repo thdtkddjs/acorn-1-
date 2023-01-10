@@ -140,9 +140,11 @@
         <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
         <div class="search_menu">
             <div class="search_bar">
-                <form action="${pageContext.request.contextPath}/index/" method="get">
-                    <input type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
-                    <button type="submit">검색</button>
+                <form action="${pageContext.request.contextPath}/index/" method="post">
+                    <div class="serch_box">
+                    	<img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" />
+                    	<input class="search_input" type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
+                    </div>
                 </form>
             </div>
             

@@ -168,9 +168,11 @@ td>img{
         <div class="main_banner">메인 배너 표시</div>
         <div class="search_menu">
             <div class="search_bar">
-                <form action="">
-                    <input type="text" placeholder="가게 명을 입력하세요...">
-                    
+                <form action="${pageContext.request.contextPath}/index/" method="post">
+                    <div class="serch_box">
+                    	<img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" />
+                    	<input class="search_input" type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
+                    </div>
                 </form>
             </div>
             
@@ -191,7 +193,7 @@ td>img{
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
 	                    	<p class="card-text">${tmp.content}</p>
-	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}?title=${tmp.title}" class="btn btn-primary">가게 정보 보기</a>
+	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary">가게 정보 보기</a>
 	                    </div>
 	                </div>
                 <br>
@@ -201,18 +203,6 @@ td>img{
         <div class="search_result">
                 <div class="main_content">
 		            <div class="content_images">
-		                <div class="content_photo_1">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                </div>
-		                <div class="content_photo_2">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                </div>
-
-
 						<div class="main_title">
 							<div id="map"
 								style="width: 200px; height: 150px; margin: auto; float: right; margin-right: 20px;"></div>
@@ -334,8 +324,8 @@ td>img{
 	<script>
 
 		window.onload = function() {
-			$("#table_1").show();
-			$("#table_2").hide();
+			$(".table_1").show();
+			$(".table_2").hide();
 			$(".table_3").hide();
 			$(".table_4").hide();
 		}
