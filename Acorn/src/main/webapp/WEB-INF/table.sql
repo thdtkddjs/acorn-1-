@@ -49,7 +49,7 @@ menuNum number primary key, -- 고유번호
 name varchar2(20) not null,-- 상품 이름
 price number, -- 메뉴 가격
 content varchar2(100), -- 한눈에 들어오는 수준으로 짧은 글로 사용
-imagePath varchar2(20)-- 이미지 경로(카메라로 찍은 파일을 바로 올리면 이름이 아주 길 수도 있으니 200정도로 넓게 잡음)
+imagePath varchar2(200)-- 이미지 경로(카메라로 찍은 파일을 바로 올리면 이름이 아주 길 수도 있으니 200정도로 넓게 잡음)
 )
 
 -- orderNum을 얻어낼 시퀀스
