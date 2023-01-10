@@ -11,6 +11,7 @@ public class UsersDto {
 	private String profile;
 	private String regdate;
 	private String newPwd;
+	private String isSave;
     private int startRowNum;
     private int endRowNum;
     private int prevNum; // 이전 글의 번호
@@ -19,8 +20,8 @@ public class UsersDto {
 	//디폴트 생성자
 	public UsersDto() {}
 
-	public UsersDto(String id, String pwd, String email, String profile, String regdate, String newPwd, int startRowNum,
-			int endRowNum, int prevNum, int nextNum) {
+	public UsersDto(String id, String pwd, String email, String profile, String regdate, String newPwd, String isSave,
+			int startRowNum, int endRowNum, int prevNum, int nextNum) {
 		super();
 		this.id = id;
 		this.pwd = pwd;
@@ -28,6 +29,7 @@ public class UsersDto {
 		this.profile = profile;
 		this.regdate = regdate;
 		this.newPwd = newPwd;
+		this.isSave = isSave;
 		this.startRowNum = startRowNum;
 		this.endRowNum = endRowNum;
 		this.prevNum = prevNum;
@@ -82,6 +84,14 @@ public class UsersDto {
 		this.newPwd = newPwd;
 	}
 
+	public String getIsSave() {
+		return isSave;
+	}
+
+	public void setIsSave(String isSave) {
+		this.isSave = isSave;
+	}
+
 	public int getStartRowNum() {
 		return startRowNum;
 	}
@@ -113,6 +123,8 @@ public class UsersDto {
 	public void setNextNum(int nextNum) {
 		this.nextNum = nextNum;
 	}
+
+	
 
 	
 }
