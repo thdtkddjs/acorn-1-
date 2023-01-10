@@ -28,7 +28,7 @@
 <body>
 <div class="container">
    <h1>상점 정보 변경 요청폼</h1>
-   <form action="${pageContext.request.contextPath}/shop/update" method="Get">
+   <form action="${pageContext.request.contextPath}/shop/update" method="Get" id="updateForm">
    	  <!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
   	  <input type="hidden" name="imagePath" 
      		value="${ empty dto.imagePath ? 'empty' : dto.imagePath }"/>
@@ -147,13 +147,6 @@
 	         //textarea 이외에 입력한 내용을 여기서 검증하고 
 	         const title=document.querySelector("#title").value;
 	         
-// 	         //만일 폼 제출을 막고 싶으면  
-// 	         //e.preventDefault();
-// 	         //을 수행하게 해서 폼 제출을 막아준다.
-// 	         if(title.length < 5){
-// 	            alert("제목을 5글자 이상 입력하세요!");
-// 	            e.preventDefault();
-// 	         }
 	         
 	      });
 	</script>
