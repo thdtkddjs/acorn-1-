@@ -12,110 +12,136 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </head>
 <style>
-    .container{
-        display: grid;
-        grid-template-areas:
-		"header header header"
-        "banner banner banner"
-		"search main main"
-		"  bot   bot   bot  ";
+.container {
+	display: grid;
+	grid-template-areas: 
+	"header header header" 
+	"banner banner banner"
+	"search main main" 
+	"  bot   bot   bot  ";
+	grid-template-columns: 1fr 2fr 1fr;
+	box-shadow: 0px 5px 20px 0px grey;
+	border-right: thin;
+	z-index: 1;
+	min-width: 1320px;
+}
+.main_content{
+	grid-area : main;
+}
+.header {
+	grid-area: header;
+	text-align: right;
+	display: block;
+}
 
-        grid-template-columns: 1fr 2fr 1fr;
-        box-shadow: 0px 5px 20px 0px grey;
-	    border-right: thin;
-        z-index: 1;
-        min-width: 1320px;
-    }
-    .header{
-        grid-area: header;
-        text-align: right;
-        display: block;
-    }
-    .main_banner{
-        grid-area: banner;
-        text-align: center;
-        height: 200px;
-        background-color: skyblue;
-    }
-    .side_menu_a {
-        grid-area: search;
-        width : 100%;
-        text-align: center;
-        background-color: lightgray;
-    }
-    .search_menu{
-        grid-area: search;
-        box-shadow: 2px 2px 3px 0px grey;
-        background-color: white;
-        z-index: 3;
-        position: relative;
-    }
-    .search_result{
-        grid-area: main;
-        width: 100%;
-        height: 680px;
-        text-align: center;
-    }
-    .side_menu_b {
-        grid-area: b;
-        width : 100%;
-        text-align: center;
-        background-color: lightgray;
-    }
-    .footer{
-        padding-left :10px;
-        padding-right :10px;
-        margin-top: 0px;
-        background-color: white;
-        grid-area: footer;
-        bottom: 0px;
-        width: 100%;
-        position: fixed;
-        z-index: 5;
-    }
-    .bottom{
-       grid-area : bot; 
-    }
-    .search_bar{
-        border: 3px solid;
-        border-color: rgb(64, 219, 43);
-        border-radius: 5px;
-        margin: 10px;
-        width: 290px;
-    }
-    .search_bar>form>input{
-        width: 250px;
-        margin : 10px;
-        border: none;
-        font-size: large;
-    }
-    .suggest_menu>.card{
-        margin-left: 10px;
-    }
-    #map{
-        z-index: 2;
-    }
-    .suggest_menu{
-        height : 600px; 
-        overflow: scroll; 
-        -ms-overflow-style: none;
-    }
-    .suggest_menu::-webkit-scrollbar{
-        display:none;
-    }
-    .fold_btn{
-        position: absolute;
-        left : 300px;
-        top : 150px;
-        z-index: 5;
-    }
-    .open_btn{
-        position: absolute;
-        left : 200px;
-        top : 150px;
-        z-index: 5;
-    }
-    
+.main_banner {
+	grid-area: banner;
+	text-align: center;
+	height: 200px;
+	background-color: skyblue;
+}
+
+.side_menu_a {
+	grid-area: search;
+	width: 100%;
+	text-align: center;
+	background-color: lightgray;
+}
+
+.search_menu {
+	grid-area: search;
+	box-shadow: 2px 2px 3px 0px grey;
+	background-color: white;
+	z-index: 3;
+	position: relative;
+}
+
+.search_result {
+	grid-area: main;
+	width: 100%;
+	height: 680px;
+	text-align: center;
+}
+
+.side_menu_b {
+	grid-area: b;
+	width: 100%;
+	text-align: center;
+	background-color: lightgray;
+}
+
+.footer {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 0px;
+	background-color: white;
+	grid-area: footer;
+	bottom: 0px;
+	width: 100%;
+	position: fixed;
+	z-index: 5;
+}
+
+.bottom {
+	grid-area: bot;
+}
+
+.search_bar {
+	border: 3px solid;
+	border-color: rgb(64, 219, 43);
+	border-radius: 5px;
+	margin: 10px;
+	width: 290px;
+}
+
+.search_bar>form>input {
+	width: 250px;
+	margin: 10px;
+	border: none;
+	font-size: large;
+}
+
+.suggest_menu>.card {
+	margin-left: 10px;
+}
+
+#map {
+	z-index: 2;
+}
+
+.suggest_menu {
+	height: 600px;
+	overflow: scroll;
+	-ms-overflow-style: none;
+}
+
+.suggest_menu::-webkit-scrollbar {
+	display: none;
+}
+
+.fold_btn {
+	position: absolute;
+	left: 300px;
+	top: 150px;
+	z-index: 5;
+}
+
+.open_btn {
+	position: absolute;
+	left: 200px;
+	top: 150px;
+	z-index: 5;
+}
+
+.content_photo_1>img, .content_photo_2>img {
+	width: 200px;
+	margin: 0.5px;
+	margin-right: -5px;
+}
+.main_table{
+	width : 900px;
+	
+}
 </style>
 <body>
 
@@ -136,8 +162,6 @@
 			</c:choose>
 		</div>
         <div class="main_banner">메인 배너 표시</div>
-        <button class="fold_btn" onclick="fold_menu()"> ◀ </button>
-        <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
         <div class="search_menu">
             <div class="search_bar">
                 <form action="">
@@ -158,23 +182,69 @@
 				</c:choose>
 				<c:forEach var="tmp" items="${list }">
 					<div class="card" style="width: 18rem;">
-	                    <img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
+	                    <img src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220310_48%2F1646883669558peXxc_JPEG%2F20220310_124026.jpg&type=f&size=340x180" class="card-img-top" alt="...">
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
-	                    	<p class="card-text">${tmp.content }</p>
+	                    	<p class="card-text">${tmp.content} }</p>
 	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary">가게 정보 보기</a>
 	                    </div>
 	                </div>
                 <br>
 				</c:forEach>
-
-
-
             </div>
         </div>
         <div class="search_result">
-            <div id="map" style="width: 972px; height: 700px;  float: right;"></div>
-            
+                <div class="main_content">
+		            <div class="content_images">
+		                <div class="content_photo_1">
+		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
+		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
+		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
+		                </div>
+		                <div class="content_photo_2">
+		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
+		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
+		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
+		                </div>
+		
+		
+		                <div class="main_title">
+		                    <div id="map" style="width: 200px; height: 150px; margin: auto; float: right; margin-right: 20px;"></div>
+		
+		                    <br><br>
+		                    <Strong>${dto.title }</Strong> 
+		                    <p>리뷰 ${dto.reviewCount } 회</p>
+		                    <p>좋아요 : ${dto.likeCount}, 싫어요 : ${dto.dislikeCount } </p>
+		                    <p style="margin:0px;">　</p>
+		                </div>
+		                <table class="main_table">
+		                    <tbody>
+		                        <tr>
+		                            <th onClick="ShopInfo()">가게 정보</th>
+		                            <th>메뉴</th>
+		                            <th>리뷰</th>
+		                            <th>사진</th>
+		                        </tr>
+		                        <tr class=shopInfo>
+		                            <td colspan="5">&nbsp; 가게 소개 : ${dto.content }</td>
+		                        </tr>
+		                        <tr class=shopInfo>
+		                            <td colspan="5">&nbsp; 전화 번호 : ${dto.telNum}</td>
+		                        </tr>
+		                        <tr class=shopInfo>
+		                            <td colspan="5">&nbsp; 영업 시간 : </td>
+		                        </tr>
+		                        <tr class=shopInfo>
+		                            <td colspan="5">&nbsp; 주소 : ${dto.addr }</td>
+		                        </tr>
+		                        <tr class=shopInfo>
+		                            <td colspan="5">&nbsp; 단체 손님 환영</td>
+		                        </tr>
+		                    </tbody>
+		
+		                </table>
+		            </div>
+		        </div>    
         </div>
         <div class="bottom">　</div>
 
@@ -183,54 +253,29 @@
     </div>        
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9xl3ekksy5"></script>
     <script>
-        let markerInfo = [
-            '<div class="marker_info">',
-            '   <h5><a href="http://naver.com">에이콘 아카데미</a></h5>',
-            '   <p>서울특별시 강남구 테헤란로 124 삼원타워 5층 <br>',
-            '       <img src="http://acornacademy.co.kr/mobile/img/logo.png" height="55" alt="에이콘" /><br>',
-            '   </p>',
-            '</div>'
-        ].join('');
+    	let lat = ${dto.latitude};
+    	let lng = ${dto.longitude};
+
 
         let map = new naver.maps.Map('map', {
-            center : new naver.maps.LatLng(37.498778, 127.031662),
+            center : new naver.maps.LatLng(lat, lng),
             zoom : 18
         });
 
         let marker = new naver.maps.Marker({
-            position : new naver.maps.LatLng(37.498778, 127.031662),
+            position : new naver.maps.LatLng(lat, lng),
             map: map
         });
 
-        let infowindow = new naver.maps.InfoWindow({
-            content: markerInfo
-        });
-
-        naver.maps.Event.addListener(marker, "click", function(e) {
-            if (infowindow.getMap()) {
-                infowindow.close();
-            } else {
-                infowindow.open(map, marker);
-            }
-        });
-
-        function fold_menu() {
-            document.querySelector(".search_bar").style.display ="none";
-            document.querySelector(".search_menu").style.display ="none";
-            document.querySelector("#map").style.width ="1296px";
-            document.querySelector("#map").style.height ="700px";
-            document.querySelector(".open_btn").style.removeProperty("display");
-            document.querySelector(".fold_btn").style.display="none";
-        };
-
-        function open_menu() {
-            document.querySelector(".search_bar").style.removeProperty("display");
-            document.querySelector(".search_menu").style.removeProperty("display");
-            document.querySelector("#map").style.width ="972px";
-            document.querySelector("#map").style.height ="700px";
-            document.querySelector(".fold_btn").style.removeProperty("display");
-            document.querySelector(".open_btn").style.display="none";
-        };
+		function ShopInfo(){
+			let shopInfo = document.querySelectorAll(".shopInfo");
+			shopInfo[0].style.display="none";
+			shopInfo[1].style.display="none";
+			shopInfo[2].style.display="none";
+			shopInfo[3].style.display="none";
+			shopInfo[4].style.display="none";
+			
+		};
 
 
     </script>        
