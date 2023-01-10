@@ -54,7 +54,6 @@
 		where num=#{num}
 	</update>
 	<select id="getList" resultType="shopDto">
-      
       SELECT *
       FROM
          (SELECT result1.*, ROWNUM AS rnum
@@ -84,4 +83,5 @@
 	     	) result1
      	where num=#{num}
    </select>
+
 </mapper>

@@ -140,8 +140,9 @@
         <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
         <div class="search_menu">
             <div class="search_bar">
-                <form action="">
-                    <input type="text" placeholder="가게 명을 입력하세요...">
+                <form action="${pageContext.request.contextPath}/index/" method="get">
+                    <input type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
+                    <button type="submit">검색</button>
                 </form>
             </div>
             

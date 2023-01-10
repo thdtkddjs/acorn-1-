@@ -140,8 +140,9 @@
         <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
         <div class="search_menu">
             <div class="search_bar">
-                <form action="">
-                    <input type="text" placeholder="가게 명을 입력하세요...">
+                <form action="${pageContext.request.contextPath}/index/" method="post">
+                    <input type="text" name="keyword" value="${dto.title}" placeholder="가게 명을 입력하세요...">
+                    <button type="submit">검색</button>
                 </form>
             </div>
             
@@ -153,7 +154,7 @@
 						<h5>회원님을 위한 오늘의 추천</h5>
 					</c:when>
 					<c:otherwise>
-						<h5>${sessionScope.id }님을 위한 오늘의 추천</h5>
+						<h5><strong>검색 결과</strong></h5>
 					</c:otherwise>
 				</c:choose>
 				<c:forEach var="tmp" items="${list }">
@@ -162,8 +163,9 @@
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
 	                    	<p class="card-text">${tmp.content }</p>
-	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary">가게 정보 보기</a>
-	                    </div>
+	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}"	class="btn btn-primary">가게 정보 보기</a>
+
+						</div>
 	                </div>
                 <br>
 				</c:forEach>

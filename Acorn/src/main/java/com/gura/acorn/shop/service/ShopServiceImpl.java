@@ -1,5 +1,6 @@
 package com.gura.acorn.shop.service;
 
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -33,11 +34,21 @@ public class ShopServiceImpl implements ShopService{
 		int startRowNum = 1 + (pageNum - 1) * PAGE_ROW_COUNT;
 		int endRowNum = pageNum * PAGE_ROW_COUNT;
 
-
+		String keyword = request.getParameter("keyword");
+		//키워드가 넘어오지 않으면 빈문자열 세팅
+		if (keyword == null) {
+			keyword = "";
+		}
+		String encodedK = URLEncoder.encode(keyword);
+		
 		ShopDto dto = new ShopDto();
 		dto.setStartRowNum(startRowNum);
 		dto.setEndRowNum(endRowNum);
 		
+		//검색을 통해 키워드가 넘어오면 dto에 키워드 값을 세팅
+		if (!keyword.equals("")) {
+			dto.setTitle(keyword);
+		}		
 		
 		List<ShopDto> list = shopDao.getList(dto);
 		int totalRow = shopDao.getCount(dto);

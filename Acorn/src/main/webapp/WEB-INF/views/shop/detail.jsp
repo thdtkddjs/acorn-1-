@@ -170,6 +170,7 @@ td>img{
             <div class="search_bar">
                 <form action="">
                     <input type="text" placeholder="가게 명을 입력하세요...">
+                    
                 </form>
             </div>
             
@@ -189,8 +190,8 @@ td>img{
 	                    <img src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220310_48%2F1646883669558peXxc_JPEG%2F20220310_124026.jpg&type=f&size=340x180" class="card-img-top" alt="...">
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
-	                    	<p class="card-text">${tmp.content} }</p>
-	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary">가게 정보 보기</a>
+	                    	<p class="card-text">${tmp.content}</p>
+	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}?title=${tmp.title}" class="btn btn-primary">가게 정보 보기</a>
 	                    </div>
 	                </div>
                 <br>
@@ -367,14 +368,8 @@ td>img{
 				$(".table_4").show();
 			})
 		})
-		let lat = $
-		{
-			dto.latitude
-		};
-		let lng = $
-		{
-			dto.longitude
-		};
+		let lat = ${dto.latitude};
+		let lng = ${dto.longitude};
 
 		let map = new naver.maps.Map('map', {
 			center : new naver.maps.LatLng(lat, lng),
