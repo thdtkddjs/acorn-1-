@@ -41,3 +41,6 @@ CREATE TABLE board_shop_review( -- 테이블명 추후 변경 예정
 );
 -- 댓글의 글번호를 얻어낼 시퀀스
 CREATE SEQUENCE board_shop_review_seq;
+
+-- baord_shop table 생성 당시 addr 칼럼 50자 였으면 아래 sql문으로 변경 필요
+ALTER TABLE board_shop MODIFY(addr VARCHAR2(200));
