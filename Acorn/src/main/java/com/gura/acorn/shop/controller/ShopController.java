@@ -33,6 +33,13 @@ public class ShopController {
 		return "index";
 	}
 	
+	//기능시험용 리스트 페이지 이동(추후 삭제 예정)
+	@RequestMapping("/shop/list")
+	public String list(HttpServletRequest request) {
+		service.getList(request);
+		return "shop/list";
+	}
+	
 	//글 작성폼 이동
 	@GetMapping("/shop/insertform")
 	public String insertform() {
