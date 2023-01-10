@@ -67,9 +67,7 @@ public class ShopController {
 	//가게정보 상세보기
 	@GetMapping("/shop/detail")
 	public String detail(HttpServletRequest request) {
-		service.getList(request);
 		service.getDetail(request);
-		service.getData(request);
 		return "shop/detail";
 	}
 	

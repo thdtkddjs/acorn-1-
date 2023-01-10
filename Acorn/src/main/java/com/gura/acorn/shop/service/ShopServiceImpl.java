@@ -164,7 +164,7 @@ public class ShopServiceImpl implements ShopService{
 		reviewDto.setEndRowNum(endRowNum);
 
 		//1페이지에 해당하는 댓글 목록만 select 되도록 한다.
-		List<ShopReviewDto> commentList = shopReviewDao.getList(reviewDto);
+		List<ShopReviewDto> reviewList = shopReviewDao.getList(reviewDto);
 
 		//원글의 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
 		int totalRow = shopReviewDao.getCount(num);
@@ -177,7 +177,7 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("encodedK", encodedK);
 		request.setAttribute("condition", condition);
 		request.setAttribute("totalRow", totalRow);
-		request.setAttribute("commentList", commentList);
+		request.setAttribute("reviewList", reviewList);
 		request.setAttribute("totalPageCount", totalPageCount);
 
 	}
@@ -262,7 +262,6 @@ public class ShopServiceImpl implements ShopService{
 	public void saveReview(HttpServletRequest request) {
 		//폼 전송되는 파라미터 추출 
 		int ref_group = Integer.parseInt(request.getParameter("ref_group"));//원글의 글번호
-		String target_id = request.getParameter("target_id"); //댓글 대상자의 아이디
 		String content = request.getParameter("content"); //댓글의 내용
 
 		String review_group = request.getParameter("review_group");
@@ -275,7 +274,6 @@ public class ShopServiceImpl implements ShopService{
 		ShopReviewDto dto = new ShopReviewDto();
 		dto.setNum(seq);
 		dto.setWriter(writer);
-		dto.setTarget_id(target_id);
 		dto.setContent(content);
 		dto.setRef_group(ref_group);
 		//원글의 댓글인경우
