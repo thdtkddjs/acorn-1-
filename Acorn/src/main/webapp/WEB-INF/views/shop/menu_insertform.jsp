@@ -31,8 +31,7 @@
    <form action="${pageContext.request.contextPath}/shop/menu_insert" method="get" id="insertForm">
    	  <!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
   	  <input type="hidden" name="imagePath" value="empty"/>
-  	  <input type="hidden" name="num" value="${requestScope.num }" />
-      
+      <input type="hidden" name="num" value="${param.num }"/>
       <!-- 메뉴명 input -->
       <div class="mb-3">
          <label class="form-label" for="name">메뉴명</label>

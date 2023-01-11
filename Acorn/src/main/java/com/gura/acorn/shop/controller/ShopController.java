@@ -55,7 +55,7 @@ public class ShopController {
 		return "shop/insert";
 	}
 	
-	@RequestMapping("/index/")
+	@RequestMapping("/index")
 	public String index(HttpServletRequest request) {
 		service.getList(request);
 		return "index";
@@ -74,6 +74,7 @@ public class ShopController {
 	public String detail(HttpServletRequest request) {
 		service.getList(request);
 		service.getDetail(request);
+		service.menuGetList(request);
 		return "shop/detail";
 	}
 	
@@ -155,8 +156,8 @@ public class ShopController {
 	
 	@GetMapping("/shop/menu_insert")
 	public String menuinsert(ShopMenuDto dto, HttpServletRequest request) {
-		service.saveMenu(dto, request);
-		
+		dto.setNum(Integer.parseInt(request.getParameter("num")));
+		service.saveMenu(dto, request);		
 		return "shop/menu_insert";
 	}
 

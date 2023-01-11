@@ -11,7 +11,7 @@
 <body>
 	<script>
 		alert("새 가게가 추가되었습니다.")
-		location.href="${pageContext.request.contextPath}/shop/detail?num=${requestScope.num}";
+		location.href="${pageContext.request.contextPath}/shop/detail?num=${param.num }";
 	</script>
 </body>
 </html>
