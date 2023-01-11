@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gura.acorn.shop.dto.ShopDto;
+import com.gura.acorn.shop.dto.ShopMenuDto;
 import com.gura.acorn.shop.dto.ShopReviewDto;
 
 @Controller
@@ -140,4 +141,23 @@ public class ShopController {
 		return map;
 
 	}
+	
+	@RequestMapping("/shop/menulist")
+	public String getList(HttpServletRequest request) {
+		service.menuGetList(request);
+		return "shop/menulist";
+	}
+	
+	@RequestMapping("/shop/menu_insertform")
+	public String menuinsertform() {
+		return "shop/menu_insertform";
+	}
+	
+	@GetMapping("/shop/menu_insert")
+	public String menuinsert(ShopMenuDto dto, HttpServletRequest request) {
+		service.saveMenu(dto, request);
+		
+		return "shop/menu_insert";
+	}
+
 }

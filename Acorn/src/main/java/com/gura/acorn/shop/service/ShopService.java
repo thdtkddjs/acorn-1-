@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gura.acorn.shop.dto.ShopDto;
+import com.gura.acorn.shop.dto.ShopMenuDto;
 import com.gura.acorn.shop.dto.ShopReviewDto;
 
 public interface ShopService {
@@ -34,4 +35,7 @@ public interface ShopService {
 	public void deleteReview(HttpServletRequest request);//댓글 삭제
 	public void updateReview(ShopReviewDto dto); //댓글 수정 코멘트 기능 구현 후 활성화
 	public void moreReviewList(HttpServletRequest request);//댓글 더보기 기능
+	
+	public void saveMenu(ShopMenuDto dto, HttpServletRequest request);
+	public void menuGetList(HttpServletRequest request);
 }

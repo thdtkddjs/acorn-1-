@@ -44,10 +44,10 @@ CREATE SEQUENCE board_shop_review_seq;
 
 -- menu 정보(image 포함)
 CREATE TABLE board_shop_menu(
-num number not null,-- 상점과 Join하는 역할
+num number not null,-- 어떤 상점의 메뉴인지를 표시
 menuNum number primary key, -- 고유번호
-name varchar2(20) not null,-- 상품 이름
-price number, -- 메뉴 가격
+name varchar2(50) not null,-- 상품 이름
+price varchar2(50), -- 메뉴 가격
 content varchar2(100), -- 한눈에 들어오는 수준으로 짧은 글로 사용
 imagePath varchar2(200)-- 이미지 경로(카메라로 찍은 파일을 바로 올리면 이름이 아주 길 수도 있으니 200정도로 넓게 잡음)
 )
