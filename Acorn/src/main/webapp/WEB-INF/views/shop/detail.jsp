@@ -10,6 +10,7 @@
     <title>index.jsp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 </head>
 <style>
 .container {
@@ -142,6 +143,9 @@
 	width : 900px;
 	
 }
+td>img{
+	width:200px;
+}
 </style>
 <body>
 
@@ -164,8 +168,11 @@
         <div class="main_banner">메인 배너 표시</div>
         <div class="search_menu">
             <div class="search_bar">
-                <form action="">
-                    <input type="text" placeholder="가게 명을 입력하세요...">
+                <form action="${pageContext.request.contextPath}/index/" method="post">
+                    <div class="serch_box">
+                    	<img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" />
+                    	<input class="search_input" type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
+                    </div>
                 </form>
             </div>
             
@@ -185,7 +192,7 @@
 	                    <img src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220310_48%2F1646883669558peXxc_JPEG%2F20220310_124026.jpg&type=f&size=340x180" class="card-img-top" alt="...">
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
-	                    	<p class="card-text">${tmp.content} }</p>
+	                    	<p class="card-text">${tmp.content}</p>
 	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary">가게 정보 보기</a>
 	                    </div>
 	                </div>
@@ -196,57 +203,120 @@
         <div class="search_result">
                 <div class="main_content">
 		            <div class="content_images">
-		                <div class="content_photo_1">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                </div>
-		                <div class="content_photo_2">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                </div>
-		
-		
-		                <div class="main_title">
-		                    <div id="map" style="width: 200px; height: 150px; margin: auto; float: right; margin-right: 20px;"></div>
-		
-		                    <br><br>
-		                    <Strong>${dto.title }</Strong> 
-		                    <p>리뷰 ${dto.reviewCount } 회</p>
-		                    <p>좋아요 : ${dto.likeCount}, 싫어요 : ${dto.dislikeCount } </p>
-		                    <p style="margin:0px;">　</p>
-		                </div>
-		                <table class="main_table">
-		                    <tbody>
-		                        <tr>
-		                            <th onClick="ShopInfo()">가게 정보</th>
-		                            <th>메뉴</th>
-		                            <th>리뷰</th>
-		                            <th>사진</th>
-		                        </tr>
-		                        <tr class=shopInfo>
-		                            <td colspan="5">&nbsp; 가게 소개 : ${dto.content }</td>
-		                        </tr>
-		                        <tr class=shopInfo>
-		                            <td colspan="5">&nbsp; 전화 번호 : ${dto.telNum}</td>
-		                        </tr>
-		                        <tr class=shopInfo>
-		                            <td colspan="5">&nbsp; 영업 시간 : </td>
-		                        </tr>
-		                        <tr class=shopInfo>
-		                            <td colspan="5">&nbsp; 주소 : ${dto.addr }</td>
-		                        </tr>
-		                        <tr class=shopInfo>
-		                            <td colspan="5">&nbsp; 단체 손님 환영</td>
-		                        </tr>
-		                        <th>
-		                        	<td><a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
-		                        </th>
-		                    </tbody>
-		
-		                </table>
-		            </div>
+
+						<div class="main_title">
+							<div id="map"
+								style="width: 200px; height: 150px; margin: auto; float: right; margin-right: 20px;"></div>
+	
+							<br>
+							<br> <Strong>${dto.title }</Strong>
+							<p>리뷰 ${dto.reviewCount } 회</p>
+							<p>좋아요 : ${dto.likeCount}, 싫어요 : ${dto.dislikeCount }</p>
+							<p style="margin: 0px;"></p>
+						</div>
+						<div class=btn_box>
+							<button type="button" id="btn_1">가게 소개</button>
+							<button type="button" id="btn_2">메뉴</button>
+							<button type="button" id="btn_3">리뷰</button>
+							<button type="button" id="btn_4">사진</button>
+						</div>
+					<div class="table_1">
+						<table>
+							<tbody>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 가게 소개 : ${dto.content }</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 전화 번호 : ${dto.telNum}</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 영업 시간 :</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 주소 : ${dto.addr }</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 단체 손님 환영</td>
+								</tr>
+                <tr>
+                  <td><a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
+                </tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="table_2">
+						<table>
+							<tbody>
+								<tr>
+									<td>메뉴 1 : 10,000원</td>
+								</tr>
+								<tr>
+									<td>메뉴 2 : 20,000원</td>
+								</tr>
+								<tr>
+									<td>메뉴 3 : 30,000원</td>
+								</tr>
+								<tr>
+									<td>메뉴 4 : 40,000원</td>
+								</tr>
+								<tr>
+									<td>메뉴 5 : 50,000원</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="table_3">
+						<table>
+							<tbody>
+								<tr>
+									<td>리뷰</td>
+								</tr>
+								<tr>
+									<td>5점  :  N명</td>
+								</tr>
+								<tr>
+									<td>4점  :  N명</td>
+								</tr>
+								<tr>
+									<td>3점  :  N명</td>
+								</tr>
+								<tr>
+									<td>2점  :  N명</td>
+								</tr>
+								<tr>
+									<td>1점  :  N명</td>
+								</tr>
+								<tr>
+									<td>리뷰 : "~~~~~~~~~~~~~~~~~~"</td>
+								</tr>
+								<tr>
+									<td>리뷰 : "~~~~~~~~~~~~~~~~~~"</td>
+								</tr>
+								<tr>
+									<td>리뷰 : "~~~~~~~~~~~~~~~~~~"</td>
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+					<div class="table_4">
+						<table>
+							<tbody>
+								<tr>
+									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
+									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
+									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
+								</tr>
+									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
+									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
+									<td> <img src="" alt="" /></td>
+								</tr>
+								
+							</tbody>
+						</table>
+					</div>
+
+				</div>
 		        </div>    
         </div>
         <div class="bottom">　</div>
@@ -255,34 +325,57 @@
         
     </div>        
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9xl3ekksy5"></script>
-    <script>
-    	let lat = ${dto.latitude};
-    	let lng = ${dto.longitude};
+	<script>
 
+		window.onload = function() {
+			$(".table_1").show();
+			$(".table_2").hide();
+			$(".table_3").hide();
+			$(".table_4").hide();
+		}
+		$(document).ready(function() {
+			$("#btn_1").click(function() {
 
-        let map = new naver.maps.Map('map', {
-            center : new naver.maps.LatLng(lat, lng),
-            zoom : 18
-        });
+				$(".table_1").show();
+				$(".table_2").hide();
+				$(".table_3").hide();
+				$(".table_4").hide();
+			})
+			$("#btn_2").click(function() {
 
-        let marker = new naver.maps.Marker({
-            position : new naver.maps.LatLng(lat, lng),
-            map: map
-        });
+				$(".table_1").hide();
+				$(".table_2").show();
+				$(".table_3").hide();
+				$(".table_4").hide();
+			})
+			$("#btn_3").click(function() {
 
-		function ShopInfo(){
-			let shopInfo = document.querySelectorAll(".shopInfo");
-			shopInfo[0].style.display="none";
-			shopInfo[1].style.display="none";
-			shopInfo[2].style.display="none";
-			shopInfo[3].style.display="none";
-			shopInfo[4].style.display="none";
-			
-		};
+				$(".table_1").hide();
+				$(".table_2").hide();
+				$(".table_3").show();
+				$(".table_4").hide();
+			})
+			$("#btn_4").click(function() {
+				$(".table_1").hide();
+				$(".table_2").hide();
+				$(".table_3").hide();
+				$(".table_4").show();
+			})
+		})
+		let lat = ${dto.latitude};
+		let lng = ${dto.longitude};
 
+		let map = new naver.maps.Map('map', {
+			center : new naver.maps.LatLng(lat, lng),
+			zoom : 18
+		});
 
-    </script>        
-    <div class="footer">
+		let marker = new naver.maps.Marker({
+			position : new naver.maps.LatLng(lat, lng),
+			map : map
+		});
+	</script>
+	<div class="footer">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
           <symbol id="bootstrap" viewBox="0 0 118 94">
             <title>Bootstrap</title>

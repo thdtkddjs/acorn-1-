@@ -77,12 +77,7 @@ public class ShopServiceImpl implements ShopService{
 		
 		//만일 검색 키워드가 넘어온다면 
 		if(!keyword.equals("")){
-			//검색 조건이 무엇이냐에 따라 분기 하기
-			if(condition.equals("title")){//제목 검색인 경우
 				dto.setTitle(keyword);
-			}else if(condition.equals("categorie")){ //작성자 검색인 경우
-				dto.setCategorie(keyword);
-			} // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다.
 		}
 		
 		// 목록을 select 해 온다.(검색 키워드가 있는경우 키워드에 부합하는 전체 글)
@@ -129,23 +124,16 @@ public class ShopServiceImpl implements ShopService{
 			condition = ""; 
 		}
 		
+		String encodedK = URLEncoder.encode(keyword);
+		
 		ShopDto dto = new ShopDto();
 		dto.setNum(num);
 		//만일 검색 키워드가 넘어온다면 
 		if(!keyword.equals("")){
-			//검색 조건이 무엇이냐에 따라 분기 하기
-			if(condition.equals("title")){//제목 검색인 경우
-				dto.setTitle(keyword);
-			}else if(condition.equals("categorie")){ //작성자 검색인 경우
-				dto.setCategorie(keyword);
-			} // 다른 검색 조건을 추가 하고 싶다면 아래에 else if() 를 계속 추가 하면 된다.
+			dto.setTitle(keyword);
 		}
-		
 		//글 정보 얻기
 		ShopDto resultDto = shopDao.getData(dto);
-		
-		String encodedK = URLEncoder.encode(keyword);
-
 		
 		//[ 리뷰 페이징 처리에 관련된 로직 ]
 		
@@ -183,7 +171,7 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("totalRow", totalRow);
 		request.setAttribute("commentList", commentList);
 		request.setAttribute("totalPageCount", totalPageCount);
-
+		
 	}
 
 	@Override

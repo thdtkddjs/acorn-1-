@@ -12,110 +12,137 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </head>
 <style>
-    .container{
-        display: grid;
-        grid-template-areas:
-		"header header header"
-        "banner banner banner"
-		"search main main"
-		"  bot   bot   bot  ";
+.container {
+	display: grid;
+	grid-template-areas: "header header header" "banner banner banner"
+		"search main main" "  bot   bot   bot  ";
+	grid-template-columns: 1fr 2fr 1fr;
+	box-shadow: 0px 5px 20px 0px grey;
+	border-right: thin;
+	z-index: 1;
+	min-width: 1320px;
+}
 
-        grid-template-columns: 1fr 2fr 1fr;
-        box-shadow: 0px 5px 20px 0px grey;
-	    border-right: thin;
-        z-index: 1;
-        min-width: 1320px;
-    }
-    .header{
-        grid-area: header;
-        text-align: right;
-        display: block;
-    }
-    .main_banner{
-        grid-area: banner;
-        text-align: center;
-        height: 200px;
-        background-color: skyblue;
-    }
-    .side_menu_a {
-        grid-area: search;
-        width : 100%;
-        text-align: center;
-        background-color: lightgray;
-    }
-    .search_menu{
-        grid-area: search;
-        box-shadow: 2px 2px 3px 0px grey;
-        background-color: white;
-        z-index: 3;
-        position: relative;
-    }
-    .search_result{
-        grid-area: main;
-        width: 100%;
-        height: 680px;
-        text-align: center;
-    }
-    .side_menu_b {
-        grid-area: b;
-        width : 100%;
-        text-align: center;
-        background-color: lightgray;
-    }
-    .footer{
-        padding-left :10px;
-        padding-right :10px;
-        margin-top: 0px;
-        background-color: white;
-        grid-area: footer;
-        bottom: 0px;
-        width: 100%;
-        position: fixed;
-        z-index: 5;
-    }
-    .bottom{
-       grid-area : bot; 
-    }
-    .search_bar{
-        border: 3px solid;
-        border-color: rgb(64, 219, 43);
-        border-radius: 5px;
-        margin: 10px;
-        width: 290px;
-    }
-    .search_bar>form>input{
-        width: 250px;
-        margin : 10px;
-        border: none;
-        font-size: large;
-    }
-    .suggest_menu>.card{
-        margin-left: 10px;
-    }
-    #map{
-        z-index: 2;
-    }
-    .suggest_menu{
-        height : 600px; 
-        overflow: scroll; 
-        -ms-overflow-style: none;
-    }
-    .suggest_menu::-webkit-scrollbar{
-        display:none;
-    }
-    .fold_btn{
-        position: absolute;
-        left : 300px;
-        top : 150px;
-        z-index: 5;
-    }
-    .open_btn{
-        position: absolute;
-        left : 200px;
-        top : 150px;
-        z-index: 5;
-    }
-    
+.header {
+	grid-area: header;
+	text-align: right;
+	display: block;
+}
+
+.main_banner {
+	grid-area: banner;
+	text-align: center;
+	height: 200px;
+	background-color: skyblue;
+}
+
+.side_menu_a {
+	grid-area: search;
+	width: 100%;
+	text-align: center;
+	background-color: lightgray;
+}
+
+.search_menu {
+	grid-area: search;
+	box-shadow: 2px 2px 3px 0px grey;
+	background-color: white;
+	z-index: 3;
+	position: relative;
+}
+
+.search_result {
+	grid-area: main;
+	width: 100%;
+	height: 680px;
+	text-align: center;
+}
+
+.side_menu_b {
+	grid-area: b;
+	width: 100%;
+	text-align: center;
+	background-color: lightgray;
+}
+
+.footer {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 0px;
+	background-color: white;
+	grid-area: footer;
+	bottom: 0px;
+	width: 100%;
+	position: fixed;
+	z-index: 5;
+}
+
+.bottom {
+	grid-area: bot;
+}
+
+.search_bar {
+	border: 3px solid;
+	border-color: rgb(64, 219, 43);
+	border-radius: 5px;
+	margin: 10px;
+	width: 290px;
+}
+
+.search_bar>form>input {
+	width: 250px;
+	margin: 10px;
+	border: none;
+	font-size: large;
+}
+
+.suggest_menu>.card {
+	margin-left: 10px;
+}
+
+#map {
+	z-index: 2;
+}
+
+.suggest_menu {
+	height: 600px;
+	overflow: scroll;
+	-ms-overflow-style: none;
+}
+
+.suggest_menu::-webkit-scrollbar {
+	display: none;
+}
+
+.fold_btn {
+	position: absolute;
+	left: 300px;
+	top: 150px;
+	z-index: 5;
+}
+
+.open_btn {
+	position: absolute;
+	left: 200px;
+	top: 150px;
+	z-index: 5;
+}
+.search_box{
+	position: relative;
+}
+.search_img{
+	position : absolute;
+	width: 17px;
+	margin: 0;
+	top:25px;
+	right:13%;
+}
+.search_input{
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
 </style>
 <body>
 
@@ -140,8 +167,11 @@
         <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
         <div class="search_menu">
             <div class="search_bar">
-                <form action="">
-                    <input type="text" placeholder="가게 명을 입력하세요...">
+                <form action="${pageContext.request.contextPath}/index/" method="post">
+                    <div class="serch_box">
+                    	<img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" />
+                    	<input class="search_input" type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
+                    </div>
                 </form>
             </div>
             
@@ -153,7 +183,7 @@
 						<h5>회원님을 위한 오늘의 추천</h5>
 					</c:when>
 					<c:otherwise>
-						<h5>${sessionScope.id }님을 위한 오늘의 추천</h5>
+						<h5><strong>검색 결과</strong></h5>
 					</c:otherwise>
 				</c:choose>
 				<c:forEach var="tmp" items="${list }">
@@ -162,8 +192,9 @@
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
 	                    	<p class="card-text">${tmp.content }</p>
-	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary">가게 정보 보기</a>
-	                    </div>
+	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}"	class="btn btn-primary">가게 정보 보기</a>
+
+						</div>
 	                </div>
                 <br>
 				</c:forEach>

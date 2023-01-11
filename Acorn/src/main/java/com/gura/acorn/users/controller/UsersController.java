@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class UsersController {
 	
 	@Autowired
 	private UsersService service;
+	
+	@RequestMapping("/users/list")
+	public String getList(HttpServletRequest request) {
+		service.getList(request);
+		
+		return "users/list";
+	}
 	
 	/*
 	 *  GET 방식 /users/signup_form 요청을 처리할 메소드 
@@ -48,13 +56,14 @@ public class UsersController {
 	}
 	//로그인 요청 처리
 	@RequestMapping("/users/login")
-	public ModelAndView login(ModelAndView mView, UsersDto dto, String url, HttpSession session) {
+	public ModelAndView login(ModelAndView mView, UsersDto dto, String url,
+			HttpSession session, HttpServletResponse response) {
 		/*
 		 *  서비스에서 비즈니스 로직을 처리할때 필요로  하는 객체를 컨트롤러에서 직접 전달을 해 주어야 한다.
 		 *  주로, HttpServletRequest, HttpServletResponse, HttpSession, ModelAndView
 		 *  등등의 객체 이다. 
 		 */
-		service.loginProcess(dto, session);
+		service.loginProcess(dto, session, response);
 		
 		//로그인 후에 가야할 목적지 정보를 인코딩 하지 않는것과 인코딩 한 것을 모두 ModelAndView 객체에 담고 
 		String encodedUrl=URLEncoder.encode(url);

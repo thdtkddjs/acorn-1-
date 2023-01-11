@@ -1,5 +1,7 @@
 package com.gura.acorn.users.dao;
 
+import java.util.List;
+
 import com.gura.acorn.users.dto.UsersDto;
 
 public interface UsersDao {
@@ -15,4 +17,12 @@ public interface UsersDao {
 	public void update(UsersDto dto);
 	//회원 정보를 삭제하는 메소드
 	public void delete(String id);
+	//회원 목록
+	public List<UsersDto> getList(UsersDto dto);
+	//회원 수
+	public int getCount(UsersDto dto);
+	//회원정보
+	public UsersDto getData(int num);
+	//키워드를 활용한 글 정보
+	public UsersDto getData(UsersDto dto);
 }
