@@ -396,13 +396,13 @@ button:hover {
 							<tbody>
 								<c:forEach var="tmp" items="${menuList }">
 								<tr>
-									<th>${tmp.name }</th>
+									<th>메뉴명 : ${tmp.name }</th>
 								</tr>
 								<tr>
-									<th>${tmp.price }</th>
+									<th>가격 : ${tmp.price }</th>
 								</tr>
 								<tr>
-									<th>${tmp.content }</th>
+									<th>설명 : ${tmp.content }</th>
 								</tr>
 								<tr>
 									<th><img src="${pageContext.request.contextPath}/${tmp.imagePath}"></th>
