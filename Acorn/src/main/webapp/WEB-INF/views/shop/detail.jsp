@@ -284,11 +284,14 @@ rotate(
 );
 }
 }
-#profileImage{
+	#profileImage{
       width: 100px;
       height: 100px;
       border: 1px solid #cecece;
       border-radius: 50%;
+   }
+   #imageForm{
+      display: none;
    }
 </style>
 <body>
@@ -513,7 +516,7 @@ rotate(
 						</table>
 					</div>
 					<div class="table_3">
-						<table style="width:600px;">
+						<table style="width:950px;">
 							<tbody>
 								<tr>
 									<td>리뷰</td>
@@ -604,6 +607,7 @@ rotate(
 											
 											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
 											<input type="hidden" name="ref_group" value="${dto.num }" />
+											
 											<textarea name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
 											<button type="submit">등록</button>
 										</form>

@@ -55,7 +55,7 @@ public class ShopController {
 		return "shop/insert";
 	}
 	
-	@RequestMapping("/index/")
+	@RequestMapping("/index")
 	public String index(HttpServletRequest request) {
 		service.getList(request);
 		return "index";
