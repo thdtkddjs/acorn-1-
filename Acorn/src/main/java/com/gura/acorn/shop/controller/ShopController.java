@@ -94,7 +94,7 @@ public class ShopController {
 	//새로운 댓글 저장 요청 처리
 	@RequestMapping("/shop/review_insert")
 	public String reviewInsert(HttpServletRequest request, int ref_group) {
-	      
+	    
 		service.saveReview(request);
 	   
 		return "redirect:/shop/detail?num="+ref_group;

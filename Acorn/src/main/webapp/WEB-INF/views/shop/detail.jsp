@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 <style>
 .container {
@@ -152,8 +153,8 @@ td>img{
 }
 /* 리뷰 프로필 이미지를 작은 원형으로 만든다. */
 .profile-image {
-	width: 50px;
-	height: 50px;
+	width: 30px;
+	height: 30px;
 	border: 1px solid #cecece;
 	border-radius: 50%;
 }
@@ -197,17 +198,6 @@ td>img{
 .reviews .review-form {
 	display: none;
 }
-/* .reply_icon 을 li 요소를 기준으로 배치 하기 */
-.reviews li {
-	position: relative;
-}
-
-.reviews .reply-icon {
-	position: absolute;
-	top: 1em;
-	left: 1em;
-	color: red;
-}
 
 pre {
 	display: block;
@@ -248,6 +238,12 @@ rotate(
 );
 }
 }
+#profileImage{
+      width: 100px;
+      height: 100px;
+      border: 1px solid #cecece;
+      border-radius: 50%;
+   }
 </style>
 <body>
 
@@ -373,7 +369,7 @@ rotate(
 						</table>
 					</div>
 					<div class="table_3">
-						<table>
+						<table style="width:600px;">
 							<tbody>
 								<tr>
 									<td>리뷰</td>
@@ -388,60 +384,50 @@ rotate(
 												<c:forEach var="tmp" items="${reviewList }">
 													<c:choose>
 														<c:when test="${tmp.deleted eq 'yes' }">
-															<li>삭제된 댓글 입니다.</li>
+															<li>삭제된 리뷰 입니다.</li>
 														</c:when>
 														<c:otherwise>
 															<c:if test="${tmp.num eq tmp.review_group }">
 																<li id="reli${tmp.num }">
 															</c:if>
-															<c:if test="${tmp.num ne tmp.review_group }">
-																<li id="reli${tmp.num }" style="padding-left: 50px;"><svg
-																		class="reply-icon" xmlns="http://www.w3.org/2000/svg"
-																		width="16" height="16" fill="currentColor"
-																		class="bi bi-arrow-return-right" viewBox="0 0 16 16">
-								                                <path fill-rule="evenodd" d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z" />
-								                           </svg>
-															</c:if>
+															
 															<dl>
-																<dt>
-																	<c:if test="${ empty tmp.profile }">
-																		<svg class="profile-image" xmlns="http://www.w3.org/2000/svg"
-																			width="16" height="16" fill="currentColor"
-																			class="bi bi-person-circle" viewBox="0 0 16 16">
-								                                      <path
-																				d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-								                                      <path fill-rule="evenodd"
-																				d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-								                                    </svg>
-																	</c:if>
-																	<c:if test="${not empty tmp.profile }">
-																		<img class="profile-image"
-																			src="${pageContext.request.contextPath}${tmp.profile }" />
-																	</c:if>
-																	<span>${tmp.writer }</span>
-																	<span>${tmp.regdate }</span> 
-																	<a data-num="${tmp.num }" href="javascript:" class="reply-link">답글</a>
+																<dt class="row">
+																	<div class="col-2">
+																		<img class="profile-image" src="${pageContext.request.contextPath}${tmp.profile }" />
+																	</div>
+																	<div class="col-8">
+																		<pre id="pre${tmp.num }">${tmp.content }</pre>
+																	</div>
+																	<div class="col-2">
+																		<c:if test="${ empty tmp.profile }">
+																			<svg class="profile-image" xmlns="http://www.w3.org/2000/svg"
+																				width="16" height="16" fill="currentColor"
+																				class="bi bi-person-circle" viewBox="0 0 16 16">
+									                                      <path
+																					d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+									                                      <path fill-rule="evenodd"
+																					d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+									                                    </svg>
+																		</c:if>
+																		<c:if test="${not empty tmp.profile }">
+																			<img class="profile-image" src="${pageContext.request.contextPath}${tmp.profile }" />
+																		</c:if>
+																		<span class="col">${tmp.writer }</span>
+																	</div>
+																</dt>
+																<dd>
+																	<span>${tmp.regdate } |</span> 
+																	<!-- <a data-num="${tmp.num }" href="javascript:" class="reply-link">답글</a>  -->
 																	<c:if test="${ (id ne null) and (tmp.writer eq id) }">
 																		<a data-num="${tmp.num }" class="update-link"
 																			href="javascript:">수정</a>
 																		<a data-num="${tmp.num }" class="delete-link"
 																			href="javascript:">삭제</a>
 																	</c:if>
-																</dt>
-																<dd>
-																	<pre id="pre${tmp.num }">${tmp.content }</pre>
 																</dd>
 															</dl>
-															<form id="reForm${tmp.num }"
-																class="animate__animated review-form re-insert-form"
-																action="review_insert" method="post">
-																<input type="hidden" name="ref_group" value="${dto.num }" /> <input
-																	type="hidden" name="target_id" value="${tmp.writer }" /> <input
-																	type="hidden" name="review_group"
-																	value="${tmp.review_group }" />
-																<textarea name="content"></textarea>
-																<button type="submit">등록</button>
-															</form>
+
 															<c:if test="${tmp.writer eq id }">
 																<form id="updateForm${tmp.num }"
 																	class="review-form update-form" action="review_update"
@@ -461,14 +447,29 @@ rotate(
 								<tr>
 									<td>
 										<!-- 원글에 리뷰를 작성할 폼 -->
-										<form class="review-form insert-form" action="review_insert"
-											method="post">
+										<form class="review-form insert-form" action="review_insert" method="post">
+											<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
+  	  										<input type="hidden" name="imagePath" value="empty"/>
+											
+											<a id="rImageLink" href="javascript:">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+													<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+													<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+										        </svg>
+											</a>
+											
 											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
 											<input type="hidden" name="ref_group" value="${dto.num }" />
-								
 											<textarea name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
 											<button type="submit">등록</button>
 										</form>
+										
+										<!-- 이미지 등록용 숨겨진 form -->
+									   <form id="imageForm" action="rivew_image_upload" method="post" enctype="multipart/form-data">
+									      사진
+									      <input type="file" id="image" name="image" accept=".jpg, .png, .gif, .jpeg"/>
+									      <button type="submit">업로드</button>
+									   </form>
 									</td>
 								</tr>
 							</tbody>
@@ -624,7 +625,6 @@ rotate(
       addUpdateFormListener(".update-form");
       addUpdateListener(".update-link");
       addDeleteListener(".delete-link");
-      addReplyListener(".reply-link");
       
       
       //댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
@@ -732,7 +732,7 @@ rotate(
             deleteLinks[i].addEventListener("click", function(){
                //click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
                const num=this.getAttribute("data-num"); //댓글의 글번호
-               const isDelete=confirm("댓글을 삭제 하시겠습니까?");
+               const isDelete=confirm("리뷰를 삭제 하시겠습니까?");
                if(isDelete){
                   // gura_util.js 에 있는 함수들 이용해서 ajax 요청
                   ajaxPromise("review_delete", "post", "num="+num)
@@ -743,55 +743,12 @@ rotate(
                      //만일 삭제 성공이면 
                      if(data.isSuccess){
                         //댓글이 있는 곳에 삭제된 댓글입니다를 출력해 준다. 
-                        document.querySelector("#reli"+num).innerText="삭제된 댓글입니다.";
+                        document.querySelector("#reli"+num).innerText="삭제된 리뷰입니다.";
                      }
                   });
                }
             });
-         }
-      }
-      function addReplyListener(sel){
-         //댓글 링크의 참조값을 배열에 담아오기 
-         let replyLinks=document.querySelectorAll(sel);
-         //반복문 돌면서 모든 링크에 이벤트 리스너 함수 등록하기
-         for(let i=0; i<replyLinks.length; i++){
-            replyLinks[i].addEventListener("click", function(){
-               
-               if(!isLogin){
-                  const isMove=confirm("로그인이 필요 합니다. 로그인 페이지로 이동 하시겠습니까?");
-                  if(isMove){
-                     location.href=
-                        "${pageContext.request.contextPath}/users/loginform?url=${pageContext.request.contextPath}/shop/detail?num=${dto.num}";
-                  }
-                  return;
-               }
-               
-               //click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
-               const num=this.getAttribute("data-num"); //댓글의 글번호
-               
-               const form=document.querySelector("#reForm"+num);
-               
-               //현재 문자열을 읽어온다 ( "답글" or "취소" )
-               let current = this.innerText;
-               
-               if(current == "답글"){
-                  //번호를 이용해서 댓글의 댓글폼을 선택해서 보이게 한다. 
-                  form.style.display="block";
-                  form.classList.add("animate__flash");
-                  this.innerText="취소";   
-                  form.addEventListener("animationend", function(){
-                     form.classList.remove("animate__flash");
-                  }, {once:true});
-               }else if(current == "취소"){
-                  form.classList.add("animate__fadeOut");
-                  this.innerText="답글";
-                  form.addEventListener("animationend", function(){
-                     form.classList.remove("animate__fadeOut");
-                     form.style.display="none";
-                  },{once:true});
-               }
-            });
-         }
+         }  
       }
       
       function addUpdateFormListener(sel){
@@ -829,5 +786,30 @@ rotate(
          }
       }
    </script>
+	<script>
+		//이미지 링크를 클릭하면 
+		document.querySelector("#rImageLink").addEventListener("click", function(){
+			if(!isLogin){
+			       //폼 전송을 막고 
+			       e.preventDefault();
+			       //로그인 폼으로 이동 시킨다.
+			       location.href = "${pageContext.request.contextPath}/users/loginform?url=${pageContext.request.contextPath}/shop/detail?num=${dto.num}";
+			}
+			document.querySelector("#image").click();	
+		});   
+
+		document.querySelector("#image").addEventListener("change", function(){
+			const form = document.querySelector("#imageForm"); 
+			ajaxFormPromise(form)
+			.then(function(response){
+				return response.json();
+			})
+			.then(function(data){
+				document.querySelector("input[name=imagePath]").value = data.imagePath;
+				let img = `<img id="profileImage" src="${pageContext.request.contextPath }\${data.imagePath}">`;
+				document.querySelector("#rImageLink").innerHTML=img;
+			});
+		}); 
+	</script>
 </body>
 </html>
