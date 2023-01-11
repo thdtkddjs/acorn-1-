@@ -240,6 +240,9 @@
 		                        <tr class=shopInfo>
 		                            <td colspan="5">&nbsp; 단체 손님 환영</td>
 		                        </tr>
+		                        <th>
+		                        	<td><a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
+		                        </th>
 		                    </tbody>
 		
 		                </table>
