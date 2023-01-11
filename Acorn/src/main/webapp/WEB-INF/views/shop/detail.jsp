@@ -252,6 +252,7 @@ button:hover {
         <div class="search_result">
                 <div class="main_content">
 		            <div class="content_images">
+
 						<div class="main_title">
 							<div id="map"style="width: 300px; height: 220px; margin: auto; float: right; "></div>
 
@@ -285,6 +286,7 @@ button:hover {
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 단체 손님 환영</td>
 								</tr>
+
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 더미 데이터</td>
 								</tr>
@@ -384,7 +386,11 @@ button:hover {
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 더미 데이터</td>
 								</tr>
-								
+
+                <tr>
+                  <td><a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
+                </tr>
+
 							</tbody>
 						</table>
 					</div>

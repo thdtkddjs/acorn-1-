@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/views/shop/updateform.jsp</title>
+<title>/views/shop/menu_insertform.jsp</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <style>
@@ -27,55 +27,42 @@
 </head>
 <body>
 <div class="container">
-   <h1>상점 정보 변경 요청폼</h1>
-   <form action="${pageContext.request.contextPath}/shop/update" method="Get" id="updateForm">
+   <h1>메뉴 신규 등록</h1>
+   <form action="${pageContext.request.contextPath}/shop/menu_insert" method="get" id="insertForm">
    	  <!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
-  	  <input type="hidden" name="imagePath" 
-     		value="${ empty dto.imagePath ? 'empty' : dto.imagePath }"/>
-      <input type="hidden" name="num" value="${dto.num }" />
-      <!-- 점포명 input -->
+  	  <input type="hidden" name="imagePath" value="empty"/>
+  	  <input type="hidden" name="num" value="${requestScope.num }" />
+      
+      <!-- 메뉴명 input -->
       <div class="mb-3">
-         <label class="form-label" for="title">점포명</label>
-         <input class="form-control" type="text" name="title" id="title" value="${dto.title }"/>
+         <label class="form-label" for="name">메뉴명</label>
+         <input class="form-control" type="text" name="name" id="name"/>
       </div>
-      <!-- 카테고리 input -->
+      
+      <a id="profileLink" href="javascript:">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+          <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+          <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+        </svg>
+      </a>
+      
+      <!-- 가격 input -->
       <div class="mb-3">
-         <label class="form-label" for="categorie">카테고리</label>
-         <input class="form-control" type="text" name="categorie" id="categorie" value="${dto.categorie }"/>
-      </div>
-      <!-- 번호 input -->
-      <div class="mb-3">
-         <label class="form-label" for="telNum">전화번호</label>
-         <input class="form-control" type="text" name="telNum" id="telNum" value="${dto.telNum }"/>
-      </div>
-      <!-- 주소 input -->
-      <div class="mb-3">
-         <label class="form-label" for="addr">주소</label>
-         <input class="form-control" type="text" name="addr" id="addr" value="${dto.addr }"/>
+         <label class="form-label" for="price">가격</label>
+         <input class="form-control" type="number" name="price" id="price"/>
       </div>
       <!-- smart editor를 이용하는 content input -->
       <div class="mb-3">
-         <label class="form-label" for="content">내용</label>
-         <textarea class="form-control"  name="content" id="content">${dto.content }</textarea>
+         <label class="form-label" for="content">메뉴 설명</label>
+         <textarea class="form-control"  name="content" id="content"></textarea>
       </div>
-      <a id="profileLink" href="javascript:">
-         <c:choose>
-            <c:when test="${ empty dto.imagePath }">
-               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                 <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-               </svg>
-            </c:when>
-            <c:otherwise>
-               <img id="profileImage" src="${pageContext.request.contextPath }${ dto.imagePath}">
-            </c:otherwise>
-         </c:choose>
-      </a>
+   
       <button class="btn btn-primary" type="submit">저장</button>
-      <!-- 이미지 등록용 숨겨진 form -->
-
    </form>
    
+   <!-- 이미지 등록용 숨겨진 form 
+   	원래는 별도로 image_upload를 써야하지만 이대로도 잘 작동하길래 그냥 내버려뒀습니다. 
+   	뭔가 문제가 발생하면 알려주세요-->
    <form id="imageForm" action="${pageContext.request.contextPath}/shop/image_upload" method="post" enctype="multipart/form-data">
       프로필 사진
       <input type="file" id="image" name="image" accept=".jpg, .png, .gif, .jpeg"/>
@@ -132,6 +119,17 @@
 	      alert(sHTML);
 	   }
 	
+	   function submitContents(elClickedObj) {
+			//SmartEditor 에 의해 만들어진(작성한글) 내용이 textarea 의 value 가 되도록 한다. 
+			oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+			
+			// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("content").value를 이용해서 처리하면 됩니다.
+			
+			try {
+				//폼 제출하기 
+				elClickedObj.form.submit();
+			} catch(e) {}
+		}
 	   
 	   function setDefaultFont() {
 	      var sDefaultFont = '궁서';
@@ -140,13 +138,11 @@
 	   }
 	   
 	   //폼에 submit 이벤트가 일어났을때 실행할 함수 등록
-	   document.querySelector("#updateForm")
+	   document.querySelector("#insertForm")
 	      .addEventListener("submit", function(e){
 	         //에디터에 입력한 내용이 textarea 의 value 값이 될수 있도록 변환한다. 
 	         oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-	         //textarea 이외에 입력한 내용을 여기서 검증하고 
-	         const title=document.querySelector("#title").value;
-	         
+	         //textarea 이외에 입력한 내용을 여기서 검증하고 (필요는 없지만 그냥 냅둡니다.)
 	         
 	      });
 	</script>
@@ -171,7 +167,7 @@
          .then(function(data){
             console.log(data);
             // input name="profile" 요소의 value 값으로 이미지 경로 넣어주기
-            document.querySelector("input[name=imagePath]").value=data.imagePath;
+            document.querySelector("input[name=imagePath]").value = data.imagePath;
             
             // img 요소를 문자열로 작성한 다음 
             let img=`<img id="profileImage" 
