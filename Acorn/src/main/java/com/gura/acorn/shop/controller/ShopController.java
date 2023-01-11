@@ -25,13 +25,11 @@ public class ShopController {
 	@Autowired
 	private ShopService service;
 	
-	//인덱스 페이지부터 가게리스트를 받을예정 (추후 인데스페이지가 홈 이 되면 경로 변경가능)
-	@RequestMapping("/index")
-	public String index(HttpServletRequest request) {
-		service.getList(request);
 
-		return "index";
-	}
+	//추천 가게가 아닌 검색했을 경우 검색어에 대한 결과 list 출력
+
+	
+	//인덱스 페이지부터 가게리스트를 받을예정 ( 홈컨트롤러에서 리스트 불러오기 필요 ) > 나중에 필요하다면 리스트에 관련된 컨트롤러 추가
 	
 	//기능시험용 리스트 페이지 이동(추후 삭제 예정)
 	@RequestMapping("/shop/list")
@@ -56,6 +54,12 @@ public class ShopController {
 		return "shop/insert";
 	}
 	
+	@RequestMapping("/index/")
+	public String index(HttpServletRequest request) {
+		service.getList(request);
+		return "index";
+	}
+
 	//글 섬네일 등록을 위한 메소드
 	@ResponseBody
 	@RequestMapping(value = "/shop/image_upload", method = RequestMethod.POST)
@@ -69,7 +73,6 @@ public class ShopController {
 	public String detail(HttpServletRequest request) {
 		service.getList(request);
 		service.getDetail(request);
-		service.getData(request);
 		return "shop/detail";
 	}
 	
