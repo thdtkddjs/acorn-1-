@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/views/shop/insertform.jsp</title>
+<title>/views/shop/menu_insertform.jsp</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <style>
@@ -27,15 +27,16 @@
 </head>
 <body>
 <div class="container">
-   <h1>상점 신규 등록</h1>
-   <form action="${pageContext.request.contextPath}/shop/insert" method="post" id="insertForm">
+   <h1>메뉴 신규 등록</h1>
+   <form action="${pageContext.request.contextPath}/shop/menu_insert" method="get" id="insertForm">
    	  <!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
   	  <input type="hidden" name="imagePath" value="empty"/>
+  	  <input type="hidden" name="num" value="${requestScope.num }" />
       
-      <!-- 점포명 input -->
+      <!-- 메뉴명 input -->
       <div class="mb-3">
-         <label class="form-label" for="title">점포명</label>
-         <input class="form-control" type="text" name="title" id="title"/>
+         <label class="form-label" for="name">메뉴명</label>
+         <input class="form-control" type="text" name="name" id="name"/>
       </div>
       
       <a id="profileLink" href="javascript:">
@@ -45,34 +46,23 @@
         </svg>
       </a>
       
-      <!-- 카테고리 input -->
+      <!-- 가격 input -->
       <div class="mb-3">
-         <label class="form-label" for="categorie">카테고리</label>
-         <input class="form-control" type="text" name="categorie" id="categorie"/>
+         <label class="form-label" for="price">가격</label>
+         <input class="form-control" type="number" name="price" id="price"/>
       </div>
-      
-      <!-- 번호 input -->
-      <div class="mb-3">
-         <label class="form-label" for="telNum">전화번호</label>
-         <input class="form-control" type="text" name="telNum" id="telNum"/>
-      </div>
-      
-      <!-- 주소 input -->
-      <div class="mb-3">
-         <label class="form-label" for="addr">주소</label>
-         <input class="form-control" type="text" name="addr" id="addr"/>
-      </div>
-      
       <!-- smart editor를 이용하는 content input -->
       <div class="mb-3">
-         <label class="form-label" for="content">내용</label>
+         <label class="form-label" for="content">메뉴 설명</label>
          <textarea class="form-control"  name="content" id="content"></textarea>
       </div>
    
-      <button class="btn btn-primary" type="submit" onclick="submitContents(this)">저장</button>
+      <button class="btn btn-primary" type="submit">저장</button>
    </form>
    
-   <!-- 이미지 등록용 숨겨진 form -->
+   <!-- 이미지 등록용 숨겨진 form 
+   	원래는 별도로 image_upload를 써야하지만 이대로도 잘 작동하길래 그냥 내버려뒀습니다. 
+   	뭔가 문제가 발생하면 알려주세요-->
    <form id="imageForm" action="${pageContext.request.contextPath}/shop/image_upload" method="post" enctype="multipart/form-data">
       프로필 사진
       <input type="file" id="image" name="image" accept=".jpg, .png, .gif, .jpeg"/>
@@ -153,7 +143,6 @@
 	         //에디터에 입력한 내용이 textarea 의 value 값이 될수 있도록 변환한다. 
 	         oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 	         //textarea 이외에 입력한 내용을 여기서 검증하고 (필요는 없지만 그냥 냅둡니다.)
-	         const title=document.querySelector("#title").value;
 	         
 	      });
 	</script>
@@ -189,20 +178,5 @@
       });      
       
    </script>
-   
-   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
-		window.onload = function(){
-		    document.getElementById("addr").addEventListener("click", function(){ //주소입력칸을 클릭하면
-		        //카카오 주소 창 오픈
-		        new daum.Postcode({
-		            oncomplete: function(data) { //선택시 입력값 세팅
-		                document.getElementById("addr").value = data.address; // 주소 넣기
-		                document.querySelector("input[name=addr]").focus(); //상세입력 포커싱
-		            }
-		        }).open();
-		    });
-		}
-	</script>
 </body>
 </html>

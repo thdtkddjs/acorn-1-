@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shopMenu">
+
+	<insert id="insert" parameterType="shopMenuDto">
+		insert into board_shop_menu
+		(num, menuNum, name, price, content, imagePath)
+		values(#{num}, board_shop_menu_seq.nextval,#{name}, #{price}, #{content}, #{imagePath})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from board_shop_menu
+		where menuNum=#{menuNum}
+	</delete>
+	
+	<select id="getCount" parameterType="shopMenuDto" resultType="int">
+      SELECT NVL(MAX(ROWNUM), 0)
+      FROM board_shop_menu
+      where num=#{num}
+    </select>   
+
+	<select id="getList" parameterType="int" resultType="shopMenuDto">
+		select menuNum, name, price, content, imagePath
+		from board_shop_menu
+		where num=#{num}
+		order by menuNum asc
+	</select>
+
+</mapper>
