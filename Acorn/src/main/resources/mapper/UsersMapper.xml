@@ -44,11 +44,23 @@
          FROM
             (SELECT id, pwd, email, regdate
             FROM users
+            
+            <choose>
+                 <when test="id != null">
+                    WHERE id LIKE '%'||#{id}||'%'
+                 </when>
+            </choose>
+            
             ORDER BY regdate DESC) result1)
       WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
 	<select id="getCount" parameterType="usersDto" resultType="int">
       SELECT NVL(MAX(ROWNUM), 0)
       FROM users
+      <choose>
+            <when test="id != null">
+               WHERE id LIKE '%'||#{id}||'%'
+            </when>
+      </choose>
     </select>
 </mapper> 
