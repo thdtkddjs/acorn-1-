@@ -285,6 +285,13 @@ th>img{
 /* 댓글에 댓글을 다는 폼과 수정폼은 일단 숨긴다. */
 .reviews .review-form {
 	display: none;
+	text-align : left;
+	height : 152px;
+	width : 590px;
+	padding : 0px;
+	margin : 0px;
+	margin-left : 3px;
+	padding : 15px;
 }
 
 pre {
@@ -608,6 +615,15 @@ pre {
 																	</div>
 																	<div class="col-8">
 																		<pre class="comment_box" id="pre${tmp.num }">${tmp.content }</pre>
+																		<c:if test="${tmp.writer eq id }">
+																			<form id="updateForm${tmp.num }"
+																				class="review-form update-form" action="review_update"
+																				method="post">
+																				<input type="hidden" name="num" value="${tmp.num }" />
+																				<textarea name="content">${tmp.content }</textarea>
+																				<button type="submit" id="ur${tmp.num }">수정</button>
+																			</form>
+																		</c:if>
 																	</div>
 																	<div class="review_profile col-2 ">
 																		<c:if test="${ empty tmp.profile }">
@@ -639,16 +655,6 @@ pre {
 																</dt>
 
 															</dl>
-
-															<c:if test="${tmp.writer eq id }">
-																<form id="updateForm${tmp.num }"
-																	class="review-form update-form" action="review_update"
-																	method="post">
-																	<input type="hidden" name="num" value="${tmp.num }" />
-																	<textarea name="content">${tmp.content }</textarea>
-																	<button type="submit">수정</button>
-																</form>
-															</c:if>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
@@ -985,24 +991,30 @@ pre {
                const num=this.getAttribute("data-num"); //댓글의 글번호
                
                const form = document.querySelector("#updateForm"+num);
+               const form2 = document.querySelector("#pre"+num);
                
                //현재 문자열 읽어오기 ( "수정" or "취소")
                let current = this.innerText;
                
                if(current == "수정"){
-            	   //수정 폼 보이게 하기
             	   form.style.display="block";
+            	   form2.style.display="none";
                    form.classList.add("animate__flash");
                    this.innerText="취소";   
                    form.addEventListener("animationend", function(){
                       form.classList.remove("animate__flash");
                    }, {once:true});
+                   document.querySelector("#ur"+num).addEventListener("click", function(){
+                	   form2.style.display="block";	
+                	   updateLinks[i].innerText = "수정";
+				   });
                  }else if(current == "취소"){
                     form.classList.add("animate__fadeOut");
                     this.innerText="수정";
                     form.addEventListener("animationend", function(){
                        form.classList.remove("animate__fadeOut");
                        form.style.display="none";
+                       form2.style.display="block";
                     },{once:true});
                }
                
