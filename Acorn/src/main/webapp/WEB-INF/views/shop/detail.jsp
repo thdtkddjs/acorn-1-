@@ -103,8 +103,30 @@
 }
 
 .suggest_menu::-webkit-scrollbar {
-	display: none;
+	width : 5px;
+	height : 0px;
 }
+.suggest_menu::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+}
+.suggest_menu::-webkit-scrollbar-track {
+}
+.table_1::-webkit-scrollbar, .table_2::-webkit-scrollbar, 
+.table_3::-webkit-scrollbar, .table_4::-webkit-scrollbar {
+	width : 5px;
+	height : 0px;
+}
+.table_1::-webkit-scrollbar-thumb, .table_2::-webkit-scrollbar-thumb, 
+.table_3::-webkit-scrollbar-thumb, .table_4::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+}
+.table_1::-webkit-scrollbar-track, .table_2::-webkit-scrollbar-track, 
+.table_3::-webkit-scrollbar-track, .table_4::-webkit-scrollbar-track {
+
+}
+
 
 .fold_btn {
 	position: absolute;
@@ -171,18 +193,47 @@ button:hover {
 	background-color: skyblue;
 }
 .table_1, .table_2, .table_3, .table_4{
-	width : 943px;
+	width : 972px;
 	height : 600px; 
 	overflow: scroll;
-	margin-left:15px;
 }
-.table_1::-webkit-scrollbar, .table_2::-webkit-scrollbar, 
-.table_3::-webkit-scrollbar, .table_4::-webkit-scrollbar {
-	display: none;
-}
+
 th>img{
 	width : 200px;
 }
+
+.menu_card{
+ 	width: 18rem;
+ 	float : left;
+ 	margin-left: 25px;
+	margin-top: 15px;
+}
+.logo{
+	width:50px;
+}
+.logo_text{
+	display: flex; 
+	position: fixed;
+	text-decoration : none;
+	font-size : 30px;
+	font-weight : bold;
+}
+.user_menu{
+	text-decoration : none;
+	margin-top : 12px;
+	padding : 0px;
+	width : 120px;
+	height : 25px;
+	padding-top:7px;
+}
+.logout_menu{
+	text-decoration : none;
+	margin-top : -2px;
+	padding : 0px;
+	width : 70px;
+	height : 25px;
+}
+
 /* 리뷰 관련 스타일 */ 
 .content {
 	border: 1px dotted gray;
@@ -249,17 +300,6 @@ pre {
 	border-radius: 4px;
 }
 
-.loader {
-	/* 로딩 이미지를 가운데 정렬하기 위해 */
-	text-align: center;
-	/* 일단 숨겨 놓기 */
-	display: none;
-}
-
-.loader svg {
-	animation: rotateAni 1s ease-out infinite;
-}
-
 @
 keyframes rotateAni { 0%{
 	transform: rotate(0deg);
@@ -283,6 +323,7 @@ rotate(
    #imageForm{
       display: none;
    }
+
 </style>
 <body>
 
@@ -291,16 +332,20 @@ rotate(
         <div class="header">
 			<c:choose>
 				<c:when test="${ empty sessionScope.id}">
-					<a href="${pageContext.request.contextPath}/index" style="display: flex; position: fixed;">홈으로</a>
-					<a href="${pageContext.request.contextPath}/users/loginform">로그인</a>
-					<a href="${pageContext.request.contextPath}/users/signup_form">회원가입</a>
+					<a href="${pageContext.request.contextPath}/index" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+						HOMEPAGE NAME
+					</a>
+					<a href="${pageContext.request.contextPath}/users/loginform"  class="top_menu btn btn-outline-dark">LOGIN</a>
+					<a href="${pageContext.request.contextPath}/users/signup_form"  class="top_menu btn btn-outline-success">SIGN-UP</a>
 				</c:when>
 				<c:otherwise>
-					<p>
-						<a href="${pageContext.request.contextPath}/index" style="display: flex; position: fixed;">홈으로</a>
-						<a href="${pageContext.request.contextPath}/users/info">${sessionScope.id }</a>
-						로그인중... <a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>
-					</p>
+					<a href="${pageContext.request.contextPath}/index" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+						HOMEPAGE NAME
+					</a>
+					<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
+					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -368,13 +413,6 @@ rotate(
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 단체 손님 환영</td>
 								</tr>
-					
-								<tr class=shopInfo>
-
-									<td colspan="5">&nbsp; <a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
-								</tr>
-
-								</tr>
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 더미 데이터</td>
 								</tr>
@@ -469,33 +507,30 @@ rotate(
 									<td colspan="5">&nbsp; 더미 데이터</td>
 								</tr>
 
-                <tr>
-                  <td><a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
-                </tr>
 
 							</tbody>
 						</table>
 					</div>
 					<div class="table_2">
 						<table>
+							<c:choose>
+								<c:when test="${sessionScope.id eq 'admin'}">
+									<a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}" style="display:block; width:101%;" class="btn btn-outline-warning">메뉴 추가</a>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+						
 							<tbody>
 								<c:forEach var="tmp" items="${menuList }">
-								<tr>
-
-									<tr>
-										<th><img src="${pageContext.request.contextPath}/${tmp.imagePath}"></th>
-									</tr>
-									<tr>
-										<th>${tmp.name }</th>
-									</tr>
-									<tr>
-										<th>${tmp.price }</th>
-									</tr>
-									<tr>
-										<th>${tmp.content }</th>
-									</tr>
-								</tr>	
-
+								<div class="menu_card card">
+									<img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
+									<div class="card-body">
+										<h5 class="card-title">${tmp.name}</h5>
+										<p class="card-text">${tmp.content}</p>
+										<a href="#" class="btn btn-primary">${tmp.price }원</a>
+									</div>
+								</div>
 								</c:forEach>
 							</tbody>
 						</table>
