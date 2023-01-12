@@ -71,7 +71,7 @@
 	position: fixed;
 	z-index: 5;
 }
-
+ 
 
 .search_bar {
 	border: 3px solid;
@@ -253,7 +253,8 @@ th>img{
 }
 
 .reviews dt {
-	margin-top: 5px;
+	margin-top: 10px;
+	position : relative;
 }
 
 .reviews dd {
@@ -295,35 +296,77 @@ pre {
 	color: #333333;
 	word-break: break-all;
 	word-wrap: break-word;
-	background-color: #f5f5f5;
-	border: 1px solid #ccc;
-	border-radius: 4px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px
 }
 
-@
-keyframes rotateAni { 0%{
-	transform: rotate(0deg);
+@keyframes rotateAni { 
+	0%{
+		transform: rotate(0deg);
+	}
+	100%{
+		transform:rotate(360deg);
+	}
 }
-100
-%
-{
-transform
-:
-rotate(
-360deg
-);
-}
-}
-	#profileImage{
-      width: 100px;
-      height: 100px;
-      border: 1px solid #cecece;
-      border-radius: 50%;
-   }
-   #imageForm{
-      display: none;
+#profileImage{
+    width: 100px;
+    height: 100px;
+    border: 1px solid #cecece;
+    border-radius: 50%;
+  }
+#imageForm{
+	display: none;
    }
 
+.col-2{
+	width : auto;
+	border:1px solid #c9c9c9; 
+	border-radius:10px;
+	padding : 0px;
+	overflow:hidden;
+}
+.col-8{
+	padding : 0px;
+}
+.comment_box{
+	text-align : left;
+	height : 152px;
+	width : 590px;
+	padding : 0px;
+	margin : 0px;
+	margin-left : 3px;
+	padding : 15px;
+}
+.review_profile{
+	background-color : #feffe6;
+	right: 0px;
+    height: 152px;
+    width: 150px;
+    position: absolute;
+    padding : 10px;
+}
+.profile-image{
+	width : 50px;
+	height : 50px;
+}
+.review_img{
+	width : 200px;
+	height : 150px;
+}
+.row {
+	margin-left : 10px;
+}
+.update-link{
+	font-size : 15px;
+	text-decoration : none;
+	padding : 0px;
+}
+.delete-link{
+	font-size : 15px;
+	text-decoration : none;
+	padding : 0px;
+}
 </style>
 <body>
 
@@ -561,12 +604,12 @@ rotate(
 															<dl>
 																<dt class="row">
 																	<div class="col-2">
-																		<img src="${pageContext.request.contextPath}${tmp.imagePath }" />
+																		<img class="review_img" src="${pageContext.request.contextPath}${tmp.imagePath}"/>
 																	</div>
 																	<div class="col-8">
-																		<pre id="pre${tmp.num }">${tmp.content }</pre>
+																		<pre class="comment_box" id="pre${tmp.num }">${tmp.content }</pre>
 																	</div>
-																	<div class="col-2">
+																	<div class="review_profile col-2 ">
 																		<c:if test="${ empty tmp.profile }">
 																			<svg class="profile-image" xmlns="http://www.w3.org/2000/svg"
 																				width="16" height="16" fill="currentColor"
@@ -578,20 +621,23 @@ rotate(
 									                                    </svg>
 																		</c:if>
 																		<c:if test="${not empty tmp.profile }">
-																			<img class="profile-image" src="${pageContext.request.contextPath}${tmp.profile }" />
+																			<img class="profile-image" src="${pageContext.request.contextPath}${tmp.profile }"  />
 																		</c:if>
+																		<br>
 																		<span class="col">${tmp.writer }</span>
+																		<br>
+																		<span style="font-weight:100;">${tmp.regdate }</span> 
+																		
+																		<br>
+																		<c:if test="${ (id ne null) and (tmp.writer eq id) }">
+																			<a data-num="${tmp.num }" class="update-link btn btn-warning"
+																				href="javascript:">수정</a>
+																			<a data-num="${tmp.num }" class="delete-link btn btn-danger"
+																				href="javascript:">삭제</a>
+																		</c:if>
 																	</div>
 																</dt>
-																<dd>
-																	<span>${tmp.regdate } |</span> 
-																	<c:if test="${ (id ne null) and (tmp.writer eq id) }">
-																		<a data-num="${tmp.num }" class="update-link"
-																			href="javascript:">수정</a>
-																		<a data-num="${tmp.num }" class="delete-link"
-																			href="javascript:">삭제</a>
-																	</c:if>
-																</dd>
+
 															</dl>
 
 															<c:if test="${tmp.writer eq id }">
