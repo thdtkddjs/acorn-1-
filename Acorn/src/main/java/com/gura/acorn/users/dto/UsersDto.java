@@ -10,6 +10,7 @@ public class UsersDto {
 	private String email;
 	private String profile;
 	private String regdate;
+	private String ban;
 	private String newPwd;
 	private String isSave;
     private int startRowNum;
@@ -20,14 +21,15 @@ public class UsersDto {
 	//디폴트 생성자
 	public UsersDto() {}
 
-	public UsersDto(String id, String pwd, String email, String profile, String regdate, String newPwd, String isSave,
-			int startRowNum, int endRowNum, int prevNum, int nextNum) {
+	public UsersDto(String id, String pwd, String email, String profile, String regdate, String ban, String newPwd,
+			String isSave, int startRowNum, int endRowNum, int prevNum, int nextNum) {
 		super();
 		this.id = id;
 		this.pwd = pwd;
 		this.email = email;
 		this.profile = profile;
 		this.regdate = regdate;
+		this.ban = ban;
 		this.newPwd = newPwd;
 		this.isSave = isSave;
 		this.startRowNum = startRowNum;
@@ -74,6 +76,14 @@ public class UsersDto {
 
 	public void setRegdate(String regdate) {
 		this.regdate = regdate;
+	}
+
+	public String getBan() {
+		return ban;
+	}
+
+	public void setBan(String ban) {
+		this.ban = ban;
 	}
 
 	public String getNewPwd() {
@@ -123,8 +133,6 @@ public class UsersDto {
 	public void setNextNum(int nextNum) {
 		this.nextNum = nextNum;
 	}
-
-	
 
 	
 }
