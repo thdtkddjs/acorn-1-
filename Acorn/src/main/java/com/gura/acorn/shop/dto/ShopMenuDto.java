@@ -91,8 +91,4 @@ public class ShopMenuDto {
 	public void setEndRowNum(int endRowNum) {
 		this.endRowNum = endRowNum;
 	}
-	   
-	   
-		
-	   
 }

@@ -7,7 +7,7 @@
 		FROM
 			(SELECT result1.*, ROWNUM AS rnum
 			FROM
-				(SELECT num, writer, content, target_id, ref_group,
+				(SELECT num, writer, content, ref_group,
 					review_group, deleted, board_shop_review.regdate, profile
 				FROM board_shop_review
 				INNER JOIN users
@@ -27,14 +27,14 @@
 	<!-- 리뷰 저장할 때 가게글의 글번호도 미리 ShopReviewDto 객체에 담아와야 한다. -->
 	<insert id="insert" parameterType="shopReviewDto">
 		INSERT INTO board_shop_review
-		(num, writer, content, target_id, ref_group, review_group, regdate)
-		VALUES(#{num}, #{writer}, #{content}, #{target_id}, #{ref_group},
+		(num, writer, content, ref_group, review_group, regdate)
+		VALUES(#{num}, #{writer}, #{content}, #{ref_group},
 			#{review_group}, SYSDATE)
 	</insert>
 	
 	<!-- 저장 예정인 리뷰의 글번호를 미리 얻어내기 -->
 	<select id="getSequence" resultType="int">
-		SELECT board_cafe_comment_seq.NEXTVAL
+		SELECT board_shop_review_seq.NEXTVAL
 		FROM DUAL
 	</select>
 	
