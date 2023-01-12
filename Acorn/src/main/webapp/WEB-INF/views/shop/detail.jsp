@@ -19,6 +19,7 @@
 	grid-template-areas: "header header header" "banner banner banner"
 		"search main main" "  bot   bot   bot  ";
 	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-rows: 50px 870px;
 	box-shadow: 0px 5px 20px 0px grey;
 	border-right: thin;
 	z-index: 1;
@@ -35,19 +36,6 @@
 	display: block;
 }
 
-.main_banner {
-	grid-area: banner;
-	text-align: center;
-	height: 180px;
-	background-color: skyblue;
-}
-
-.side_menu_a {
-	grid-area: search;
-	width: 100%;
-	text-align: center;
-	background-color: lightgray;
-}
 
 .search_menu {
 	grid-area: search;
@@ -60,8 +48,9 @@
 .search_result {
 	grid-area: main;
 	width: 100%;
-	height: 680px;
+	height: 870px;
 	text-align: center;
+	box-shadow: 2px 2px 3px 0px grey;
 }
 
 .side_menu_b {
@@ -83,9 +72,6 @@
 	z-index: 5;
 }
 
-.bottom {
-	grid-area: bot;
-}
 
 .search_bar {
 	border: 3px solid;
@@ -111,7 +97,7 @@
 }
 
 .suggest_menu {
-	height: 600px;
+	height: 763px;
 	overflow: scroll;
 	-ms-overflow-style: none;
 }
@@ -185,13 +171,17 @@ button:hover {
 	background-color: skyblue;
 }
 .table_1, .table_2, .table_3, .table_4{
-	width : 972px;
-	height : 438px; 
+	width : 943px;
+	height : 600px; 
 	overflow: scroll;
-	-ms-overflow-style: none;
+	margin-left:15px;
 }
-.table_1::-webkit-scrollbar {
+.table_1::-webkit-scrollbar, .table_2::-webkit-scrollbar, 
+.table_3::-webkit-scrollbar, .table_4::-webkit-scrollbar {
 	display: none;
+}
+th>img{
+	width : 200px;
 }
 /* 리뷰 관련 스타일 */ 
 .content {
@@ -314,7 +304,6 @@ rotate(
 				</c:otherwise>
 			</c:choose>
 		</div>
-        <div class="main_banner">메인 배너 표시</div>
         <div class="search_menu">
             <div class="search_bar">
                 <form action="${pageContext.request.contextPath}/index/" method="post">
@@ -328,14 +317,7 @@ rotate(
             
             <hr>
             <div class="suggest_menu">
-				<c:choose>
-					<c:when test="${ empty sessionScope.id}">
-						<h5>회원님을 위한 오늘의 추천</h5>
-					</c:when>
-					<c:otherwise>
-						<h5>${sessionScope.id }님을 위한 오늘의 추천</h5>
-					</c:otherwise>
-				</c:choose>
+				<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
 				<c:forEach var="tmp" items="${list }">
 					<div class="card" style="width: 18rem;">
 	                    <img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
@@ -386,12 +368,12 @@ rotate(
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 단체 손님 환영</td>
 								</tr>
+					
+								<tr class=shopInfo>
 
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
+									<td colspan="5">&nbsp; <a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
 								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
+
 								</tr>
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 더미 데이터</td>
@@ -497,21 +479,24 @@ rotate(
 					<div class="table_2">
 						<table>
 							<tbody>
+								<c:forEach var="tmp" items="${menuList }">
 								<tr>
-									<td>메뉴 1 : 10,000원</td>
-								</tr>
-								<tr>
-									<td>메뉴 2 : 20,000원</td>
-								</tr>
-								<tr>
-									<td>메뉴 3 : 30,000원</td>
-								</tr>
-								<tr>
-									<td>메뉴 4 : 40,000원</td>
-								</tr>
-								<tr>
-									<td>메뉴 5 : 50,000원</td>
-								</tr>
+
+									<tr>
+										<th><img src="${pageContext.request.contextPath}/${tmp.imagePath}"></th>
+									</tr>
+									<tr>
+										<th>${tmp.name }</th>
+									</tr>
+									<tr>
+										<th>${tmp.price }</th>
+									</tr>
+									<tr>
+										<th>${tmp.content }</th>
+									</tr>
+								</tr>	
+
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>

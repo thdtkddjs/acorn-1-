@@ -73,6 +73,7 @@ public class ShopController {
 	@GetMapping("/shop/detail")
 	public String detail(HttpServletRequest request) {
 		service.getDetail(request);
+		service.menuGetList(request);
 		return "shop/detail";
 	}
 	
@@ -154,8 +155,8 @@ public class ShopController {
 	
 	@GetMapping("/shop/menu_insert")
 	public String menuinsert(ShopMenuDto dto, HttpServletRequest request) {
-		service.saveMenu(dto, request);
-		
+		dto.setNum(Integer.parseInt(request.getParameter("num")));
+		service.saveMenu(dto, request);		
 		return "shop/menu_insert";
 	}
 
