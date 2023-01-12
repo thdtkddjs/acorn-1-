@@ -269,12 +269,12 @@ th>img{
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 단체 손님 환영</td>
 								</tr>
-
+					
 								<tr class=shopInfo>
+
 									<td colspan="5">&nbsp; <a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
 								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
+
 								</tr>
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 더미 데이터</td>
@@ -382,6 +382,7 @@ th>img{
 							<tbody>
 								<c:forEach var="tmp" items="${menuList }">
 								<tr>
+
 									<tr>
 										<th><img src="${pageContext.request.contextPath}/${tmp.imagePath}"></th>
 									</tr>
@@ -395,6 +396,7 @@ th>img{
 										<th>${tmp.content }</th>
 									</tr>
 								</tr>	
+
 								</c:forEach>
 							</tbody>
 						</table>
