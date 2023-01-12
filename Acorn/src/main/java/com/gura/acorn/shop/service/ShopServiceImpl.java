@@ -257,6 +257,7 @@ public class ShopServiceImpl implements ShopService{
 		String content = request.getParameter("content"); //댓글의 내용
 
 		String review_group = request.getParameter("review_group");
+		String imagePath = (String)request.getParameter("imagePath");
 
 		//댓글 작성자는 session 영역에서 얻어내기
 		String writer = (String)request.getSession().getAttribute("id");
@@ -268,6 +269,7 @@ public class ShopServiceImpl implements ShopService{
 		dto.setWriter(writer);
 		dto.setContent(content);
 		dto.setRef_group(ref_group);
+		dto.setImagePath(imagePath);
 		//원글의 댓글인경우
 		if(review_group == null){
 			//댓글의 글번호를 comment_group 번호로 사용한다.

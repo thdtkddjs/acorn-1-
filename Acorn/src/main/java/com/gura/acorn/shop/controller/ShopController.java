@@ -100,7 +100,7 @@ public class ShopController {
 	//새로운 댓글 저장 요청 처리
 	@RequestMapping("/shop/review_insert")
 	public String reviewInsert(HttpServletRequest request, int ref_group) {
-	    
+		
 		service.saveReview(request);
 	   
 		return "redirect:/shop/detail?num="+ref_group;
@@ -140,6 +140,13 @@ public class ShopController {
 		// {"isSuccess":true} 형식의 JSON 문자열이 응답되도록 한다. 
 		return map;
 
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/shop/review_image_upload", method = RequestMethod.POST)
+	public Map<String, Object> reviewImageUpload(MultipartFile image, HttpServletRequest request) {
+
+		return service.saveImagePath(request, image);
 	}
 	
 	@RequestMapping("/shop/menulist")
