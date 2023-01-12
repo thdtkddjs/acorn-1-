@@ -12,136 +12,159 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </head>
 <style>
-    .container{
-        display: grid;
-        grid-template-areas:
+.container {
+	display: grid;
+	grid-template-areas: 
 		"header header header"
-        "banner banner banner"
-		"search main main"
-		"  bot   bot   bot  ";
+		"search main main";
+	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-rows: 50px 870px;
+	box-shadow: 0px 5px 20px 0px grey;
+	border-right: thin;
+	z-index: 1;
+	min-width: 1320px;
+}
 
-        grid-template-columns: 1fr 2fr 1fr;
-        box-shadow: 0px 5px 20px 0px grey;
-	    border-right: thin;
-        z-index: 1;
-        min-width: 1320px;
-    }
-    .header{
-        grid-area: header;
-        text-align: right;
-        display: block;
-    }
-    .main_banner{
-        grid-area: banner;
-        text-align: center;
-        height: 200px;
-        background-color: skyblue;
-    }
-    .side_menu_a {
-        grid-area: search;
-        width : 100%;
-        text-align: center;
-        background-color: lightgray;
-    }
-    .search_menu{
-        grid-area: search;
-        box-shadow: 2px 2px 3px 0px grey;
-        background-color: white;
-        z-index: 3;
-        position: relative;
-    }
-    .search_result{
-        grid-area: main;
-        width: 100%;
-        height: 680px;
-        text-align: center;
-    }
-    .side_menu_b {
-        grid-area: b;
-        width : 100%;
-        text-align: center;
-        background-color: lightgray;
-    }
-    .footer{
-        padding-left :10px;
-        padding-right :10px;
-        margin-top: 0px;
-        background-color: white;
-        grid-area: footer;
-        bottom: 0px;
-        width: 100%;
-        position: fixed;
-        z-index: 5;
-    }
-    .bottom{
-       grid-area : bot; 
-    }
-    .search_bar{
-        border: 3px solid;
-        border-color: rgb(64, 219, 43);
-        border-radius: 5px;
-        margin: 10px;
-        width: 290px;
-    }
-    .search_bar>form>input{
-        width: 250px;
-        margin : 10px;
-        border: none;
-        font-size: large;
-    }
-    .suggest_menu>.card{
-        margin-left: 10px;
-    }
-    #map{
-        z-index: 2;
-    }
-    .suggest_menu{
-        height : 600px; 
-        overflow: scroll; 
-        -ms-overflow-style: none;
-    }
-    .suggest_menu::-webkit-scrollbar{
-        display:none;
-    }
-    .fold_btn{
-        position: absolute;
-        left : 300px;
-        top : 150px;
-        z-index: 5;
-    }
-    .open_btn{
-        position: absolute;
-        left : 200px;
-        top : 150px;
-        z-index: 5;
-    }
-    
+.header {
+	grid-area: header;
+	text-align: right;
+	display: block;
+}
+
+.side_menu_a {
+	grid-area: search;
+	width: 100%;
+	text-align: center;
+	background-color: lightgray;
+}
+
+.search_menu {
+	grid-area: search;
+	box-shadow: 2px 2px 3px 0px grey;
+	background-color: white;
+	z-index: 3;
+	position: relative;
+}
+
+.search_result {
+	grid-area: main;
+	width: 100%;
+	height: 680px;
+	text-align: center;
+}
+
+.side_menu_b {
+	grid-area: b;
+	width: 100%;
+	text-align: center;
+	background-color: lightgray;
+}
+
+.footer {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 0px;
+	background-color: white;
+	grid-area: footer;
+	bottom: 0px;
+	width: 100%;
+	position: fixed;
+	z-index: 5;
+}
+
+
+.search_bar {
+	border: 3px solid;
+	border-color: rgb(64, 219, 43);
+	border-radius: 5px;
+	margin: 10px;
+	width: 290px;
+}
+
+.search_bar>form>input {
+	width: 250px;
+	margin: 10px;
+	border: none;
+	font-size: large;
+}
+
+.suggest_menu>.card {
+	margin-left: 10px;
+}
+
+#map {
+	z-index: 2;
+}
+
+.suggest_menu {
+	height: 763px;
+	overflow: scroll;
+	-ms-overflow-style: none;
+}
+
+.suggest_menu::-webkit-scrollbar {
+	display: none;
+}
+
+.fold_btn {
+	position: absolute;
+	left: 300px;
+	top: 150px;
+	z-index: 5;
+}
+
+.open_btn {
+	position: absolute;
+	left: 200px;
+	top: 150px;
+	z-index: 5;
+}
+.search_box{
+	position: relative;
+}
+.search_img{
+	position : absolute;
+	width: 17px;
+	margin: 0;
+	top:25px;
+	right:13%;
+}
+.search_input{
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
 </style>
 <body>
-
     <div class="container">
         
         <div class="header">
 			<c:choose>
 				<c:when test="${ empty sessionScope.id}">
+					<a href="${pageContext.request.contextPath}/index" style="display: flex; position: fixed;">홈으로</a>
 					<a href="${pageContext.request.contextPath}/users/loginform">로그인</a>
 					<a href="${pageContext.request.contextPath}/users/signup_form">회원가입</a>
 				</c:when>
 				<c:otherwise>
 					<p>
+						<a href="${pageContext.request.contextPath}/index" style="display: flex; position: fixed;">홈으로</a>
 						<a href="${pageContext.request.contextPath}/users/info">${sessionScope.id }</a>
-						로그인중... <a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>
+						로그인중... 
+						<a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>
 					</p>
 				</c:otherwise>
 			</c:choose>
+			
+		<hr>
 		</div>
-        <div class="main_banner">메인 배너 표시</div>
-        <button class="fold_btn" onclick="fold_menu()"> ◀ </button>
-        <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
         <div class="search_menu">
             <div class="search_bar">
-                <form action="">
-                    <input type="text" placeholder="가게 명을 입력하세요...">
+                <form action="${pageContext.request.contextPath}/index/" method="post">
+                    <div class="serch_box">
+                    	<button type="submit" style="display:contents"><img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" /></button>
+                    	<input class="search_input" type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
+                    </div>
                 </form>
             </div>
             
@@ -149,11 +172,11 @@
             <hr>
             <div class="suggest_menu">
 				<c:choose>
-					<c:when test="${ empty sessionScope.id}">
-						<h5>회원님을 위한 오늘의 추천</h5>
+					<c:when test="${ empty keyword}">
+						<h5 style="margin-left:20px;">오늘의 추천 가게</h5>
 					</c:when>
 					<c:otherwise>
-						<h5>${sessionScope.id }님을 위한 오늘의 추천</h5>
+						<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
 					</c:otherwise>
 				</c:choose>
 				<c:forEach var="tmp" items="${list }">
@@ -162,8 +185,9 @@
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
 	                    	<p class="card-text">${tmp.content }</p>
-	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary">가게 정보 보기</a>
-	                    </div>
+	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}"	class="btn btn-primary">가게 정보 보기</a>
+
+						</div>
 	                </div>
                 <br>
 				</c:forEach>
@@ -173,7 +197,7 @@
             </div>
         </div>
         <div class="search_result">
-            <div id="map" style="width: 972px; height: 700px;  float: right;"></div>
+            <div id="map" style="width: 972px; height: 871px;  float: right;"></div>
             
         </div>
         <div class="bottom">　</div>
@@ -181,39 +205,53 @@
 
         
     </div>        
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9xl3ekksy5"></script>
+	
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b45a7e1f67e033582e03cb02a068e52&libraries=services"></script>
+	<script>
+	
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };  
+	
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch('서울특별시 강남구 테헤란로 124', function(result, status) {
+	
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+	
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+	        // 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+	
+	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	        var infowindow = new kakao.maps.InfoWindow({
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;">Acorn Academy</div>'
+	        });
+	        infowindow.open(map, marker);
+	
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	    } 
+	});    
+	</script>
+
+	<!-- 메뉴 접기 버튼 잠시 휴식
+     
+	<button class="fold_btn" onclick="fold_menu()"> ◀ </button>
+    <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
     <script>
-        let markerInfo = [
-            '<div class="marker_info">',
-            '   <h5><a href="http://naver.com">에이콘 아카데미</a></h5>',
-            '   <p>서울특별시 강남구 테헤란로 124 삼원타워 5층 <br>',
-            '       <img src="http://acornacademy.co.kr/mobile/img/logo.png" height="55" alt="에이콘" /><br>',
-            '   </p>',
-            '</div>'
-        ].join('');
-
-        let map = new naver.maps.Map('map', {
-            center : new naver.maps.LatLng(37.498778, 127.031662),
-            zoom : 18
-        });
-
-        let marker = new naver.maps.Marker({
-            position : new naver.maps.LatLng(37.498778, 127.031662),
-            map: map
-        });
-
-        let infowindow = new naver.maps.InfoWindow({
-            content: markerInfo
-        });
-
-        naver.maps.Event.addListener(marker, "click", function(e) {
-            if (infowindow.getMap()) {
-                infowindow.close();
-            } else {
-                infowindow.open(map, marker);
-            }
-        });
-
         function fold_menu() {
             document.querySelector(".search_bar").style.display ="none";
             document.querySelector(".search_menu").style.display ="none";
@@ -231,9 +269,8 @@
             document.querySelector(".fold_btn").style.removeProperty("display");
             document.querySelector(".open_btn").style.display="none";
         };
-
-
-    </script>        
+    </script>   -->
+   
     <div class="footer">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
           <symbol id="bootstrap" viewBox="0 0 118 94">

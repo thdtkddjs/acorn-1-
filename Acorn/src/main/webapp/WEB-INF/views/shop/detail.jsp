@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index.jsp</title>
+    <title>detail.jsp</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
@@ -16,38 +16,26 @@
 .container {
 	display: grid;
 	grid-template-areas: 
-	"header header header" 
-	"banner banner banner"
-	"search main main" 
-	"  bot   bot   bot  ";
+		"header header header"
+		"search main main";
 	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-rows: 50px 870px;
 	box-shadow: 0px 5px 20px 0px grey;
 	border-right: thin;
 	z-index: 1;
 	min-width: 1320px;
 }
-.main_content{
-	grid-area : main;
+
+.main_content {
+	grid-area: main;
 }
+
 .header {
 	grid-area: header;
 	text-align: right;
 	display: block;
 }
 
-.main_banner {
-	grid-area: banner;
-	text-align: center;
-	height: 200px;
-	background-color: skyblue;
-}
-
-.side_menu_a {
-	grid-area: search;
-	width: 100%;
-	text-align: center;
-	background-color: lightgray;
-}
 
 .search_menu {
 	grid-area: search;
@@ -60,8 +48,9 @@
 .search_result {
 	grid-area: main;
 	width: 100%;
-	height: 680px;
+	height: 870px;
 	text-align: center;
+	box-shadow: 2px 2px 3px 0px grey;
 }
 
 .side_menu_b {
@@ -83,9 +72,6 @@
 	z-index: 5;
 }
 
-.bottom {
-	grid-area: bot;
-}
 
 .search_bar {
 	border: 3px solid;
@@ -111,7 +97,7 @@
 }
 
 .suggest_menu {
-	height: 600px;
+	height: 763px;
 	overflow: scroll;
 	-ms-overflow-style: none;
 }
@@ -133,19 +119,71 @@
 	top: 150px;
 	z-index: 5;
 }
-
+.search_box{
+	position: relative;
+}
+.search_img{
+	position : absolute;
+	width: 17px;
+	margin: 0;
+	top:25px;
+	right:13%;
+}
+.search_input{
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+}
 .content_photo_1>img, .content_photo_2>img {
 	width: 200px;
 	margin: 0.5px;
 	margin-right: -5px;
 }
-.main_table{
-	width : 900px;
+
+.main_title {
+	height: 220px;
+}
+
+.btn_box {
 	
 }
-td>img{
-	width:200px;
+
+.main_table {
+	width: 900px;
 }
+
+td>img {
+	width: 200px;
+}
+
+
+button {
+	background-color: dodgerblue;
+	padding: 8px 30px !important;
+	width: 243px;
+	font-size: 14px;
+	color: white;
+	border: 0px solid transparent;
+	float: left;
+}
+
+button:hover {
+	background-color: skyblue;
+}
+.table_1, .table_2, .table_3, .table_4{
+	width : 943px;
+	height : 600px; 
+	overflow: scroll;
+	margin-left:15px;
+}
+.table_1::-webkit-scrollbar, .table_2::-webkit-scrollbar, 
+.table_3::-webkit-scrollbar, .table_4::-webkit-scrollbar {
+	display: none;
+}
+th>img{
+	width : 200px;
+}
+	
 </style>
 <body>
 
@@ -154,42 +192,39 @@ td>img{
         <div class="header">
 			<c:choose>
 				<c:when test="${ empty sessionScope.id}">
+					<a href="${pageContext.request.contextPath}/index" style="display: flex; position: fixed;">홈으로</a>
 					<a href="${pageContext.request.contextPath}/users/loginform">로그인</a>
 					<a href="${pageContext.request.contextPath}/users/signup_form">회원가입</a>
 				</c:when>
 				<c:otherwise>
 					<p>
+						<a href="${pageContext.request.contextPath}/index" style="display: flex; position: fixed;">홈으로</a>
 						<a href="${pageContext.request.contextPath}/users/info">${sessionScope.id }</a>
 						로그인중... <a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>
 					</p>
 				</c:otherwise>
 			</c:choose>
 		</div>
-        <div class="main_banner">메인 배너 표시</div>
         <div class="search_menu">
             <div class="search_bar">
-                <form action="">
-                    <input type="text" placeholder="가게 명을 입력하세요...">
+                <form action="${pageContext.request.contextPath}/index/" method="post">
+                    <div class="serch_box">
+                    	<button type="submit" style="display:contents"><img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" /></button>
+                    	<input class="search_input" type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
+                    </div>
                 </form>
             </div>
             
             
             <hr>
             <div class="suggest_menu">
-				<c:choose>
-					<c:when test="${ empty sessionScope.id}">
-						<h5>회원님을 위한 오늘의 추천</h5>
-					</c:when>
-					<c:otherwise>
-						<h5>${sessionScope.id }님을 위한 오늘의 추천</h5>
-					</c:otherwise>
-				</c:choose>
+				<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
 				<c:forEach var="tmp" items="${list }">
 					<div class="card" style="width: 18rem;">
-	                    <img src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20220310_48%2F1646883669558peXxc_JPEG%2F20220310_124026.jpg&type=f&size=340x180" class="card-img-top" alt="...">
+	                    <img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
-	                    	<p class="card-text">${tmp.content} }</p>
+	                    	<p class="card-text">${tmp.content}</p>
 	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary">가게 정보 보기</a>
 	                    </div>
 	                </div>
@@ -200,22 +235,10 @@ td>img{
         <div class="search_result">
                 <div class="main_content">
 		            <div class="content_images">
-		                <div class="content_photo_1">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                </div>
-		                <div class="content_photo_2">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                    <img src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/201702/27/117f5b49-1d09-4550-8ab7-87c0d82614de.jpg" alt="">
-		                </div>
-
 
 						<div class="main_title">
-							<div id="map"
-								style="width: 200px; height: 150px; margin: auto; float: right; margin-right: 20px;"></div>
-	
+							<div id="map"style="width: 300px; height: 220px; margin: auto; float: right; "></div>
+
 							<br>
 							<br> <Strong>${dto.title }</Strong>
 							<p>리뷰 ${dto.reviewCount } 회</p>
@@ -246,27 +269,135 @@ td>img{
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 단체 손님 환영</td>
 								</tr>
+					
+								<tr class=shopInfo>
+
+									<td colspan="5">&nbsp; <a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
+								</tr>
+
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+								<tr class=shopInfo>
+									<td colspan="5">&nbsp; 더미 데이터</td>
+								</tr>
+
+                <tr>
+                  <td><a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
+                </tr>
+
 							</tbody>
 						</table>
 					</div>
 					<div class="table_2">
 						<table>
 							<tbody>
+								<c:forEach var="tmp" items="${menuList }">
 								<tr>
-									<td>메뉴 1 : 10,000원</td>
-								</tr>
-								<tr>
-									<td>메뉴 2 : 20,000원</td>
-								</tr>
-								<tr>
-									<td>메뉴 3 : 30,000원</td>
-								</tr>
-								<tr>
-									<td>메뉴 4 : 40,000원</td>
-								</tr>
-								<tr>
-									<td>메뉴 5 : 50,000원</td>
-								</tr>
+
+									<tr>
+										<th><img src="${pageContext.request.contextPath}/${tmp.imagePath}"></th>
+									</tr>
+									<tr>
+										<th>${tmp.name }</th>
+									</tr>
+									<tr>
+										<th>${tmp.price }</th>
+									</tr>
+									<tr>
+										<th>${tmp.content }</th>
+									</tr>
+								</tr>	
+
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>
@@ -329,62 +460,101 @@ td>img{
 
         
     </div>        
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=9xl3ekksy5"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b45a7e1f67e033582e03cb02a068e52&libraries=services"></script>
+	<script>
+	
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };  
+	
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch( '${dto.addr}' , function(result, status) {
+	
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+	
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+	
+	        // 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+	
+	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	        var infowindow = new kakao.maps.InfoWindow({
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;"> ${dto.title} </div>'
+	        });
+	        infowindow.open(map, marker);
+	
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	    } 
+	});    
+	</script>
 	<script>
 
 		window.onload = function() {
-			$("#table_1").show();
-			$("#table_2").hide();
+			$("#btn_1").css({"background-color" : "gray"})
+			$("#btn_2").css({"background-color" : "#BDBDBD"})
+			$("#btn_3").css({"background-color" : "#BDBDBD"})
+			$("#btn_4").css({"background-color" : "#BDBDBD"})
+			$(".table_1").show();
+			$(".table_2").hide();
 			$(".table_3").hide();
 			$(".table_4").hide();
 		}
 		$(document).ready(function() {
 			$("#btn_1").click(function() {
-
+				$("#btn_1").css({"background-color" : "gray"})
+				$("#btn_2").css({"background-color" : "#BDBDBD"})
+				$("#btn_3").css({"background-color" : "#BDBDBD"})
+				$("#btn_4").css({"background-color" : "#BDBDBD"})
 				$(".table_1").show();
 				$(".table_2").hide();
 				$(".table_3").hide();
 				$(".table_4").hide();
 			})
 			$("#btn_2").click(function() {
-
+				$("#btn_1").css({"background-color" : "#BDBDBD"})
+				$("#btn_2").css({"background-color" : "gray"})
+				$("#btn_3").css({"background-color" : "#BDBDBD"})
+				$("#btn_4").css({"background-color" : "#BDBDBD"})
 				$(".table_1").hide();
 				$(".table_2").show();
 				$(".table_3").hide();
 				$(".table_4").hide();
 			})
 			$("#btn_3").click(function() {
-
+				$("#btn_1").css({"background-color" : "#BDBDBD"})
+				$("#btn_2").css({"background-color" : "#BDBDBD"})
+				$("#btn_3").css({"background-color" : "gray"})
+				$("#btn_4").css({"background-color" : "#BDBDBD"})
 				$(".table_1").hide();
 				$(".table_2").hide();
 				$(".table_3").show();
 				$(".table_4").hide();
 			})
 			$("#btn_4").click(function() {
+				$("#btn_1").css({"background-color" : "#BDBDBD"})
+				$("#btn_2").css({"background-color" : "#BDBDBD"})
+				$("#btn_3").css({"background-color" : "#BDBDBD"})
+				$("#btn_4").css({"background-color" : "gray"})
 				$(".table_1").hide();
 				$(".table_2").hide();
 				$(".table_3").hide();
 				$(".table_4").show();
 			})
 		})
-		let lat = $
-		{
-			dto.latitude
-		};
-		let lng = $
-		{
-			dto.longitude
-		};
 
-		let map = new naver.maps.Map('map', {
-			center : new naver.maps.LatLng(lat, lng),
-			zoom : 18
-		});
-
-		let marker = new naver.maps.Marker({
-			position : new naver.maps.LatLng(lat, lng),
-			map : map
-		});
 	</script>
 	<div class="footer">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
