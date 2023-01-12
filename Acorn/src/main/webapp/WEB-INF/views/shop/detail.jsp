@@ -286,12 +286,9 @@ button:hover {
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 단체 손님 환영</td>
 								</tr>
-
+					
 								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
+									<td><a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
 								</tr>
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 더미 데이터</td>
@@ -397,21 +394,20 @@ button:hover {
 					<div class="table_2">
 						<table>
 							<tbody>
+								<c:forEach var="tmp" items="${menuList }">
 								<tr>
-									<td>메뉴 1 : 10,000원</td>
+									<th>메뉴명 : ${tmp.name }</th>
 								</tr>
 								<tr>
-									<td>메뉴 2 : 20,000원</td>
+									<th>가격 : ${tmp.price }</th>
 								</tr>
 								<tr>
-									<td>메뉴 3 : 30,000원</td>
+									<th>설명 : ${tmp.content }</th>
 								</tr>
 								<tr>
-									<td>메뉴 4 : 40,000원</td>
+									<th><img src="${pageContext.request.contextPath}/${tmp.imagePath}"></th>
 								</tr>
-								<tr>
-									<td>메뉴 5 : 50,000원</td>
-								</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>
