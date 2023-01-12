@@ -14,9 +14,11 @@
 <style>
 .container {
 	display: grid;
-	grid-template-areas: "header header header" "banner banner banner"
-		"search main main" "  bot   bot   bot  ";
+	grid-template-areas: 
+		"header header header"
+		"search main main";
 	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-rows: 50px 870px;
 	box-shadow: 0px 5px 20px 0px grey;
 	border-right: thin;
 	z-index: 1;
@@ -27,13 +29,6 @@
 	grid-area: header;
 	text-align: right;
 	display: block;
-}
-
-.main_banner {
-	grid-area: banner;
-	text-align: center;
-	height: 180px;
-	background-color: skyblue;
 }
 
 .side_menu_a {
@@ -77,9 +72,6 @@
 	z-index: 5;
 }
 
-.bottom {
-	grid-area: bot;
-}
 
 .search_bar {
 	border: 3px solid;
@@ -105,7 +97,7 @@
 }
 
 .suggest_menu {
-	height: 600px;
+	height: 763px;
 	overflow: scroll;
 	-ms-overflow-style: none;
 }
@@ -163,10 +155,9 @@
 					</p>
 				</c:otherwise>
 			</c:choose>
+			
+		<hr>
 		</div>
-        <div class="main_banner">메인 배너 표시</div>
-        <button class="fold_btn" onclick="fold_menu()"> ◀ </button>
-        <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
         <div class="search_menu">
             <div class="search_bar">
                 <form action="${pageContext.request.contextPath}/index/" method="post">
@@ -181,11 +172,11 @@
             <hr>
             <div class="suggest_menu">
 				<c:choose>
-					<c:when test="${ empty sessionScope.id}">
-						<h5>회원님을 위한 오늘의 추천</h5>
+					<c:when test="${ empty keyword}">
+						<h5 style="margin-left:20px;">오늘의 추천 가게</h5>
 					</c:when>
 					<c:otherwise>
-						<h5><strong>검색 결과</strong></h5>
+						<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
 					</c:otherwise>
 				</c:choose>
 				<c:forEach var="tmp" items="${list }">
@@ -206,7 +197,7 @@
             </div>
         </div>
         <div class="search_result">
-            <div id="map" style="width: 972px; height: 700px;  float: right;"></div>
+            <div id="map" style="width: 972px; height: 871px;  float: right;"></div>
             
         </div>
         <div class="bottom">　</div>
@@ -256,7 +247,10 @@
 	});    
 	</script>
 
-    
+	<!-- 메뉴 접기 버튼 잠시 휴식
+     
+	<button class="fold_btn" onclick="fold_menu()"> ◀ </button>
+    <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
     <script>
         function fold_menu() {
             document.querySelector(".search_bar").style.display ="none";
@@ -275,9 +269,8 @@
             document.querySelector(".fold_btn").style.removeProperty("display");
             document.querySelector(".open_btn").style.display="none";
         };
-
-
-    </script>        
+    </script>   -->
+   
     <div class="footer">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
           <symbol id="bootstrap" viewBox="0 0 118 94">

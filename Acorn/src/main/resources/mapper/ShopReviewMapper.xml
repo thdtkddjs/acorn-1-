@@ -7,7 +7,8 @@
 		FROM
 			(SELECT result1.*, ROWNUM AS rnum
 			FROM
-				(SELECT num, writer, content, ref_group, review_group, deleted, TO_CHAR(board_shop_review.regdate, 'YY.MM.DD HH24:MI') AS regdate, profile
+				(SELECT num, writer, content, ref_group, review_group, deleted, 
+					TO_CHAR(board_shop_review.regdate, 'YY.MM.DD HH24:MI') AS regdate, profile
 				FROM board_shop_review
 				INNER JOIN users
 				ON board_shop_review.writer = users.id
@@ -27,7 +28,12 @@
 	<insert id="insert" parameterType="shopReviewDto">
 		INSERT INTO board_shop_review
 		(num, writer, content, ref_group, review_group, regdate)
+<<<<<<< HEAD
 		VALUES(#{num}, #{writer}, #{content}, #{ref_group}, #{review_group}, SYSDATE)
+=======
+		VALUES(#{num}, #{writer}, #{content}, #{ref_group},
+			#{review_group}, SYSDATE)
+>>>>>>> refs/remotes/upstream/master
 	</insert>
 	
 	<!-- 저장 예정인 리뷰의 글번호를 미리 얻어내기 -->

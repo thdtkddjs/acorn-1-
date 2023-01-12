@@ -48,7 +48,7 @@
       <!-- 가격 input -->
       <div class="mb-3">
          <label class="form-label" for="price">가격</label>
-         <input class="form-control" type="number" name="price" id="price"/>
+         <input class="form-control" type="text" name="price" id="price"/>
       </div>
       <!-- smart editor를 이용하는 content input -->
       <div class="mb-3">

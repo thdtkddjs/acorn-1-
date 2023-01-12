@@ -7,92 +7,88 @@ public class ShopMenuDto {
 	   private int num;
 	   private int menuNum;
 	   private String name;
-	   private int price;
+	   private String price;
 	   private String content;
 	   private String imagePath;
 	   private int startRowNum;
 	   private int endRowNum;
 	   
 	   public ShopMenuDto() {}
-	   
-		public ShopMenuDto(int num, int menuNum, String name, int price, String content, String imagePath, int startRowNum,
-				int endRowNum) {
-			super();
-			this.num = num;
-			this.menuNum = menuNum;
-			this.name = name;
-			this.price = price;
-			this.content = content;
-			this.imagePath = imagePath;
-			this.startRowNum = startRowNum;
-			this.endRowNum = endRowNum;
-		}
 
-		public int getNum() {
-			return num;
-		}
+	public ShopMenuDto(int num, int menuNum, String name, String price, String content, String imagePath,
+			int startRowNum, int endRowNum) {
+		super();
+		this.num = num;
+		this.menuNum = menuNum;
+		this.name = name;
+		this.price = price;
+		this.content = content;
+		this.imagePath = imagePath;
+		this.startRowNum = startRowNum;
+		this.endRowNum = endRowNum;
+	}
 
-		public void setNum(int num) {
-			this.num = num;
-		}
+	public int getNum() {
+		return num;
+	}
 
-		public int getMenuNum() {
-			return menuNum;
-		}
+	public void setNum(int num) {
+		this.num = num;
+	}
 
-		public void setMenuNum(int menuNum) {
-			this.menuNum = menuNum;
-		}
+	public int getMenuNum() {
+		return menuNum;
+	}
 
-		public String getName() {
-			return name;
-		}
+	public void setMenuNum(int menuNum) {
+		this.menuNum = menuNum;
+	}
 
-		public void setName(String name) {
-			this.name = name;
-		}
+	public String getName() {
+		return name;
+	}
 
-		public int getPrice() {
-			return price;
-		}
+	public void setName(String name) {
+		this.name = name;
+	}
 
-		public void setPrice(int price) {
-			this.price = price;
-		}
+	public String getPrice() {
+		return price;
+	}
 
-		public String getContent() {
-			return content;
-		}
+	public void setPrice(String price) {
+		this.price = price;
+	}
 
-		public void setContent(String content) {
-			this.content = content;
-		}
+	public String getContent() {
+		return content;
+	}
 
-		public String getImagePath() {
-			return imagePath;
-		}
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-		public void setImagePath(String imagePath) {
-			this.imagePath = imagePath;
-		}
+	public String getImagePath() {
+		return imagePath;
+	}
 
-		public int getStartRowNum() {
-			return startRowNum;
-		}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
 
-		public void setStartRowNum(int startRowNum) {
-			this.startRowNum = startRowNum;
-		}
+	public int getStartRowNum() {
+		return startRowNum;
+	}
 
-		public int getEndRowNum() {
-			return endRowNum;
-		}
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
 
-		public void setEndRowNum(int endRowNum) {
-			this.endRowNum = endRowNum;
-		}
-	   
+	public int getEndRowNum() {
+		return endRowNum;
+	}
 
-		
-	   
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
 }
