@@ -269,19 +269,7 @@ th>img{
 	clear: left;
 }
 
-.reviews ul li {
-	border-top: 1px solid #888;
-}
 
-.review-form textarea {
-	width: 84%;
-	height: 100px;
-}
-
-.review-form button {
-	width: 14%;
-	height: 100px;
-}
 /* 댓글에 댓글을 다는 폼과 수정폼은 일단 숨긴다. */
 .reviews .review-form {
 	display: none;
@@ -366,6 +354,31 @@ pre {
 	font-size : 15px;
 	text-decoration : none;
 	padding : 0px;
+}
+.regist_comment_box{
+ 	height: 100px; 
+ 	width: 692px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+	text-align : left;
+	padding : 0px;
+	margin : 0px;
+	margin-left : 3px;
+	padding : 15px;
+}
+.regist_btn{
+	width:148px;
+	height : 100px;
+	margin-left:5px;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+}
+.comment_img{
+	width:100px;
+	height:100px;
+	border: 1px solid #c9c9c9;
+    border-radius: 10px;
 }
 </style>
 <body>
@@ -657,24 +670,21 @@ pre {
 									</td>
 								</tr>
 								<tr>
-									<td>
-										<!-- 원글에 리뷰를 작성할 폼 -->
+								<td style="left: 10px; position: relative;">
+								<!-- 원글에 리뷰를 작성할 폼 -->
 										<form class="review-form insert-form" action="review_insert" method="post">
 											<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
   	  										<input type="hidden" name="imagePath" value="empty"/>
 											
-											<a id="profileLink" href="javascript:">
-												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-													<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-													<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-										        </svg>
+											<a id="profileLink" href="javascript:" style="float:left;">
+												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
 											</a>
 											
 											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
 											<input type="hidden" name="ref_group" value="${dto.num }" />
 											
-											<textarea name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
-											<button type="submit">등록</button>
+											<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
+											<button class="regist_btn" type="submit">등록</button>
 										</form>
 										
 										<!-- 이미지 등록용 숨겨진 form -->
@@ -688,7 +698,7 @@ pre {
 							</tbody>
 						</table>
 						<nav>
-							<ul class="pagination">
+							<ul class="pagination" style="margin:10px;">
 								<%--
 								  startPageNum 이 1 이 아닌 경우에만 Prev 링크를 제공한다. 
 								  &condition=${condition}&keyword=${encodedK}

@@ -6,26 +6,66 @@
 <head>
 <meta charset="UTF-8">
 <title>/views/users/info.jsp</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <style>
-   /* 프로필 이미지를 작은 원형으로 만든다 */
-   #profileImage{
-      width: 50px;
-      height: 50px;
-      border: 1px solid #cecece;
-      border-radius: 50%;
-   }
+/* 프로필 이미지를 작은 원형으로 만든다 */
+#profileImage {
+	width: 50px;
+	height: 50px;
+	border: 1px solid #cecece;
+	border-radius: 50%;
+}
+
+.container {
+	width: 624px;
+	height: 600px;
+	box-shadow: 0px 5px 20px 0px grey;
+	margin-top: 150px;
+	border-radius: 20px;
+	padding-top: 50px;
+}
+
+h1 {
+	text-align: center;
+}
+
+.submit_btn {
+	width: 100px;
+}
+table{
+	width : 300px;
+	margin-left: 150px;
+}
+tr{
+	height : 30px;
+	
+}
+th{
+	border-right : 1px solid black;
+	text-align : left;
+	height : 30px;
+}
+a{
+	text-decoration:none;
+}
 </style>
 </head>
-<body>
+<body class="text-center">
 	<div class="container">
-	   <h1>가입 정보 입니다.</h1>
+		<a href="${pageContext.request.contextPath}/index" class="logo_text">
+			<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+		</a>
+	   <h1>INFO</h1>
+	   <br>
 	   <table>
 	      <tr>
-	         <th>아이디</th>
+	         <th>ID</th>
 	         <td>${id }</td>
 	      </tr>
+	      <tr style="height:10px;"></tr>
 	      <tr>
-	         <th>프로필 이미지</th>
+	         <th>PROFILE</th>
 	         <td>
 	         <c:choose>
 	            <c:when test="${empty dto.profile }">
@@ -41,21 +81,27 @@
 	         </c:choose>
 	         </td>
 	      </tr>
+	      <tr style="height:10px;"></tr>
 	      <tr>
 	         <th>비밀번호</th>
-	         <td><a href="${pageContext.request.contextPath}/users/pwd_updateform">수정하기</a></td>
+	         <td><a href="${pageContext.request.contextPath}/users/pwd_updateform" class="btn btn-outline-info" style="padding :2px;">수정하기</a></td>
 	      </tr>
+	      <tr style="height:10px;"></tr>
 	      <tr>
 	         <th>이메일</th>
 	         <td>${dto.email }</td>
 	      </tr>
+	      <tr style="height:10px;"></tr>
 	      <tr>
 	         <th>가입일</th>
 	         <td>${dto.regdate }</td>
 	      </tr>
+	      <tr style="height:10px;"></tr>
 	   </table>
-	   <a href="${pageContext.request.contextPath}/users/updateform">개인정보 수정</a>
-	   <a href="javascript:deleteConfirm()">탈퇴</a>
+	   <br>
+	   <br>
+	   <a href="${pageContext.request.contextPath}/users/updateform" class="btn btn-outline-warning">EDIT</a>
+	   <a href="javascript:deleteConfirm()" class="btn btn-outline-danger">DROP-OUT</a>
 	</div>
 	<script>
 	   function deleteConfirm(){
