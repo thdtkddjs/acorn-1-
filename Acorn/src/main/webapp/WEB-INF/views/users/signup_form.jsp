@@ -56,5 +56,27 @@ h1{
 	      <button class="submit_btn btn btn-primary" type="submit">SIGN-UP</button>
 	   </form>
 </div>   
+<script>
+	$("#email").on("input", function(){
+	    $(this).removeClass("is-valid is-invalid");
+    	const inputEmail=$(this).val();
+    	const reg=/@/;
+    
+    	if(!reg.test(inputEmail)){
+        	$(this).addClass("is-invalid");
+        	isEmailValid=false;
+     	}else{
+        	$(this).addClass("is-valid");
+        	isEmailValid=true;
+     	}
+  	});
+    
+    $("#signupForm").on("submit", function(){
+        const isFormValid = isEmailValid;
+        if(!isFormValid){
+           return false;
+        }
+     });
+</script>
 </body>
 </html>
