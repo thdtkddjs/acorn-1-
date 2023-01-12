@@ -88,6 +88,27 @@
             //id 가 profileLink 인 요소의 내부(자식요소)에 덮어쓰기 하면서 html 형식으로 해석해 주세요 라는 의미 
             document.querySelector("#profileLink").innerHTML=img;
          });
+         
+         $("#email").on("input", function(){
+         $(this).removeClass("is-valid is-invalid");
+         const inputEmail=$(this).val();
+         const reg=/@/;
+         
+         if(!reg.test(inputEmail)){
+             $(this).addClass("is-invalid");
+             isEmailValid=false;
+          }else{
+             $(this).addClass("is-valid");
+             isEmailValid=true;
+          }
+       });
+         
+         $("#signupForm").on("submit", function(){
+             const isFormValid = isEmailValid;
+             if(!isFormValid){
+                return false;
+             }
+          });
       });      
       
    </script>
