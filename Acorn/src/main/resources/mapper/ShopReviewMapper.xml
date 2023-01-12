@@ -7,8 +7,7 @@
 		FROM
 			(SELECT result1.*, ROWNUM AS rnum
 			FROM
-				(SELECT num, writer, content, ref_group,
-					review_group, deleted, board_shop_review.regdate, profile
+				(SELECT num, writer, content, ref_group, review_group, deleted, imagePath, TO_CHAR(board_shop_review.regdate, 'YY.MM.DD HH24:MI') AS regdate, profile
 				FROM board_shop_review
 				INNER JOIN users
 				ON board_shop_review.writer = users.id
@@ -19,7 +18,7 @@
 	
 	<!-- 리뷰는 실제로 삭제하지 않고 delete 칼럼에 저장된 값을 yes로 수정하는 작업만 한다. -->
 	<update id="delete" parameterType="int">
-		UPDATE board_shop_comment
+		UPDATE board_shop_review
 		SET deleted = 'yes'
 		WHERE num = #{num}
 	</update>
@@ -27,9 +26,8 @@
 	<!-- 리뷰 저장할 때 가게글의 글번호도 미리 ShopReviewDto 객체에 담아와야 한다. -->
 	<insert id="insert" parameterType="shopReviewDto">
 		INSERT INTO board_shop_review
-		(num, writer, content, ref_group, review_group, regdate)
-		VALUES(#{num}, #{writer}, #{content}, #{ref_group},
-			#{review_group}, SYSDATE)
+		(num, writer, content, ref_group, review_group, regdate, imagePath)
+		VALUES(#{num}, #{writer}, #{content}, #{ref_group}, #{review_group}, SYSDATE, #{imagePath})
 	</insert>
 	
 	<!-- 저장 예정인 리뷰의 글번호를 미리 얻어내기 -->
@@ -45,7 +43,7 @@
 	</update>
 	
 	<select id="getData" parameterType="int" resultType="shopReviewDto">
-		SELECT num, writer, content, ref_group, review_group, deleted, regdate
+		SELECT num, writer, content, ref_group, review_group, deleted, TO_CHAR(regdate, 'YY.MM.DD HH24:MI') AS regdate, imagePath
 		FROM board_shop_review
 		WHERE num = #{num}
 	</select>

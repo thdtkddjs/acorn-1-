@@ -31,7 +31,7 @@ public class ShopReviewDaoImpl implements ShopReviewDao{
 
 	@Override
 	public int getSequence() {
-		return session.selectOne("shopReivew.getSequence");
+		return session.selectOne("shopReview.getSequence");
 	}
 
 	@Override

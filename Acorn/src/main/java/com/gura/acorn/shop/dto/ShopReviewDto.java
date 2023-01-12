@@ -16,11 +16,12 @@ public class ShopReviewDto {
 	private String profile;
 	private int startRowNum;
 	private int endRowNum;
+	private String imagePath;
 	
 	public ShopReviewDto() {}
 
 	public ShopReviewDto(int num, String writer, String content, String target_id, int ref_group, int review_group,
-			String deleted, String grade, String regdate, String profile, int startRowNum, int endRowNum) {
+			String deleted, String grade, String regdate, String profile, int startRowNum, int endRowNum, String imagePath) {
 		super();
 		this.num = num;
 		this.writer = writer;
@@ -34,6 +35,7 @@ public class ShopReviewDto {
 		this.profile = profile;
 		this.startRowNum = startRowNum;
 		this.endRowNum = endRowNum;
+		this.imagePath = imagePath;
 	}
 
 	public int getNum() {
@@ -130,5 +132,13 @@ public class ShopReviewDto {
 
 	public void setEndRowNum(int endRowNum) {
 		this.endRowNum = endRowNum;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
 	}
 }
