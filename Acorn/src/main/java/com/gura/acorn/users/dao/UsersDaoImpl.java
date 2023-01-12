@@ -83,4 +83,13 @@ public class UsersDaoImpl implements UsersDao{
 		return session.selectOne("users.getData2", dto);
 	}
 
+	@Override
+	public void ban(String id) {
+		
+		session.update("users.ban", id);
+		
+	}
+	
+	
+
 }

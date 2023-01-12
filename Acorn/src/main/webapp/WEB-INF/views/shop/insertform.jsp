@@ -69,7 +69,7 @@
          <textarea class="form-control"  name="content" id="content"></textarea>
       </div>
    
-      <button class="btn btn-primary" type="submit">저장</button>
+      <button class="btn btn-primary" type="submit" onclick="submitContents(this)">저장</button>
    </form>
    
    <!-- 이미지 등록용 숨겨진 form -->

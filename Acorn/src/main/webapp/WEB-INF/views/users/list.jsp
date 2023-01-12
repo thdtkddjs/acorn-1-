@@ -19,7 +19,8 @@
                <th>아이디</th>
                <th>이메일</th>
                <th>등록일</th>
-               <th>삭제</th>
+               <th>차단</th>
+               <th>차단 여부</th>
             </tr>
          </thead>
          <tbody>
@@ -28,7 +29,8 @@
                <td>${tmp.id }</td>
                <td>${tmp.email }</td>
                <td>${tmp.regdate }</td>
-               <td><a href="javascript:deleteConfirm(${tmp.id })">삭제</a></td>
+               <td><a href="javascript:ban('${tmp.id }')">차단</a></td>
+               <td id="${tmp.id }">${tmp.ban }</td>
             </tr>
          </c:forEach>
          </tbody>
@@ -75,13 +77,31 @@
          </p>
       </c:if>
    </div>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
    <script>
-      function deleteConfirm(id){
-         let isDelete=confirm("삭제 하시겠습니까?");
-         if(isDelete){
-            location.href="delete?id="+id;
+      function ban(id){
+         let isBan=confirm("삭제 하시겠습니까?");
+         if(isBan){
+           //여기서 id 를 활용해서 페이지 전환 없이 원하는 작업을 한다.
+           $.ajax({
+        	   url:"${pageContext.request.contextPath}/users/ban",
+        	   method:"post",
+        	   data:{id:id},
+        	   success:function(data){
+        		   console.log(data);
+        		   if(data.isSuccess){
+        			   $("#"+id).text("BAN");
+        		   }
+        	   }
+           });
          }
       }
    </script>
 </body>
 </html>
+
+
+
+
+
+

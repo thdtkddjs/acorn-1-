@@ -25,4 +25,6 @@ public interface UsersDao {
 	public UsersDto getData(int num);
 	//키워드를 활용한 글 정보
 	public UsersDto getData(UsersDto dto);
+	//회원 밴 시키는 메소드
+	public void ban(String id);
 }

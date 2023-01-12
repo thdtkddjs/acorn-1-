@@ -28,9 +28,6 @@
 						<img class="profile-image" src="${pageContext.request.contextPath}/users/profile/${tmp.profile }" />
 					</c:if>
 					<span>${tmp.writer }</span>
-					<c:if test="${tmp.num ne tmp.review_group }">
-                        @<i>${tmp.target_id }</i>
-					</c:if>
 					<span>${tmp.regdate }</span> 
 					<a data-num="${tmp.num }" href="javascript:" class="reply-link">답글</a>
 					<c:if test="${ (id ne null) and (tmp.writer eq id) }">
@@ -42,7 +39,7 @@
 					<pre id="pre${tmp.num }">${tmp.content }</pre>
 				</dd>
 			</dl>
-			<form id="reForm${tmp.num }" class="animate__animated comment-form re-insert-form" action="review_insert" method="post">
+			<form id="reForm${tmp.num }" class="animate__animated review-form re-insert-form" action="review_insert" method="post">
 				<input type="hidden" name="ref_group" value="${num }" /> 
 				<input type="hidden" name="target_id" value="${tmp.writer }" /> 
 				<input type="hidden" name="review_group" value="${tmp.review_group }" />
@@ -50,13 +47,12 @@
 				<button type="submit">등록</button>
 			</form>
 			<c:if test="${tmp.writer eq id }">
-				<form id="updateForm${tmp.num }" class="comment-form update-form" action="review_update" method="post">
+				<form id="updateForm${tmp.num }" class="review-form update-form" action="review_update" method="post">
 					<input type="hidden" name="num" value="${tmp.num }" />
 					<textarea name="content">${tmp.content }</textarea>
 					<button type="submit">수정</button>
 				</form>
 			</c:if>
-			</li>
 		</c:otherwise>
 	</c:choose>
 </c:forEach>

@@ -24,4 +24,5 @@ public interface UsersService {
 	public void deleteUser(HttpSession session, ModelAndView mView);
 	public void getList(HttpServletRequest request);
 	public void getData(HttpServletRequest request);
+	public void banUser(HttpServletRequest request);
 }
