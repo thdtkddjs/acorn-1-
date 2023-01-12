@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </head>
 <style>
 .container {
@@ -192,7 +193,106 @@ button:hover {
 .table_1::-webkit-scrollbar {
 	display: none;
 }
-	
+/* 리뷰 관련 스타일 */ 
+.content {
+	border: 1px dotted gray;
+}
+/* 리뷰 프로필 이미지를 작은 원형으로 만든다. */
+.profile-image {
+	width: 30px;
+	height: 30px;
+	border: 1px solid #cecece;
+	border-radius: 50%;
+}
+/* ul 요소의 기본 스타일 제거 */
+.reviews ul {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+
+.reviews dt {
+	margin-top: 5px;
+}
+
+.reviews dd {
+	margin-left: 50px;
+}
+
+.review-form textarea, .review-form button {
+	float: left;
+}
+
+.reviews li {
+	clear: left;
+}
+
+.reviews ul li {
+	border-top: 1px solid #888;
+}
+
+.review-form textarea {
+	width: 84%;
+	height: 100px;
+}
+
+.review-form button {
+	width: 14%;
+	height: 100px;
+}
+/* 댓글에 댓글을 다는 폼과 수정폼은 일단 숨긴다. */
+.reviews .review-form {
+	display: none;
+}
+
+pre {
+	display: block;
+	padding: 9.5px;
+	margin: 0 0 10px;
+	font-size: 13px;
+	line-height: 1.42857143;
+	color: #333333;
+	word-break: break-all;
+	word-wrap: break-word;
+	background-color: #f5f5f5;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+.loader {
+	/* 로딩 이미지를 가운데 정렬하기 위해 */
+	text-align: center;
+	/* 일단 숨겨 놓기 */
+	display: none;
+}
+
+.loader svg {
+	animation: rotateAni 1s ease-out infinite;
+}
+
+@
+keyframes rotateAni { 0%{
+	transform: rotate(0deg);
+}
+100
+%
+{
+transform
+:
+rotate(
+360deg
+);
+}
+}
+	#profileImage{
+      width: 100px;
+      height: 100px;
+      border: 1px solid #cecece;
+      border-radius: 50%;
+   }
+   #imageForm{
+      display: none;
+   }
 </style>
 <body>
 
@@ -412,36 +512,110 @@ button:hover {
 						</table>
 					</div>
 					<div class="table_3">
-						<table>
+						<table style="width:950px;">
 							<tbody>
 								<tr>
 									<td>리뷰</td>
 								</tr>
 								<tr>
-									<td>5점  :  N명</td>
+									<td>평점  :  N점</td>
 								</tr>
 								<tr>
-									<td>4점  :  N명</td>
+									<td>
+										<div class="reviews">
+											<ul>
+												<c:forEach var="tmp" items="${reviewList }">
+													<c:choose>
+														<c:when test="${tmp.deleted eq 'yes' }">
+															<li>삭제된 리뷰 입니다.</li>
+														</c:when>
+														<c:otherwise>
+															<c:if test="${tmp.num eq tmp.review_group }">
+																<li id="reli${tmp.num }">
+															</c:if>
+															
+															<dl>
+																<dt class="row">
+																	<div class="col-2">
+																		<img class="profile-image" src="${pageContext.request.contextPath}${tmp.profile }" />
+																	</div>
+																	<div class="col-8">
+																		<pre id="pre${tmp.num }">${tmp.content }</pre>
+																	</div>
+																	<div class="col-2">
+																		<c:if test="${ empty tmp.profile }">
+																			<svg class="profile-image" xmlns="http://www.w3.org/2000/svg"
+																				width="16" height="16" fill="currentColor"
+																				class="bi bi-person-circle" viewBox="0 0 16 16">
+									                                      <path
+																					d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+									                                      <path fill-rule="evenodd"
+																					d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+									                                    </svg>
+																		</c:if>
+																		<c:if test="${not empty tmp.profile }">
+																			<img class="profile-image" src="${pageContext.request.contextPath}${tmp.profile }" />
+																		</c:if>
+																		<span class="col">${tmp.writer }</span>
+																	</div>
+																</dt>
+																<dd>
+																	<span>${tmp.regdate } |</span> 
+																	<!-- <a data-num="${tmp.num }" href="javascript:" class="reply-link">답글</a>  -->
+																	<c:if test="${ (id ne null) and (tmp.writer eq id) }">
+																		<a data-num="${tmp.num }" class="update-link"
+																			href="javascript:">수정</a>
+																		<a data-num="${tmp.num }" class="delete-link"
+																			href="javascript:">삭제</a>
+																	</c:if>
+																</dd>
+															</dl>
+
+															<c:if test="${tmp.writer eq id }">
+																<form id="updateForm${tmp.num }"
+																	class="review-form update-form" action="review_update"
+																	method="post">
+																	<input type="hidden" name="num" value="${tmp.num }" />
+																	<textarea name="content">${tmp.content }</textarea>
+																	<button type="submit">수정</button>
+																</form>
+															</c:if>
+														</c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</ul>
+										</div>
+									</td>
 								</tr>
 								<tr>
-									<td>3점  :  N명</td>
+									<td>
+										<!-- 원글에 리뷰를 작성할 폼 -->
+										<form class="review-form insert-form" action="review_insert" method="post">
+											<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
+  	  										<input type="hidden" name="imagePath" value="empty"/>
+											
+											<a id="rImageLink" href="javascript:">
+												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+													<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+													<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+										        </svg>
+											</a>
+											
+											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
+											<input type="hidden" name="ref_group" value="${dto.num }" />
+											
+											<textarea name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
+											<button type="submit">등록</button>
+										</form>
+										
+										<!-- 이미지 등록용 숨겨진 form -->
+									   <form id="imageForm" action="rivew_image_upload" method="post" enctype="multipart/form-data">
+									      사진
+									      <input type="file" id="image" name="image" accept=".jpg, .png, .gif, .jpeg"/>
+									      <button type="submit">업로드</button>
+									   </form>
+									</td>
 								</tr>
-								<tr>
-									<td>2점  :  N명</td>
-								</tr>
-								<tr>
-									<td>1점  :  N명</td>
-								</tr>
-								<tr>
-									<td>리뷰 : "~~~~~~~~~~~~~~~~~~"</td>
-								</tr>
-								<tr>
-									<td>리뷰 : "~~~~~~~~~~~~~~~~~~"</td>
-								</tr>
-								<tr>
-									<td>리뷰 : "~~~~~~~~~~~~~~~~~~"</td>
-								</tr>
-								
 							</tbody>
 						</table>
 					</div>
@@ -614,5 +788,217 @@ button:hover {
         </footer>
     
     </div>
+    <script src="${pageContext.request.contextPath}/resources/js/gura_util.js"></script>
+	<script>
+      
+      //클라이언트가 로그인 했는지 여부
+      let isLogin=${ not empty id };
+      
+      document.querySelector(".insert-form")
+         .addEventListener("submit", function(e){
+            //만일 로그인 하지 않았으면 
+            if(!isLogin){
+               //폼 전송을 막고 
+               e.preventDefault();
+               //로그인 폼으로 이동 시킨다.
+               location.href=
+                  "${pageContext.request.contextPath}/users/loginform?url=${pageContext.request.contextPath}/shop/detail?num=${dto.num}";
+            }
+         });
+      
+      /*
+         detail
+          페이지 로딩 시점에 만들어진 1 페이지에 해당하는 
+         댓글에 이벤트 리스너 등록 하기 
+      */
+      addUpdateFormListener(".update-form");
+      addUpdateListener(".update-link");
+      addDeleteListener(".delete-link");
+      
+      
+      //댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
+      let currentPage=1;
+      //마지막 페이지는 totalPageCount 이다.  
+      <%-- 댓글의 개수가 0일 때 오류를 발생하지 않기 위해 --%>
+      let lastPage=${totalPageCount eq 0 ? 1 : totalPageCount};
+      
+      //추가로 댓글을 요청하고 그 작업이 끝났는지 여부를 관리할 변수 
+      let isLoading=false; //현재 로딩중인지 여부 
+      
+      /*
+         window.scrollY => 위쪽으로 스크롤된 길이
+         window.innerHeight => 웹브라우저의 창의 높이
+         document.body.offsetHeight => body 의 높이 (문서객체가 차지하는 높이)
+      */
+      window.addEventListener("scroll", function(){
+         //바닥 까지 스크롤 했는지 여부 
+         const isBottom = 
+            window.innerHeight + window.scrollY  >= document.body.offsetHeight;
+         //현재 페이지가 마지막 페이지인지 여부 알아내기
+         let isLast = currentPage == lastPage;   
+         //현재 바닥까지 스크롤 했고 로딩중이 아니고 현재 페이지가 마지막이 아니라면
+         if(isBottom && !isLoading && !isLast){
+            //로딩바 띄우기
+            document.querySelector(".loader").style.display="block";
+            
+            //로딩 작업중이라고 표시
+            isLoading=true;
+            
+            //현재 댓글 페이지를 1 증가 시키고 
+            currentPage++;
+            
+            /*
+               해당 페이지의 내용을 ajax 요청을 통해서 받아온다.
+               "pageNum=xxx&num=xxx" 형식으로 GET 방식 파라미터를 전달한다. 
+            */
+            ajaxPromise("ajax_review_list","get",
+                  "pageNum="+currentPage+"&num=${dto.num}")
+            .then(function(response){
+               //json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
+               return response.text();
+            })
+            .then(function(data){
+               //data 는 html 형식의 문자열이다. 
+               console.log(data);
+               // beforebegin | afterbegin | beforeend | afterend
+               document.querySelector(".reviews ul")
+                  .insertAdjacentHTML("beforeend", data);
+               //로딩이 끝났다고 표시한다.
+               isLoading=false;
+               //새로 추가된 댓글 li 요소 안에 있는 a 요소를 찾아서 이벤트 리스너 등록 하기 
+               addUpdateListener(".page-"+currentPage+" .update-link");
+               addDeleteListener(".page-"+currentPage+" .delete-link");
+               addReplyListener(".page-"+currentPage+" .reply-link");
+               //새로 추가된 댓글 li 요소 안에 있는 댓글 수정폼에 이벤트 리스너 등록하기
+               addUpdateFormListener(".page-"+currentPage+" .update-form");
+               
+               //로딩바 숨기기
+               document.querySelector(".loader").style.display="none";
+            });
+         }
+      });
+      
+      //인자로 전달되는 선택자를 이용해서 이벤트 리스너를 등록하는 함수 
+      function addUpdateListener(sel){
+         //댓글 수정 링크의 참조값을 배열에 담아오기 
+         // sel 은  ".page-xxx  .update-link" 형식의 내용이다 
+         let updateLinks=document.querySelectorAll(sel);
+         for(let i=0; i<updateLinks.length; i++){
+            updateLinks[i].addEventListener("click", function(){
+               //click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
+               const num=this.getAttribute("data-num"); //댓글의 글번호
+               
+               const form = document.querySelector("#updateForm"+num);
+               
+               //현재 문자열 읽어오기 ( "수정" or "취소")
+               let current = this.innerText;
+               
+               if(current == "수정"){
+            	   //수정 폼 보이게 하기
+            	   form.style.display="block";
+                   form.classList.add("animate__flash");
+                   this.innerText="취소";   
+                   form.addEventListener("animationend", function(){
+                      form.classList.remove("animate__flash");
+                   }, {once:true});
+                 }else if(current == "취소"){
+                    form.classList.add("animate__fadeOut");
+                    this.innerText="수정";
+                    form.addEventListener("animationend", function(){
+                       form.classList.remove("animate__fadeOut");
+                       form.style.display="none";
+                    },{once:true});
+               }
+               
+               
+            });
+         }
+      }
+      function addDeleteListener(sel){
+         //댓글 삭제 링크의 참조값을 배열에 담아오기 
+         let deleteLinks=document.querySelectorAll(sel);
+         for(let i=0; i<deleteLinks.length; i++){
+            deleteLinks[i].addEventListener("click", function(){
+               //click 이벤트가 일어난 바로 그 요소의 data-num 속성의 value 값을 읽어온다. 
+               const num=this.getAttribute("data-num"); //댓글의 글번호
+               const isDelete=confirm("리뷰를 삭제 하시겠습니까?");
+               if(isDelete){
+                  // gura_util.js 에 있는 함수들 이용해서 ajax 요청
+                  ajaxPromise("review_delete", "post", "num="+num)
+                  .then(function(response){
+                     return response.json();
+                  })
+                  .then(function(data){
+                     //만일 삭제 성공이면 
+                     if(data.isSuccess){
+                        //댓글이 있는 곳에 삭제된 댓글입니다를 출력해 준다. 
+                        document.querySelector("#reli"+num).innerText="삭제된 리뷰입니다.";
+                     }
+                  });
+               }
+            });
+         }  
+      }
+      
+      function addUpdateFormListener(sel){
+         //댓글 수정 폼의 참조값을 배열에 담아오기
+         let updateForms=document.querySelectorAll(sel);
+         for(let i=0; i<updateForms.length; i++){
+            //폼에 submit 이벤트가 일어 났을때 호출되는 함수 등록 
+            updateForms[i].addEventListener("submit", function(e){
+               //submit 이벤트가 일어난 form 의 참조값을 form 이라는 변수에 담기 
+               const form=this;
+               //폼 제출을 막은 다음 
+               e.preventDefault();
+               //이벤트가 일어난 폼을 ajax 전송하도록 한다.
+               ajaxFormPromise(form)
+               .then(function(response){
+                  return response.json();
+               })
+               .then(function(data){
+                  if(data.isSuccess){
+                     /*
+                        document.querySelector() 는 html 문서 전체에서 특정 요소의 
+                        참조값을 찾는 기능
+                        
+                        특정문서의 참조값.querySelector() 는 해당 문서 객체의 자손 요소 중에서
+                        특정 요소의 참조값을 찾는 기능
+                     */
+                     const num=form.querySelector("input[name=num]").value;
+                     const content=form.querySelector("textarea[name=content]").value;
+                     //수정폼에 입력한 value 값을 pre 요소에도 출력하기 
+                     document.querySelector("#pre"+num).innerText=content;
+                     form.style.display="none";
+                  }
+               });
+            });
+         }
+      }
+   </script>
+	<script>
+		//이미지 링크를 클릭하면 
+		document.querySelector("#rImageLink").addEventListener("click", function(){
+			if(!isLogin){
+			       //폼 전송을 막고 
+			       e.preventDefault();
+			       //로그인 폼으로 이동 시킨다.
+			       location.href = "${pageContext.request.contextPath}/users/loginform?url=${pageContext.request.contextPath}/shop/detail?num=${dto.num}";
+			}
+			document.querySelector("#image").click();	
+		});   
+
+		document.querySelector("#image").addEventListener("change", function(){
+			const form = document.querySelector("#imageForm"); 
+			ajaxFormPromise(form)
+			.then(function(response){
+				return response.json();
+			})
+			.then(function(data){
+				document.querySelector("input[name=imagePath]").value = data.imagePath;
+				let img = `<img id="profileImage" src="${pageContext.request.contextPath }\${data.imagePath}">`;
+				document.querySelector("#rImageLink").innerHTML=img;
+			});
+		}); 
+	</script>
 </body>
 </html>

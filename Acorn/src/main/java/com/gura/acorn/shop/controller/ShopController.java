@@ -72,7 +72,6 @@ public class ShopController {
 	//가게정보 상세보기
 	@GetMapping("/shop/detail")
 	public String detail(HttpServletRequest request) {
-		service.getList(request);
 		service.getDetail(request);
 		service.menuGetList(request);
 		return "shop/detail";
@@ -101,7 +100,7 @@ public class ShopController {
 	//새로운 댓글 저장 요청 처리
 	@RequestMapping("/shop/review_insert")
 	public String reviewInsert(HttpServletRequest request, int ref_group) {
-	      
+	    
 		service.saveReview(request);
 	   
 		return "redirect:/shop/detail?num="+ref_group;
