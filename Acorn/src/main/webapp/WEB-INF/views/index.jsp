@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>index.jsp</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>index.jsp</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </head>
 <style>
 .container {
@@ -94,6 +94,10 @@
 
 #map {
 	z-index: 2;
+	box-shadow: 2px 2px 3px 0px grey;
+	width: 972px; 
+	height: 870px;  
+	float: right;
 }
 
 .suggest_menu {
@@ -101,10 +105,17 @@
 	overflow: scroll;
 	-ms-overflow-style: none;
 }
-
 .suggest_menu::-webkit-scrollbar {
-	display: none;
+	width : 5px;
+	height : 0px;
 }
+.suggest_menu::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+}
+.suggest_menu::-webkit-scrollbar-track {
+}
+
 
 .fold_btn {
 	position: absolute;
@@ -134,29 +145,60 @@
   padding: 10px 12px;
   font-size: 14px;
 }
-
+.logo{
+	width:50px;
+}
+.logo_text{
+	display: flex; 
+	position: fixed;
+	text-decoration : none;
+	font-size : 30px;
+	font-weight : bold;
+}
+.top_menu{
+	padding: 0px;
+    width: 70px;
+    margin-top: 10px;
+}
+.user_menu{
+	text-decoration : none;
+	margin-top : 12px;
+	padding : 0px;
+	width : 120px;
+	height : 25px;
+	padding-top:7px;
+}
+.logout_menu{
+	text-decoration : none;
+	margin-top : -2px;
+	padding : 0px;
+	width : 70px;
+	height : 25px;
+}
 </style>
 <body>
     <div class="container">
-        
         <div class="header">
 			<c:choose>
 				<c:when test="${ empty sessionScope.id}">
-					<a href="${pageContext.request.contextPath}/index" style="display: flex; position: fixed;">홈으로</a>
-					<a href="${pageContext.request.contextPath}/users/loginform">로그인</a>
-					<a href="${pageContext.request.contextPath}/users/signup_form">회원가입</a>
+					<a href="${pageContext.request.contextPath}/index" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+						HOMEPAGE NAME
+					</a>
+					<a href="${pageContext.request.contextPath}/users/loginform"  class="top_menu btn btn-outline-dark">LOGIN</a>
+					<a href="${pageContext.request.contextPath}/users/signup_form"  class="top_menu btn btn-outline-success">SIGN-UP</a>
 				</c:when>
 				<c:otherwise>
-					<p>
-						<a href="${pageContext.request.contextPath}/index" style="display: flex; position: fixed;">홈으로</a>
-						<a href="${pageContext.request.contextPath}/users/info">${sessionScope.id }</a>
-						로그인중... 
-						<a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>
-					</p>
+					<a href="${pageContext.request.contextPath}/index" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+						HOMEPAGE NAME
+					</a>
+					<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
+					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
 				</c:otherwise>
 			</c:choose>
 			
-		<hr>
+
 		</div>
         <div class="search_menu">
             <div class="search_bar">
@@ -197,7 +239,7 @@
             </div>
         </div>
         <div class="search_result">
-            <div id="map" style="width: 972px; height: 871px;  float: right;"></div>
+            <div id="map"></div>
             
         </div>
         <div class="bottom">　</div>
