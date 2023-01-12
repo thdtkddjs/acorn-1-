@@ -1,6 +1,7 @@
 package com.gura.acorn.users.controller;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -143,5 +143,22 @@ public class UsersController {
 		//서비스를 이용해서 이미지를 upload 폴더에 저장하고 리턴되는 Map 을 리턴해서 json 문자열 응답하기
 		return service.saveProfileImage(request, image);
 	}
+	
+	@RequestMapping("/users/ban")
+	@ResponseBody
+	public Map<String, Object> ban(HttpServletRequest request) {
+		// 서비스를 이용해서 밴 정보를 수정하고
+		service.banUser(request);
+		Map<String, Object> map=new HashMap<>();
+		map.put("isSuccess", true);
+		return map;
+	}
 }
+
+
+
+
+
+
+
 

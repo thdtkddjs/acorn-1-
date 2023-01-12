@@ -7,7 +7,7 @@
 		VALUES( #{id}, #{pwd}, #{email}, SYSDATE)
 	</insert>
 	<select id="getData" parameterType="string" resultType="usersDto">
-		SELECT id, pwd, profile, email, regdate
+		SELECT id, pwd, profile, email, regdate, ban
 		FROM users
 		WHERE id=#{id}
 	</select>
@@ -25,12 +25,12 @@
 	 -->
 	<update id="update" parameterType="usersDto">
 		UPDATE users
-		SET email=#{email }, profile=#{profile, jdbcType=VARCHAR}
+		SET email=#{email }, profile=#{profile, jdbcType=VARCHAR}, ban=#{ban}
 		WHERE id=#{id }
 	</update>
-	<update id="update2" parameterType="usersDto">
+	<update id="ban" parameterType="string">
 		UPDATE users
-		SET email=#{email } <if test="profile != null">, profile=#{profile }</if>
+		SET ban='BAN'
 		WHERE id=#{id }
 	</update>
 	<delete id="delete" parameterType="string">
@@ -42,7 +42,7 @@
       FROM
          (SELECT result1.*, ROWNUM AS rnum
          FROM
-            (SELECT id, pwd, email, regdate
+            (SELECT id, pwd, email, regdate, ban
             FROM users
             
             <choose>
