@@ -16,9 +16,8 @@
 <style>
 .container {
 	display: grid;
-	grid-template-areas: 
-		"header header header"
-		"search main main";
+	grid-template-areas: "header header header"
+		"search main main" "  bot   bot   bot  ";
 	grid-template-columns: 1fr 2fr 1fr;
 	grid-template-rows: 50px 870px;
 	box-shadow: 0px 5px 20px 0px grey;
@@ -181,6 +180,9 @@ button:hover {
 .table_3::-webkit-scrollbar, .table_4::-webkit-scrollbar {
 	display: none;
 }
+th>img{
+	width : 200px;
+}
 /* 리뷰 관련 스타일 */ 
 .content {
 	border: 1px dotted gray;
@@ -281,11 +283,6 @@ rotate(
    #imageForm{
       display: none;
    }
-=======
-th>img{
-	width : 200px;
-}
-	
 </style>
 <body>
 
@@ -529,7 +526,7 @@ th>img{
 															<dl>
 																<dt class="row">
 																	<div class="col-2">
-																		<img class="profile-image" src="${pageContext.request.contextPath}${tmp.profile }" />
+																		<img src="${pageContext.request.contextPath}${tmp.imagePath }" />
 																	</div>
 																	<div class="col-8">
 																		<pre id="pre${tmp.num }">${tmp.content }</pre>
@@ -553,7 +550,6 @@ th>img{
 																</dt>
 																<dd>
 																	<span>${tmp.regdate } |</span> 
-																	<!-- <a data-num="${tmp.num }" href="javascript:" class="reply-link">답글</a>  -->
 																	<c:if test="${ (id ne null) and (tmp.writer eq id) }">
 																		<a data-num="${tmp.num }" class="update-link"
 																			href="javascript:">수정</a>
@@ -586,7 +582,7 @@ th>img{
 											<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
   	  										<input type="hidden" name="imagePath" value="empty"/>
 											
-											<a id="rImageLink" href="javascript:">
+											<a id="profileLink" href="javascript:">
 												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
 													<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
 													<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
@@ -601,7 +597,7 @@ th>img{
 										</form>
 										
 										<!-- 이미지 등록용 숨겨진 form -->
-									   <form id="imageForm" action="rivew_image_upload" method="post" enctype="multipart/form-data">
+									   <form id="imageForm" action="${pageContext.request.contextPath}/shop/review_image_upload" method="post" enctype="multipart/form-data">
 									      사진
 									      <input type="file" id="image" name="image" accept=".jpg, .png, .gif, .jpeg"/>
 									      <button type="submit">업로드</button>
@@ -610,6 +606,33 @@ th>img{
 								</tr>
 							</tbody>
 						</table>
+						<nav>
+							<ul class="pagination">
+								<%--
+								  startPageNum 이 1 이 아닌 경우에만 Prev 링크를 제공한다. 
+								  &condition=${condition}&keyword=${encodedK}
+								--%>
+								<c:if test="${startPageNum ne 1 }">
+									<li class="page-item">
+										<a class="page-link" href="list?pageNum=${startPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
+									</li>
+								</c:if>
+								<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
+									<li class="page-item ${pageNum eq i ? 'active' : '' }">
+										<a class="page-link" href="list?pageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
+									</li>
+								</c:forEach>
+				
+								<%--
+									마지막 페이지 번호가 전체 페이지의 갯수보다 작으면 Next 링크를 제공한다. 
+								--%>
+								<c:if test="${endPageNum lt totalPageCount }">
+									<li class="page-item">
+										<a class="page-link" href="list?pageNum=${endPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
+									</li>
+								</c:if>
+							</ul>
+						</nav>
 					</div>
 					<div class="table_4">
 						<table>
@@ -966,16 +989,8 @@ th>img{
             });
          }
       }
-   </script>
-	<script>
-		//이미지 링크를 클릭하면 
-		document.querySelector("#rImageLink").addEventListener("click", function(){
-			if(!isLogin){
-			       //폼 전송을 막고 
-			       e.preventDefault();
-			       //로그인 폼으로 이동 시킨다.
-			       location.href = "${pageContext.request.contextPath}/users/loginform?url=${pageContext.request.contextPath}/shop/detail?num=${dto.num}";
-			}
+    //이미지 링크를 클릭하면 
+		document.querySelector("#profileLink").addEventListener("click", function(){
 			document.querySelector("#image").click();	
 		});   
 
@@ -988,9 +1003,9 @@ th>img{
 			.then(function(data){
 				document.querySelector("input[name=imagePath]").value = data.imagePath;
 				let img = `<img id="profileImage" src="${pageContext.request.contextPath }\${data.imagePath}">`;
-				document.querySelector("#rImageLink").innerHTML=img;
+				document.querySelector("#profileLink").innerHTML=img;
 			});
-		}); 
-	</script>
+		});
+   </script>
 </body>
 </html>
