@@ -25,7 +25,7 @@
 	 -->
 	<update id="update" parameterType="usersDto">
 		UPDATE users
-		SET email=#{email }, profile=#{profile, jdbcType=VARCHAR}, ban=#{ban}
+		SET email=#{email }, profile=#{profile, jdbcType=VARCHAR}
 		WHERE id=#{id }
 	</update>
 	<update id="ban" parameterType="string">
