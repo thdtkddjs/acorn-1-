@@ -55,8 +55,15 @@ h1{
 	      </div>
 	      <button class="submit_btn btn btn-primary" type="submit">SIGN-UP</button>
 	   </form>
-</div>   
+</div>  
+<script
+  src="https://code.jquery.com/jquery-3.6.3.js"
+  integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+  crossorigin="anonymous"></script> 
 <script>
+	
+	let isEmailValid=false;
+	
 	$("#email").on("input", function(){
 	    $(this).removeClass("is-valid is-invalid");
     	const inputEmail=$(this).val();
@@ -70,12 +77,15 @@ h1{
         	isEmailValid=true;
      	}
   	});
+	
+	
     
-    $("#signupForm").on("submit", function(){
+    $("#myForm").on("submit", function(){
         const isFormValid = isEmailValid;
         if(!isFormValid){
            return false;
         }
+        
      });
 </script>
 </body>

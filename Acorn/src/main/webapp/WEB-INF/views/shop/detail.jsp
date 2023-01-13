@@ -1094,7 +1094,7 @@ pre {
       }
     //이미지 링크를 클릭하면 
 		document.querySelector("#profileLink").addEventListener("click", function(){
-			document.querySelector("#image").click();	
+			document.querySelector("#image").click();
 		});   
 
 		document.querySelector("#image").addEventListener("change", function(){

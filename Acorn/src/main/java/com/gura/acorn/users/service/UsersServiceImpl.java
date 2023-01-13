@@ -290,4 +290,5 @@ public class UsersServiceImpl implements UsersService{
 		System.out.println(id);
 		dao.ban(id);
 	}
+	
 }

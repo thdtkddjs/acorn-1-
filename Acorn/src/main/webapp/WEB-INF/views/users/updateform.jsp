@@ -36,7 +36,7 @@
       			</c:otherwise>
       		</c:choose>
       </a>
-      <form action="${pageContext.request.contextPath}/users/update" method="post">
+      <form id="myform" action="${pageContext.request.contextPath}/users/update" method="post">
          <input type="hidden" name="profile" 
             value="${ empty dto.profile ? 'empty' : dto.profile }"/>
          <div>
@@ -60,8 +60,7 @@
    </div>
    <!-- gura_util.js 로딩 -->
    <script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
-   <script>
-
+	<script>
       //프로필 이미지 링크를 클릭하면 
       document.querySelector("#profileLink").addEventListener("click", function(){
          // input type="file" 을 강제 클릭 시킨다. 
@@ -88,29 +87,37 @@
             //id 가 profileLink 인 요소의 내부(자식요소)에 덮어쓰기 하면서 html 형식으로 해석해 주세요 라는 의미 
             document.querySelector("#profileLink").innerHTML=img;
          });
+         </script>
          
-         $("#email").on("input", function(){
-         $(this).removeClass("is-valid is-invalid");
-         const inputEmail=$(this).val();
-         const reg=/@/;
-         
-         if(!reg.test(inputEmail)){
-             $(this).addClass("is-invalid");
-             isEmailValid=false;
-          }else{
-             $(this).addClass("is-valid");
-             isEmailValid=true;
-          }
-       });
-         
-         $("#signupForm").on("submit", function(){
-             const isFormValid = isEmailValid;
-             if(!isFormValid){
-                return false;
-             }
-          });
-      });      
-      
-   </script>
+         <script src="https://code.jquery.com/jquery-3.6.3.js" 
+         integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> 
+   <script>
+	
+	let isEmailValid=false;
+	
+	$("#email").on("input", function(){
+	    $(this).removeClass("is-valid is-invalid");
+    	const inputEmail=$(this).val();
+    	const reg=/@/;
+    
+    	if(!reg.test(inputEmail)){
+        	$(this).addClass("is-invalid");
+        	isEmailValid=false;
+     	}else{
+        	$(this).addClass("is-valid");
+        	isEmailValid=true;
+     	}
+  	});
+	
+	
+    
+    $("#myForm").on("submit", function(){
+        const isFormValid = isEmailValid;
+        if(!isFormValid){
+           return false;
+        }
+        
+     });
+</script>
 </body>
 </html>
