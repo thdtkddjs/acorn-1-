@@ -634,12 +634,11 @@ pre {
 																		</c:choose>
 																	</div>
 																	<div class="col-8">
-																		<pre class="comment_box" id="pre${tmp.num }">${tmp.content }</pre>
+																		<pre class="comment_box" id="pre${tmp.num }">${tmp.title} | ${tmp.grade} <br /> ${tmp.content }</pre>
 																		<c:if test="${tmp.writer eq id }">
-																			<form id="updateForm${tmp.num }"
-																				class="review-form update-form" action="review_update"
-																				method="post">
+																			<form id="updateForm${tmp.num }" class="review-form update-form" action="review_update" method="post">
 																				<input type="hidden" name="num" value="${tmp.num }" />
+																				<input type="text" name="title" value="${tmp.title }" />
 																				<textarea name="content">${tmp.content }</textarea>
 																				<button type="submit" id="ur${tmp.num }">수정</button>
 																			</form>
@@ -696,9 +695,8 @@ pre {
 											<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
   	  										<input type="hidden" name="imagePath" value="empty"/>
 											
-											<a id="profileLink" href="javascript:" style="float:left;">
-												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
-											</a>
+											<input type="text" name="title" id="title" placeholder="제목 입력..."/>
+											
 											<label for="grade_number">평점 : ★</label>
 											<input type="radio" name="grade_number" value=1 />
 											<label for="grade_number">★★</label>
@@ -709,6 +707,10 @@ pre {
 											<input type="radio" name="grade_number" value=4 />
 											<label for="grade_number">★★★★★</label>
 											<input type="radio" name="grade_number" value=5 checked/>
+											
+											<a id="profileLink" href="javascript:" style="float:left;">
+												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
+											</a>
 											
 											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
 											<input type="hidden" name="ref_group" value="${dto.num }" />

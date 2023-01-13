@@ -82,5 +82,11 @@ alter table board_shop_review drop(grade);
 
 alter table board_shop_review add(grade number);
 
+alter table board_shop_review add(title varchar2(50));
+
+-- 처음 테이블 만들 당시에 shop_review 테이블에 target_id 칼럼이 있으신분은 아래 sql문으로 제거
+alter table board_shop_review drop(target_id);
+
 -- 유저스 테이블 벤 기능용 칼럼 추가
 ALTER TABLE users ADD(BAN varchar2(25));
+
