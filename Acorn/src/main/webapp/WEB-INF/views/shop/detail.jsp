@@ -624,12 +624,14 @@ pre {
 															<dl>
 																<dt class="row">
 																	<div class="col-2">
-																		<c:if test="${ empty tmp.imagePath }">
-																			<img class="review_img" src="${pageContext.request.contextPath}/resources/images/photo.png"/>
-																		</c:if>
-																		<c:if test="${not empty tmp.imagePath }">
-																			<img class="review_img" src="${pageContext.request.contextPath}${tmp.imagePath}"/>
-																		</c:if>
+																		<c:choose>
+																			<c:when test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
+																				<img class="review_img" src="${pageContext.request.contextPath}/resources/images/photo.png"/>
+																			</c:when>
+																			<c:otherwise>
+																				<img class="review_img" src="${pageContext.request.contextPath}${tmp.imagePath}"/>
+																			</c:otherwise>
+																		</c:choose>
 																	</div>
 																	<div class="col-8">
 																		<pre class="comment_box" id="pre${tmp.num }">${tmp.content }</pre>
