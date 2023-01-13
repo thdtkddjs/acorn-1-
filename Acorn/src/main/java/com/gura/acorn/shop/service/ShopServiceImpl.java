@@ -173,9 +173,10 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("totalPageCount", totalPageCount);
 		
 		//평점 추가
-
-		double grade=Math.round(shopReviewDao.getGrade(num)*100)/100.0;
-		request.setAttribute("grade", grade);
+		if(shopReviewDao.getData(num)!=null) {
+			double grade=Math.round(shopReviewDao.getGrade(num)*100)/100.0;
+			request.setAttribute("grade", grade);
+		}
 	}
 
 	@Override
