@@ -85,4 +85,4 @@ ALTER TABLE users ADD(ban varchar2(25));
 
 ALTER TABLE board_shop_review DROP(grade);
 
-ALTER TABLE board_shop_reivew ADD(grade number);
+ALTER TABLE board_shop_review ADD(grade number);
