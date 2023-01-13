@@ -697,16 +697,16 @@ pre {
 											<a id="profileLink" href="javascript:" style="float:left;">
 												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
 											</a>
-											<label for="grade_number">1</label>
+											<label for="grade_number">평점 : ★</label>
 											<input type="radio" name="grade_number" value=1 />
-											<label for="grade_number">2</label>
+											<label for="grade_number">★★</label>
 											<input type="radio" name="grade_number" value=2 />
-											<label for="grade_number">3</label>
+											<label for="grade_number">★★★</label>
 											<input type="radio" name="grade_number" value=3 />
-											<label for="grade_number">4</label>
+											<label for="grade_number">★★★★</label>
 											<input type="radio" name="grade_number" value=4 />
-											<label for="grade_number">5</label>
-											<input type="radio" name="grade_number" value=5 />
+											<label for="grade_number">★★★★★</label>
+											<input type="radio" name="grade_number" value=5 checked/>
 											
 											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
 											<input type="hidden" name="ref_group" value="${dto.num }" />

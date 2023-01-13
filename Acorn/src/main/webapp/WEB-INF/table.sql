@@ -4,7 +4,8 @@ CREATE TABLE users(
     pwd VARCHAR2(100) NOT NULL,
     email VARCHAR2(100),
     profile VARCHAR2(100), --프로필 이미지 경로를 저장할 칼럼
-    regdate DATE
+    regdate DATE,
+    ban VARCHAR2(25)
 );
 
 -- 가게 리스트 테이블
@@ -79,7 +80,7 @@ ALTER TABLE board_shop_review ADD(imagePath varchar2(200));
 
 alter table board_shop_review drop(grade);
 
-alter table board_shop_reivew add(grade number);
+alter table board_shop_review add(grade number);
 
 -- 유저스 테이블 벤 기능용 칼럼 추가
 ALTER TABLE users ADD(BAN varchar2(25));
