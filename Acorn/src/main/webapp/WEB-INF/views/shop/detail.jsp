@@ -71,7 +71,7 @@
 	position: fixed;
 	z-index: 5;
 }
-
+ 
 
 .search_bar {
 	border: 3px solid;
@@ -103,8 +103,30 @@
 }
 
 .suggest_menu::-webkit-scrollbar {
-	display: none;
+	width : 5px;
+	height : 0px;
 }
+.suggest_menu::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+}
+.suggest_menu::-webkit-scrollbar-track {
+}
+.table_1::-webkit-scrollbar, .table_2::-webkit-scrollbar, 
+.table_3::-webkit-scrollbar, .table_4::-webkit-scrollbar {
+	width : 5px;
+	height : 0px;
+}
+.table_1::-webkit-scrollbar-thumb, .table_2::-webkit-scrollbar-thumb, 
+.table_3::-webkit-scrollbar-thumb, .table_4::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+}
+.table_1::-webkit-scrollbar-track, .table_2::-webkit-scrollbar-track, 
+.table_3::-webkit-scrollbar-track, .table_4::-webkit-scrollbar-track {
+
+}
+
 
 .fold_btn {
 	position: absolute;
@@ -171,18 +193,47 @@ button:hover {
 	background-color: skyblue;
 }
 .table_1, .table_2, .table_3, .table_4{
-	width : 943px;
+	width : 972px;
 	height : 600px; 
 	overflow: scroll;
-	margin-left:15px;
 }
-.table_1::-webkit-scrollbar, .table_2::-webkit-scrollbar, 
-.table_3::-webkit-scrollbar, .table_4::-webkit-scrollbar {
-	display: none;
-}
+
 th>img{
 	width : 200px;
 }
+
+.menu_card{
+ 	width: 18rem;
+ 	float : left;
+ 	margin-left: 25px;
+	margin-top: 15px;
+}
+.logo{
+	width:50px;
+}
+.logo_text{
+	display: flex; 
+	position: fixed;
+	text-decoration : none;
+	font-size : 30px;
+	font-weight : bold;
+}
+.user_menu{
+	text-decoration : none;
+	margin-top : 12px;
+	padding : 0px;
+	width : 120px;
+	height : 25px;
+	padding-top:7px;
+}
+.logout_menu{
+	text-decoration : none;
+	margin-top : -2px;
+	padding : 0px;
+	width : 70px;
+	height : 25px;
+}
+
 /* 리뷰 관련 스타일 */ 
 .content {
 	border: 1px dotted gray;
@@ -202,7 +253,8 @@ th>img{
 }
 
 .reviews dt {
-	margin-top: 5px;
+	margin-top: 10px;
+	position : relative;
 }
 
 .reviews dd {
@@ -217,22 +269,17 @@ th>img{
 	clear: left;
 }
 
-.reviews ul li {
-	border-top: 1px solid #888;
-}
 
-.review-form textarea {
-	width: 84%;
-	height: 100px;
-}
-
-.review-form button {
-	width: 14%;
-	height: 100px;
-}
 /* 댓글에 댓글을 다는 폼과 수정폼은 일단 숨긴다. */
 .reviews .review-form {
 	display: none;
+	text-align : left;
+	height : 152px;
+	width : 590px;
+	padding : 0px;
+	margin : 0px;
+	margin-left : 3px;
+	padding : 15px;
 }
 
 pre {
@@ -244,45 +291,102 @@ pre {
 	color: #333333;
 	word-break: break-all;
 	word-wrap: break-word;
-	background-color: #f5f5f5;
-	border: 1px solid #ccc;
-	border-radius: 4px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px
 }
 
-.loader {
-	/* 로딩 이미지를 가운데 정렬하기 위해 */
-	text-align: center;
-	/* 일단 숨겨 놓기 */
+@keyframes rotateAni { 
+	0%{
+		transform: rotate(0deg);
+	}
+	100%{
+		transform:rotate(360deg);
+	}
+}
+#profileImage{
+    width: 100px;
+    height: 100px;
+    border: 1px solid #cecece;
+    border-radius: 50%;
+  }
+#imageForm{
 	display: none;
-}
-
-.loader svg {
-	animation: rotateAni 1s ease-out infinite;
-}
-
-@
-keyframes rotateAni { 0%{
-	transform: rotate(0deg);
-}
-100
-%
-{
-transform
-:
-rotate(
-360deg
-);
-}
-}
-	#profileImage{
-      width: 100px;
-      height: 100px;
-      border: 1px solid #cecece;
-      border-radius: 50%;
    }
-   #imageForm{
-      display: none;
-   }
+
+.col-2{
+	width : auto;
+	border:1px solid #c9c9c9; 
+	border-radius:10px;
+	padding : 0px;
+	overflow:hidden;
+}
+.col-8{
+	padding : 0px;
+}
+.comment_box{
+	text-align : left;
+	height : 152px;
+	width : 590px;
+	padding : 0px;
+	margin : 0px;
+	margin-left : 3px;
+	padding : 15px;
+}
+.review_profile{
+	background-color : #feffe6;
+	right: 0px;
+    height: 152px;
+    width: 150px;
+    position: absolute;
+    padding : 10px;
+}
+.profile-image{
+	width : 50px;
+	height : 50px;
+}
+.review_img{
+	width : 200px;
+	height : 150px;
+}
+.row {
+	margin-left : 10px;
+}
+.update-link{
+	font-size : 15px;
+	text-decoration : none;
+	padding : 0px;
+}
+.delete-link{
+	font-size : 15px;
+	text-decoration : none;
+	padding : 0px;
+}
+.regist_comment_box{
+ 	height: 100px; 
+ 	width: 692px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+	text-align : left;
+	padding : 0px;
+	margin : 0px;
+	margin-left : 3px;
+	padding : 15px;
+}
+.regist_btn{
+	width:148px;
+	height : 100px;
+	margin-left:5px;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+}
+.comment_img{
+	width:100px;
+	height:100px;
+	border: 1px solid #c9c9c9;
+    border-radius: 10px;
+}
 </style>
 <body>
 
@@ -291,16 +395,20 @@ rotate(
         <div class="header">
 			<c:choose>
 				<c:when test="${ empty sessionScope.id}">
-					<a href="${pageContext.request.contextPath}/index" style="display: flex; position: fixed;">홈으로</a>
-					<a href="${pageContext.request.contextPath}/users/loginform">로그인</a>
-					<a href="${pageContext.request.contextPath}/users/signup_form">회원가입</a>
+					<a href="${pageContext.request.contextPath}/index" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+						HOMEPAGE NAME
+					</a>
+					<a href="${pageContext.request.contextPath}/users/loginform"  class="top_menu btn btn-outline-dark">LOGIN</a>
+					<a href="${pageContext.request.contextPath}/users/signup_form"  class="top_menu btn btn-outline-success">SIGN-UP</a>
 				</c:when>
 				<c:otherwise>
-					<p>
-						<a href="${pageContext.request.contextPath}/index" style="display: flex; position: fixed;">홈으로</a>
-						<a href="${pageContext.request.contextPath}/users/info">${sessionScope.id }</a>
-						로그인중... <a href="${pageContext.request.contextPath}/users/logout">로그아웃</a>
-					</p>
+					<a href="${pageContext.request.contextPath}/index" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+						HOMEPAGE NAME
+					</a>
+					<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
+					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -368,13 +476,6 @@ rotate(
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 단체 손님 환영</td>
 								</tr>
-					
-								<tr class=shopInfo>
-
-									<td colspan="5">&nbsp; <a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
-								</tr>
-
-								</tr>
 								<tr class=shopInfo>
 									<td colspan="5">&nbsp; 더미 데이터</td>
 								</tr>
@@ -469,33 +570,30 @@ rotate(
 									<td colspan="5">&nbsp; 더미 데이터</td>
 								</tr>
 
-                <tr>
-                  <td><a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}">메뉴 추가</a></td>
-                </tr>
 
 							</tbody>
 						</table>
 					</div>
 					<div class="table_2">
 						<table>
+							<c:choose>
+								<c:when test="${sessionScope.id eq 'admin'}">
+									<a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}" style="display:block; width:101%;" class="btn btn-outline-warning">메뉴 추가</a>
+								</c:when>
+								<c:otherwise>
+								</c:otherwise>
+							</c:choose>
+						
 							<tbody>
 								<c:forEach var="tmp" items="${menuList }">
-								<tr>
-
-									<tr>
-										<th><img src="${pageContext.request.contextPath}/${tmp.imagePath}"></th>
-									</tr>
-									<tr>
-										<th>${tmp.name }</th>
-									</tr>
-									<tr>
-										<th>${tmp.price }</th>
-									</tr>
-									<tr>
-										<th>${tmp.content }</th>
-									</tr>
-								</tr>	
-
+								<div class="menu_card card">
+									<img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
+									<div class="card-body">
+										<h5 class="card-title">${tmp.name}</h5>
+										<p class="card-text">${tmp.content}</p>
+										<a href="#" class="btn btn-primary">${tmp.price }원</a>
+									</div>
+								</div>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -526,12 +624,21 @@ rotate(
 															<dl>
 																<dt class="row">
 																	<div class="col-2">
-																		<img src="${pageContext.request.contextPath}${tmp.imagePath }" />
+																		<img class="review_img" src="${pageContext.request.contextPath}${tmp.imagePath}"/>
 																	</div>
 																	<div class="col-8">
-																		<pre id="pre${tmp.num }">${tmp.content }</pre>
+																		<pre class="comment_box" id="pre${tmp.num }">${tmp.content }</pre>
+																		<c:if test="${tmp.writer eq id }">
+																			<form id="updateForm${tmp.num }"
+																				class="review-form update-form" action="review_update"
+																				method="post">
+																				<input type="hidden" name="num" value="${tmp.num }" />
+																				<textarea name="content">${tmp.content }</textarea>
+																				<button type="submit" id="ur${tmp.num }">수정</button>
+																			</form>
+																		</c:if>
 																	</div>
-																	<div class="col-2">
+																	<div class="review_profile col-2 ">
 																		<c:if test="${ empty tmp.profile }">
 																			<svg class="profile-image" xmlns="http://www.w3.org/2000/svg"
 																				width="16" height="16" fill="currentColor"
@@ -543,31 +650,24 @@ rotate(
 									                                    </svg>
 																		</c:if>
 																		<c:if test="${not empty tmp.profile }">
-																			<img class="profile-image" src="${pageContext.request.contextPath}${tmp.profile }" />
+																			<img class="profile-image" src="${pageContext.request.contextPath}${tmp.profile }"  />
 																		</c:if>
+																		<br>
 																		<span class="col">${tmp.writer }</span>
+																		<br>
+																		<span style="font-weight:100;">${tmp.regdate }</span> 
+																		
+																		<br>
+																		<c:if test="${ (id ne null) and (tmp.writer eq id) }">
+																			<a data-num="${tmp.num }" class="update-link btn btn-warning"
+																				href="javascript:">수정</a>
+																			<a data-num="${tmp.num }" class="delete-link btn btn-danger"
+																				href="javascript:">삭제</a>
+																		</c:if>
 																	</div>
 																</dt>
-																<dd>
-																	<span>${tmp.regdate } |</span> 
-																	<c:if test="${ (id ne null) and (tmp.writer eq id) }">
-																		<a data-num="${tmp.num }" class="update-link"
-																			href="javascript:">수정</a>
-																		<a data-num="${tmp.num }" class="delete-link"
-																			href="javascript:">삭제</a>
-																	</c:if>
-																</dd>
-															</dl>
 
-															<c:if test="${tmp.writer eq id }">
-																<form id="updateForm${tmp.num }"
-																	class="review-form update-form" action="review_update"
-																	method="post">
-																	<input type="hidden" name="num" value="${tmp.num }" />
-																	<textarea name="content">${tmp.content }</textarea>
-																	<button type="submit">수정</button>
-																</form>
-															</c:if>
+															</dl>
 														</c:otherwise>
 													</c:choose>
 												</c:forEach>
@@ -576,24 +676,21 @@ rotate(
 									</td>
 								</tr>
 								<tr>
-									<td>
-										<!-- 원글에 리뷰를 작성할 폼 -->
+								<td style="left: 10px; position: relative;">
+								<!-- 원글에 리뷰를 작성할 폼 -->
 										<form class="review-form insert-form" action="review_insert" method="post">
 											<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
   	  										<input type="hidden" name="imagePath" value="empty"/>
 											
-											<a id="profileLink" href="javascript:">
-												<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-													<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-													<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-										        </svg>
+											<a id="profileLink" href="javascript:" style="float:left;">
+												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
 											</a>
 											
 											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
 											<input type="hidden" name="ref_group" value="${dto.num }" />
-											<input type="number" name="grade_number" />
-											<textarea name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
-											<button type="submit">등록</button>
+											<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
+											<button class="regist_btn" type="submit">등록</button>
+>>>>>>> refs/remotes/upstream/master
 										</form>
 										
 										<!-- 이미지 등록용 숨겨진 form -->
@@ -607,7 +704,7 @@ rotate(
 							</tbody>
 						</table>
 						<nav>
-							<ul class="pagination">
+							<ul class="pagination" style="margin:10px;">
 								<%--
 								  startPageNum 이 1 이 아닌 경우에만 Prev 링크를 제공한다. 
 								  &condition=${condition}&keyword=${encodedK}
@@ -904,24 +1001,30 @@ rotate(
                const num=this.getAttribute("data-num"); //댓글의 글번호
                
                const form = document.querySelector("#updateForm"+num);
+               const form2 = document.querySelector("#pre"+num);
                
                //현재 문자열 읽어오기 ( "수정" or "취소")
                let current = this.innerText;
                
                if(current == "수정"){
-            	   //수정 폼 보이게 하기
             	   form.style.display="block";
+            	   form2.style.display="none";
                    form.classList.add("animate__flash");
                    this.innerText="취소";   
                    form.addEventListener("animationend", function(){
                       form.classList.remove("animate__flash");
                    }, {once:true});
+                   document.querySelector("#ur"+num).addEventListener("click", function(){
+                	   form2.style.display="block";	
+                	   updateLinks[i].innerText = "수정";
+				   });
                  }else if(current == "취소"){
                     form.classList.add("animate__fadeOut");
                     this.innerText="수정";
                     form.addEventListener("animationend", function(){
                        form.classList.remove("animate__fadeOut");
                        form.style.display="none";
+                       form2.style.display="block";
                     },{once:true});
                }
                
