@@ -172,6 +172,10 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("reviewList", reviewList);
 		request.setAttribute("totalPageCount", totalPageCount);
 		
+		//평점 추가
+
+		double grade=shopReviewDao.getGrade(num);
+		request.setAttribute("grade", grade);
 	}
 
 	@Override
@@ -254,8 +258,14 @@ public class ShopServiceImpl implements ShopService{
 	public void saveReview(HttpServletRequest request) {
 		//폼 전송되는 파라미터 추출 
 		int ref_group = Integer.parseInt(request.getParameter("ref_group"));//원글의 글번호
+		//평점을 구현하는 문단
+		int GN=Integer.parseInt(request.getParameter("grade_number"));
+		//여기까지
+		
+		
+		
+		
 		String content = request.getParameter("content"); //댓글의 내용
-
 		String review_group = request.getParameter("review_group");
 		String imagePath = (String)request.getParameter("imagePath");
 
@@ -270,6 +280,7 @@ public class ShopServiceImpl implements ShopService{
 		dto.setContent(content);
 		dto.setRef_group(ref_group);
 		dto.setImagePath(imagePath);
+		dto.setGrade(GN);
 		//원글의 댓글인경우
 		if(review_group == null){
 			//댓글의 글번호를 comment_group 번호로 사용한다.

@@ -26,8 +26,8 @@
 	<!-- 리뷰 저장할 때 가게글의 글번호도 미리 ShopReviewDto 객체에 담아와야 한다. -->
 	<insert id="insert" parameterType="shopReviewDto">
 		INSERT INTO board_shop_review
-		(num, writer, content, ref_group, review_group, regdate, imagePath)
-		VALUES(#{num}, #{writer}, #{content}, #{ref_group}, #{review_group}, SYSDATE, #{imagePath})
+		(num, writer, content, ref_group, review_group, regdate, imagePath, grade)
+		VALUES(#{num}, #{writer}, #{content}, #{ref_group}, #{review_group}, SYSDATE, #{imagePath}, #{grade})
 	</insert>
 	
 	<!-- 저장 예정인 리뷰의 글번호를 미리 얻어내기 -->
@@ -53,4 +53,11 @@
 		FROM board_shop_review
 		WHERE ref_group = #{ref_group}
 	</select>
+	<!-- Grade 계산용 deleted는 제외 -->
+	<select id="getGrade" parameterType="int" resultType="double">
+		SELECT avg(grade)
+		FROM board_shop_review
+		WHERE ref_group = #{ref_group} and deleted='no'
+	</select>
+	
 </mapper>
