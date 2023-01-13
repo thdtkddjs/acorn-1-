@@ -4,7 +4,8 @@ CREATE TABLE users(
     pwd VARCHAR2(100) NOT NULL,
     email VARCHAR2(100),
     profile VARCHAR2(100), --프로필 이미지 경로를 저장할 칼럼
-    regdate DATE
+    regdate DATE,
+    ban VARCHAR2(25)
 );
 
 -- 가게 리스트 테이블
@@ -78,10 +79,10 @@ ALTER TABLE 테이블명 DROP(칼럼명);
 ALTER TABLE board_shop_review ADD(imagePath varchar2(200));
 
 -- users 테이블 ban 칼럼 추가
-alter table board_shop_reivew add(ban varchar2(25));
+ALTER TABLE users ADD(ban varchar2(25));
 
 -- review의 grade 구현을 위한 칼럼 교체
 
-alter table board_shop_review drop(grade);
+ALTER TABLE board_shop_review DROP(grade);
 
-alter table board_shop_reivew add(grade number);
+ALTER TABLE board_shop_reivew ADD(grade number);
