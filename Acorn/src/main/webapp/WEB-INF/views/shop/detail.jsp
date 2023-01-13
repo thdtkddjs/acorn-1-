@@ -507,7 +507,7 @@ rotate(
 									<td>리뷰</td>
 								</tr>
 								<tr>
-									<td>평점  :  N점</td>
+									<td>평점  :  ${grade}점</td>
 								</tr>
 								<tr>
 									<td>
@@ -591,7 +591,7 @@ rotate(
 											
 											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
 											<input type="hidden" name="ref_group" value="${dto.num }" />
-											
+											<input type="number" name="grade_number" />
 											<textarea name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
 											<button type="submit">등록</button>
 										</form>
