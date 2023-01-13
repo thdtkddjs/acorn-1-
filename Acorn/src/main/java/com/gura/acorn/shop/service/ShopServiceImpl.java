@@ -174,7 +174,7 @@ public class ShopServiceImpl implements ShopService{
 		
 		//평점 추가
 
-		double grade=shopReviewDao.getGrade(num);
+		double grade=Math.round(shopReviewDao.getGrade(num)*100)/100.0;
 		request.setAttribute("grade", grade);
 	}
 
