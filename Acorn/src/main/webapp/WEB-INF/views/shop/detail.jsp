@@ -164,11 +164,10 @@
 
 .main_title {
 	height: 220px;
+	background-color : #edfffb;
 }
 
-.btn_box {
-	
-}
+
 
 .main_table {
 	width: 900px;
@@ -387,6 +386,66 @@ pre {
 	border: 1px solid #c9c9c9;
     border-radius: 10px;
 }
+#btn_1{
+	background-color : #B2CCFF;
+}
+#btn_2, #btn_3, #btn_4{
+	background-color : #D5D5D5;
+}
+.rainbow_effect{
+	animation-duration: 1s; 
+	animation-name: rainbowLink; 
+	animation-iteration-count: infinite; 
+}
+@keyframes rainbowLink {     
+ 0% { background-color: #ff2a2a; }
+ 15% { background-color: #ff7a2a; }
+ 30% { background-color: #ffc52a; }
+ 45% { background-color: #43ff2a; }
+ 60% { background-color: #2a89ff; }
+ 75% { background-color: #202082; }
+ 90% { background-color: #6b2aff; } 
+ 100% { background-color: #e82aff; }
+}
+.top_menu{
+	padding: 0px;
+    width: 70px;
+    margin-top: 10px;
+}
+.user_menu{
+	text-decoration : none;
+	margin-top : 12px;
+	padding : 0px;
+	width : 120px;
+	height : 25px;
+	padding-top:7px;
+}
+.logout_menu{
+	text-decoration : none;
+	margin-top : -2px;
+	padding : 0px;
+	width : 70px;
+	height : 25px;
+}
+.shop_info{
+	margin-left:100px;
+	margin-top:50px;
+	width : 400px;
+}
+.table1_warpper{
+	height : 400px;
+    width: 600px;
+    margin-top: 50px;
+	position : relative;
+	margin-left:186px;
+	border : 1px solid gray;
+	border-radius : 10px;
+	box-shadow: 2px 2px 3px 0px grey;
+}
+.card-img-top{
+	width:286px;
+	height:200px;
+}
 </style>
 <body>
 
@@ -402,6 +461,16 @@ pre {
 					<a href="${pageContext.request.contextPath}/users/loginform"  class="top_menu btn btn-outline-dark">LOGIN</a>
 					<a href="${pageContext.request.contextPath}/users/signup_form"  class="top_menu btn btn-outline-success">SIGN-UP</a>
 				</c:when>
+				<c:when test="${sessionScope.id eq 'admin'}">
+					<a href="${pageContext.request.contextPath}/index" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+						HOMEPAGE NAME
+					</a>
+					<a href="${pageContext.request.contextPath}/shop/insertform" class="user_menu badge text-bg-success">REGIST SHOP</a>
+					<a href="${pageContext.request.contextPath}/users/list" class="user_menu badge text-bg-warning">USER LIST</a>
+					<a href="${pageContext.request.contextPath}/users/info" class="rainbow_effect user_menu badge">${sessionScope.id }</a>
+					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
+				</c:when>
 				<c:otherwise>
 					<a href="${pageContext.request.contextPath}/index" class="logo_text">
 						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
@@ -409,6 +478,7 @@ pre {
 					</a>
 					<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
 					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
+
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -425,7 +495,15 @@ pre {
             
             <hr>
             <div class="suggest_menu">
-				<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
+				<c:choose>
+					<c:when test="${ empty keyword}">
+						<h5 style="margin-left:20px;">오늘의 추천 가게</h5>
+					</c:when>
+					<c:otherwise>
+						<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
+					</c:otherwise>
+				</c:choose>
+            	
 				<c:forEach var="tmp" items="${list }">
 					<div class="card" style="width: 18rem;">
 	                    <img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
@@ -447,134 +525,50 @@ pre {
 							<div id="map"style="width: 300px; height: 220px; margin: auto; float: right; "></div>
 
 							<br>
-							<br> <Strong>${dto.title }</Strong>
-							<p>리뷰 ${dto.reviewCount } 회</p>
+							<br> <Strong>${dto.title}</Strong>
+							<p>리뷰 ${dto.reviewCount} 회</p>
 							<p>좋아요 : ${dto.likeCount}, 싫어요 : ${dto.dislikeCount }</p>
 							<p style="margin: 0px;"></p>
 						</div>
 						<div class=btn_box>
-							<button type="button" id="btn_1">가게 소개</button>
-							<button type="button" id="btn_2">메뉴</button>
-							<button type="button" id="btn_3">리뷰</button>
-							<button type="button" id="btn_4">사진</button>
+							<button type="button" id="btn_1"><span>가게 소개</span></button>
+							<button type="button" id="btn_2"><span>메뉴</span></button>
+							<button type="button" id="btn_3"><span>리뷰</span></button>
+							<button class="rainbow_effect" type="button" id="btn_4"><span class="rainbow_effect">★</span></button>
 						</div>
 					<div class="table_1">
-						<table>
-							<tbody>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 가게 소개 : ${dto.content }</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 전화 번호 : ${dto.telNum}</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 영업 시간 :</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 주소 : ${dto.addr }</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 단체 손님 환영</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-
-
-							</tbody>
-						</table>
+						<div class="table1_warpper">
+							<table class="shop_info">
+								<tbody>
+									<tr class=shopInfo>
+										<td style="border-right: 1px solid gray">소개</td>
+										<td>${dto.content}</td>
+									</tr>
+									<tr style="height:40px"></tr>
+									<tr class=shopInfo>
+										<td style="border-right: 1px solid gray">전화 번호</td>
+										<td>${dto.telNum}</td>
+									</tr>
+									<tr style="height:40px"></tr>
+									<tr class=shopInfo>
+										<td style="border-right: 1px solid gray">영업 시간</td>
+										<td></td>
+									</tr>
+									<tr style="height:40px"></tr>
+									<tr class=shopInfo>
+										<td style="border-right: 1px solid gray">주소</td>
+										<td>${dto.addr}</td>
+									</tr>
+									<tr style="height:40px"></tr>
+									<tr class=shopInfo>
+										<td style="border-right: 1px solid gray">전화 번호</td>
+										<td>${dto.telNum}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
-					<div class="table_2">
+					<div class="table_2" style="display:none;" >
 						<table>
 							<c:choose>
 								<c:when test="${sessionScope.id eq 'admin'}">
@@ -598,7 +592,7 @@ pre {
 							</tbody>
 						</table>
 					</div>
-					<div class="table_3">
+					<div class="table_3" style="display:none;">
 						<table style="width:950px;">
 							<tbody>
 								<tr>
@@ -757,21 +751,8 @@ pre {
 							</ul>
 						</nav>
 					</div>
-					<div class="table_4">
-						<table>
-							<tbody>
-								<tr>
-									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
-									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
-									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
-								</tr>
-									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
-									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
-									<td> <img src="" alt="" /></td>
-								</tr>
-								
-							</tbody>
-						</table>
+					<div class="table_4" style="display:none;">
+								TBD
 					</div>
 
 				</div>
@@ -825,10 +806,6 @@ pre {
 	<script>
 
 		window.onload = function() {
-			$("#btn_1").css({"background-color" : "gray"})
-			$("#btn_2").css({"background-color" : "#BDBDBD"})
-			$("#btn_3").css({"background-color" : "#BDBDBD"})
-			$("#btn_4").css({"background-color" : "#BDBDBD"})
 			$(".table_1").show();
 			$(".table_2").hide();
 			$(".table_3").hide();
@@ -836,40 +813,40 @@ pre {
 		}
 		$(document).ready(function() {
 			$("#btn_1").click(function() {
-				$("#btn_1").css({"background-color" : "gray"})
-				$("#btn_2").css({"background-color" : "#BDBDBD"})
-				$("#btn_3").css({"background-color" : "#BDBDBD"})
-				$("#btn_4").css({"background-color" : "#BDBDBD"})
+				$("#btn_1").css({"background-color" : "#B2CCFF"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
 				$(".table_1").show();
 				$(".table_2").hide();
 				$(".table_3").hide();
 				$(".table_4").hide();
 			})
 			$("#btn_2").click(function() {
-				$("#btn_1").css({"background-color" : "#BDBDBD"})
-				$("#btn_2").css({"background-color" : "gray"})
-				$("#btn_3").css({"background-color" : "#BDBDBD"})
-				$("#btn_4").css({"background-color" : "#BDBDBD"})
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#B2CCFF"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
 				$(".table_1").hide();
 				$(".table_2").show();
 				$(".table_3").hide();
 				$(".table_4").hide();
 			})
 			$("#btn_3").click(function() {
-				$("#btn_1").css({"background-color" : "#BDBDBD"})
-				$("#btn_2").css({"background-color" : "#BDBDBD"})
-				$("#btn_3").css({"background-color" : "gray"})
-				$("#btn_4").css({"background-color" : "#BDBDBD"})
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#B2CCFF"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
 				$(".table_1").hide();
 				$(".table_2").hide();
 				$(".table_3").show();
 				$(".table_4").hide();
 			})
 			$("#btn_4").click(function() {
-				$("#btn_1").css({"background-color" : "#BDBDBD"})
-				$("#btn_2").css({"background-color" : "#BDBDBD"})
-				$("#btn_3").css({"background-color" : "#BDBDBD"})
-				$("#btn_4").css({"background-color" : "gray"})
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#B2CCFF"})
 				$(".table_1").hide();
 				$(".table_2").hide();
 				$(".table_3").hide();
