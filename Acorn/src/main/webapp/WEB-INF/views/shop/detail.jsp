@@ -685,12 +685,22 @@ pre {
 											<a id="profileLink" href="javascript:" style="float:left;">
 												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
 											</a>
+											<label for="grade_number">1</label>
+											<input type="radio" name="grade_number" value=1 />
+											<label for="grade_number">2</label>
+											<input type="radio" name="grade_number" value=2 />
+											<label for="grade_number">3</label>
+											<input type="radio" name="grade_number" value=3 />
+											<label for="grade_number">4</label>
+											<input type="radio" name="grade_number" value=4 />
+											<label for="grade_number">5</label>
+											<input type="radio" name="grade_number" value=5 />
 											
 											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
 											<input type="hidden" name="ref_group" value="${dto.num }" />
 											<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
 											<button class="regist_btn" type="submit">등록</button>
->>>>>>> refs/remotes/upstream/master
+
 										</form>
 										
 										<!-- 이미지 등록용 숨겨진 form -->

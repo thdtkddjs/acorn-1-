@@ -36,7 +36,7 @@ CREATE TABLE board_shop_review( -- 테이블명 추후 변경 예정
     ref_group NUMBER, 
     review_group NUMBER,
     deleted CHAR(3) DEFAULT 'no', --  리뷰 삭제여부
-    grade CHAR(3) DEFAULT 'no', -- 평점 작성 여부(필요시 다른 테이블로 이동)
+    grade number, -- 평점 작성 여부(필요시 다른 테이블로 이동)
     regdate DATE
 );
 -- 댓글의 글번호를 얻어낼 시퀀스
@@ -76,3 +76,12 @@ ALTER TABLE 테이블명 DROP(칼럼명);
 
 -- 리뷰 테이블 사진 저장용 칼럼 추가
 ALTER TABLE board_shop_review ADD(imagePath varchar2(200));
+
+-- users 테이블 ban 칼럼 추가
+alter table board_shop_reivew add(ban varchar2(25));
+
+-- review의 grade 구현을 위한 칼럼 교체
+
+alter table board_shop_review drop(grade);
+
+alter table board_shop_reivew add(grade number);
