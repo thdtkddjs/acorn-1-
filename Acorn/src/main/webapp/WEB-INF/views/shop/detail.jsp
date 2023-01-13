@@ -628,7 +628,7 @@ pre {
 																		</c:choose>
 																	</div>
 																	<div class="col-8">
-																		<pre class="comment_box" id="pre${tmp.num }">${tmp.title} | ${tmp.grade} <br /> ${tmp.content }</pre>
+																		<pre class="comment_box" id="pre${tmp.num }"><span id="spt${tmp.num }">${tmp.title}</span> | <span>${tmp.grade}</span> <br /> <span id="spc${tmp.num }">${tmp.content }</span></pre>
 																		<c:if test="${tmp.writer eq id }">
 																			<form id="updateForm${tmp.num }" class="review-form update-form" action="review_update" method="post">
 																				<input type="hidden" name="num" value="${tmp.num }" />
@@ -1085,10 +1085,12 @@ pre {
                         특정문서의 참조값.querySelector() 는 해당 문서 객체의 자손 요소 중에서
                         특정 요소의 참조값을 찾는 기능
                      */
-                     const num=form.querySelector("input[name=num]").value;
-                     const content=form.querySelector("textarea[name=content]").value;
+                     const num = form.querySelector("input[name=num]").value;
+                     const title = form.querySelector("input[name=title]").value;
+                     const content = form.querySelector("textarea[name=content]").value;
                      //수정폼에 입력한 value 값을 pre 요소에도 출력하기 
-                     document.querySelector("#pre"+num).innerText=content;
+                     document.querySelector("#spt"+num).innerText=title;
+                     document.querySelector("#spc"+num).innerText=content;
                      form.style.display="none";
                   }
                });
