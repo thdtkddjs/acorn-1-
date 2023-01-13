@@ -74,5 +74,12 @@ ALTER TABLE board_shop MODIFY(addr VARCHAR2(200));
 -- 코드 완성 후 필요없어진 칼럼 지우기
 ALTER TABLE 테이블명 DROP(칼럼명);
 
--- 리뷰 테이블 사진 저장용 칼럼 추가
+-- 리뷰 테이블 추가기능용 칼럼 추가
 ALTER TABLE board_shop_review ADD(imagePath varchar2(200));
+
+alter table board_shop_review drop(grade);
+
+alter table board_shop_reivew add(grade number);
+
+-- 유저스 테이블 벤 기능용 칼럼 추가
+ALTER TABLE users ADD(BAN varchar2(25));
