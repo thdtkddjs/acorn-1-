@@ -75,14 +75,18 @@ ALTER TABLE board_shop MODIFY(addr VARCHAR2(200));
 -- 코드 완성 후 필요없어진 칼럼 지우기
 ALTER TABLE 테이블명 DROP(칼럼명);
 
--- 리뷰 테이블 사진 저장용 칼럼 추가
+-- 리뷰 테이블 추가기능용 칼럼 추가
 ALTER TABLE board_shop_review ADD(imagePath varchar2(200));
 
--- users 테이블 ban 칼럼 추가
-ALTER TABLE users ADD(ban varchar2(25));
+alter table board_shop_review drop(grade);
 
--- review의 grade 구현을 위한 칼럼 교체
+alter table board_shop_review add(grade number);
 
-ALTER TABLE board_shop_review DROP(grade);
+alter table board_shop_review add(title varchar2(50));
 
-ALTER TABLE board_shop_reivew ADD(grade number);
+-- 처음 테이블 만들 당시에 shop_review 테이블에 target_id 칼럼이 있으신분은 아래 sql문으로 제거
+alter table board_shop_review drop(target_id);
+
+-- 유저스 테이블 벤 기능용 칼럼 추가
+ALTER TABLE users ADD(BAN varchar2(25));
+
