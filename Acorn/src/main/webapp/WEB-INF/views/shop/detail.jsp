@@ -624,7 +624,12 @@ pre {
 															<dl>
 																<dt class="row">
 																	<div class="col-2">
-																		<img class="review_img" src="${pageContext.request.contextPath}${tmp.imagePath}"/>
+																		<c:if test="${ empty tmp.imagePath }">
+																			<img class="review_img" src="${pageContext.request.contextPath}/resources/images/photo.png"/>
+																		</c:if>
+																		<c:if test="${not empty tmp.imagePath }">
+																			<img class="review_img" src="${pageContext.request.contextPath}${tmp.imagePath}"/>
+																		</c:if>
 																	</div>
 																	<div class="col-8">
 																		<pre class="comment_box" id="pre${tmp.num }">${tmp.content }</pre>
@@ -658,12 +663,19 @@ pre {
 																		<span style="font-weight:100;">${tmp.regdate }</span> 
 																		
 																		<br>
-																		<c:if test="${ (id ne null) and (tmp.writer eq id) }">
-																			<a data-num="${tmp.num }" class="update-link btn btn-warning"
-																				href="javascript:">수정</a>
-																			<a data-num="${tmp.num }" class="delete-link btn btn-danger"
-																				href="javascript:">삭제</a>
-																		</c:if>
+																	
+																		<c:choose>
+																			<c:when test="${ (id ne null) and (tmp.writer eq id) }">
+																				<a data-num="${tmp.num }" class="update-link btn btn-warning"
+																					href="javascript:">수정</a>
+																				<a data-num="${tmp.num }" class="delete-link btn btn-danger"
+																					href="javascript:">삭제</a>
+																			</c:when>
+																			<c:when test="${id eq 'admin' }">
+																				<a data-num="${tmp.num }" class="delete-link btn btn-danger"
+																					href="javascript:">삭제</a>
+																			</c:when>
+																		</c:choose>
 																	</div>
 																</dt>
 
