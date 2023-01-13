@@ -36,7 +36,7 @@ CREATE TABLE board_shop_review( -- 테이블명 추후 변경 예정
     ref_group NUMBER, 
     review_group NUMBER,
     deleted CHAR(3) DEFAULT 'no', --  리뷰 삭제여부
-    grade CHAR(3) DEFAULT 'no', -- 평점 작성 여부(필요시 다른 테이블로 이동)
+    grade number, -- 평점 작성 여부(필요시 다른 테이블로 이동)
     regdate DATE
 );
 -- 댓글의 글번호를 얻어낼 시퀀스

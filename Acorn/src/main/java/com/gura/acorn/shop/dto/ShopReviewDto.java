@@ -11,7 +11,7 @@ public class ShopReviewDto {
 	private int ref_group;
 	private int review_group;
 	private String deleted;
-	private String grade; //필요 시 다른테이블 dto로 이동
+	private int grade; //필요 시 다른테이블 dto로 이동
 	private String regdate;
 	private String profile;
 	private int startRowNum;
@@ -21,7 +21,8 @@ public class ShopReviewDto {
 	public ShopReviewDto() {}
 
 	public ShopReviewDto(int num, String writer, String content, String target_id, int ref_group, int review_group,
-			String deleted, String grade, String regdate, String profile, int startRowNum, int endRowNum, String imagePath) {
+			String deleted, int grade, String regdate, String profile, int startRowNum, int endRowNum,
+			String imagePath) {
 		super();
 		this.num = num;
 		this.writer = writer;
@@ -94,11 +95,11 @@ public class ShopReviewDto {
 		this.deleted = deleted;
 	}
 
-	public String getGrade() {
+	public int getGrade() {
 		return grade;
 	}
 
-	public void setGrade(String grade) {
+	public void setGrade(int grade) {
 		this.grade = grade;
 	}
 
@@ -141,4 +142,7 @@ public class ShopReviewDto {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
+
+
+	
 }
