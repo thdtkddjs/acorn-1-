@@ -740,50 +740,50 @@ pre {
 																		</c:choose>
 																	</div>
 																	<div class="col-8">
-																		<pre class="comment_box" id="pre${tmp.num }"><span id="spt${tmp.num }">${tmp.title}</span> | <span>${tmp.grade}</span> <br /> <span id="spc${tmp.num }">${tmp.content }</span></pre>
+																		<pre class="comment_box" id="pre${tmp.num }"><span id="spt${tmp.num }">${tmp.title}</span> | <span id="spg${tmp.grade }">${tmp.grade}</span> <br /> <span id="spc${tmp.num }">${tmp.content }</span></pre>
 																		<c:if test="${tmp.writer eq id }">
 																			<form id="updateForm${tmp.num }" class="review-form update-form" action="review_update" method="post">
 																				<input type="hidden" name="num" value="${tmp.num }" />
 																				<input type="text" name="title" value="${tmp.title }" />
 																				<div class="startRadio">
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=0.5>
+																					  <input type="radio" name="grade_number" value=0.5  ${tmp.grade eq 0.5 ? 'checked' : '' }>
 																					  <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=1>
+																					  <input type="radio" name="grade_number" value=1 ${tmp.grade eq 1 ? 'checked' : '' }>
 																					  <span class="startRadio__img"><span class="blind">별 1개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=1.5>
+																					  <input type="radio" name="grade_number" value=1.5 ${tmp.grade eq 1.5 ? 'checked' : '' }>
 																					  <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=2>
+																					  <input type="radio" name="grade_number" value=2 ${tmp.grade eq 2 ? 'checked' : '' }>
 																					  <span class="startRadio__img"><span class="blind">별 2개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=2.5>
+																					  <input type="radio" name="grade_number" value=2.5 ${tmp.grade eq 2.5 ? 'checked' : '' }>
 																					  <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=3>
+																					  <input type="radio" name="grade_number" value=3 ${tmp.grade eq 3 ? 'checked' : '' }>
 																					  <span class="startRadio__img"><span class="blind">별 3개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=3.5>
+																					  <input type="radio" name="grade_number" value=3.5 ${tmp.grade eq 3.5 ? 'checked' : '' }>
 																					  <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=4>
+																					  <input type="radio" name="grade_number" value=4 ${tmp.grade eq 4 ? 'checked' : '' }>
 																					  <span class="startRadio__img"><span class="blind">별 4개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=4.5>
+																					  <input type="radio" name="grade_number" value=4.5 ${tmp.grade eq 4.5 ? 'checked' : '' }>
 																					  <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=5>
+																					  <input type="radio" name="grade_number" value=5 ${tmp.grade eq 5 ? 'checked' : '' }>
 																					  <span class="startRadio__img"><span class="blind">별 5개</span></span>
 																					</label>
 																				</div>
@@ -881,7 +881,7 @@ pre {
 												  <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
 												</label>
 												<label class="startRadio__box">
-												  <input type="radio" name="grade_number" value=5>
+												  <input type="radio" name="grade_number" value=5 checked>
 												  <span class="startRadio__img"><span class="blind">별 5개</span></span>
 												</label>
 											</div>
