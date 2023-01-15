@@ -889,14 +889,15 @@ pre {
 												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
 											</a>
 											
+											<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
+  	  										<input type="hidden" name="imagePath" value="empty"/>
+											
 											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
 											<input type="hidden" name="ref_group" value="${dto.num }" />
 											<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
 											<button class="regist_btn" type="submit">등록</button>
 										</form>
 								</div>
-										<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
-  	  									<input type="hidden" name="imagePath" value="empty"/>
 										<!-- 이미지 등록용 숨겨진 form -->
 									   <form id="imageForm" action="${pageContext.request.contextPath}/shop/review_image_upload" method="post" enctype="multipart/form-data">
 									      사진
