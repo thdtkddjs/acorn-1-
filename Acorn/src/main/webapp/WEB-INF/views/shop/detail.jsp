@@ -15,96 +15,96 @@
 </head>
 <style>
 .container {
-	display: grid;
-	grid-template-areas: "header header header"
-		"search main main" "  bot   bot   bot  ";
-	grid-template-columns: 1fr 2fr 1fr;
-	grid-template-rows: 50px 870px;
-	box-shadow: 0px 5px 20px 0px grey;
-	border-right: thin;
-	z-index: 1;
-	min-width: 1320px;
+   display: grid;
+   grid-template-areas: "header header header"
+      "search main main" "  bot   bot   bot  ";
+   grid-template-columns: 1fr 2fr 1fr;
+   grid-template-rows: 50px 870px;
+   box-shadow: 0px 5px 20px 0px grey;
+   border-right: thin;
+   z-index: 1;
+   min-width: 1320px;
 }
 
 .main_content {
-	grid-area: main;
+   grid-area: main;
 }
 
 .header {
-	grid-area: header;
-	text-align: right;
-	display: block;
+   grid-area: header;
+   text-align: right;
+   display: block;
 }
 
 
 .search_menu {
-	grid-area: search;
-	box-shadow: 2px 2px 3px 0px grey;
-	background-color: white;
-	z-index: 3;
-	position: relative;
+   grid-area: search;
+   box-shadow: 2px 2px 3px 0px grey;
+   background-color: white;
+   z-index: 3;
+   position: relative;
 }
 
 .search_result {
-	grid-area: main;
-	width: 100%;
-	height: 870px;
-	text-align: center;
-	box-shadow: 2px 2px 3px 0px grey;
+   grid-area: main;
+   width: 100%;
+   height: 870px;
+   text-align: center;
+   box-shadow: 2px 2px 3px 0px grey;
 }
 
 .side_menu_b {
-	grid-area: b;
-	width: 100%;
-	text-align: center;
-	background-color: lightgray;
+   grid-area: b;
+   width: 100%;
+   text-align: center;
+   background-color: lightgray;
 }
 
 .footer {
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-top: 0px;
-	background-color: white;
-	grid-area: footer;
-	bottom: 0px;
-	width: 100%;
-	position: fixed;
-	z-index: 5;
+   padding-left: 10px;
+   padding-right: 10px;
+   margin-top: 0px;
+   background-color: white;
+   grid-area: footer;
+   bottom: 0px;
+   width: 100%;
+   position: fixed;
+   z-index: 5;
 }
  
 
 .search_bar {
-	border: 3px solid;
-	border-color: rgb(64, 219, 43);
-	border-radius: 5px;
-	margin: 10px;
-	width: 290px;
+   border: 3px solid;
+   border-color: rgb(64, 219, 43);
+   border-radius: 5px;
+   margin: 10px;
+   width: 290px;
 }
 
 .search_bar>form>input {
-	width: 250px;
-	margin: 10px;
-	border: none;
-	font-size: large;
+   width: 250px;
+   margin: 10px;
+   border: none;
+   font-size: large;
 }
 
 .suggest_menu>.card {
-	margin-left: 10px;
+   margin-left: 10px;
 }
 
 #map {
-	z-index: 2;
+   z-index: 2;
 }
 
 .suggest_menu {
-	height: 763px;
-	overflow: scroll;
-	-ms-overflow-style: none;
+   height: 763px;
+   overflow: scroll;
+   -ms-overflow-style: none;
 }
 
 .suggest_menu::-webkit-scrollbar {
-	width : 5px;
-	height : 0px;
+   width : 5px;
+   height : 0px;
 }
 .suggest_menu::-webkit-scrollbar-thumb {
     background-color: #2f3542;
@@ -114,8 +114,8 @@
 }
 .table_1::-webkit-scrollbar, .table_2::-webkit-scrollbar, 
 .table_3::-webkit-scrollbar, .table_4::-webkit-scrollbar {
-	width : 5px;
-	height : 0px;
+   width : 5px;
+   height : 0px;
 }
 .table_1::-webkit-scrollbar-thumb, .table_2::-webkit-scrollbar-thumb, 
 .table_3::-webkit-scrollbar-thumb, .table_4::-webkit-scrollbar-thumb {
@@ -129,27 +129,27 @@
 
 
 .fold_btn {
-	position: absolute;
-	left: 300px;
-	top: 150px;
-	z-index: 5;
+   position: absolute;
+   left: 300px;
+   top: 150px;
+   z-index: 5;
 }
 
 .open_btn {
-	position: absolute;
-	left: 200px;
-	top: 150px;
-	z-index: 5;
+   position: absolute;
+   left: 200px;
+   top: 150px;
+   z-index: 5;
 }
 .search_box{
-	position: relative;
+   position: relative;
 }
 .search_img{
-	position : absolute;
-	width: 17px;
-	margin: 0;
-	top:25px;
-	right:13%;
+   position : absolute;
+   width: 17px;
+   margin: 0;
+   top:25px;
+   right:13%;
 }
 .search_input{
   width: 100%;
@@ -157,245 +157,266 @@
   font-size: 14px;
 }
 .content_photo_1>img, .content_photo_2>img {
-	width: 200px;
-	margin: 0.5px;
-	margin-right: -5px;
+   width: 200px;
+   margin: 0.5px;
+   margin-right: -5px;
 }
 
 .main_title {
-	height: 220px;
-	background-color : #edfffb;
+   height: 220px;
+   background-color : #edfffb;
 }
 
 
 
 .main_table {
-	width: 900px;
+   width: 900px;
 }
 
 td>img {
-	width: 200px;
+   width: 200px;
 }
 
 
 button {
-	background-color: dodgerblue;
-	padding: 8px 30px !important;
-	width: 243px;
-	font-size: 14px;
-	color: white;
-	border: 0px solid transparent;
-	float: left;
+   background-color: dodgerblue;
+   padding: 8px 30px !important;
+   width: 243px;
+   font-size: 14px;
+   color: white;
+   border: 0px solid transparent;
+   float: left;
 }
 
 button:hover {
-	background-color: skyblue;
+   background-color: skyblue;
 }
 .table_1, .table_2, .table_3, .table_4{
-	width : 972px;
-	height : 600px; 
-	overflow: scroll;
+   width : 972px;
+   height : 600px; 
+   overflow: scroll;
 }
 
 th>img{
-	width : 200px;
+   width : 200px;
 }
 
 .menu_card{
- 	width: 18rem;
- 	float : left;
- 	margin-left: 25px;
-	margin-top: 15px;
+    width: 18rem;
+    float : left;
+    margin-left: 25px;
+   margin-top: 15px;
 }
 .logo{
-	width:50px;
+   width:50px;
 }
 .logo_text{
-	display: flex; 
-	position: fixed;
-	text-decoration : none;
-	font-size : 30px;
-	font-weight : bold;
+   display: flex; 
+   position: fixed;
+   text-decoration : none;
+   font-size : 30px;
+   font-weight : bold;
 }
 .user_menu{
-	text-decoration : none;
-	margin-top : 12px;
-	padding : 0px;
-	width : 120px;
-	height : 25px;
-	padding-top:7px;
+   text-decoration : none;
+   margin-top : 12px;
+   padding : 0px;
+   width : 120px;
+   height : 25px;
+   padding-top:7px;
 }
 .logout_menu{
-	text-decoration : none;
-	margin-top : -2px;
-	padding : 0px;
-	width : 70px;
-	height : 25px;
+   text-decoration : none;
+   margin-top : -2px;
+   padding : 0px;
+   width : 70px;
+   height : 25px;
 }
 
 /* 리뷰 관련 스타일 */ 
 .content {
-	border: 1px dotted gray;
+   border: 1px dotted gray;
 }
 /* 리뷰 프로필 이미지를 작은 원형으로 만든다. */
 .profile-image {
-	width: 30px;
-	height: 30px;
-	border: 1px solid #cecece;
-	border-radius: 50%;
+   width: 30px;
+   height: 30px;
+   border: 1px solid #cecece;
+   border-radius: 50%;
 }
 /* ul 요소의 기본 스타일 제거 */
 .reviews ul {
-	padding: 0;
-	margin: 0;
-	list-style-type: none;
+   padding: 0;
+   margin: 0;
+   list-style-type: none;
 }
 
 .reviews dt {
-	margin-top: 10px;
-	position : relative;
+   margin-top: 10px;
+   position : relative;
 }
 
 .reviews dd {
-	margin-left: 50px;
+   margin-left: 50px;
 }
 
 .review-form textarea, .review-form button {
-	float: left;
+   float: left;
 }
 
 .reviews li {
-	clear: left;
+   clear: left;
 }
 
 
 /* 댓글에 댓글을 다는 폼과 수정폼은 일단 숨긴다. */
 .reviews .review-form {
-	display: none;
-	text-align : left;
-	height : 152px;
-	width : 590px;
-	padding : 0px;
-	margin : 0px;
-	margin-left : 3px;
-	padding : 15px;
+   display: none;
+   text-align : left;
+   height : 152px;
+   width : 590px;
+   padding : 0px;
+   margin : 0px;
+   margin-left : 3px;
+   padding : 15px;
 }
 
 pre {
-	display: block;
-	padding: 9.5px;
-	margin: 0 0 10px;
-	font-size: 13px;
-	line-height: 1.42857143;
-	color: #333333;
-	word-break: break-all;
-	word-wrap: break-word;
+   display: block;
+   padding: 9.5px;
+   margin: 0 0 10px;
+   font-size: 13px;
+   line-height: 1.42857143;
+   color: #333333;
+   word-break: break-all;
+   word-wrap: break-word;
     background-color: #eeffee;
     border: 1px solid #c9c9c9;
     border-radius: 10px
 }
 
 @keyframes rotateAni { 
-	0%{
-		transform: rotate(0deg);
-	}
-	100%{
-		transform:rotate(360deg);
-	}
+   0%{
+      transform: rotate(0deg);
+   }
+   100%{
+      transform:rotate(360deg);
+   }
 }
 #profileImage{
     width: 100px;
     height: 100px;
     border: 1px solid #cecece;
-    border-radius: 50%;
+    border-radius: 10px;
   }
 #imageForm{
-	display: none;
+   display: none;
    }
 
 .col-2{
-	width : auto;
-	border:1px solid #c9c9c9; 
-	border-radius:10px;
-	padding : 0px;
-	overflow:hidden;
+   width : auto;
+   border:1px solid #c9c9c9; 
+   border-radius:10px;
+   padding : 0px;
+   overflow:hidden;
 }
 .col-8{
-	padding : 0px;
+   padding : 0px;
 }
 .comment_box{
-	text-align : left;
-	height : 152px;
-	width : 590px;
-	padding : 0px;
-	margin : 0px;
-	margin-left : 3px;
-	padding : 15px;
+   text-align : left;
+   height : 152px;
+   width : 590px;
+   padding : 0px;
+   margin : 0px;
+   margin-left : 3px;
+   padding : 15px;
 }
 .review_profile{
-	background-color : #feffe6;
-	right: 0px;
+   background-color : #feffe6;
+   right: 0px;
     height: 152px;
     width: 150px;
     position: absolute;
     padding : 10px;
 }
 .profile-image{
-	width : 50px;
-	height : 50px;
+   width : 50px;
+   height : 50px;
 }
 .review_img{
-	width : 200px;
-	height : 150px;
+   width : 200px;
+   height : 150px;
 }
 .row {
-	margin-left : 10px;
+   margin-left : 10px;
 }
 .update-link{
-	font-size : 15px;
-	text-decoration : none;
-	padding : 0px;
+   font-size : 15px;
+   text-decoration : none;
+   padding : 0px;
 }
 .delete-link{
-	font-size : 15px;
-	text-decoration : none;
-	padding : 0px;
+   font-size : 15px;
+   text-decoration : none;
+   padding : 0px;
+}
+#title{
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: #eeffee;
+	border: 1px solid #c9c9c9;
+	border-radius: 5px;
+	position: relative;
+	left: 3px;
+	height: 35px;
 }
 .regist_comment_box{
- 	height: 100px; 
- 	width: 692px;
+	width: 623px;
+    height: 106px;
     background-color: #eeffee;
     border: 1px solid #c9c9c9;
     border-radius: 10px;
+   text-align : left;
+   padding : 0px;
+   margin : 0px;
+   margin-left : 3px;
+   padding : 15px;
+}
+.comment_form_box{
+    height: 170px; 
+    width: 100%;
+    background-color: white;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
 	text-align : left;
-	padding : 0px;
 	margin : 0px;
 	margin-left : 3px;
-	padding : 15px;
+	padding : 10px
 }
 .regist_btn{
-	width:148px;
-	height : 100px;
-	margin-left:5px;
+   width:148px;
+   height : 106px;
+   margin-left:5px;
     border: 1px solid #c9c9c9;
     border-radius: 10px;
 }
 .comment_img{
-	width:100px;
-	height:100px;
-	border: 1px solid #c9c9c9;
-    border-radius: 10px;
+   width:147px;
+   height:147px;
+   border: 1px solid #c9c9c9;
+   border-radius: 10px;
 }
 #btn_1{
-	background-color : #B2CCFF;
+   background-color : #B2CCFF;
 }
 #btn_2, #btn_3, #btn_4{
-	background-color : #D5D5D5;
+   background-color : #D5D5D5;
 }
 .rainbow_effect{
-	animation-duration: 1s; 
-	animation-name: rainbowLink; 
-	animation-iteration-count: infinite; 
+   animation-duration: 1s; 
+   animation-name: rainbowLink; 
+   animation-iteration-count: infinite; 
 }
 @keyframes rainbowLink {     
  0% { background-color: #ff2a2a; }
@@ -408,44 +429,135 @@ pre {
  100% { background-color: #e82aff; }
 }
 .top_menu{
-	padding: 0px;
+   padding: 0px;
     width: 70px;
     margin-top: 10px;
 }
 .user_menu{
-	text-decoration : none;
-	margin-top : 12px;
-	padding : 0px;
-	width : 120px;
-	height : 25px;
-	padding-top:7px;
+   text-decoration : none;
+   margin-top : 12px;
+   padding : 0px;
+   width : 120px;
+   height : 25px;
+   padding-top:7px;
 }
 .logout_menu{
-	text-decoration : none;
-	margin-top : -2px;
-	padding : 0px;
+   text-decoration : none;
+   margin-top : -2px;
+   padding : 0px;
+   width : 70px;
+   height : 25px;
+}
+.shop_info{
+   margin-left:100px;
+   margin-top:50px;
+   width : 400px;
+}
+.table1_warpper{
+   height : 400px;
+    width: 600px;
+    margin-top: 50px;
+   position : relative;
+   margin-left:186px;
+   border : 1px solid gray;
+   border-radius : 10px;
+   box-shadow: 2px 2px 3px 0px grey;
+}
+.card-img-top{
+   width:286px;
+   height:200px;
+}
+
+
+.blind {
+  position: absolute;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  border: none;
+  clip: rect(0, 0, 0, 0);
+}
+
+.startRadio {
+	display: inline-block;
+	overflow: hidden;
+	height: 40px;
+	float:right;
+	position: relative;
+	right: 370px;
+	bottom: 5px;
+}
+.startRadio:after {
+  content: "";
+  display: block;
+  position: relative;
+  z-index: 10;
+  height: 40px;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOEfKtAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAACCBJREFUeNrsnHtwTFccx38pIpRQicooOjKkNBjrUX0ww0ijg4qpaCPTSjttPWYwU/X4o/XoH/7w7IMOQyg1SCco9d5EhTIebSSVoEQlxLQhoRIiJEF/33vOPrLdTe/u3pW7u/c3c/aeu3vuub/fZ3/nnN8999wb8piFDPFYnjIQGAANgAZAA6A+xXxZJD1LY70q9ohjg5kHRX5oZ6JGIYYHuiXrzxCduSHShjP69cAQPcaB92qIuq4k+uuO2G/fkqhgMlHzJoYHqpIlJ6zwzEjILz5heKAqKbkrvO9utbIbzwn6ZbQIFV4Y1cLwwHpl3hErvK2PP6MMTpnI4zv8ZjTheuRsKdG6320s7bniY22uKGMAdCGzfiaqfaRk17DnnbN8L/OrHz4WZQyATuRgEdHeS0r2CqcZTorMxG8ok1loAPxP0Dwj0xYCssdVOJaR332nkDwojjEAStmYR5R7XckeZ1DzXZXj375AGZT9Ps8AaA2aPz9s3V2n4pC1+JhzWBwb9AC/PEV0TTRYM3tY6v+V5zIAaMYxODaoAd6oJFp03MbSHe74wLHXK4MYIALjigdKdjt71n61x8my23Ds/CNBCvB8GVFqrtOgWa0ogw3qQF1BB3B23aA5393j5TFrUEdDBtcNAvAQh8q7CpTsNbD05uKFU/HuAlFnUAC0n2lGYMye9I+ndfGxtxF4I49AvCGC6ycOcBM3vOy/lewpBjDX2/pkHSdPl4i6Axrg/VoOmrPqBsQaiRKAo26c40mKzyZU0bn/cZMohz0D3oHLL6Tb95WfM9lzXtfUkAWUwZu41mFEvduJ1CeKyMSpWwRRYx+5iiZ35XBJlXdDgMq5LqDll7r0BkwbTPaBLahzJf9BcVk8oGTZDSphbGWPtgKmSYLt+aw291jc9sBbVQKSAkt61kX2tIfOa0GvlMPpNCdEfbmy4/ddk1pArXnTW6Y+nEycejiWw23SmAjhqQDbR8Jt00xDgFf5ejOXIWVbmmCJ+M6FnJSgcmTKZ1j39TBjwlDDJESTTAA7wFnZTuEMNUqA7Rsl8vhOFcAfLxAdKxaw4GXwNmdOaOdVOdKzLjKsh+RHwlAb8SZGeqrJzlvbOJaFV5pkvzqwI9HoF1wARHCbuI2o2obiqgSUbdcEr1IAC4PtZNcF9JVbfEehjHzrGKI3u9bThLecJXpvp7VPW8XAJlMQCwNdyZtJ6DM3JhCNi1XRB67mhjlpr7ghyzKaIe4MUniMjHZgWc6q4UQTTCoDaRRcNNS6u4MrGhyE8GDzDuTBwhm8eq9EZrzMkf1A2/U/V2gKIngYUA4pVzcDBQuP48BpZqLlvypZjMl9uTmfD3B43eWg2Wxaf6Kv4728FkYF7/dSsggxs/gEMQEMD7bhar0ZbP4qXoPJBHSgqSOJxnRTdvkCiPbxiaIDEB5s2gcbYStsVrOmU9UlNobwzaOJhgls0XJg6RhA8DrKASMaNsJWtStiVc9RIIjcnigicZaenNL5xO0CAB5sSIdNsA02wla14tYkD2Yvdr8jLrzltWSavHj3V3jQPQ22wCbY5u4MjduzZK2aEu0fR9Q9UtkdLCGG+SE86LwFNsAW2ATb3BWPphnbNicy8wmjhe8N4/SDHzogPO+Nzq2FLbDJE/F4nrZDONGBZKLnWiq7o/gfTfcj74OuCVi8bk4WtngqXk10d3mGx/0k67+XyIpt8gN40DEROu9PEjZ4I17fKcDUODpf2X8ks4LrdQwPuiVDV+gM3b0VTW61vNSeg6ix1hEshRVN1SE86JQCHaErdNakXi3vyu25RPTWVuuEbFO+bq7WCbxQ3jywxLIjumhXt6Y3+6CYKcq6q6fZG0UX6KYlPM0BQq6U27I6AnjFQTd9AqyqFU8aIcvNt0Qv9KQuVdCtqlbHAItsd3yLdDgIFznoqEOA5X4AsNzwQMMDDQ80PNDwQF0CLLT9u4U6BFjooKO+AFbWEJXeE1mOu0r1Rk/qVAkdK2t0CFDn/Z/P+kHN3hujdf8XskBZGWVZG3GUPShbI4Cx0DW2rd4AauSBDC6ON1M4JTh8jwVOK+Q7FAwPdAJuLG8+JHGPhZ5uQvSRnM9JzVH6LQBN4HIHeLuWQaZ7DLA8gAAykAm8SeI0BPuRzdn9+okUIdcrz+GGvOI3kcruKYCH8XFY/JPGIFcHBEB3QxgGgEe8RnAahP3nWxFNH8Au2Ft4n70A5LxBYpUU3tyx7KQyNQXgQ7ied3m7h0EubIhQRrMZ6chlRDfFmupINuamC2i4hQNww0msblAeP5j1CrtgLFETlTFBzSN2vbPieeF8W8CElwBgbctCPv8tF+eP4E0Z/pCy6ToCeKeaKHyxyLLy4U4Ux3oaPBg40fIdllHMZnAjuqpbxOM0toPrFTAxBnm0uM5PaNaLWJc/neiC5wxaVszkj1CdxIGuRmBWtp+8jQhDJgIUFmgfTSH6ZTzRSC/gKfWTqAN1HeM6R8VY60O/eonPvRk6+HIk1gagwwDCSr8uww4szUxG0xzPDTaPzfrpbaLXOmgfIb/Kde7kcTyffTyll7U7GAcdoAt08sVAokkT/pZHxykHRJYTHgKIt4QiH3Mo8smA+h9W8YUUV4jBZk1OnUs3vA3uAqep37CGU/vrBCCe/11i93o6hCJTZSji7qNTWgseFkL4s1yEQFbBiL80TidhjKU5IBT5VIYienlZIv7AuXYh0FIRAmkWymjigR/sEu85TXrRd4+VaiV4DDftHFHGZaINo3QUBwarGO+RNgAaAA2AwSz/CjAAQpkGTQKEVKkAAAAASUVORK5CYII=") repeat-x 0 0;
+  background-size: contain;
+  pointer-events: none;
+}
+.startRadio__box {
+  position: relative;
+  z-index: 1;
+  float: left;
+  width: 20px;
+  height: 40px;
+  cursor: pointer;
+}
+.startRadio__box input {
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  position: absolute !important;
+}
+.startRadio__box input:checked + .startRadio__img {
+  background-color: yellow;
+}
+.startRadio__img {
+  display: block;
+  position: absolute;
+  right: 0;
+  width: 500px;
+  height: 40px;
+  pointer-events: none;
+}
+.col-8>form{
+	background-color: white;
+	border: 1px solid #c9c9c9;
+	border-radius: 10px;
+}
+.update-form>input{
+	font-size : 13px;
+	background-color: #eeffee;
+	border: 1px solid #c9c9c9;
+	border-radius: 5px;
+	margin-bottom: 3px;
+}
+.update-form>textarea{
+	font-size : 13px;
+	background-color: #eeffee;
+	border: 1px solid #c9c9c9;
+	border-radius: 5px;
+	width : 555px;
+	height:62px;
+	margin-bottom: 3px;
+}
+.comment_edit_btn{
+	padding : 0px !important;
+	font-size : 10px;
+	border-radius: 5px;
 	width : 70px;
 	height : 25px;
 }
-.shop_info{
-	margin-left:100px;
-	margin-top:50px;
-	width : 400px;
+.update-form>.startRadio{
+	float: right;
+    position: relative;
+    right: 190px;
 }
-.table1_warpper{
-	height : 400px;
-    width: 600px;
-    margin-top: 50px;
-	position : relative;
-	margin-left:186px;
-	border : 1px solid gray;
-	border-radius : 10px;
-	box-shadow: 2px 2px 3px 0px grey;
-}
-.card-img-top{
-	width:286px;
-	height:200px;
-}
+
 </style>
 <body>
 
@@ -633,8 +745,51 @@ pre {
 																			<form id="updateForm${tmp.num }" class="review-form update-form" action="review_update" method="post">
 																				<input type="hidden" name="num" value="${tmp.num }" />
 																				<input type="text" name="title" value="${tmp.title }" />
+																				<div class="startRadio">
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=0.5>
+																					  <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=1>
+																					  <span class="startRadio__img"><span class="blind">별 1개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=1.5>
+																					  <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=2>
+																					  <span class="startRadio__img"><span class="blind">별 2개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=2.5>
+																					  <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=3>
+																					  <span class="startRadio__img"><span class="blind">별 3개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=3.5>
+																					  <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=4>
+																					  <span class="startRadio__img"><span class="blind">별 4개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=4.5>
+																					  <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=5>
+																					  <span class="startRadio__img"><span class="blind">별 5개</span></span>
+																					</label>
+																				</div>
+																				
 																				<textarea name="content">${tmp.content }</textarea>
-																				<button type="submit" id="ur${tmp.num }">수정</button>
+																				<button type="submit" id="ur${tmp.num }" class=comment_edit_btn>수정</button>
 																			</form>
 																		</c:if>
 																	</div>
@@ -685,23 +840,51 @@ pre {
 								<tr>
 								<td style="left: 10px; position: relative;">
 								<!-- 원글에 리뷰를 작성할 폼 -->
+								<div class="comment_form_box">
 										<form class="review-form insert-form" action="review_insert" method="post">
-											<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
-  	  										<input type="hidden" name="imagePath" value="empty"/>
-											
-											<input type="text" name="title" id="title" placeholder="제목 입력..."/>
-											
-											<label for="grade_number">평점 : ★</label>
-											<input type="radio" name="grade_number" value=1 />
-											<label for="grade_number">★★</label>
-											<input type="radio" name="grade_number" value=2 />
-											<label for="grade_number">★★★</label>
-											<input type="radio" name="grade_number" value=3 />
-											<label for="grade_number">★★★★</label>
-											<input type="radio" name="grade_number" value=4 />
-											<label for="grade_number">★★★★★</label>
-											<input type="radio" name="grade_number" value=5 checked/>
-											
+											<input type="text" name="title" id="title" placeholder="한줄평 입력..."/>
+											<div class="startRadio">
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=0.5>
+												  <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=1>
+												  <span class="startRadio__img"><span class="blind">별 1개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=1.5>
+												  <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=2>
+												  <span class="startRadio__img"><span class="blind">별 2개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=2.5>
+												  <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=3>
+												  <span class="startRadio__img"><span class="blind">별 3개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=3.5>
+												  <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=4>
+												  <span class="startRadio__img"><span class="blind">별 4개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=4.5>
+												  <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=5>
+												  <span class="startRadio__img"><span class="blind">별 5개</span></span>
+												</label>
+											</div>
 											<a id="profileLink" href="javascript:" style="float:left;">
 												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
 											</a>
@@ -710,9 +893,10 @@ pre {
 											<input type="hidden" name="ref_group" value="${dto.num }" />
 											<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
 											<button class="regist_btn" type="submit">등록</button>
-
 										</form>
-										
+								</div>
+										<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
+  	  									<input type="hidden" name="imagePath" value="empty"/>
 										<!-- 이미지 등록용 숨겨진 form -->
 									   <form id="imageForm" action="${pageContext.request.contextPath}/shop/review_image_upload" method="post" enctype="multipart/form-data">
 									      사진
@@ -751,9 +935,56 @@ pre {
 							</ul>
 						</nav>
 					</div>
-					<div class="table_4" style="display:none;">
-								TBD
-					</div>
+               <div class="table_4" style="display:none;">
+                  <div class="startRadio">
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star0_5" value=0.5 >
+                      <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star1" value=1>
+                      <span class="startRadio__img"><span class="blind">별 1개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star1_5" value=1.5>
+                      <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star2" value=2>
+                      <span class="startRadio__img"><span class="blind">별 2개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star2_5" value=2.5>
+                      <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star3" value=3>
+                      <span class="startRadio__img"><span class="blind">별 3개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star3_5" value=3.5>
+                      <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star4" value=4>
+                      <span class="startRadio__img"><span class="blind">별 4개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star4_5" value=4.5>
+                      <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star5" value=5>
+                      <span class="startRadio__img"><span class="blind">별 5개</span></span>
+                    </label>
+                  </div>
+               </div>
+	            <!-- 
+	               document.querySelectorAll("input:checked")[1].value
+	               지금은 상언씨 코드랑 같이있어서 배열 1로 검색해야 잡히는데 지우게되면 0으로 잡아도 잡힐듯합니다.
+	               id에다 star[별_개수] 식으로 id 배열해놨고, 집가서 value 값으로 수정하면 잘 될거같은디  
+	            
+	             -->
 
 				</div>
 		        </div>    
@@ -804,7 +1035,6 @@ pre {
 	});    
 	</script>
 	<script>
-
 		window.onload = function() {
 			$(".table_1").show();
 			$(".table_2").hide();
@@ -853,7 +1083,6 @@ pre {
 				$(".table_4").show();
 			})
 		})
-
 	</script>
 	<div class="footer">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -1099,7 +1328,6 @@ pre {
 		document.querySelector("#profileLink").addEventListener("click", function(){
 			document.querySelector("#image").click();	
 		});   
-
 		document.querySelector("#image").addEventListener("change", function(){
 			const form = document.querySelector("#imageForm"); 
 			ajaxFormPromise(form)
