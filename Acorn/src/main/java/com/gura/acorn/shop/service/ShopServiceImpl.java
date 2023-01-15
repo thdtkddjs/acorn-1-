@@ -262,7 +262,7 @@ public class ShopServiceImpl implements ShopService{
 		//폼 전송되는 파라미터 추출 
 		int ref_group = Integer.parseInt(request.getParameter("ref_group"));//원글의 글번호
 		//평점을 구현하는 문단
-		int GN=Integer.parseInt(request.getParameter("grade_number"));
+		double GN= Double.parseDouble(request.getParameter("grade_number"));
 		//여기까지
 		
 		
