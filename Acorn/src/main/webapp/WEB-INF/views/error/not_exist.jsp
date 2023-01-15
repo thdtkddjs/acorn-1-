@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/views/users/login.jsp</title>
+<title>/views/error/info.jsp</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <style>
@@ -36,24 +36,16 @@ img{
 </head>
 <body class="text-center">
 	<div class="container">
-	   <c:choose>
-	      <c:when test="${not empty sessionScope.id }">
-	         <script>
-	         	window.location.href = '${pageContext.request.contextPath}/index';
-	         </script>
-	      </c:when>
-	      <c:otherwise>
-         	<img src="${pageContext.request.contextPath}/resources/images/access_denied.png" alt="" />
-            <br />
-            <br />
-            <br />
-            <h3>LOGIN FAIL</h3>
-            <br />
-            <p>PLEASE CHECK YOUR ID & PW</p>
-            <br />
-            <a class="btn btn-outline-warning" href="loginform?url=${requestScope.encodedUrl }">LOGIN PAGE</a>
-	      </c:otherwise>
-	   </c:choose>
+		<img src="${pageContext.request.contextPath}/resources/images/access_denied.png" alt="" />
+		<br />
+		<br />
+		<br />
+		<h3>LOGIN FAIL</h3>
+		<br />
+		<p>The ID you entered does not exist.</p>
+		<p>Please, Check Your ID</p>
+	
+		<a class="btn btn-outline-warning" href="loginform?url=${requestScope.encodedUrl }">LOGIN PAGE</a>
 	</div>
 </body>
 </html>
