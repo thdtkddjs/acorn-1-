@@ -92,32 +92,60 @@
          <script src="https://code.jquery.com/jquery-3.6.3.js" 
          integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> 
    <script>
+
+   let isPwdValid=false;
+	let isEmailValid=false;	
+
+		// id 가 email 인 요소에 input 이벤트가 일어 났을때 실행할 함수 등록
+		$("#email").on("input", function(){	
+		//두개의 클래스 제거하기
+		$(this).removeClass("is-valid is-invalid");
+		
+		//입력한 이메일
+		const inputEmail=$(this).val();
+		//이메일을 검증할 정규 표현식  
+		const reg=/@/;
+		//만일 입력한 이메일이 정규표현식 검증을 통과 하지 못했다면
+		if(!reg.test(inputEmail)){
+			$(this).addClass("is-invalid");
+			isEmailValid=false;
+		}else{//통과 했다면 
+			$(this).addClass("is-valid");
+			isEmailValid=true;
+		}
+	});	
+
+	function checkPwd(){
+		//먼저 2개의 클래스를 제거하고 
+		$("#pwd").removeClass("is-valid is-invalid");
+		
+		//입력한 두개의 비밀 번호를 읽어와서 
+		const pwd=$("#pwd").val();
+		const pwd2=$("#pwd2").val();
+		
+		//만일 비밀번호 입력란과 확인란이 다르다면
+		if(pwd != pwd2){
+			$("#pwd").addClass("is-invalid");
+			isPwdValid=false;
+		}else{//같다면
+			$("#pwd").addClass("is-valid");
+			isPwdValid=true;
+		}
+	}
 	
-	let isEmailValid=false;
+	// #pwd 와 #pwd2 를 모두 선택해서 이벤트 리스너 함수 등록
+	$("#pwd, #pwd2").on("input", function(){
+		checkPwd();
+	});
 	
-	$("#email").on("input", function(){
-	    $(this).removeClass("is-valid is-invalid");
-    	const inputEmail=$(this).val();
-    	const reg=/@/;
-    
-    	if(!reg.test(inputEmail)){
-        	$(this).addClass("is-invalid");
-        	isEmailValid=false;
-     	}else{
-        	$(this).addClass("is-valid");
-        	isEmailValid=true;
-     	}
-  	});
-	
-	
-    
-    $("#myForm").on("submit", function(){
-        const isFormValid = isEmailValid;
-        if(!isFormValid){
-           return false;
-        }
-        
-     });
+   
+   $("#myform").on("submit", function(){
+   	const isFormValid = isPwdValid && isEmailValid;
+       if(!isFormValid){
+          return false;
+       }
+       
+    });
 </script>
 </body>
 </html>
