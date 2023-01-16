@@ -138,40 +138,62 @@ public class ShopServiceImpl implements ShopService{
 		//[ 리뷰 페이징 처리에 관련된 로직 ]
 		
 		//한 페이지에 몇개씩 표시할 것인지
-		final int PAGE_ROW_COUNT=10;
+		final int RV_PAGE_ROW_COUNT = 5;
+		final int RV_PAGE_DISPLAY_COUNT = 5;
 
 		//detail.jsp 페이지에서는 항상 1페이지의 댓글 내용만 출력한다. 
-		int pageNum = 1;
+		int rvPageNum = 1;
 
+		String rvStrPageNum = request.getParameter("rvPageNum");
+		if(rvStrPageNum != null) {
+			rvPageNum = Integer.parseInt(rvStrPageNum);
+		}
+		
 		//보여줄 페이지의 시작 ROWNUM
-		int startRowNum = 1 + (pageNum - 1) * PAGE_ROW_COUNT;
+		int rvStartRowNum = 1 + (rvPageNum - 1) * RV_PAGE_ROW_COUNT;
 		//보여줄 페이지의 끝 ROWNUM
-		int endRowNum = pageNum * PAGE_ROW_COUNT;
+		int rvEndRowNum = rvPageNum * RV_PAGE_ROW_COUNT;
 
 		//원글의 글번호를 이용해서 해당글에 달린 댓글 목록을 얻어온다.
 		ShopReviewDto reviewDto = new ShopReviewDto();
 		reviewDto.setRef_group(num);
 		//1페이지에 해당하는 startRowNum 과 endRowNum 을 dto 에 담아서  
-		reviewDto.setStartRowNum(startRowNum);
-		reviewDto.setEndRowNum(endRowNum);
+		reviewDto.setStartRowNum(rvStartRowNum);
+		reviewDto.setEndRowNum(rvEndRowNum);
 
 		//1페이지에 해당하는 댓글 목록만 select 되도록 한다.
 		List<ShopReviewDto> reviewList = shopReviewDao.getList(reviewDto);
 
 		//원글의 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
-		int totalRow = shopReviewDao.getCount(num);
+		int rvTotalRow = shopReviewDao.getCount(num);
+		int rvStartPageNum = 1 + ((rvPageNum - 1) / RV_PAGE_DISPLAY_COUNT) * RV_PAGE_DISPLAY_COUNT;
+		// 하단 끝 페이지 번호
+		int rvEndPageNum = rvStartPageNum + RV_PAGE_DISPLAY_COUNT - 1;
 		//댓글 전체 페이지의 갯수
-		int totalPageCount = (int)Math.ceil(totalRow / (double)PAGE_ROW_COUNT);
+		int rvTotalPageCount = (int)Math.ceil(rvTotalRow / (double)RV_PAGE_ROW_COUNT);
+		if (rvEndPageNum > rvTotalPageCount) {
+			rvEndPageNum = rvTotalPageCount; // 보정해 준다.
+		}
 		
 		//request에 담기
 		request.setAttribute("dto", resultDto);
 		request.setAttribute("keyword", keyword);
+		request.setAttribute("rvPageNum", rvPageNum);
+		request.setAttribute("rvStartPageNum", rvStartPageNum);
+		request.setAttribute("rvEndPageNum", rvEndPageNum);
 		request.setAttribute("encodedK", encodedK);
 		request.setAttribute("condition", condition);
-		request.setAttribute("totalRow", totalRow);
+		request.setAttribute("rvTotalRow", rvTotalRow);
 		request.setAttribute("reviewList", reviewList);
-		request.setAttribute("totalPageCount", totalPageCount);
+		request.setAttribute("rvTotalPageCount", rvTotalPageCount);
 		
+		//평점 추가
+		if(shopReviewDao.getCount(num)==0) {
+	         request.setAttribute("grade", "입력된 평점이 없습니다.");
+	    }else if(shopReviewDao.getCount(num)!=0) {
+	    	double grade=Math.round(shopReviewDao.getGrade(num)*100)/100.0;
+	        request.setAttribute("grade", grade+" 점");
+	    }
 	}
 
 	@Override
@@ -240,7 +262,12 @@ public class ShopServiceImpl implements ShopService{
 	
 		// json 문자열을 출력하기 위한 Map 객체 생성하고 정보 담기
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("imagePath", "/resources/upload/" + saveFileName);
+		if(orgFileName.equals("")) {
+			map.put("imagePath","/resources/images/photo.png");
+		}else {
+			map.put("imagePath", "/resources/upload/" + saveFileName);
+		}
+		
 		
 		return map;
 	}
@@ -254,8 +281,14 @@ public class ShopServiceImpl implements ShopService{
 	public void saveReview(HttpServletRequest request) {
 		//폼 전송되는 파라미터 추출 
 		int ref_group = Integer.parseInt(request.getParameter("ref_group"));//원글의 글번호
-		String content = request.getParameter("content"); //댓글의 내용
-
+		//평점을 구현하는 문단
+		double GN= Double.parseDouble(request.getParameter("grade_number"));
+		//여기까지
+		
+		
+		
+		String title = request.getParameter("title"); // 리뷰 제목
+		String content = request.getParameter("content"); //리뷰 내용
 		String review_group = request.getParameter("review_group");
 		String imagePath = (String)request.getParameter("imagePath");
 
@@ -267,9 +300,11 @@ public class ShopServiceImpl implements ShopService{
 		ShopReviewDto dto = new ShopReviewDto();
 		dto.setNum(seq);
 		dto.setWriter(writer);
+		dto.setTitle(title);
 		dto.setContent(content);
 		dto.setRef_group(ref_group);
 		dto.setImagePath(imagePath);
+		dto.setGrade(GN);
 		//원글의 댓글인경우
 		if(review_group == null){
 			//댓글의 글번호를 comment_group 번호로 사용한다.

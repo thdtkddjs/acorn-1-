@@ -57,8 +57,10 @@
                  <input type="hidden" name="url" value="${param.url }"/>
               </c:otherwise>
           </c:choose>
-	    
-	    <h1 class="h3 mb-3 fw-normal">로그인 폼</h1>
+	    <a href="${pageContext.request.contextPath}/index" class="logo_text">
+			<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+		</a>		
+	    <h1 class="h3 mb-3 fw-normal">LOGIN</h1>
 	
 	    <div class="form-floating">
 	      <input name="id" value="${cookie.savedId.value }" type="text" class="form-control" id="floatingInput" placeholder="id">
@@ -77,7 +79,7 @@
 	      </label>
 	    </div>
 	    <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
-	    <p class="mt-5 mb-3 text-muted">&copy; 2017–2022</p>
+	    <p class="mt-5 mb-3 text-muted">&copy; 2022 ACORN TEAM1</p>
 	  </form>
 	</main>
 </body>

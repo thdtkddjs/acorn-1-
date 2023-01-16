@@ -4,7 +4,8 @@ CREATE TABLE users(
     pwd VARCHAR2(100) NOT NULL,
     email VARCHAR2(100),
     profile VARCHAR2(100), --프로필 이미지 경로를 저장할 칼럼
-    regdate DATE
+    regdate DATE,
+    ban VARCHAR2(25)
 );
 
 -- 가게 리스트 테이블
@@ -18,7 +19,7 @@ CREATE TABLE board_shop(
     likeCount NUMBER, -- 좋아요 개수
     dislikeCount NUMBER, -- 싫어요 개수 (추후 평점시스템으로 변경할경우 삭제)
     telNum VARCHAR2(20), -- 가게 전화번호
-    addr VARCHAR2(50), --  주소(불필요시 추후 삭제)
+    addr VARCHAR2(200), --  주소(불필요시 추후 삭제)
     latitude NUMBER, -- 위도(불필요시 추후 삭제)
     longitude NUMBER -- 경도(불필요시 추후 삭제)
 );
@@ -32,11 +33,11 @@ CREATE TABLE board_shop_review( -- 테이블명 추후 변경 예정
     writer VARCHAR2(100), -- 리뷰의 작성자 아이디
     content VARCHAR2(500), -- 리뷰 내용
     target_num VARCHAR2(100), -- 리뷰 대상(글) 번호
-    target_id VARCHAR2(100), -- 댓글의 대상자 아이디(리뷰의 댓글 필요하면 테이블 따로 관리)
     ref_group NUMBER, 
     review_group NUMBER,
     deleted CHAR(3) DEFAULT 'no', --  리뷰 삭제여부
-    grade CHAR(3) DEFAULT 'no', -- 평점 작성 여부(필요시 다른 테이블로 이동)
+    grade number, -- 평점 작성 여부(필요시 다른 테이블로 이동)
+    imagePath VARCHAR2(200), -- 섬네일
     regdate DATE
 );
 -- 댓글의 글번호를 얻어낼 시퀀스
@@ -74,5 +75,17 @@ ALTER TABLE board_shop MODIFY(addr VARCHAR2(200));
 -- 코드 완성 후 필요없어진 칼럼 지우기
 ALTER TABLE 테이블명 DROP(칼럼명);
 
--- 리뷰 테이블 사진 저장용 칼럼 추가
+-- 리뷰 테이블 추가기능용 칼럼 추가
 ALTER TABLE board_shop_review ADD(imagePath varchar2(200));
+
+alter table board_shop_review drop(grade);
+
+alter table board_shop_review add(grade number);
+
+alter table board_shop_review add(title varchar2(50));
+
+-- 처음 테이블 만들 당시에 shop_review 테이블에 target_id 칼럼이 있으신분은 아래 sql문으로 제거
+alter table board_shop_review drop(target_id);
+
+-- 유저스 테이블 벤 기능용 칼럼 추가
+ALTER TABLE users ADD(BAN varchar2(25));
