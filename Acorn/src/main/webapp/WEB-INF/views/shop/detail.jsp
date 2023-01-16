@@ -126,7 +126,14 @@
 .table_3::-webkit-scrollbar-track, .table_4::-webkit-scrollbar-track {
 
 }
-
+textarea::-webkit-scrollbar{
+   width : 5px;
+   height : 0px;
+}
+textarea::-webkit-scrollbar-thumb{
+    background-color: #2f3542;
+    border-radius: 10px;
+}
 
 .fold_btn {
    position: absolute;
@@ -304,8 +311,8 @@ pre {
    }
 }
 #profileImage{
-    width: 100px;
-    height: 100px;
+    width: 147px;
+    height: 147px;
     border: 1px solid #cecece;
     border-radius: 10px;
   }
@@ -324,6 +331,8 @@ pre {
    padding : 0px;
 }
 .comment_box{
+   border:1px solid #c9c9c9; 
+   border-radius:10px;
    text-align : left;
    height : 152px;
    width : 590px;
@@ -407,10 +416,7 @@ pre {
    border: 1px solid #c9c9c9;
    border-radius: 10px;
 }
-#btn_1{
-   background-color : #B2CCFF;
-}
-#btn_2, #btn_3, #btn_4{
+#btn_1, #btn_2, #btn_3, #btn_4{
    background-color : #D5D5D5;
 }
 .rainbow_effect{
@@ -513,6 +519,9 @@ pre {
   width: 0 !important;
   position: absolute !important;
 }
+.startRadio__box .point + .startRadio__img {
+  background-color: yellow;
+}
 .startRadio__box input:checked + .startRadio__img {
   background-color: yellow;
 }
@@ -556,6 +565,28 @@ pre {
 	float: right;
     position: relative;
     right: 190px;
+}
+.review_title_box{
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+    position: relative;
+    left: 3px;
+    height: 35px;
+}
+.review_content_box{
+    width: 555px;
+    height: 80px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 3px;
+    padding: 15px;
 }
 
 </style>
@@ -648,7 +679,7 @@ pre {
 							<button type="button" id="btn_3"><span>리뷰</span></button>
 							<button class="rainbow_effect" type="button" id="btn_4"><span class="rainbow_effect">★</span></button>
 						</div>
-					<div class="table_1">
+					<div class="table_1" style="display:none;">
 						<div class="table1_warpper">
 							<table class="shop_info">
 								<tbody>
@@ -726,7 +757,7 @@ pre {
 															<c:if test="${tmp.num eq tmp.review_group }">
 																<li id="reli${tmp.num }">
 															</c:if>
-															
+															 
 															<dl>
 																<dt class="row">
 																	<div class="col-2">
@@ -740,50 +771,113 @@ pre {
 																		</c:choose>
 																	</div>
 																	<div class="col-8">
-																		<pre class="comment_box" id="pre${tmp.num }"><span id="spt${tmp.num }">${tmp.title}</span> | <span id="spg${tmp.grade }">${tmp.grade}</span> <br /> <span id="spc${tmp.num }">${tmp.content }</span></pre>
+																		<div class="comment_box" id="pre${tmp.num }">
+
+																			<!-- 
+																			<span id="spt${tmp.num }">${tmp.title}</span>
+																			 -->
+																			<input class="review_title_box" type="text" name="title" id="spt${tmp.num }" value="${tmp.title}" disabled/>
+																			
+																		 	<div class="startRadio" style="pointer-events: none;
+																										    display: inline-block;
+																										    overflow: hidden;
+																										    height: 40px;
+																										    float: right;
+																										    position: relative;
+																										    right: 140px;
+																										    bottom: 5px;
+																										    z-index : 9;">
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=0.5  ${tmp.grade eq 0.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=1 ${tmp.grade eq 1 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 1개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=1.5 ${tmp.grade eq 1.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=2 ${tmp.grade eq 2 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 2개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=2.5 ${tmp.grade eq 2.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=3 ${tmp.grade eq 3 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 3개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=3.5 ${tmp.grade eq 3.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=4 ${tmp.grade eq 4 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 4개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=4.5 ${tmp.grade eq 4.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=5 ${tmp.grade eq 5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 5개</span></span>
+																				</label>
+																			</div>
+																			<br />
+																			<textarea class="review_content_box" id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
+																		</div>
+																		
+																		
+																		
+																		<!-- 수정폼 -->
 																		<c:if test="${tmp.writer eq id }">
 																			<form id="updateForm${tmp.num }" class="review-form update-form" action="review_update" method="post">
 																				<input type="hidden" name="num" value="${tmp.num }" />
 																				<input type="text" name="title" value="${tmp.title }" />
 																				<div class="startRadio">
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=0.5  ${tmp.grade eq 0.5 ? 'checked' : '' }>
+																					  <input type="radio" name="grade_number" value=0.5  ${tmp.grade eq 0.5 ? 'checked' : '' } disabled>
 																					  <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=1 ${tmp.grade eq 1 ? 'checked' : '' }>
+																					  <input type="radio" name="grade_number" value=1 ${tmp.grade eq 1 ? 'checked' : '' } disabled>
 																					  <span class="startRadio__img"><span class="blind">별 1개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=1.5 ${tmp.grade eq 1.5 ? 'checked' : '' }>
+																					  <input type="radio" name="grade_number" value=1.5 ${tmp.grade eq 1.5 ? 'checked' : '' } disabled>
 																					  <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=2 ${tmp.grade eq 2 ? 'checked' : '' }>
+																					  <input type="radio" name="grade_number" value=2 ${tmp.grade eq 2 ? 'checked' : '' } disabled>
 																					  <span class="startRadio__img"><span class="blind">별 2개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=2.5 ${tmp.grade eq 2.5 ? 'checked' : '' }>
+																					  <input type="radio" name="grade_number" value=2.5 ${tmp.grade eq 2.5 ? 'checked' : '' } disabled>
 																					  <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=3 ${tmp.grade eq 3 ? 'checked' : '' }>
+																					  <input type="radio" name="grade_number" value=3 ${tmp.grade eq 3 ? 'checked' : '' } disabled>
 																					  <span class="startRadio__img"><span class="blind">별 3개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=3.5 ${tmp.grade eq 3.5 ? 'checked' : '' }>
+																					  <input type="radio" name="grade_number" value=3.5 ${tmp.grade eq 3.5 ? 'checked' : '' } disabled>
 																					  <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=4 ${tmp.grade eq 4 ? 'checked' : '' }>
+																					  <input type="radio" name="grade_number" value=4 ${tmp.grade eq 4 ? 'checked' : '' } disabled>
 																					  <span class="startRadio__img"><span class="blind">별 4개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=4.5 ${tmp.grade eq 4.5 ? 'checked' : '' }>
+																					  <input type="radio" name="grade_number" value=4.5 ${tmp.grade eq 4.5 ? 'checked' : '' } disabled>
 																					  <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
 																					</label>
 																					<label class="startRadio__box">
-																					  <input type="radio" name="grade_number" value=5 ${tmp.grade eq 5 ? 'checked' : '' }>
+																					  <input type="radio" name="grade_number" value=5 ${tmp.grade eq 5 ? 'checked' : '' } disabled>
 																					  <span class="startRadio__img"><span class="blind">별 5개</span></span>
 																					</label>
 																				</div>
@@ -885,7 +979,7 @@ pre {
 												  <span class="startRadio__img"><span class="blind">별 5개</span></span>
 												</label>
 											</div>
-											<a id="profileLink" href="javascript:" style="float:left;">
+											<a id="thumbnailLink" href="javascript:" style="float:left;">
 												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
 											</a>
 											
@@ -914,23 +1008,23 @@ pre {
 								  startPageNum 이 1 이 아닌 경우에만 Prev 링크를 제공한다. 
 								  &condition=${condition}&keyword=${encodedK}
 								--%>
-								<c:if test="${startPageNum ne 1 }">
+								<c:if test="${rvStartPageNum ne 1 }">
 									<li class="page-item">
-										<a class="page-link" href="list?pageNum=${startPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
+										<a class="page-link" href="detail?num=${dto.num}&rvPageNum=${rvStartPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
 									</li>
 								</c:if>
-								<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
-									<li class="page-item ${pageNum eq i ? 'active' : '' }">
-										<a class="page-link" href="list?pageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
+								<c:forEach var="i" begin="${rvStartPageNum }" end="${rvEndPageNum }">
+									<li class="page-item ${rvPageNum eq i ? 'active' : '' }">
+										<a class="page-link" href="detail?num=${dto.num }&rvPageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
 									</li>
 								</c:forEach>
 				
 								<%--
 									마지막 페이지 번호가 전체 페이지의 갯수보다 작으면 Next 링크를 제공한다. 
 								--%>
-								<c:if test="${endPageNum lt totalPageCount }">
+								<c:if test="${rvEndPageNum lt rvTotalPageCount }">
 									<li class="page-item">
-										<a class="page-link" href="list?pageNum=${endPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
+										<a class="page-link" href="detail?num=${dto.num }&rvPageNum=${rvEndPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
 									</li>
 								</c:if>
 							</ul>
@@ -1036,11 +1130,46 @@ pre {
 	});    
 	</script>
 	<script>
+		//tab menu 컨트롤 코드
+		var beforePage=1;
 		window.onload = function() {
-			$(".table_1").show();
-			$(".table_2").hide();
-			$(".table_3").hide();
-			$(".table_4").hide();
+			if(sessionStorage.getItem("beforePage")==1){
+				$("#btn_1").css({"background-color" : "#B2CCFF"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").show();
+				$(".table_2").hide();
+				$(".table_3").hide();
+				$(".table_4").hide();				
+			}else if(sessionStorage.getItem("beforePage")==2){
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#B2CCFF"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").hide();
+				$(".table_2").show();
+				$(".table_3").hide();
+				$(".table_4").hide();				
+			}else if(sessionStorage.getItem("beforePage")==3){
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#B2CCFF"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").hide();
+				$(".table_2").hide();
+				$(".table_3").show();
+				$(".table_4").hide();				
+			}else if(sessionStorage.getItem("beforePage")==4){
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#B2CCFF"})
+				$(".table_1").hide();
+				$(".table_2").hide();
+				$(".table_3").hide();
+				$(".table_4").show();			
+			}
 		}
 		$(document).ready(function() {
 			$("#btn_1").click(function() {
@@ -1052,6 +1181,8 @@ pre {
 				$(".table_2").hide();
 				$(".table_3").hide();
 				$(".table_4").hide();
+				beforePage=1;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 			$("#btn_2").click(function() {
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
@@ -1062,6 +1193,8 @@ pre {
 				$(".table_2").show();
 				$(".table_3").hide();
 				$(".table_4").hide();
+				beforePage=2;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 			$("#btn_3").click(function() {
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
@@ -1072,6 +1205,8 @@ pre {
 				$(".table_2").hide();
 				$(".table_3").show();
 				$(".table_4").hide();
+				beforePage=3;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 			$("#btn_4").click(function() {
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
@@ -1082,6 +1217,12 @@ pre {
 				$(".table_2").hide();
 				$(".table_3").hide();
 				$(".table_4").show();
+				beforePage=4;
+				sessionStorage.setItem("beforePage", beforePage);
+			})
+			$("a").click(function() {
+				beforePage=1;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 		})
 	</script>
@@ -1159,69 +1300,6 @@ pre {
       addUpdateFormListener(".update-form");
       addUpdateListener(".update-link");
       addDeleteListener(".delete-link");
-      
-      
-      //댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
-      let currentPage=1;
-      //마지막 페이지는 totalPageCount 이다.  
-      <%-- 댓글의 개수가 0일 때 오류를 발생하지 않기 위해 --%>
-      let lastPage=${totalPageCount eq 0 ? 1 : totalPageCount};
-      
-      //추가로 댓글을 요청하고 그 작업이 끝났는지 여부를 관리할 변수 
-      let isLoading=false; //현재 로딩중인지 여부 
-      
-      /*
-         window.scrollY => 위쪽으로 스크롤된 길이
-         window.innerHeight => 웹브라우저의 창의 높이
-         document.body.offsetHeight => body 의 높이 (문서객체가 차지하는 높이)
-      */
-      window.addEventListener("scroll", function(){
-         //바닥 까지 스크롤 했는지 여부 
-         const isBottom = 
-            window.innerHeight + window.scrollY  >= document.body.offsetHeight;
-         //현재 페이지가 마지막 페이지인지 여부 알아내기
-         let isLast = currentPage == lastPage;   
-         //현재 바닥까지 스크롤 했고 로딩중이 아니고 현재 페이지가 마지막이 아니라면
-         if(isBottom && !isLoading && !isLast){
-            //로딩바 띄우기
-            document.querySelector(".loader").style.display="block";
-            
-            //로딩 작업중이라고 표시
-            isLoading=true;
-            
-            //현재 댓글 페이지를 1 증가 시키고 
-            currentPage++;
-            
-            /*
-               해당 페이지의 내용을 ajax 요청을 통해서 받아온다.
-               "pageNum=xxx&num=xxx" 형식으로 GET 방식 파라미터를 전달한다. 
-            */
-            ajaxPromise("ajax_review_list","get",
-                  "pageNum="+currentPage+"&num=${dto.num}")
-            .then(function(response){
-               //json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
-               return response.text();
-            })
-            .then(function(data){
-               //data 는 html 형식의 문자열이다. 
-               console.log(data);
-               // beforebegin | afterbegin | beforeend | afterend
-               document.querySelector(".reviews ul")
-                  .insertAdjacentHTML("beforeend", data);
-               //로딩이 끝났다고 표시한다.
-               isLoading=false;
-               //새로 추가된 댓글 li 요소 안에 있는 a 요소를 찾아서 이벤트 리스너 등록 하기 
-               addUpdateListener(".page-"+currentPage+" .update-link");
-               addDeleteListener(".page-"+currentPage+" .delete-link");
-               addReplyListener(".page-"+currentPage+" .reply-link");
-               //새로 추가된 댓글 li 요소 안에 있는 댓글 수정폼에 이벤트 리스너 등록하기
-               addUpdateFormListener(".page-"+currentPage+" .update-form");
-               
-               //로딩바 숨기기
-               document.querySelector(".loader").style.display="none";
-            });
-         }
-      });
       
       //인자로 전달되는 선택자를 이용해서 이벤트 리스너를 등록하는 함수 
       function addUpdateListener(sel){
@@ -1319,7 +1397,7 @@ pre {
                      const title = form.querySelector("input[name=title]").value;
                      const content = form.querySelector("textarea[name=content]").value;
                      //수정폼에 입력한 value 값을 pre 요소에도 출력하기 
-                     document.querySelector("#spt"+num).innerText=title;
+                     document.querySelector("#spt"+num).value=title;
                      document.querySelector("#spc"+num).innerText=content;
                      form.style.display="none";
                   }
@@ -1328,7 +1406,7 @@ pre {
          }
       }
     //이미지 링크를 클릭하면 
-		document.querySelector("#profileLink").addEventListener("click", function(){
+		document.querySelector("#thumbnailLink").addEventListener("click", function(){
 			document.querySelector("#image").click();	
 		});   
 		document.querySelector("#image").addEventListener("change", function(){
@@ -1339,8 +1417,8 @@ pre {
 			})
 			.then(function(data){
 				document.querySelector("input[name=imagePath]").value = data.imagePath;
-				let img = `<img id="profileImage" src="${pageContext.request.contextPath }\${data.imagePath}">`;
-				document.querySelector("#profileLink").innerHTML=img;
+				let img = `<img class="comment_img" src="${pageContext.request.contextPath }\${data.imagePath}">`;
+				document.querySelector("#thumbnailLink").innerHTML=img;
 			});
 		});
    </script>

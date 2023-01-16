@@ -3,6 +3,7 @@ package com.gura.acorn.users.controller;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -153,6 +154,12 @@ public class UsersController {
 		map.put("isSuccess", true);
 		return map;
 	}
+	@RequestMapping("/users/checkid")
+	@ResponseBody
+	public Map<String, Object> checkId(String inputId) {
+	
+		return service.isExistId(inputId);
+   }
 }
 
 
