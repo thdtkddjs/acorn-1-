@@ -79,6 +79,7 @@
 	      </label>
 	    </div>
 	    <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+	    <a href="${pageContext.request.contextPath}/users/signup_form" class="w-100 btn btn-lg btn-success" style="margin-top:10px;">회원가입</a>
 	    <p class="mt-5 mb-3 text-muted">&copy; 2022 ACORN TEAM1</p>
 	  </form>
 	</main>

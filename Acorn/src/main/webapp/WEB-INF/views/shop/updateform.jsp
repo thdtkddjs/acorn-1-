@@ -53,6 +53,14 @@
          <label class="form-label" for="addr">주소</label>
          <input class="form-control" type="text" name="addr" id="addr" value="${dto.addr }"/>
       </div>
+      <!-- 영업 시간 -->
+		<div class="mb-3">
+			<label class="form-label" for="startTime">개점 시간</label>
+			<input class="form-control" type="time" name="startTime" value="${dto.startTime }"/>
+			<br />
+			<label class="form-label" for="endTime">폐점 시간</label>
+			<input class="form-control" type="time" name="endTime" value="${dto.endTime }"/>
+		</div>
       <!-- smart editor를 이용하는 content input -->
       <div class="mb-3">
          <label class="form-label" for="content">내용</label>
