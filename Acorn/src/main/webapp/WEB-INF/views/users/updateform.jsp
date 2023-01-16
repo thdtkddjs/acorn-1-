@@ -36,7 +36,7 @@
       			</c:otherwise>
       		</c:choose>
       </a>
-      <form action="${pageContext.request.contextPath}/users/update" method="post">
+      <form id="myform" action="${pageContext.request.contextPath}/users/update" method="post">
          <input type="hidden" name="profile" 
             value="${ empty dto.profile ? 'empty' : dto.profile }"/>
          <div>
@@ -60,8 +60,7 @@
    </div>
    <!-- gura_util.js 로딩 -->
    <script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
-   <script>
-
+	<script>
       //프로필 이미지 링크를 클릭하면 
       document.querySelector("#profileLink").addEventListener("click", function(){
          // input type="file" 을 강제 클릭 시킨다. 
@@ -88,29 +87,65 @@
             //id 가 profileLink 인 요소의 내부(자식요소)에 덮어쓰기 하면서 html 형식으로 해석해 주세요 라는 의미 
             document.querySelector("#profileLink").innerHTML=img;
          });
+         </script>
          
-         $("#email").on("input", function(){
-         $(this).removeClass("is-valid is-invalid");
-         const inputEmail=$(this).val();
-         const reg=/@/;
-         
-         if(!reg.test(inputEmail)){
-             $(this).addClass("is-invalid");
-             isEmailValid=false;
-          }else{
-             $(this).addClass("is-valid");
-             isEmailValid=true;
-          }
-       });
-         
-         $("#signupForm").on("submit", function(){
-             const isFormValid = isEmailValid;
-             if(!isFormValid){
-                return false;
-             }
-          });
-      });      
-      
-   </script>
+         <script src="https://code.jquery.com/jquery-3.6.3.js" 
+         integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> 
+   <script>
+
+   let isPwdValid=false;
+	let isEmailValid=false;	
+
+		// id 가 email 인 요소에 input 이벤트가 일어 났을때 실행할 함수 등록
+		$("#email").on("input", function(){	
+		//두개의 클래스 제거하기
+		$(this).removeClass("is-valid is-invalid");
+		
+		//입력한 이메일
+		const inputEmail=$(this).val();
+		//이메일을 검증할 정규 표현식  
+		const reg=/@/;
+		//만일 입력한 이메일이 정규표현식 검증을 통과 하지 못했다면
+		if(!reg.test(inputEmail)){
+			$(this).addClass("is-invalid");
+			isEmailValid=false;
+		}else{//통과 했다면 
+			$(this).addClass("is-valid");
+			isEmailValid=true;
+		}
+	});	
+
+	function checkPwd(){
+		//먼저 2개의 클래스를 제거하고 
+		$("#pwd").removeClass("is-valid is-invalid");
+		
+		//입력한 두개의 비밀 번호를 읽어와서 
+		const pwd=$("#pwd").val();
+		const pwd2=$("#pwd2").val();
+		
+		//만일 비밀번호 입력란과 확인란이 다르다면
+		if(pwd != pwd2){
+			$("#pwd").addClass("is-invalid");
+			isPwdValid=false;
+		}else{//같다면
+			$("#pwd").addClass("is-valid");
+			isPwdValid=true;
+		}
+	}
+	
+	// #pwd 와 #pwd2 를 모두 선택해서 이벤트 리스너 함수 등록
+	$("#pwd, #pwd2").on("input", function(){
+		checkPwd();
+	});
+	
+   
+   $("#myform").on("submit", function(){
+   	const isFormValid = isPwdValid && isEmailValid;
+       if(!isFormValid){
+          return false;
+       }
+       
+    });
+</script>
 </body>
 </html>
