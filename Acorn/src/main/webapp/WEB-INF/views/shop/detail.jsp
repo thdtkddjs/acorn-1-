@@ -1130,6 +1130,7 @@ pre {
 	});    
 	</script>
 	<script>
+		//tab menu 컨트롤 코드
 		var beforePage=1;
 		window.onload = function() {
 			if(sessionStorage.getItem("beforePage")==1){
