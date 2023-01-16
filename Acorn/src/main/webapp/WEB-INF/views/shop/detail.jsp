@@ -689,8 +689,8 @@ pre {
 									</tr>
 									<tr style="height:40px"></tr>
 									<tr class=shopInfo>
-										<td style="border-right: 1px solid gray">전화 번호</td>
-										<td>${dto.telNum}</td>
+										<td style="border-right: 1px solid gray">카테고리</td>
+										<td>${dto.categorie}</td>
 									</tr>
 									<tr style="height:40px"></tr>
 									<tr class=shopInfo>
@@ -710,6 +710,10 @@ pre {
 								</tbody>
 							</table>
 						</div>
+						<c:if test="${sessionScope.id eq 'admin'}">
+							<a href="delete?num=${ dto.num}">가게 삭제</a>
+							<a href="updateform?num=${ dto.num}">가게 수정</a>
+						</c:if>
 					</div>
 					<div class="table_2" style="display:none;" >
 						<table>
