@@ -10,20 +10,17 @@ public class ShopDto {
 	   private String imagePath;
 	   private String categorie;
 	   private int reviewCount;
-	   private int likeCount;
-	   private int dislikeCount;
+	   private String startTime;
+	   private String endTime;
 	   private String telNum;
 	   private String addr;
-	   private double latitude;
-	   private double longitude;
 	   private int startRowNum;
 	   private int endRowNum;
 	   
 	   public ShopDto() {}
 
 	public ShopDto(int num, String title, String content, String imagePath, String categorie, int reviewCount,
-			int likeCount, int dislikeCount, String telNum, String addr, double latitude, double longitude,
-			int startRowNum, int endRowNum) {
+			String startTime, String endTime, String telNum, String addr, int startRowNum, int endRowNum) {
 		super();
 		this.num = num;
 		this.title = title;
@@ -31,12 +28,10 @@ public class ShopDto {
 		this.imagePath = imagePath;
 		this.categorie = categorie;
 		this.reviewCount = reviewCount;
-		this.likeCount = likeCount;
-		this.dislikeCount = dislikeCount;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.telNum = telNum;
 		this.addr = addr;
-		this.latitude = latitude;
-		this.longitude = longitude;
 		this.startRowNum = startRowNum;
 		this.endRowNum = endRowNum;
 	}
@@ -89,20 +84,20 @@ public class ShopDto {
 		this.reviewCount = reviewCount;
 	}
 
-	public int getLikeCount() {
-		return likeCount;
+	public String getStartTime() {
+		return startTime;
 	}
 
-	public void setLikeCount(int likeCount) {
-		this.likeCount = likeCount;
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
 
-	public int getDislikeCount() {
-		return dislikeCount;
+	public String getEndTime() {
+		return endTime;
 	}
 
-	public void setDislikeCount(int dislikeCount) {
-		this.dislikeCount = dislikeCount;
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 
 	public String getTelNum() {
@@ -121,22 +116,6 @@ public class ShopDto {
 		this.addr = addr;
 	}
 
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
 	public int getStartRowNum() {
 		return startRowNum;
 	}
@@ -152,6 +131,5 @@ public class ShopDto {
 	public void setEndRowNum(int endRowNum) {
 		this.endRowNum = endRowNum;
 	}
-	   
-	   
+
 }

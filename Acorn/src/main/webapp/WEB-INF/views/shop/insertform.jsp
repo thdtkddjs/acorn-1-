@@ -28,7 +28,7 @@
 <body>
 <div class="container">
    <h1>상점 신규 등록</h1>
-   <form action="${pageContext.request.contextPath}/shop/insert" method="post" id="insertForm">
+   <form action="${pageContext.request.contextPath}/shop/insert" method="get" id="insertForm">
    	  <!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
   	  <input type="hidden" name="imagePath" value="empty"/>
       
@@ -62,7 +62,14 @@
          <label class="form-label" for="addr">주소</label>
          <input class="form-control" type="text" name="addr" id="addr"/>
       </div>
-      
+      <!-- 영업 시간 -->
+      <div class="mb-3">
+      	 <label for="startTime">개점 시간</label>
+      	 <input type="time" name="startTime" />
+      	 <label for=""> ~ </label>
+      	 <label for="endTime">폐점 시간</label>
+      	 <input type="time" name="endTime" />
+      </div>
       <!-- smart editor를 이용하는 content input -->
       <div class="mb-3">
          <label class="form-label" for="content">내용</label>

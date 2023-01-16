@@ -639,7 +639,7 @@ pre {
 							<br>
 							<br> <Strong>${dto.title}</Strong>
 							<p>리뷰 ${dto.reviewCount} 회</p>
-							<p>좋아요 : ${dto.likeCount}, 싫어요 : ${dto.dislikeCount }</p>
+							<p>영업시간 : ${startTime} ~ ${endTime}</p>
 							<p style="margin: 0px;"></p>
 						</div>
 						<div class=btn_box>
@@ -664,7 +664,7 @@ pre {
 									<tr style="height:40px"></tr>
 									<tr class=shopInfo>
 										<td style="border-right: 1px solid gray">영업 시간</td>
-										<td></td>
+										<td>${startTime} ~ ${endTime}</td>										
 									</tr>
 									<tr style="height:40px"></tr>
 									<tr class=shopInfo>

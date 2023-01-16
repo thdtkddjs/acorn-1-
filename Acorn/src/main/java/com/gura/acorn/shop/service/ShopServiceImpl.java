@@ -163,6 +163,7 @@ public class ShopServiceImpl implements ShopService{
 		//댓글 전체 페이지의 갯수
 		int totalPageCount = (int)Math.ceil(totalRow / (double)PAGE_ROW_COUNT);
 		
+		
 		//request에 담기
 		request.setAttribute("dto", resultDto);
 		request.setAttribute("keyword", keyword);
@@ -172,6 +173,7 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("reviewList", reviewList);
 		request.setAttribute("totalPageCount", totalPageCount);
 		
+		
 		//평점 추가
 		if(shopReviewDao.getCount(num)==0) {
 	         request.setAttribute("grade", "입력된 평점이 없습니다.");
@@ -179,6 +181,13 @@ public class ShopServiceImpl implements ShopService{
 	    	double grade=Math.round(shopReviewDao.getGrade(num)*100)/100.0;
 	        request.setAttribute("grade", grade+" 점");
 	    }
+		
+		//영업 시간 추가
+		String startTime = resultDto.getStartTime();
+		String endTime = resultDto.getEndTime();
+		
+		request.setAttribute("startTime", startTime);
+		request.setAttribute("endTime", endTime);
 	}
 
 	@Override
