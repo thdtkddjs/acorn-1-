@@ -80,6 +80,7 @@ textarea {
 }
 </style>
 </head>
+
 <body class="text-center">
 	<div class="container">
 		<a href="${pageContext.request.contextPath}/index" class="logo_text">
@@ -120,6 +121,15 @@ textarea {
 					class="form-control" type="text" name="addr" id="addr" />
 			</div>
 			<br />
+      <!-- 영업 시간 -->
+      <div class="mb-3">
+      	 <label for="startTime">개점 시간</label>
+      	 <input type="time" name="startTime" />
+      	 <label for=""> ~ </label>
+      	 <label for="endTime">폐점 시간</label>
+      	 <input type="time" name="endTime" />
+      </div>
+      <br />
 			<!-- 설명 입력 textbox -->
 			<div class="mb-3" style="position: relative;">
 				<label class="form-label" for="content" style="top: -130px; position: relative;">EXPLAIN</label>
@@ -142,8 +152,8 @@ textarea {
 		</form>
 	</div>
 
-	<script
-		src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
+
 	<script>
 
       //프로필 이미지 링크를 클릭하면 

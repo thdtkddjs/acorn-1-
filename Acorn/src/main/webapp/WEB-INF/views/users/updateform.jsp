@@ -46,6 +46,7 @@
          <div>
             <label for="email">이메일</label>
             <input type="text" id="email" name="email" value="${dto.email }"/>
+         	<div class="invalid-feedback">경고! 이메일 형식에는 반드시 @가 들어가야 합니다.</div>
          </div>
          <button type="submit">수정</button>
          <button type="reset">취소</button>
@@ -93,7 +94,6 @@
          integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> 
    <script>
 
-   let isPwdValid=false;
 	let isEmailValid=false;	
 
 		// id 가 email 인 요소에 input 이벤트가 일어 났을때 실행할 함수 등록
@@ -114,30 +114,6 @@
 			isEmailValid=true;
 		}
 	});	
-
-	function checkPwd(){
-		//먼저 2개의 클래스를 제거하고 
-		$("#pwd").removeClass("is-valid is-invalid");
-		
-		//입력한 두개의 비밀 번호를 읽어와서 
-		const pwd=$("#pwd").val();
-		const pwd2=$("#pwd2").val();
-		
-		//만일 비밀번호 입력란과 확인란이 다르다면
-		if(pwd != pwd2){
-			$("#pwd").addClass("is-invalid");
-			isPwdValid=false;
-		}else{//같다면
-			$("#pwd").addClass("is-valid");
-			isPwdValid=true;
-		}
-	}
-	
-	// #pwd 와 #pwd2 를 모두 선택해서 이벤트 리스너 함수 등록
-	$("#pwd, #pwd2").on("input", function(){
-		checkPwd();
-	});
-	
    
    $("#myform").on("submit", function(){
    	const isFormValid = isPwdValid && isEmailValid;
