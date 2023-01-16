@@ -630,7 +630,9 @@ pre {
             <div class="search_bar">
                 <form action="${pageContext.request.contextPath}/index/" method="post">
                     <div class="serch_box">
-                    	<button type="submit" style="display:contents"><img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" /></button>
+                    	<button type="submit" style="display:contents">
+                    		<img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" />
+                    	</button>
                     	<input class="search_input" type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
                     </div>
                 </form>
@@ -650,7 +652,7 @@ pre {
             	
 				<c:forEach var="tmp" items="${list }">
 					<div class="card" style="width: 18rem;">
-	                    <img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
+	                    <img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="..." >
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
 	                    	<p class="card-text">${tmp.content}</p>
@@ -671,7 +673,6 @@ pre {
 							<br>
 							<br> <Strong>${dto.title}</Strong>
 							<p>리뷰 ${dto.reviewCount} 회</p>
-							<p>영업시간 : ${startTime} ~ ${endTime}</p>
 							<p style="margin: 0px;"></p>
 						</div>
 						<div class=btn_box>
@@ -681,6 +682,9 @@ pre {
 							<button class="rainbow_effect" type="button" id="btn_4"><span class="rainbow_effect">★</span></button>
 						</div>
 					<div class="table_1" style="display:none;">
+						<c:if test="${sessionScope.id eq 'admin'}">
+							<a href="delete?num=${ dto.num}" style="display:block; width:101%;" class="btn btn-outline-danger">가게 삭제</a>
+						</c:if>
 						<div class="table1_warpper">
 							<table class="shop_info">
 								<tbody>
@@ -711,21 +715,12 @@ pre {
 								</tbody>
 							</table>
 						</div>
-						<c:if test="${sessionScope.id eq 'admin'}">
-							<a href="delete?num=${ dto.num}">가게 삭제</a>
-							<a href="updateform?num=${ dto.num}">가게 수정</a>
-						</c:if>
 					</div>
 					<div class="table_2" style="display:none;" >
 						<table>
-							<c:choose>
-								<c:when test="${sessionScope.id eq 'admin'}">
-									<a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}" style="display:block; width:101%;" class="btn btn-outline-warning">메뉴 추가</a>
-								</c:when>
-								<c:otherwise>
-								</c:otherwise>
-							</c:choose>
-						
+							<c:if test="${sessionScope.id eq 'admin'}">
+								<a href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}" style="display:block; width:101%;" class="btn btn-outline-warning">메뉴 추가</a>
+							</c:if>
 							<tbody>
 								<c:forEach var="tmp" items="${menuList }">
 								<div class="menu_card card">
@@ -733,7 +728,7 @@ pre {
 									<div class="card-body">
 										<h5 class="card-title">${tmp.name}</h5>
 										<p class="card-text">${tmp.content}</p>
-										<a href="#" class="btn btn-primary">${tmp.price }원</a>
+										<p class="btn btn-primary">${tmp.price }원</p>
 									</div>
 								</div>
 								</c:forEach>
