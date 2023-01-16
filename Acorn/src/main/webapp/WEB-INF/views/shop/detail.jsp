@@ -159,6 +159,7 @@ textarea::-webkit-scrollbar-thumb{
    right:13%;
 }
 .search_input{
+border : none;
   width: 100%;
   padding: 10px 12px;
   font-size: 14px;
@@ -640,7 +641,7 @@ pre {
             <div class="suggest_menu">
 				<c:choose>
 					<c:when test="${ empty keyword}">
-						<h5 style="margin-left:20px;">오늘의 추천 가게</h5>
+						<h5 style="margin-left:20px;">STORE LIST</h5>
 					</c:when>
 					<c:otherwise>
 						<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
@@ -653,7 +654,7 @@ pre {
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
 	                    	<p class="card-text">${tmp.content}</p>
-	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary">가게 정보 보기</a>
+	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" class="btn btn-primary" id="card_info">INFO</a>
 	                    </div>
 	                </div>
                 <br>
@@ -1035,55 +1036,9 @@ pre {
 						</nav>
 					</div>
                <div class="table_4" style="display:none;">
-                  <div class="startRadio">
-                    <label class="startRadio__box">
-                      <input type="radio" name="star" id="star0_5" value=0.5 >
-                      <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
-                    </label>
-                    <label class="startRadio__box">
-                      <input type="radio" name="star" id="star1" value=1>
-                      <span class="startRadio__img"><span class="blind">별 1개</span></span>
-                    </label>
-                    <label class="startRadio__box">
-                      <input type="radio" name="star" id="star1_5" value=1.5>
-                      <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
-                    </label>
-                    <label class="startRadio__box">
-                      <input type="radio" name="star" id="star2" value=2>
-                      <span class="startRadio__img"><span class="blind">별 2개</span></span>
-                    </label>
-                    <label class="startRadio__box">
-                      <input type="radio" name="star" id="star2_5" value=2.5>
-                      <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
-                    </label>
-                    <label class="startRadio__box">
-                      <input type="radio" name="star" id="star3" value=3>
-                      <span class="startRadio__img"><span class="blind">별 3개</span></span>
-                    </label>
-                    <label class="startRadio__box">
-                      <input type="radio" name="star" id="star3_5" value=3.5>
-                      <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
-                    </label>
-                    <label class="startRadio__box">
-                      <input type="radio" name="star" id="star4" value=4>
-                      <span class="startRadio__img"><span class="blind">별 4개</span></span>
-                    </label>
-                    <label class="startRadio__box">
-                      <input type="radio" name="star" id="star4_5" value=4.5>
-                      <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
-                    </label>
-                    <label class="startRadio__box">
-                      <input type="radio" name="star" id="star5" value=5>
-                      <span class="startRadio__img"><span class="blind">별 5개</span></span>
-                    </label>
-                  </div>
+ 
                </div>
-	            <!-- 
-	               document.querySelectorAll("input:checked")[1].value
-	               지금은 상언씨 코드랑 같이있어서 배열 1로 검색해야 잡히는데 지우게되면 0으로 잡아도 잡힐듯합니다.
-	               id에다 star[별_개수] 식으로 id 배열해놨고, 집가서 value 값으로 수정하면 잘 될거같은디  
-	            
-	             -->
+	
 
 				</div>
 		        </div>    
@@ -1134,9 +1089,15 @@ pre {
 	});    
 	</script>
 	<script>
-		//tab menu 컨트롤 코드
-		var beforePage=1;
+	//tab menu 컨트롤 코드
+		
 		window.onload = function() {
+			if(sessionStorage.getItem("beforePage")==null){
+				var beforePage=1;
+			}else{
+				var beforePage=sessionStorage.getItem("beforePage");
+			}
+
 			if(sessionStorage.getItem("beforePage")==1){
 				$("#btn_1").css({"background-color" : "#B2CCFF"})
 				$("#btn_2").css({"background-color" : "#D5D5D5"})
@@ -1145,7 +1106,8 @@ pre {
 				$(".table_1").show();
 				$(".table_2").hide();
 				$(".table_3").hide();
-				$(".table_4").hide();				
+				$(".table_4").hide();
+				console.log("온로드 : "+beforePage);
 			}else if(sessionStorage.getItem("beforePage")==2){
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
 				$("#btn_2").css({"background-color" : "#B2CCFF"})
@@ -1154,7 +1116,8 @@ pre {
 				$(".table_1").hide();
 				$(".table_2").show();
 				$(".table_3").hide();
-				$(".table_4").hide();				
+				$(".table_4").hide();
+				console.log("온로드 : "+beforePage);
 			}else if(sessionStorage.getItem("beforePage")==3){
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
 				$("#btn_2").css({"background-color" : "#D5D5D5"})
@@ -1163,7 +1126,8 @@ pre {
 				$(".table_1").hide();
 				$(".table_2").hide();
 				$(".table_3").show();
-				$(".table_4").hide();				
+				$(".table_4").hide();
+				console.log("온로드 : "+beforePage);
 			}else if(sessionStorage.getItem("beforePage")==4){
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
 				$("#btn_2").css({"background-color" : "#D5D5D5"})
@@ -1172,10 +1136,24 @@ pre {
 				$(".table_1").hide();
 				$(".table_2").hide();
 				$(".table_3").hide();
-				$(".table_4").show();			
+				$(".table_4").show();
+				console.log("온로드 : "+beforePage);
 			}
 		}
 		$(document).ready(function() {
+			$(".card-body a").click(function() {
+				$("#btn_1").css({"background-color" : "#B2CCFF"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").show();
+				$(".table_2").hide();
+				$(".table_3").hide();
+				$(".table_4").hide();
+				beforePage=1;
+				sessionStorage.setItem("beforePage", beforePage);
+				console.log("카드인포 : "+beforePage);
+			})
 			$("#btn_1").click(function() {
 				$("#btn_1").css({"background-color" : "#B2CCFF"})
 				$("#btn_2").css({"background-color" : "#D5D5D5"})
@@ -1187,6 +1165,7 @@ pre {
 				$(".table_4").hide();
 				beforePage=1;
 				sessionStorage.setItem("beforePage", beforePage);
+				console.log("버튼1 : "+beforePage);
 			})
 			$("#btn_2").click(function() {
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
@@ -1199,6 +1178,7 @@ pre {
 				$(".table_4").hide();
 				beforePage=2;
 				sessionStorage.setItem("beforePage", beforePage);
+				console.log("버튼2 : "+beforePage);
 			})
 			$("#btn_3").click(function() {
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
@@ -1211,6 +1191,7 @@ pre {
 				$(".table_4").hide();
 				beforePage=3;
 				sessionStorage.setItem("beforePage", beforePage);
+				console.log("버튼3 : "+beforePage);
 			})
 			$("#btn_4").click(function() {
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
@@ -1223,11 +1204,35 @@ pre {
 				$(".table_4").show();
 				beforePage=4;
 				sessionStorage.setItem("beforePage", beforePage);
+				console.log("버튼4 : "+beforePage);
 			})
-			$("a").click(function() {
-				beforePage=1;
+			$(".regist_btn").click(function() {
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#B2CCFF"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").hide();
+				$(".table_2").hide();
+				$(".table_3").show();
+				$(".table_4").hide();
+				beforePage=3;
 				sessionStorage.setItem("beforePage", beforePage);
+				console.log("등록버튼 : "+beforePage);
 			})
+			$(".page-link").click(function() {
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#B2CCFF"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").hide();
+				$(".table_2").hide();
+				$(".table_3").show();
+				$(".table_4").hide();
+				beforePage=3;
+				sessionStorage.setItem("beforePage", beforePage);
+				console.log("페이징버튼 : "+beforePage);
+			})
+
 		})
 	</script>
 	<div class="footer">
