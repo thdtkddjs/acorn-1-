@@ -39,6 +39,7 @@ h1{
 	    <form action="${pageContext.request.contextPath}/users/signup" method="post" id="myForm">
 	      <div>
 	         <label class="control-label" for="id">ID</label>
+
 	         <input class="form-control" type="text" name="id" id="id"/>
 	         <small class="form-text text-muted">영문자 소문자로 시작하고 5글자~10글자 이내로 입력하세요.</small>
              <div class="valid-feedback">사용가능한 아이디 입니다.</div>
@@ -49,6 +50,7 @@ h1{
 	         <input class="form-control" type="password" name="pwd" id="pwd"/>
 	         <small class="form-text text-muted">특수 문자를 하나 이상 조합하세요.</small>
 	         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
+
 	      </div>
 	      <div>
 	         <label class="control-label" for="pwd2">PASSWORD CONFIRM</label>
@@ -64,13 +66,6 @@ h1{
 	</div>   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
-	/*
-	[ 검증조건 ]
-	아이디 : 영문자로 시작, 특수문자 허용하지 않음, 최소 5글자, 최대 10글자
-	비밀번호 : 특수문자 1개 , 대문자 1개 반드시 포함, 8글자 이상  
-	[a-zA-Z0-9] => [\w]
-	[^a-zA-Z0-9] => [\W]
-	*/
 	
 	//유효성 여부를 저장할 변수를 만들고 초기값 대입 
 	let isIdValid=false;
@@ -80,7 +75,7 @@ h1{
 	$("#email").on("input", function(){
 		 $(this).removeClass("is-valid is-invalid");
 		 const inputEmail=$(this).val();
-		 const reg=new RegExp("[a-z0-9]+@[a-z]+\.[a-z]{2,3}");
+		 const reg=new RegExp("^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$");
 		
 		 if(!reg.test(inputEmail)){
 		     $(this).addClass("is-invalid");
@@ -100,7 +95,7 @@ h1{
 		const pwd2=document.querySelector("#pwd2").value;
 	
 		//비밀번호를 검증할 정규 표현식
-		const reg=/[\W]/;
+		const reg = new RegExp("^[a-zA-Z\\d`~!@#$%^&*()-_=+]{8,24}$");
 		//만일 정규표현식 검증을 통과 하지 못했다면
 		if(!reg.test(pwd)){
 		document.querySelector("#pwd").classList.add("is-invalid");
@@ -169,6 +164,7 @@ h1{
 	     return false;
 	  }
 	});
+
 </script>
 </body>
 </html>

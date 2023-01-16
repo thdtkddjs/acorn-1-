@@ -84,6 +84,8 @@ alter table board_shop_review add(grade number);
 
 alter table board_shop_review add(title varchar2(50));
 
+ALTER TABLE board_shop_review ADD(grade number);
+
 -- 처음 테이블 만들 당시에 shop_review 테이블에 target_id 칼럼이 있으신분은 아래 sql문으로 제거
 alter table board_shop_review drop(target_id);
 
