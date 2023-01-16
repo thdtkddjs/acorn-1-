@@ -46,7 +46,7 @@ h1{
              <div class="valid-feedback">사용가능한 아이디 입니다.</div>
              <div class="invalid-feedback">사용할 수 없는 아이디 입니다.</div>      
 	      </div>
-	      <br />
+	      <br /> 
 	      <div>
 	         <label class="control-label" for="pwd">PASSWORD</label>
 	         <input class="form-control" type="password" name="pwd" id="pwd"/>
