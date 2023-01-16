@@ -43,7 +43,6 @@ public class ShopController {
 	@GetMapping("/shop/insertform")
 	public String insertform() {
 		return "shop/insertform";
-		//주소입력으로 관리자외의 사람이 글 작성하려고 할 경우 막기 위해 session 추가 필요
 	}
 	
 	//글 작성

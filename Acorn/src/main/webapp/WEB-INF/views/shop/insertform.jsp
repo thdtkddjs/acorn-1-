@@ -69,15 +69,6 @@ textarea {
 #imageForm {
 	display: none;
 }
-
-#profileImage {
-    width: 75px;
-    height: 75px;
-    position: absolute;
-    left: 122px;
-    top: 60px;
-    border-radius : 10px !important;
-}
 </style>
 </head>
 
@@ -106,7 +97,16 @@ textarea {
 			<!-- 카테고리 input -->
 			<div class="mb-3">
 				<label class="form-label" for="categorie">CATEGORIES</label> 
-				<input class="form-control" type="text" name="categorie" id="categorie" />
+				<select class="dropdown" name="categorie" id="categorie">
+					<option value="" selected>선택</option>
+		            <option value="한식">한식</option>
+		            <option value="분식">분식</option>
+		            <option value="일식">일식</option>
+		            <option value="양식">양식</option>
+		            <option value="중식">중식</option>
+		            <option value="패스트푸드">패스트푸드</option>
+		            <option value="기타">기타</option>
+				</select>
 			</div>
 			<br />
 			<!-- 번호 input -->
@@ -133,13 +133,12 @@ textarea {
 			<!-- 설명 입력 textbox -->
 			<div class="mb-3" style="position: relative;">
 				<label class="form-label" for="content" style="top: -130px; position: relative;">EXPLAIN</label>
-				<a id="profileLink" href="javascript:"> 
+				<a id="thumbnailLink" href="javascript:"> 
 					<img src="${pageContext.request.contextPath}/resources/images/photo.png" alt="" class="upload_img" />
 				</a>
 				<textarea class="form-control" name="content" id="content"></textarea>
 			</div>
-			<button class="btn btn-outline-success" type="submit"
-				onclick="submitContents(this)">REGIST</button>
+			<button class="btn btn-outline-success" type="submit">REGIST</button>
 		</form>
 
 		<!-- 이미지 등록용 숨겨진 form -->
@@ -157,30 +156,21 @@ textarea {
 	<script>
 
       //프로필 이미지 링크를 클릭하면 
-      document.querySelector("#profileLink").addEventListener("click", function(){
-         // input type="file" 을 강제 클릭 시킨다. 
+      document.querySelector("#thumbnailLink").addEventListener("click", function(){
          document.querySelector("#image").click();
       });   
       
       //프로필 이미지를 선택하면(바뀌면) 실행할 함수 등록
       document.querySelector("#image").addEventListener("change", function(){
-         //ajax 전송할 폼의 참조값 얻어오기
          const form=document.querySelector("#imageForm");
-         //gura_util.js 에 있는 함수를 이용해서 ajax 전송하기 
          ajaxFormPromise(form)
          .then(function(response){
             return response.json();
          })
          .then(function(data){
-            console.log(data);
-            // input name="profile" 요소의 value 값으로 이미지 경로 넣어주기
             document.querySelector("input[name=imagePath]").value = data.imagePath;
-            
-            // img 요소를 문자열로 작성한 다음 
-            let img=`<img id="profileImage" 
-               src="${pageContext.request.contextPath }\${data.imagePath}">`;
-            //id 가 profileLink 인 요소의 내부(자식요소)에 덮어쓰기 하면서 html 형식으로 해석해 주세요 라는 의미 
-            document.querySelector("#profileLink").innerHTML=img;
+            let img=`<img class="upload_img" src="${pageContext.request.contextPath }\${data.imagePath}">`;
+            document.querySelector("#thumbnailLink").innerHTML=img;
          });
       });      
       
