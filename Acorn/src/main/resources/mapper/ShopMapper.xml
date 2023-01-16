@@ -15,8 +15,8 @@
    
 	<insert id="insert" parameterType="shopDto">
 		insert into board_shop
-		(num,title,content,imagePath,categorie,reviewCount,likeCount,dislikeCount,telNum,addr,latitude,longitude)
-		values(board_shop_seq.nextval, #{title}, #{content}, #{imagePath}, #{categorie}, 0, 0, 0, #{telNum}, #{addr}, 0, 0)
+		(num,title,content,imagePath,categorie,reviewCount,startTime,endTime,telNum,addr)
+		values(board_shop_seq.nextval, #{title}, #{content}, #{imagePath}, #{categorie}, 0, #{startTime}, #{endTime}, #{telNum}, #{addr})
 	</insert>
 	
 	<delete id="delete" parameterType="int">
@@ -42,24 +42,13 @@
 		where num=#{num}
 	</update>
 	
-	<update id="likeUp" parameterType="int">
-		update board_shop
-		set likeCount=likeCount+1
-		where num=#{num}
-	</update>
-	
-	<update id="dislikeUp" parameterType="int">
-		update board_shop
-		set dislikeCount=dislikeCount+1
-		where num=#{num}
-	</update>
 	<select id="getList" resultType="shopDto">
       SELECT *
       FROM
          (SELECT result1.*, ROWNUM AS rnum
          FROM
             (SELECT num,title,content,imagePath,categorie,
-      			reviewCount,likeCount,dislikeCount,telNum,addr,latitude,longitude
+      			reviewCount,startTime,endTime,telNum,addr
       		from board_shop
             <include refid="searchCondition"/>
             ORDER BY num DESC) result1)
@@ -69,7 +58,7 @@
 	</select>
    <select id="getData" parameterType="int" resultType="shopDto">
    		select num,title,content,imagePath,categorie,
-      		reviewCount,likeCount,dislikeCount,telNum,addr,latitude,longitude
+      		reviewCount,startTime,endTime,telNum,addr
      	from board_shop
      	where num=#{num}
    </select>
@@ -77,7 +66,7 @@
    <select id="getData2" parameterType="shopDto" resultType="shopDto">
    		select result1.*
 	   		from	(select num,title,content,imagePath,categorie,
-	      		reviewCount,likeCount,dislikeCount,telNum,addr,latitude,longitude
+	      		reviewCount,startTime, endTime,telNum,addr
 	     	from board_shop
 	     	<include refid="searchCondition"/>
 	     	) result1

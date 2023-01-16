@@ -80,6 +80,7 @@ textarea {
 }
 </style>
 </head>
+
 <body class="text-center">
 	<div class="container">
 		<a href="${pageContext.request.contextPath}/index" class="logo_text">
@@ -98,26 +99,35 @@ textarea {
 		
 			<!-- 점포명 input -->
 			<div class="mb-3">
-				<label class="form-label" for="title">NAME</label> <input
-					class="form-control" type="text" name="title" id="title" />
+				<label class="form-label" for="title">NAME</label> 
+				<input class="form-control" type="text" name="title" id="title" />
 			</div>
 			<br />
 			<!-- 카테고리 input -->
 			<div class="mb-3">
-				<label class="form-label" for="categorie">CATEGORIES</label> <input
-					class="form-control" type="text" name="categorie" id="categorie" />
+				<label class="form-label" for="categorie">CATEGORIES</label> 
+				<input class="form-control" type="text" name="categorie" id="categorie" />
 			</div>
 			<br />
 			<!-- 번호 input -->
 			<div class="mb-3">
-				<label class="form-label" for="telNum">TEL NO.</label> <input
-					class="form-control" type="text" name="telNum" id="telNum" />
+				<label class="form-label" for="telNum">TEL NO.</label> 
+				<input class="form-control" type="text" name="telNum" id="telNum" />
 			</div>
 			<br />
 			<!-- 주소 input -->
 			<div class="mb-3">
-				<label class="form-label" for="addr">ADDRESS</label> <input
-					class="form-control" type="text" name="addr" id="addr" />
+				<label class="form-label" for="addr">ADDRESS</label> 
+				<input class="form-control" type="text" name="addr" id="addr" />
+			</div>
+			<br />
+			<!-- 영업 시간 -->
+			<div class="mb-3">
+				<label class="form-label" for="startTime">개점 시간</label>
+				<input class="form-control" type="time" name="startTime" />
+				<br />
+				<label class="form-label" for="endTime">폐점 시간</label>
+				<input class="form-control" type="time" name="endTime" />
 			</div>
 			<br />
 			<!-- 설명 입력 textbox -->
@@ -142,8 +152,8 @@ textarea {
 		</form>
 	</div>
 
-	<script
-		src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
+	<script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
+
 	<script>
 
       //프로필 이미지 링크를 클릭하면 
