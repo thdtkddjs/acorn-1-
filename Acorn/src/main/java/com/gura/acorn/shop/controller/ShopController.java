@@ -94,7 +94,7 @@ public class ShopController {
 	@GetMapping("/shop/delete")
 	public String delete(int num, HttpServletRequest request) {
 		service.deleteContent(num, request);
-		return "redirect:/shop/list";
+		return "redirect:/index";
 	}
 	
 	//새로운 댓글 저장 요청 처리

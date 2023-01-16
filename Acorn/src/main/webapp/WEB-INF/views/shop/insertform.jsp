@@ -57,6 +57,15 @@ input {
 	border-radius: 5px;
 }
 
+select {
+	display : inline !important;
+	width : 250px !important;
+	height : 36px;
+	margin : 0px !important;
+	border: 1px solid #ced4da;
+	border-radius: 5px;
+}
+
 textarea {
 	display : inline !important;
 	margin : 0px !important;
@@ -93,7 +102,7 @@ textarea {
 				<label class="form-label" for="title">NAME</label> 
 				<input class="form-control" type="text" name="title" id="title" />
 			</div>
-			<br />
+	
 			<!-- 카테고리 input -->
 			<div class="mb-3">
 				<label class="form-label" for="categorie">CATEGORIES</label> 
@@ -108,19 +117,19 @@ textarea {
 		            <option value="기타">기타</option>
 				</select>
 			</div>
-			<br />
+		
 			<!-- 번호 input -->
 			<div class="mb-3">
 				<label class="form-label" for="telNum">TEL NO.</label> 
 				<input class="form-control" type="text" name="telNum" id="telNum" />
 			</div>
-			<br />
+		
 			<!-- 주소 input -->
 			<div class="mb-3">
 				<label class="form-label" for="addr">ADDRESS</label> 
 				<input class="form-control" type="text" name="addr" id="addr" />
 			</div>
-			<br />
+		
 			<!-- 영업 시간 -->
 			<div class="mb-3">
 				<label class="form-label" for="startTime">개점 시간</label>
@@ -129,7 +138,7 @@ textarea {
 				<label class="form-label" for="endTime">폐점 시간</label>
 				<input class="form-control" type="time" name="endTime" />
 			</div>
-			<br />
+			
 			<!-- 설명 입력 textbox -->
 			<div class="mb-3" style="position: relative;">
 				<label class="form-label" for="content" style="top: -130px; position: relative;">EXPLAIN</label>
