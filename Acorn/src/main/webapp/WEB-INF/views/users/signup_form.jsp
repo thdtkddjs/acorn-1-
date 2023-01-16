@@ -39,11 +39,16 @@ h1{
 	    <form action="${pageContext.request.contextPath}/users/signup" method="post" id="myForm">
 	      <div>
 	         <label class="control-label" for="id">ID</label>
-	         <input class="form-control" type="text" name="id" id="id"/>      
+	         <input class="form-control" type="text" name="id" id="id"/>
+	         <small class="form-text text-muted">영문자 소문자로 시작하고 5글자~10글자 이내로 입력하세요.</small>
+             <div class="valid-feedback">사용가능한 아이디 입니다.</div>
+             <div class="invalid-feedback">사용할 수 없는 아이디 입니다.</div>      
 	      </div>
 	      <div>
 	         <label class="control-label" for="pwd">PASSWORD</label>
-	         <input class="form-control" type="password" name="pwd" id="pwd"/>   
+	         <input class="form-control" type="password" name="pwd" id="pwd"/>
+	         <small class="form-text text-muted">특수 문자를 하나 이상 조합하세요.</small>
+	         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
 	      </div>
 	      <div>
 	         <label class="control-label" for="pwd2">PASSWORD CONFIRM</label>
@@ -52,31 +57,118 @@ h1{
 	      <div>
 	         <label class="control-label" for="email">E-MAIL</label>
 	         <input class="form-control" type="text" name="email" id="email"/>
+	         <div class="invalid-feedback">이메일 형식에 맞게 입력하세요.</div>
 	      </div>
 	      <button class="submit_btn btn btn-primary" type="submit">SIGN-UP</button>
 	   </form>
 	</div>   
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
+	/*
+	[ 검증조건 ]
+	아이디 : 영문자로 시작, 특수문자 허용하지 않음, 최소 5글자, 최대 10글자
+	비밀번호 : 특수문자 1개 , 대문자 1개 반드시 포함, 8글자 이상  
+	[a-zA-Z0-9] => [\w]
+	[^a-zA-Z0-9] => [\W]
+	*/
+	
+	//유효성 여부를 저장할 변수를 만들고 초기값 대입 
+	let isIdValid=false;
+	let isPwdValid=false;
+	let isEmailValid=false;   
+	
 	$("#email").on("input", function(){
-	    $(this).removeClass("is-valid is-invalid");
-    	const inputEmail=$(this).val();
-    	const reg=/@/;
-    
-    	if(!reg.test(inputEmail)){
-        	$(this).addClass("is-invalid");
-        	isEmailValid=false;
-     	}else{
-        	$(this).addClass("is-valid");
-        	isEmailValid=true;
-     	}
-  	});
-    
-    $("#signupForm").on("submit", function(){
-        const isFormValid = isEmailValid;
-        if(!isFormValid){
-           return false;
-        }
-     });
+		 $(this).removeClass("is-valid is-invalid");
+		 const inputEmail=$(this).val();
+		 const reg=new RegExp("[a-z0-9]+@[a-z]+\.[a-z]{2,3}");
+		
+		 if(!reg.test(inputEmail)){
+		     $(this).addClass("is-invalid");
+		     isEmailValid=false;
+		  }else{
+		     $(this).addClass("is-valid");
+		     isEmailValid=true;
+		  }
+	});
+	
+	function checkPwd(){
+		//먼저 2개의 클래스를 제거하고 
+		document.querySelector("#pwd").classList.remove("is-valid");
+		document.querySelector("#pwd").classList.remove("is-invalid");
+		//입력한 두개의 비밀 번호를 읽어와서 
+		const pwd=document.querySelector("#pwd").value;
+		const pwd2=document.querySelector("#pwd2").value;
+	
+		//비밀번호를 검증할 정규 표현식
+		const reg=/[\W]/;
+		//만일 정규표현식 검증을 통과 하지 못했다면
+		if(!reg.test(pwd)){
+		document.querySelector("#pwd").classList.add("is-invalid");
+		isPwdValid=false;
+		return; //함수를 여기서 끝내라 
+		}
+	
+		//만일 비밀번호 입력란과 확인란이 다르다면
+		if(pwd != pwd2){
+		   document.querySelector("#pwd").classList.add("is-invalid");
+		   isPwdValid=false;
+		}else{//같다면
+		   document.querySelector("#pwd").classList.add("is-valid");
+		   isPwdValid=true;
+		}
+	}
+	
+	document.querySelector("#pwd").addEventListener("input", function(){
+	checkPwd();
+	});
+	
+	document.querySelector("#pwd2").addEventListener("input", function(){
+	checkPwd();
+	});
+	
+	// id 를 입력 할때 마다 호출되는 함수 등록 
+    $("#id").on("input", function(){
+       //input 요소의 참조 값을 self 에 미리 담아 놓기 
+       const self = this;
+       //일단 2개의 클래스를 모두 제거 한다음 
+       
+       $(self).removeClass("is-valid is-invalid")
+       
+       //1. 입력한 아이디를 읽어와서
+       const inputId = $(self).val();
+       const reg=new RegExp("^[a-z].{4,9}$");
+       
+     	//만일 정규표현식 검증을 통과 하지 못했다면
+		if(!reg.test(inputId)){
+			document.querySelector("#id").classList.add("is-invalid");
+			isIdValid=false;
+			return; //함수를 여기서 끝내라 
+		}
+       
+       //2. 서버에 페이지 전환없이 전송을 하고 응답을 받는다.
+       $.ajax({
+      	 url:"${pageContext.request.contextPath}/users/checkid",
+      	 data:{inputId},
+  		 success:function(data){
+            console.log(data);
+            if(data.isExist){
+               $(self).addClass("is-invalid");
+               isIdValid = false;
+            }else{
+               $(self).addClass("is-valid");
+               isIdValid = true;
+            }
+       	}
+       });
+    });
+	
+	
+	$("#myForm").on("submit", function(){
+	  const isFormValid = isIdValid && isPwdValid && isEmailValid;
+	  if(!isFormValid){
+	     return false;
+	  }
+	});
 </script>
 </body>
 </html>
