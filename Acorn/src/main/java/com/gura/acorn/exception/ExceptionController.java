@@ -18,9 +18,13 @@ public class ExceptionController {
 	public ModelAndView ban(BanException ban) {
 		ModelAndView mView = new ModelAndView();
 		// exception 이라는 키 값으로 예외 객체를 담고
-		mView.addObject("exception", ban);
-		// viewPage ( /WEB-INF/views/error/info.jsp ) 로 forward 이동해서 예외 정보 응답하기
-		mView.setViewName("error/info");
+		if(ban.getMessage().equals("notExist")) {
+			mView.addObject("exception", ban);
+			mView.setViewName("error/not_exist");
+		}else if(ban.getMessage().equals("banUser")){
+			mView.addObject("exception", ban);
+			mView.setViewName("error/ban_user");	
+		}
 		return mView;
 	}
 }

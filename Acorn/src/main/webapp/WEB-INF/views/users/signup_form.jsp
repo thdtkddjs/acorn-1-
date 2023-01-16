@@ -55,7 +55,7 @@ h1{
 	      </div>
 	      <button class="submit_btn btn btn-primary" type="submit">SIGN-UP</button>
 	   </form>
-</div>   
+	</div>   
 <script>
 	$("#email").on("input", function(){
 	    $(this).removeClass("is-valid is-invalid");

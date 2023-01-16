@@ -175,6 +175,25 @@
 	width : 70px;
 	height : 25px;
 }
+.card-img-top{
+	width:286px;
+	height:200px;
+}
+.rainbow_effect{
+	animation-duration: 1s; 
+	animation-name: rainbowLink; 
+	animation-iteration-count: infinite; 
+}
+@keyframes rainbowLink {     
+ 0% { background-color: #ff2a2a; }
+ 15% { background-color: #ff7a2a; }
+ 30% { background-color: #ffc52a; }
+ 45% { background-color: #43ff2a; }
+ 60% { background-color: #2a89ff; }
+ 75% { background-color: #202082; }
+ 90% { background-color: #6b2aff; } 
+ 100% { background-color: #e82aff; }
+}
 </style>
 <body>
     <div class="container">
@@ -188,6 +207,16 @@
 					<a href="${pageContext.request.contextPath}/users/loginform"  class="top_menu btn btn-outline-dark">LOGIN</a>
 					<a href="${pageContext.request.contextPath}/users/signup_form"  class="top_menu btn btn-outline-success">SIGN-UP</a>
 				</c:when>
+				<c:when test="${sessionScope.id eq 'admin'}">
+					<a href="${pageContext.request.contextPath}/index" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+						HOMEPAGE NAME
+					</a>
+					<a href="${pageContext.request.contextPath}/shop/insertform" class="user_menu badge text-bg-success">REGIST SHOP</a>
+					<a href="${pageContext.request.contextPath}/users/list" class="user_menu badge text-bg-warning">USER LIST</a>
+					<a href="${pageContext.request.contextPath}/users/info" class="rainbow_effect user_menu badge">${sessionScope.id }</a>
+					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
+				</c:when>
 				<c:otherwise>
 					<a href="${pageContext.request.contextPath}/index" class="logo_text">
 						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
@@ -195,6 +224,7 @@
 					</a>
 					<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
 					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
+
 				</c:otherwise>
 			</c:choose>
 			

@@ -7,7 +7,9 @@
 		FROM
 			(SELECT result1.*, ROWNUM AS rnum
 			FROM
-				(SELECT num, writer, content, ref_group, review_group, deleted, imagePath, TO_CHAR(board_shop_review.regdate, 'YY.MM.DD HH24:MI') AS regdate, profile
+				(SELECT num, writer, title, content, ref_group, 
+				review_group, deleted, imagePath, grade,
+				TO_CHAR(board_shop_review.regdate, 'YY.MM.DD HH24:MI') AS regdate, profile
 				FROM board_shop_review
 				INNER JOIN users
 				ON board_shop_review.writer = users.id
@@ -26,8 +28,8 @@
 	<!-- 리뷰 저장할 때 가게글의 글번호도 미리 ShopReviewDto 객체에 담아와야 한다. -->
 	<insert id="insert" parameterType="shopReviewDto">
 		INSERT INTO board_shop_review
-		(num, writer, content, ref_group, review_group, regdate, imagePath, grade)
-		VALUES(#{num}, #{writer}, #{content}, #{ref_group}, #{review_group}, SYSDATE, #{imagePath}, #{grade})
+		(num, writer, content, title, ref_group, review_group, regdate, imagePath, grade)
+		VALUES(#{num}, #{writer}, #{content}, #{title}, #{ref_group}, #{review_group}, SYSDATE, #{imagePath}, #{grade})
 	</insert>
 	
 	<!-- 저장 예정인 리뷰의 글번호를 미리 얻어내기 -->
@@ -38,12 +40,12 @@
 	
 	<update id="update" parameterType="shopReviewDto">
 		UPDATE board_shop_review
-		SET content = #{content}
+		SET title = #{title}, content = #{content}
 		WHERE num = #{num}
 	</update>
 	
 	<select id="getData" parameterType="int" resultType="shopReviewDto">
-		SELECT num, writer, content, ref_group, review_group, deleted, TO_CHAR(regdate, 'YY.MM.DD HH24:MI') AS regdate, imagePath
+		SELECT num, writer, title, content, ref_group, review_group, deleted, TO_CHAR(regdate, 'YY.MM.DD HH24:MI') AS regdate, imagePath
 		FROM board_shop_review
 		WHERE num = #{num}
 	</select>

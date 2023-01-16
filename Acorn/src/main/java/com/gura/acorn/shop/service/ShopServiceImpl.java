@@ -262,13 +262,13 @@ public class ShopServiceImpl implements ShopService{
 		//폼 전송되는 파라미터 추출 
 		int ref_group = Integer.parseInt(request.getParameter("ref_group"));//원글의 글번호
 		//평점을 구현하는 문단
-		int GN=Integer.parseInt(request.getParameter("grade_number"));
+		double GN= Double.parseDouble(request.getParameter("grade_number"));
 		//여기까지
 		
 		
 		
-		
-		String content = request.getParameter("content"); //댓글의 내용
+		String title = request.getParameter("title"); // 리뷰 제목
+		String content = request.getParameter("content"); //리뷰 내용
 		String review_group = request.getParameter("review_group");
 		String imagePath = (String)request.getParameter("imagePath");
 
@@ -280,6 +280,7 @@ public class ShopServiceImpl implements ShopService{
 		ShopReviewDto dto = new ShopReviewDto();
 		dto.setNum(seq);
 		dto.setWriter(writer);
+		dto.setTitle(title);
 		dto.setContent(content);
 		dto.setRef_group(ref_group);
 		dto.setImagePath(imagePath);
