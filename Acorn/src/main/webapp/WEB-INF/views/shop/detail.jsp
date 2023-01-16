@@ -979,7 +979,7 @@ pre {
 												  <span class="startRadio__img"><span class="blind">별 5개</span></span>
 												</label>
 											</div>
-											<a id="profileLink" href="javascript:" style="float:left;">
+											<a id="thumbnailLink" href="javascript:" style="float:left;">
 												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
 											</a>
 											
@@ -1008,23 +1008,23 @@ pre {
 								  startPageNum 이 1 이 아닌 경우에만 Prev 링크를 제공한다. 
 								  &condition=${condition}&keyword=${encodedK}
 								--%>
-								<c:if test="${startPageNum ne 1 }">
+								<c:if test="${rvStartPageNum ne 1 }">
 									<li class="page-item">
-										<a class="page-link" href="list?pageNum=${startPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
+										<a class="page-link" href="detail?num=${dto.num}&rvPageNum=${rvStartPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
 									</li>
 								</c:if>
-								<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
-									<li class="page-item ${pageNum eq i ? 'active' : '' }">
-										<a class="page-link" href="list?pageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
+								<c:forEach var="i" begin="${rvStartPageNum }" end="${rvEndPageNum }">
+									<li class="page-item ${rvPageNum eq i ? 'active' : '' }">
+										<a class="page-link" href="detail?num=${dto.num }&rvPageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
 									</li>
 								</c:forEach>
 				
 								<%--
 									마지막 페이지 번호가 전체 페이지의 갯수보다 작으면 Next 링크를 제공한다. 
 								--%>
-								<c:if test="${endPageNum lt totalPageCount }">
+								<c:if test="${rvEndPageNum lt rvTotalPageCount }">
 									<li class="page-item">
-										<a class="page-link" href="list?pageNum=${endPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
+										<a class="page-link" href="detail?num=${dto.num }&rvPageNum=${rvEndPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
 									</li>
 								</c:if>
 							</ul>
@@ -1300,69 +1300,6 @@ pre {
       addUpdateListener(".update-link");
       addDeleteListener(".delete-link");
       
-      
-      //댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
-      let currentPage=1;
-      //마지막 페이지는 totalPageCount 이다.  
-      <%-- 댓글의 개수가 0일 때 오류를 발생하지 않기 위해 --%>
-      let lastPage=${totalPageCount eq 0 ? 1 : totalPageCount};
-      
-      //추가로 댓글을 요청하고 그 작업이 끝났는지 여부를 관리할 변수 
-      let isLoading=false; //현재 로딩중인지 여부 
-      
-      /*
-         window.scrollY => 위쪽으로 스크롤된 길이
-         window.innerHeight => 웹브라우저의 창의 높이
-         document.body.offsetHeight => body 의 높이 (문서객체가 차지하는 높이)
-      */
-      window.addEventListener("scroll", function(){
-         //바닥 까지 스크롤 했는지 여부 
-         const isBottom = 
-            window.innerHeight + window.scrollY  >= document.body.offsetHeight;
-         //현재 페이지가 마지막 페이지인지 여부 알아내기
-         let isLast = currentPage == lastPage;   
-         //현재 바닥까지 스크롤 했고 로딩중이 아니고 현재 페이지가 마지막이 아니라면
-         if(isBottom && !isLoading && !isLast){
-            //로딩바 띄우기
-            document.querySelector(".loader").style.display="block";
-            
-            //로딩 작업중이라고 표시
-            isLoading=true;
-            
-            //현재 댓글 페이지를 1 증가 시키고 
-            currentPage++;
-            
-            /*
-               해당 페이지의 내용을 ajax 요청을 통해서 받아온다.
-               "pageNum=xxx&num=xxx" 형식으로 GET 방식 파라미터를 전달한다. 
-            */
-            ajaxPromise("ajax_review_list","get",
-                  "pageNum="+currentPage+"&num=${dto.num}")
-            .then(function(response){
-               //json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
-               return response.text();
-            })
-            .then(function(data){
-               //data 는 html 형식의 문자열이다. 
-               console.log(data);
-               // beforebegin | afterbegin | beforeend | afterend
-               document.querySelector(".reviews ul")
-                  .insertAdjacentHTML("beforeend", data);
-               //로딩이 끝났다고 표시한다.
-               isLoading=false;
-               //새로 추가된 댓글 li 요소 안에 있는 a 요소를 찾아서 이벤트 리스너 등록 하기 
-               addUpdateListener(".page-"+currentPage+" .update-link");
-               addDeleteListener(".page-"+currentPage+" .delete-link");
-               addReplyListener(".page-"+currentPage+" .reply-link");
-               //새로 추가된 댓글 li 요소 안에 있는 댓글 수정폼에 이벤트 리스너 등록하기
-               addUpdateFormListener(".page-"+currentPage+" .update-form");
-               
-               //로딩바 숨기기
-               document.querySelector(".loader").style.display="none";
-            });
-         }
-      });
-      
       //인자로 전달되는 선택자를 이용해서 이벤트 리스너를 등록하는 함수 
       function addUpdateListener(sel){
          //댓글 수정 링크의 참조값을 배열에 담아오기 
@@ -1468,7 +1405,7 @@ pre {
          }
       }
     //이미지 링크를 클릭하면 
-		document.querySelector("#profileLink").addEventListener("click", function(){
+		document.querySelector("#thumbnailLink").addEventListener("click", function(){
 			document.querySelector("#image").click();	
 		});   
 		document.querySelector("#image").addEventListener("change", function(){
@@ -1479,8 +1416,8 @@ pre {
 			})
 			.then(function(data){
 				document.querySelector("input[name=imagePath]").value = data.imagePath;
-				let img = `<img id="profileImage" src="${pageContext.request.contextPath }\${data.imagePath}">`;
-				document.querySelector("#profileLink").innerHTML=img;
+				let img = `<img class="comment_img" src="${pageContext.request.contextPath }\${data.imagePath}">`;
+				document.querySelector("#thumbnailLink").innerHTML=img;
 			});
 		});
    </script>
