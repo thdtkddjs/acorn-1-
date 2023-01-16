@@ -1,6 +1,7 @@
 package com.gura.acorn.users.service;
 
 import java.io.File;
+
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +31,10 @@ public class UsersServiceImpl implements UsersService{
 	
 	@Override
 	public Map<String, Object> isExistId(String inputId) {
-		// TODO Auto-generated method stub
-		return null;
+		boolean isExist=dao.isExist(inputId);
+		Map<String, Object> map=new HashMap<>();
+		map.put("isExist", isExist);
+		return map;
 	}
 	//회원 한명의 정보를 추가하는 메소드
 	@Override

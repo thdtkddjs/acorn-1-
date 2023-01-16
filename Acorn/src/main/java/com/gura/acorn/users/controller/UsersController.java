@@ -154,6 +154,12 @@ public class UsersController {
 		map.put("isSuccess", true);
 		return map;
 	}
+	@RequestMapping("/users/checkid")
+	@ResponseBody
+	public Map<String, Object> checkId(String inputId) {
+	
+		return service.isExistId(inputId);
+   }
 }
 
 
