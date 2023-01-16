@@ -19,4 +19,6 @@ public interface ShopReviewDao {
 	public ShopReviewDto getData(int num);
 	//리뷰의 갯수를 리턴하는 메소드
 	public int getCount(int ref_group);
+	//리뷰의 평점을 리턴하는 메소드
+	public double getGrade(int ref_group);
 }

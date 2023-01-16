@@ -44,6 +44,12 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- 이메일 인증 java send mail 사용하기 위해 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		
 		<!-- jsp 페이지 사용과 taglib를 사용하기 위해 -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -61,7 +67,7 @@
 		    <artifactId>spring-security-web</artifactId>
 		    <version>4.0.0.RELEASE</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>

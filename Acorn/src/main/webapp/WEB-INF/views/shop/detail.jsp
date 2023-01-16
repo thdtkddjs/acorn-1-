@@ -15,96 +15,96 @@
 </head>
 <style>
 .container {
-	display: grid;
-	grid-template-areas: "header header header"
-		"search main main" "  bot   bot   bot  ";
-	grid-template-columns: 1fr 2fr 1fr;
-	grid-template-rows: 50px 870px;
-	box-shadow: 0px 5px 20px 0px grey;
-	border-right: thin;
-	z-index: 1;
-	min-width: 1320px;
+   display: grid;
+   grid-template-areas: "header header header"
+      "search main main" "  bot   bot   bot  ";
+   grid-template-columns: 1fr 2fr 1fr;
+   grid-template-rows: 50px 870px;
+   box-shadow: 0px 5px 20px 0px grey;
+   border-right: thin;
+   z-index: 1;
+   min-width: 1320px;
 }
 
 .main_content {
-	grid-area: main;
+   grid-area: main;
 }
 
 .header {
-	grid-area: header;
-	text-align: right;
-	display: block;
+   grid-area: header;
+   text-align: right;
+   display: block;
 }
 
 
 .search_menu {
-	grid-area: search;
-	box-shadow: 2px 2px 3px 0px grey;
-	background-color: white;
-	z-index: 3;
-	position: relative;
+   grid-area: search;
+   box-shadow: 2px 2px 3px 0px grey;
+   background-color: white;
+   z-index: 3;
+   position: relative;
 }
 
 .search_result {
-	grid-area: main;
-	width: 100%;
-	height: 870px;
-	text-align: center;
-	box-shadow: 2px 2px 3px 0px grey;
+   grid-area: main;
+   width: 100%;
+   height: 870px;
+   text-align: center;
+   box-shadow: 2px 2px 3px 0px grey;
 }
 
 .side_menu_b {
-	grid-area: b;
-	width: 100%;
-	text-align: center;
-	background-color: lightgray;
+   grid-area: b;
+   width: 100%;
+   text-align: center;
+   background-color: lightgray;
 }
 
 .footer {
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-top: 0px;
-	background-color: white;
-	grid-area: footer;
-	bottom: 0px;
-	width: 100%;
-	position: fixed;
-	z-index: 5;
+   padding-left: 10px;
+   padding-right: 10px;
+   margin-top: 0px;
+   background-color: white;
+   grid-area: footer;
+   bottom: 0px;
+   width: 100%;
+   position: fixed;
+   z-index: 5;
 }
  
 
 .search_bar {
-	border: 3px solid;
-	border-color: rgb(64, 219, 43);
-	border-radius: 5px;
-	margin: 10px;
-	width: 290px;
+   border: 3px solid;
+   border-color: rgb(64, 219, 43);
+   border-radius: 5px;
+   margin: 10px;
+   width: 290px;
 }
 
 .search_bar>form>input {
-	width: 250px;
-	margin: 10px;
-	border: none;
-	font-size: large;
+   width: 250px;
+   margin: 10px;
+   border: none;
+   font-size: large;
 }
 
 .suggest_menu>.card {
-	margin-left: 10px;
+   margin-left: 10px;
 }
 
 #map {
-	z-index: 2;
+   z-index: 2;
 }
 
 .suggest_menu {
-	height: 763px;
-	overflow: scroll;
-	-ms-overflow-style: none;
+   height: 763px;
+   overflow: scroll;
+   -ms-overflow-style: none;
 }
 
 .suggest_menu::-webkit-scrollbar {
-	width : 5px;
-	height : 0px;
+   width : 5px;
+   height : 0px;
 }
 .suggest_menu::-webkit-scrollbar-thumb {
     background-color: #2f3542;
@@ -114,8 +114,8 @@
 }
 .table_1::-webkit-scrollbar, .table_2::-webkit-scrollbar, 
 .table_3::-webkit-scrollbar, .table_4::-webkit-scrollbar {
-	width : 5px;
-	height : 0px;
+   width : 5px;
+   height : 0px;
 }
 .table_1::-webkit-scrollbar-thumb, .table_2::-webkit-scrollbar-thumb, 
 .table_3::-webkit-scrollbar-thumb, .table_4::-webkit-scrollbar-thumb {
@@ -126,30 +126,37 @@
 .table_3::-webkit-scrollbar-track, .table_4::-webkit-scrollbar-track {
 
 }
-
+textarea::-webkit-scrollbar{
+   width : 5px;
+   height : 0px;
+}
+textarea::-webkit-scrollbar-thumb{
+    background-color: #2f3542;
+    border-radius: 10px;
+}
 
 .fold_btn {
-	position: absolute;
-	left: 300px;
-	top: 150px;
-	z-index: 5;
+   position: absolute;
+   left: 300px;
+   top: 150px;
+   z-index: 5;
 }
 
 .open_btn {
-	position: absolute;
-	left: 200px;
-	top: 150px;
-	z-index: 5;
+   position: absolute;
+   left: 200px;
+   top: 150px;
+   z-index: 5;
 }
 .search_box{
-	position: relative;
+   position: relative;
 }
 .search_img{
-	position : absolute;
-	width: 17px;
-	margin: 0;
-	top:25px;
-	right:13%;
+   position : absolute;
+   width: 17px;
+   margin: 0;
+   top:25px;
+   right:13%;
 }
 .search_input{
   width: 100%;
@@ -157,236 +164,431 @@
   font-size: 14px;
 }
 .content_photo_1>img, .content_photo_2>img {
-	width: 200px;
-	margin: 0.5px;
-	margin-right: -5px;
+   width: 200px;
+   margin: 0.5px;
+   margin-right: -5px;
 }
 
 .main_title {
-	height: 220px;
+   height: 220px;
+   background-color : #edfffb;
 }
 
-.btn_box {
-	
-}
+
 
 .main_table {
-	width: 900px;
+   width: 900px;
 }
 
 td>img {
-	width: 200px;
+   width: 200px;
 }
 
 
 button {
-	background-color: dodgerblue;
-	padding: 8px 30px !important;
-	width: 243px;
-	font-size: 14px;
-	color: white;
-	border: 0px solid transparent;
-	float: left;
+   background-color: dodgerblue;
+   padding: 8px 30px !important;
+   width: 243px;
+   font-size: 14px;
+   color: white;
+   border: 0px solid transparent;
+   float: left;
 }
 
 button:hover {
-	background-color: skyblue;
+   background-color: skyblue;
 }
 .table_1, .table_2, .table_3, .table_4{
-	width : 972px;
-	height : 600px; 
-	overflow: scroll;
+   width : 972px;
+   height : 600px; 
+   overflow: scroll;
 }
 
 th>img{
-	width : 200px;
+   width : 200px;
 }
 
 .menu_card{
- 	width: 18rem;
- 	float : left;
- 	margin-left: 25px;
-	margin-top: 15px;
+    width: 18rem;
+    float : left;
+    margin-left: 25px;
+   margin-top: 15px;
 }
 .logo{
-	width:50px;
+   width:50px;
 }
 .logo_text{
-	display: flex; 
-	position: fixed;
-	text-decoration : none;
-	font-size : 30px;
-	font-weight : bold;
+   display: flex; 
+   position: fixed;
+   text-decoration : none;
+   font-size : 30px;
+   font-weight : bold;
 }
 .user_menu{
-	text-decoration : none;
-	margin-top : 12px;
-	padding : 0px;
-	width : 120px;
-	height : 25px;
-	padding-top:7px;
+   text-decoration : none;
+   margin-top : 12px;
+   padding : 0px;
+   width : 120px;
+   height : 25px;
+   padding-top:7px;
 }
 .logout_menu{
-	text-decoration : none;
-	margin-top : -2px;
-	padding : 0px;
-	width : 70px;
-	height : 25px;
+   text-decoration : none;
+   margin-top : -2px;
+   padding : 0px;
+   width : 70px;
+   height : 25px;
 }
 
 /* 리뷰 관련 스타일 */ 
 .content {
-	border: 1px dotted gray;
+   border: 1px dotted gray;
 }
 /* 리뷰 프로필 이미지를 작은 원형으로 만든다. */
 .profile-image {
-	width: 30px;
-	height: 30px;
-	border: 1px solid #cecece;
-	border-radius: 50%;
+   width: 30px;
+   height: 30px;
+   border: 1px solid #cecece;
+   border-radius: 50%;
 }
 /* ul 요소의 기본 스타일 제거 */
 .reviews ul {
-	padding: 0;
-	margin: 0;
-	list-style-type: none;
+   padding: 0;
+   margin: 0;
+   list-style-type: none;
 }
 
 .reviews dt {
-	margin-top: 10px;
-	position : relative;
+   margin-top: 10px;
+   position : relative;
 }
 
 .reviews dd {
-	margin-left: 50px;
+   margin-left: 50px;
 }
 
 .review-form textarea, .review-form button {
-	float: left;
+   float: left;
 }
 
 .reviews li {
-	clear: left;
+   clear: left;
 }
 
 
 /* 댓글에 댓글을 다는 폼과 수정폼은 일단 숨긴다. */
 .reviews .review-form {
-	display: none;
-	text-align : left;
-	height : 152px;
-	width : 590px;
-	padding : 0px;
-	margin : 0px;
-	margin-left : 3px;
-	padding : 15px;
+   display: none;
+   text-align : left;
+   height : 152px;
+   width : 590px;
+   padding : 0px;
+   margin : 0px;
+   margin-left : 3px;
+   padding : 15px;
 }
 
 pre {
-	display: block;
-	padding: 9.5px;
-	margin: 0 0 10px;
-	font-size: 13px;
-	line-height: 1.42857143;
-	color: #333333;
-	word-break: break-all;
-	word-wrap: break-word;
+   display: block;
+   padding: 9.5px;
+   margin: 0 0 10px;
+   font-size: 13px;
+   line-height: 1.42857143;
+   color: #333333;
+   word-break: break-all;
+   word-wrap: break-word;
     background-color: #eeffee;
     border: 1px solid #c9c9c9;
     border-radius: 10px
 }
 
 @keyframes rotateAni { 
-	0%{
-		transform: rotate(0deg);
-	}
-	100%{
-		transform:rotate(360deg);
-	}
+   0%{
+      transform: rotate(0deg);
+   }
+   100%{
+      transform:rotate(360deg);
+   }
 }
 #profileImage{
-    width: 100px;
-    height: 100px;
+    width: 147px;
+    height: 147px;
     border: 1px solid #cecece;
-    border-radius: 50%;
+    border-radius: 10px;
   }
 #imageForm{
-	display: none;
+   display: none;
    }
 
 .col-2{
-	width : auto;
-	border:1px solid #c9c9c9; 
-	border-radius:10px;
-	padding : 0px;
-	overflow:hidden;
+   width : auto;
+   border:1px solid #c9c9c9; 
+   border-radius:10px;
+   padding : 0px;
+   overflow:hidden;
 }
 .col-8{
-	padding : 0px;
+   padding : 0px;
 }
 .comment_box{
-	text-align : left;
-	height : 152px;
-	width : 590px;
-	padding : 0px;
-	margin : 0px;
-	margin-left : 3px;
-	padding : 15px;
+   border:1px solid #c9c9c9; 
+   border-radius:10px;
+   text-align : left;
+   height : 152px;
+   width : 590px;
+   padding : 0px;
+   margin : 0px;
+   margin-left : 3px;
+   padding : 15px;
 }
 .review_profile{
-	background-color : #feffe6;
-	right: 0px;
+   background-color : #feffe6;
+   right: 0px;
     height: 152px;
     width: 150px;
     position: absolute;
     padding : 10px;
 }
 .profile-image{
-	width : 50px;
-	height : 50px;
+   width : 50px;
+   height : 50px;
 }
 .review_img{
-	width : 200px;
-	height : 150px;
+   width : 200px;
+   height : 150px;
 }
 .row {
-	margin-left : 10px;
+   margin-left : 10px;
 }
 .update-link{
-	font-size : 15px;
-	text-decoration : none;
-	padding : 0px;
+   font-size : 15px;
+   text-decoration : none;
+   padding : 0px;
 }
 .delete-link{
-	font-size : 15px;
-	text-decoration : none;
-	padding : 0px;
+   font-size : 15px;
+   text-decoration : none;
+   padding : 0px;
+}
+#title{
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: #eeffee;
+	border: 1px solid #c9c9c9;
+	border-radius: 5px;
+	position: relative;
+	left: 3px;
+	height: 35px;
 }
 .regist_comment_box{
- 	height: 100px; 
- 	width: 692px;
+	width: 623px;
+    height: 106px;
     background-color: #eeffee;
     border: 1px solid #c9c9c9;
     border-radius: 10px;
+   text-align : left;
+   padding : 0px;
+   margin : 0px;
+   margin-left : 3px;
+   padding : 15px;
+}
+.comment_form_box{
+    height: 170px; 
+    width: 100%;
+    background-color: white;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
 	text-align : left;
-	padding : 0px;
 	margin : 0px;
 	margin-left : 3px;
-	padding : 15px;
+	padding : 10px
 }
 .regist_btn{
-	width:148px;
-	height : 100px;
-	margin-left:5px;
+   width:148px;
+   height : 106px;
+   margin-left:5px;
     border: 1px solid #c9c9c9;
     border-radius: 10px;
 }
 .comment_img{
-	width:100px;
-	height:100px;
-	border: 1px solid #c9c9c9;
-    border-radius: 10px;
+   width:147px;
+   height:147px;
+   border: 1px solid #c9c9c9;
+   border-radius: 10px;
 }
+#btn_1, #btn_2, #btn_3, #btn_4{
+   background-color : #D5D5D5;
+}
+.rainbow_effect{
+   animation-duration: 1s; 
+   animation-name: rainbowLink; 
+   animation-iteration-count: infinite; 
+}
+@keyframes rainbowLink {     
+ 0% { background-color: #ff2a2a; }
+ 15% { background-color: #ff7a2a; }
+ 30% { background-color: #ffc52a; }
+ 45% { background-color: #43ff2a; }
+ 60% { background-color: #2a89ff; }
+ 75% { background-color: #202082; }
+ 90% { background-color: #6b2aff; } 
+ 100% { background-color: #e82aff; }
+}
+.top_menu{
+   padding: 0px;
+    width: 70px;
+    margin-top: 10px;
+}
+.user_menu{
+   text-decoration : none;
+   margin-top : 12px;
+   padding : 0px;
+   width : 120px;
+   height : 25px;
+   padding-top:7px;
+}
+.logout_menu{
+   text-decoration : none;
+   margin-top : -2px;
+   padding : 0px;
+   width : 70px;
+   height : 25px;
+}
+.shop_info{
+   margin-left:100px;
+   margin-top:50px;
+   width : 400px;
+}
+.table1_warpper{
+   height : 400px;
+    width: 600px;
+    margin-top: 50px;
+   position : relative;
+   margin-left:186px;
+   border : 1px solid gray;
+   border-radius : 10px;
+   box-shadow: 2px 2px 3px 0px grey;
+}
+.card-img-top{
+   width:286px;
+   height:200px;
+}
+
+
+.blind {
+  position: absolute;
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  border: none;
+  clip: rect(0, 0, 0, 0);
+}
+
+.startRadio {
+	display: inline-block;
+	overflow: hidden;
+	height: 40px;
+	float:right;
+	position: relative;
+	right: 370px;
+	bottom: 5px;
+}
+.startRadio:after {
+  content: "";
+  display: block;
+  position: relative;
+  z-index: 10;
+  height: 40px;
+  background: url("data:image/png;base64,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") repeat-x 0 0;
+  background-size: contain;
+  pointer-events: none;
+}
+.startRadio__box {
+  position: relative;
+  z-index: 1;
+  float: left;
+  width: 20px;
+  height: 40px;
+  cursor: pointer;
+}
+.startRadio__box input {
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  position: absolute !important;
+}
+.startRadio__box .point + .startRadio__img {
+  background-color: yellow;
+}
+.startRadio__box input:checked + .startRadio__img {
+  background-color: yellow;
+}
+.startRadio__img {
+  display: block;
+  position: absolute;
+  right: 0;
+  width: 500px;
+  height: 40px;
+  pointer-events: none;
+}
+.col-8>form{
+	background-color: white;
+	border: 1px solid #c9c9c9;
+	border-radius: 10px;
+}
+.update-form>input{
+	font-size : 13px;
+	background-color: #eeffee;
+	border: 1px solid #c9c9c9;
+	border-radius: 5px;
+	margin-bottom: 3px;
+}
+.update-form>textarea{
+	font-size : 13px;
+	background-color: #eeffee;
+	border: 1px solid #c9c9c9;
+	border-radius: 5px;
+	width : 555px;
+	height:62px;
+	margin-bottom: 3px;
+}
+.comment_edit_btn{
+	padding : 0px !important;
+	font-size : 10px;
+	border-radius: 5px;
+	width : 70px;
+	height : 25px;
+}
+.update-form>.startRadio{
+	float: right;
+    position: relative;
+    right: 190px;
+}
+.review_title_box{
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+    position: relative;
+    left: 3px;
+    height: 35px;
+}
+.review_content_box{
+    width: 555px;
+    height: 80px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 3px;
+    padding: 15px;
+}
+
 </style>
 <body>
 
@@ -402,6 +604,16 @@ pre {
 					<a href="${pageContext.request.contextPath}/users/loginform"  class="top_menu btn btn-outline-dark">LOGIN</a>
 					<a href="${pageContext.request.contextPath}/users/signup_form"  class="top_menu btn btn-outline-success">SIGN-UP</a>
 				</c:when>
+				<c:when test="${sessionScope.id eq 'admin'}">
+					<a href="${pageContext.request.contextPath}/index" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+						HOMEPAGE NAME
+					</a>
+					<a href="${pageContext.request.contextPath}/shop/insertform" class="user_menu badge text-bg-success">REGIST SHOP</a>
+					<a href="${pageContext.request.contextPath}/users/list" class="user_menu badge text-bg-warning">USER LIST</a>
+					<a href="${pageContext.request.contextPath}/users/info" class="rainbow_effect user_menu badge">${sessionScope.id }</a>
+					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
+				</c:when>
 				<c:otherwise>
 					<a href="${pageContext.request.contextPath}/index" class="logo_text">
 						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
@@ -409,6 +621,7 @@ pre {
 					</a>
 					<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
 					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
+
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -425,7 +638,15 @@ pre {
             
             <hr>
             <div class="suggest_menu">
-				<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
+				<c:choose>
+					<c:when test="${ empty keyword}">
+						<h5 style="margin-left:20px;">오늘의 추천 가게</h5>
+					</c:when>
+					<c:otherwise>
+						<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
+					</c:otherwise>
+				</c:choose>
+            	
 				<c:forEach var="tmp" items="${list }">
 					<div class="card" style="width: 18rem;">
 	                    <img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
@@ -447,134 +668,50 @@ pre {
 							<div id="map"style="width: 300px; height: 220px; margin: auto; float: right; "></div>
 
 							<br>
-							<br> <Strong>${dto.title }</Strong>
-							<p>리뷰 ${dto.reviewCount } 회</p>
+							<br> <Strong>${dto.title}</Strong>
+							<p>리뷰 ${dto.reviewCount} 회</p>
 							<p>좋아요 : ${dto.likeCount}, 싫어요 : ${dto.dislikeCount }</p>
 							<p style="margin: 0px;"></p>
 						</div>
 						<div class=btn_box>
-							<button type="button" id="btn_1">가게 소개</button>
-							<button type="button" id="btn_2">메뉴</button>
-							<button type="button" id="btn_3">리뷰</button>
-							<button type="button" id="btn_4">사진</button>
+							<button type="button" id="btn_1"><span>가게 소개</span></button>
+							<button type="button" id="btn_2"><span>메뉴</span></button>
+							<button type="button" id="btn_3"><span>리뷰</span></button>
+							<button class="rainbow_effect" type="button" id="btn_4"><span class="rainbow_effect">★</span></button>
 						</div>
-					<div class="table_1">
-						<table>
-							<tbody>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 가게 소개 : ${dto.content }</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 전화 번호 : ${dto.telNum}</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 영업 시간 :</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 주소 : ${dto.addr }</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 단체 손님 환영</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-								<tr class=shopInfo>
-									<td colspan="5">&nbsp; 더미 데이터</td>
-								</tr>
-
-
-							</tbody>
-						</table>
+					<div class="table_1" style="display:none;">
+						<div class="table1_warpper">
+							<table class="shop_info">
+								<tbody>
+									<tr class=shopInfo>
+										<td style="border-right: 1px solid gray">소개</td>
+										<td>${dto.content}</td>
+									</tr>
+									<tr style="height:40px"></tr>
+									<tr class=shopInfo>
+										<td style="border-right: 1px solid gray">전화 번호</td>
+										<td>${dto.telNum}</td>
+									</tr>
+									<tr style="height:40px"></tr>
+									<tr class=shopInfo>
+										<td style="border-right: 1px solid gray">영업 시간</td>
+										<td></td>
+									</tr>
+									<tr style="height:40px"></tr>
+									<tr class=shopInfo>
+										<td style="border-right: 1px solid gray">주소</td>
+										<td>${dto.addr}</td>
+									</tr>
+									<tr style="height:40px"></tr>
+									<tr class=shopInfo>
+										<td style="border-right: 1px solid gray">전화 번호</td>
+										<td>${dto.telNum}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
-					<div class="table_2">
+					<div class="table_2" style="display:none;" >
 						<table>
 							<c:choose>
 								<c:when test="${sessionScope.id eq 'admin'}">
@@ -598,14 +735,14 @@ pre {
 							</tbody>
 						</table>
 					</div>
-					<div class="table_3">
+					<div class="table_3" style="display:none;">
 						<table style="width:950px;">
 							<tbody>
 								<tr>
 									<td>리뷰</td>
 								</tr>
 								<tr>
-									<td>평점  :  N점</td>
+									<td>평점  :  ${grade}</td>
 								</tr>
 								<tr>
 									<td>
@@ -620,21 +757,133 @@ pre {
 															<c:if test="${tmp.num eq tmp.review_group }">
 																<li id="reli${tmp.num }">
 															</c:if>
-															
+															 
 															<dl>
 																<dt class="row">
 																	<div class="col-2">
-																		<img class="review_img" src="${pageContext.request.contextPath}${tmp.imagePath}"/>
+																		<c:choose>
+																			<c:when test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
+																				<img class="review_img" src="${pageContext.request.contextPath}/resources/images/photo.png"/>
+																			</c:when>
+																			<c:otherwise>
+																				<img class="review_img" src="${pageContext.request.contextPath}${tmp.imagePath}"/>
+																			</c:otherwise>
+																		</c:choose>
 																	</div>
 																	<div class="col-8">
-																		<pre class="comment_box" id="pre${tmp.num }">${tmp.content }</pre>
+																		<div class="comment_box" id="pre${tmp.num }">
+
+																			<!-- 
+																			<span id="spt${tmp.num }">${tmp.title}</span>
+																			 -->
+																			<input class="review_title_box" type="text" name="title" id="spt${tmp.num }" value="${tmp.title}" disabled/>
+																			
+																		 	<div class="startRadio" style="pointer-events: none;
+																										    display: inline-block;
+																										    overflow: hidden;
+																										    height: 40px;
+																										    float: right;
+																										    position: relative;
+																										    right: 140px;
+																										    bottom: 5px;
+																										    z-index : 9;">
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=0.5  ${tmp.grade eq 0.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=1 ${tmp.grade eq 1 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 1개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=1.5 ${tmp.grade eq 1.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=2 ${tmp.grade eq 2 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 2개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=2.5 ${tmp.grade eq 2.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=3 ${tmp.grade eq 3 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 3개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=3.5 ${tmp.grade eq 3.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=4 ${tmp.grade eq 4 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 4개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=4.5 ${tmp.grade eq 4.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=5 ${tmp.grade eq 5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 5개</span></span>
+																				</label>
+																			</div>
+																			<br />
+																			<textarea class="review_content_box" id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
+																		</div>
+																		
+																		
+																		
+																		<!-- 수정폼 -->
 																		<c:if test="${tmp.writer eq id }">
-																			<form id="updateForm${tmp.num }"
-																				class="review-form update-form" action="review_update"
-																				method="post">
+																			<form id="updateForm${tmp.num }" class="review-form update-form" action="review_update" method="post">
 																				<input type="hidden" name="num" value="${tmp.num }" />
+																				<input type="text" name="title" value="${tmp.title }" />
+																				<div class="startRadio">
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=0.5  ${tmp.grade eq 0.5 ? 'checked' : '' } disabled>
+																					  <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=1 ${tmp.grade eq 1 ? 'checked' : '' } disabled>
+																					  <span class="startRadio__img"><span class="blind">별 1개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=1.5 ${tmp.grade eq 1.5 ? 'checked' : '' } disabled>
+																					  <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=2 ${tmp.grade eq 2 ? 'checked' : '' } disabled>
+																					  <span class="startRadio__img"><span class="blind">별 2개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=2.5 ${tmp.grade eq 2.5 ? 'checked' : '' } disabled>
+																					  <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=3 ${tmp.grade eq 3 ? 'checked' : '' } disabled>
+																					  <span class="startRadio__img"><span class="blind">별 3개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=3.5 ${tmp.grade eq 3.5 ? 'checked' : '' } disabled>
+																					  <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=4 ${tmp.grade eq 4 ? 'checked' : '' } disabled>
+																					  <span class="startRadio__img"><span class="blind">별 4개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=4.5 ${tmp.grade eq 4.5 ? 'checked' : '' } disabled>
+																					  <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
+																					</label>
+																					<label class="startRadio__box">
+																					  <input type="radio" name="grade_number" value=5 ${tmp.grade eq 5 ? 'checked' : '' } disabled>
+																					  <span class="startRadio__img"><span class="blind">별 5개</span></span>
+																					</label>
+																				</div>
+																				
 																				<textarea name="content">${tmp.content }</textarea>
-																				<button type="submit" id="ur${tmp.num }">수정</button>
+																				<button type="submit" id="ur${tmp.num }" class=comment_edit_btn>수정</button>
 																			</form>
 																		</c:if>
 																	</div>
@@ -658,12 +907,19 @@ pre {
 																		<span style="font-weight:100;">${tmp.regdate }</span> 
 																		
 																		<br>
-																		<c:if test="${ (id ne null) and (tmp.writer eq id) }">
-																			<a data-num="${tmp.num }" class="update-link btn btn-warning"
-																				href="javascript:">수정</a>
-																			<a data-num="${tmp.num }" class="delete-link btn btn-danger"
-																				href="javascript:">삭제</a>
-																		</c:if>
+																	
+																		<c:choose>
+																			<c:when test="${ (id ne null) and (tmp.writer eq id) }">
+																				<a data-num="${tmp.num }" class="update-link btn btn-warning"
+																					href="javascript:">수정</a>
+																				<a data-num="${tmp.num }" class="delete-link btn btn-danger"
+																					href="javascript:">삭제</a>
+																			</c:when>
+																			<c:when test="${id eq 'admin' }">
+																				<a data-num="${tmp.num }" class="delete-link btn btn-danger"
+																					href="javascript:">삭제</a>
+																			</c:when>
+																		</c:choose>
 																	</div>
 																</dt>
 
@@ -678,21 +934,64 @@ pre {
 								<tr>
 								<td style="left: 10px; position: relative;">
 								<!-- 원글에 리뷰를 작성할 폼 -->
+								<div class="comment_form_box">
 										<form class="review-form insert-form" action="review_insert" method="post">
-											<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
-  	  										<input type="hidden" name="imagePath" value="empty"/>
-											
-											<a id="profileLink" href="javascript:" style="float:left;">
+											<input type="text" name="title" id="title" placeholder="한줄평 입력..."/>
+											<div class="startRadio">
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=0.5>
+												  <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=1>
+												  <span class="startRadio__img"><span class="blind">별 1개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=1.5>
+												  <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=2>
+												  <span class="startRadio__img"><span class="blind">별 2개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=2.5>
+												  <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=3>
+												  <span class="startRadio__img"><span class="blind">별 3개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=3.5>
+												  <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=4>
+												  <span class="startRadio__img"><span class="blind">별 4개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=4.5>
+												  <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
+												</label>
+												<label class="startRadio__box">
+												  <input type="radio" name="grade_number" value=5 checked>
+												  <span class="startRadio__img"><span class="blind">별 5개</span></span>
+												</label>
+											</div>
+											<a id="thumbnailLink" href="javascript:" style="float:left;">
 												<img class="comment_img" src="${pageContext.request.contextPath}/resources/images/photo.png" alt=""/>
 											</a>
 											
+											<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
+  	  										<input type="hidden" name="imagePath" value="empty"/>
+											
 											<!-- 원글의 글번호가 리뷰의 ref_group 번호가 된다. -->
 											<input type="hidden" name="ref_group" value="${dto.num }" />
-											
 											<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
 											<button class="regist_btn" type="submit">등록</button>
 										</form>
-										
+								</div>
 										<!-- 이미지 등록용 숨겨진 form -->
 									   <form id="imageForm" action="${pageContext.request.contextPath}/shop/review_image_upload" method="post" enctype="multipart/form-data">
 									      사진
@@ -709,44 +1008,78 @@ pre {
 								  startPageNum 이 1 이 아닌 경우에만 Prev 링크를 제공한다. 
 								  &condition=${condition}&keyword=${encodedK}
 								--%>
-								<c:if test="${startPageNum ne 1 }">
+								<c:if test="${rvStartPageNum ne 1 }">
 									<li class="page-item">
-										<a class="page-link" href="list?pageNum=${startPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
+										<a class="page-link" href="detail?num=${dto.num}&rvPageNum=${rvStartPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
 									</li>
 								</c:if>
-								<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
-									<li class="page-item ${pageNum eq i ? 'active' : '' }">
-										<a class="page-link" href="list?pageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
+								<c:forEach var="i" begin="${rvStartPageNum }" end="${rvEndPageNum }">
+									<li class="page-item ${rvPageNum eq i ? 'active' : '' }">
+										<a class="page-link" href="detail?num=${dto.num }&rvPageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
 									</li>
 								</c:forEach>
 				
 								<%--
 									마지막 페이지 번호가 전체 페이지의 갯수보다 작으면 Next 링크를 제공한다. 
 								--%>
-								<c:if test="${endPageNum lt totalPageCount }">
+								<c:if test="${rvEndPageNum lt rvTotalPageCount }">
 									<li class="page-item">
-										<a class="page-link" href="list?pageNum=${endPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
+										<a class="page-link" href="detail?num=${dto.num }&rvPageNum=${rvEndPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
 									</li>
 								</c:if>
 							</ul>
 						</nav>
 					</div>
-					<div class="table_4">
-						<table>
-							<tbody>
-								<tr>
-									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
-									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
-									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
-								</tr>
-									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
-									<td> <img src="https://www.newiki.net/w/images/thumb/8/8f/Grilled_porterhouse_steak.jpg/450px-Grilled_porterhouse_steak.jpg" alt="" /></td>
-									<td> <img src="" alt="" /></td>
-								</tr>
-								
-							</tbody>
-						</table>
-					</div>
+               <div class="table_4" style="display:none;">
+                  <div class="startRadio">
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star0_5" value=0.5 >
+                      <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star1" value=1>
+                      <span class="startRadio__img"><span class="blind">별 1개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star1_5" value=1.5>
+                      <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star2" value=2>
+                      <span class="startRadio__img"><span class="blind">별 2개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star2_5" value=2.5>
+                      <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star3" value=3>
+                      <span class="startRadio__img"><span class="blind">별 3개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star3_5" value=3.5>
+                      <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star4" value=4>
+                      <span class="startRadio__img"><span class="blind">별 4개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star4_5" value=4.5>
+                      <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
+                    </label>
+                    <label class="startRadio__box">
+                      <input type="radio" name="star" id="star5" value=5>
+                      <span class="startRadio__img"><span class="blind">별 5개</span></span>
+                    </label>
+                  </div>
+               </div>
+	            <!-- 
+	               document.querySelectorAll("input:checked")[1].value
+	               지금은 상언씨 코드랑 같이있어서 배열 1로 검색해야 잡히는데 지우게되면 0으로 잡아도 잡힐듯합니다.
+	               id에다 star[별_개수] 식으로 id 배열해놨고, 집가서 value 값으로 수정하면 잘 될거같은디  
+	            
+	             -->
 
 				</div>
 		        </div>    
@@ -797,60 +1130,101 @@ pre {
 	});    
 	</script>
 	<script>
-
+		//tab menu 컨트롤 코드
+		var beforePage=1;
 		window.onload = function() {
-			$("#btn_1").css({"background-color" : "gray"})
-			$("#btn_2").css({"background-color" : "#BDBDBD"})
-			$("#btn_3").css({"background-color" : "#BDBDBD"})
-			$("#btn_4").css({"background-color" : "#BDBDBD"})
-			$(".table_1").show();
-			$(".table_2").hide();
-			$(".table_3").hide();
-			$(".table_4").hide();
+			if(sessionStorage.getItem("beforePage")==1){
+				$("#btn_1").css({"background-color" : "#B2CCFF"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").show();
+				$(".table_2").hide();
+				$(".table_3").hide();
+				$(".table_4").hide();				
+			}else if(sessionStorage.getItem("beforePage")==2){
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#B2CCFF"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").hide();
+				$(".table_2").show();
+				$(".table_3").hide();
+				$(".table_4").hide();				
+			}else if(sessionStorage.getItem("beforePage")==3){
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#B2CCFF"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").hide();
+				$(".table_2").hide();
+				$(".table_3").show();
+				$(".table_4").hide();				
+			}else if(sessionStorage.getItem("beforePage")==4){
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#B2CCFF"})
+				$(".table_1").hide();
+				$(".table_2").hide();
+				$(".table_3").hide();
+				$(".table_4").show();			
+			}
 		}
 		$(document).ready(function() {
 			$("#btn_1").click(function() {
-				$("#btn_1").css({"background-color" : "gray"})
-				$("#btn_2").css({"background-color" : "#BDBDBD"})
-				$("#btn_3").css({"background-color" : "#BDBDBD"})
-				$("#btn_4").css({"background-color" : "#BDBDBD"})
+				$("#btn_1").css({"background-color" : "#B2CCFF"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
 				$(".table_1").show();
 				$(".table_2").hide();
 				$(".table_3").hide();
 				$(".table_4").hide();
+				beforePage=1;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 			$("#btn_2").click(function() {
-				$("#btn_1").css({"background-color" : "#BDBDBD"})
-				$("#btn_2").css({"background-color" : "gray"})
-				$("#btn_3").css({"background-color" : "#BDBDBD"})
-				$("#btn_4").css({"background-color" : "#BDBDBD"})
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#B2CCFF"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
 				$(".table_1").hide();
 				$(".table_2").show();
 				$(".table_3").hide();
 				$(".table_4").hide();
+				beforePage=2;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 			$("#btn_3").click(function() {
-				$("#btn_1").css({"background-color" : "#BDBDBD"})
-				$("#btn_2").css({"background-color" : "#BDBDBD"})
-				$("#btn_3").css({"background-color" : "gray"})
-				$("#btn_4").css({"background-color" : "#BDBDBD"})
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#B2CCFF"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
 				$(".table_1").hide();
 				$(".table_2").hide();
 				$(".table_3").show();
 				$(".table_4").hide();
+				beforePage=3;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 			$("#btn_4").click(function() {
-				$("#btn_1").css({"background-color" : "#BDBDBD"})
-				$("#btn_2").css({"background-color" : "#BDBDBD"})
-				$("#btn_3").css({"background-color" : "#BDBDBD"})
-				$("#btn_4").css({"background-color" : "gray"})
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#B2CCFF"})
 				$(".table_1").hide();
 				$(".table_2").hide();
 				$(".table_3").hide();
 				$(".table_4").show();
+				beforePage=4;
+				sessionStorage.setItem("beforePage", beforePage);
+			})
+			$("a").click(function() {
+				beforePage=1;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 		})
-
 	</script>
 	<div class="footer">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -926,69 +1300,6 @@ pre {
       addUpdateFormListener(".update-form");
       addUpdateListener(".update-link");
       addDeleteListener(".delete-link");
-      
-      
-      //댓글의 현재 페이지 번호를 관리할 변수를 만들고 초기값 1 대입하기
-      let currentPage=1;
-      //마지막 페이지는 totalPageCount 이다.  
-      <%-- 댓글의 개수가 0일 때 오류를 발생하지 않기 위해 --%>
-      let lastPage=${totalPageCount eq 0 ? 1 : totalPageCount};
-      
-      //추가로 댓글을 요청하고 그 작업이 끝났는지 여부를 관리할 변수 
-      let isLoading=false; //현재 로딩중인지 여부 
-      
-      /*
-         window.scrollY => 위쪽으로 스크롤된 길이
-         window.innerHeight => 웹브라우저의 창의 높이
-         document.body.offsetHeight => body 의 높이 (문서객체가 차지하는 높이)
-      */
-      window.addEventListener("scroll", function(){
-         //바닥 까지 스크롤 했는지 여부 
-         const isBottom = 
-            window.innerHeight + window.scrollY  >= document.body.offsetHeight;
-         //현재 페이지가 마지막 페이지인지 여부 알아내기
-         let isLast = currentPage == lastPage;   
-         //현재 바닥까지 스크롤 했고 로딩중이 아니고 현재 페이지가 마지막이 아니라면
-         if(isBottom && !isLoading && !isLast){
-            //로딩바 띄우기
-            document.querySelector(".loader").style.display="block";
-            
-            //로딩 작업중이라고 표시
-            isLoading=true;
-            
-            //현재 댓글 페이지를 1 증가 시키고 
-            currentPage++;
-            
-            /*
-               해당 페이지의 내용을 ajax 요청을 통해서 받아온다.
-               "pageNum=xxx&num=xxx" 형식으로 GET 방식 파라미터를 전달한다. 
-            */
-            ajaxPromise("ajax_review_list","get",
-                  "pageNum="+currentPage+"&num=${dto.num}")
-            .then(function(response){
-               //json 이 아닌 html 문자열을 응답받았기 때문에  return response.text() 해준다.
-               return response.text();
-            })
-            .then(function(data){
-               //data 는 html 형식의 문자열이다. 
-               console.log(data);
-               // beforebegin | afterbegin | beforeend | afterend
-               document.querySelector(".reviews ul")
-                  .insertAdjacentHTML("beforeend", data);
-               //로딩이 끝났다고 표시한다.
-               isLoading=false;
-               //새로 추가된 댓글 li 요소 안에 있는 a 요소를 찾아서 이벤트 리스너 등록 하기 
-               addUpdateListener(".page-"+currentPage+" .update-link");
-               addDeleteListener(".page-"+currentPage+" .delete-link");
-               addReplyListener(".page-"+currentPage+" .reply-link");
-               //새로 추가된 댓글 li 요소 안에 있는 댓글 수정폼에 이벤트 리스너 등록하기
-               addUpdateFormListener(".page-"+currentPage+" .update-form");
-               
-               //로딩바 숨기기
-               document.querySelector(".loader").style.display="none";
-            });
-         }
-      });
       
       //인자로 전달되는 선택자를 이용해서 이벤트 리스너를 등록하는 함수 
       function addUpdateListener(sel){
@@ -1082,10 +1393,12 @@ pre {
                         특정문서의 참조값.querySelector() 는 해당 문서 객체의 자손 요소 중에서
                         특정 요소의 참조값을 찾는 기능
                      */
-                     const num=form.querySelector("input[name=num]").value;
-                     const content=form.querySelector("textarea[name=content]").value;
+                     const num = form.querySelector("input[name=num]").value;
+                     const title = form.querySelector("input[name=title]").value;
+                     const content = form.querySelector("textarea[name=content]").value;
                      //수정폼에 입력한 value 값을 pre 요소에도 출력하기 
-                     document.querySelector("#pre"+num).innerText=content;
+                     document.querySelector("#spt"+num).value=title;
+                     document.querySelector("#spc"+num).innerText=content;
                      form.style.display="none";
                   }
                });
@@ -1093,10 +1406,9 @@ pre {
          }
       }
     //이미지 링크를 클릭하면 
-		document.querySelector("#profileLink").addEventListener("click", function(){
-			document.querySelector("#image").click();
+		document.querySelector("#thumbnailLink").addEventListener("click", function(){
+			document.querySelector("#image").click();	
 		});   
-
 		document.querySelector("#image").addEventListener("change", function(){
 			const form = document.querySelector("#imageForm"); 
 			ajaxFormPromise(form)
@@ -1105,8 +1417,8 @@ pre {
 			})
 			.then(function(data){
 				document.querySelector("input[name=imagePath]").value = data.imagePath;
-				let img = `<img id="profileImage" src="${pageContext.request.contextPath }\${data.imagePath}">`;
-				document.querySelector("#profileLink").innerHTML=img;
+				let img = `<img class="comment_img" src="${pageContext.request.contextPath }\${data.imagePath}">`;
+				document.querySelector("#thumbnailLink").innerHTML=img;
 			});
 		});
    </script>
