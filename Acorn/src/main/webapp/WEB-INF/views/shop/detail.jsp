@@ -126,7 +126,14 @@
 .table_3::-webkit-scrollbar-track, .table_4::-webkit-scrollbar-track {
 
 }
-
+textarea::-webkit-scrollbar{
+   width : 5px;
+   height : 0px;
+}
+textarea::-webkit-scrollbar-thumb{
+    background-color: #2f3542;
+    border-radius: 10px;
+}
 
 .fold_btn {
    position: absolute;
@@ -304,8 +311,8 @@ pre {
    }
 }
 #profileImage{
-    width: 100px;
-    height: 100px;
+    width: 147px;
+    height: 147px;
     border: 1px solid #cecece;
     border-radius: 10px;
   }
@@ -324,6 +331,8 @@ pre {
    padding : 0px;
 }
 .comment_box{
+   border:1px solid #c9c9c9; 
+   border-radius:10px;
    text-align : left;
    height : 152px;
    width : 590px;
@@ -407,10 +416,7 @@ pre {
    border: 1px solid #c9c9c9;
    border-radius: 10px;
 }
-#btn_1{
-   background-color : #B2CCFF;
-}
-#btn_2, #btn_3, #btn_4{
+#btn_1, #btn_2, #btn_3, #btn_4{
    background-color : #D5D5D5;
 }
 .rainbow_effect{
@@ -513,6 +519,9 @@ pre {
   width: 0 !important;
   position: absolute !important;
 }
+.startRadio__box .point + .startRadio__img {
+  background-color: yellow;
+}
 .startRadio__box input:checked + .startRadio__img {
   background-color: yellow;
 }
@@ -556,6 +565,28 @@ pre {
 	float: right;
     position: relative;
     right: 190px;
+}
+.review_title_box{
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+    position: relative;
+    left: 3px;
+    height: 35px;
+}
+.review_content_box{
+    width: 555px;
+    height: 80px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+    text-align: left;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 3px;
+    padding: 15px;
 }
 
 </style>
@@ -648,7 +679,7 @@ pre {
 							<button type="button" id="btn_3"><span>리뷰</span></button>
 							<button class="rainbow_effect" type="button" id="btn_4"><span class="rainbow_effect">★</span></button>
 						</div>
-					<div class="table_1">
+					<div class="table_1" style="display:none;">
 						<div class="table1_warpper">
 							<table class="shop_info">
 								<tbody>
@@ -726,7 +757,7 @@ pre {
 															<c:if test="${tmp.num eq tmp.review_group }">
 																<li id="reli${tmp.num }">
 															</c:if>
-															
+															 
 															<dl>
 																<dt class="row">
 																	<div class="col-2">
@@ -740,7 +771,70 @@ pre {
 																		</c:choose>
 																	</div>
 																	<div class="col-8">
-																		<pre class="comment_box" id="pre${tmp.num }"><span id="spt${tmp.num }">${tmp.title}</span> | <span id="spg${tmp.grade }">${tmp.grade}</span> <br /> <span id="spc${tmp.num }">${tmp.content }</span></pre>
+																		<div class="comment_box" id="pre${tmp.num }">
+
+																			<!-- 
+																			<span id="spt${tmp.num }">${tmp.title}</span>
+																			 -->
+																			<input class="review_title_box" type="text" name="title" id="spt${tmp.num }" value="${tmp.title}" disabled/>
+																			
+																		 	<div class="startRadio" style="pointer-events: none;
+																										    display: inline-block;
+																										    overflow: hidden;
+																										    height: 40px;
+																										    float: right;
+																										    position: relative;
+																										    right: 140px;
+																										    bottom: 5px;
+																										    z-index : 9;">
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=0.5  ${tmp.grade eq 0.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 0.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=1 ${tmp.grade eq 1 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 1개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=1.5 ${tmp.grade eq 1.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 1.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=2 ${tmp.grade eq 2 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 2개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=2.5 ${tmp.grade eq 2.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 2.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=3 ${tmp.grade eq 3 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 3개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=3.5 ${tmp.grade eq 3.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 3.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=4 ${tmp.grade eq 4 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 4개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=4.5 ${tmp.grade eq 4.5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 4.5개</span></span>
+																				</label>
+																				<label class="startRadio__box">
+																				  <input type="radio" name="grade_number" value=5 ${tmp.grade eq 5 ? 'class="point"' : '' }>
+																				  <span class="startRadio__img"><span class="blind">별 5개</span></span>
+																				</label>
+																			</div>
+																			<br />
+																			<textarea class="review_content_box" id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
+																		</div>
+																		
+																		
+																		
+																		<!-- 수정폼 -->
 																		<c:if test="${tmp.writer eq id }">
 																			<form id="updateForm${tmp.num }" class="review-form update-form" action="review_update" method="post">
 																				<input type="hidden" name="num" value="${tmp.num }" />
@@ -1036,11 +1130,46 @@ pre {
 	});    
 	</script>
 	<script>
+		//tab menu 컨트롤 코드
+		var beforePage=1;
 		window.onload = function() {
-			$(".table_1").show();
-			$(".table_2").hide();
-			$(".table_3").hide();
-			$(".table_4").hide();
+			if(sessionStorage.getItem("beforePage")==1){
+				$("#btn_1").css({"background-color" : "#B2CCFF"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").show();
+				$(".table_2").hide();
+				$(".table_3").hide();
+				$(".table_4").hide();				
+			}else if(sessionStorage.getItem("beforePage")==2){
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#B2CCFF"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").hide();
+				$(".table_2").show();
+				$(".table_3").hide();
+				$(".table_4").hide();				
+			}else if(sessionStorage.getItem("beforePage")==3){
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#B2CCFF"})
+				$("#btn_4").css({"background-color" : "#D5D5D5"})
+				$(".table_1").hide();
+				$(".table_2").hide();
+				$(".table_3").show();
+				$(".table_4").hide();				
+			}else if(sessionStorage.getItem("beforePage")==4){
+				$("#btn_1").css({"background-color" : "#D5D5D5"})
+				$("#btn_2").css({"background-color" : "#D5D5D5"})
+				$("#btn_3").css({"background-color" : "#D5D5D5"})
+				$("#btn_4").css({"background-color" : "#B2CCFF"})
+				$(".table_1").hide();
+				$(".table_2").hide();
+				$(".table_3").hide();
+				$(".table_4").show();			
+			}
 		}
 		$(document).ready(function() {
 			$("#btn_1").click(function() {
@@ -1052,6 +1181,8 @@ pre {
 				$(".table_2").hide();
 				$(".table_3").hide();
 				$(".table_4").hide();
+				beforePage=1;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 			$("#btn_2").click(function() {
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
@@ -1062,6 +1193,8 @@ pre {
 				$(".table_2").show();
 				$(".table_3").hide();
 				$(".table_4").hide();
+				beforePage=2;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 			$("#btn_3").click(function() {
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
@@ -1072,6 +1205,8 @@ pre {
 				$(".table_2").hide();
 				$(".table_3").show();
 				$(".table_4").hide();
+				beforePage=3;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 			$("#btn_4").click(function() {
 				$("#btn_1").css({"background-color" : "#D5D5D5"})
@@ -1082,6 +1217,12 @@ pre {
 				$(".table_2").hide();
 				$(".table_3").hide();
 				$(".table_4").show();
+				beforePage=4;
+				sessionStorage.setItem("beforePage", beforePage);
+			})
+			$("a").click(function() {
+				beforePage=1;
+				sessionStorage.setItem("beforePage", beforePage);
 			})
 		})
 	</script>
