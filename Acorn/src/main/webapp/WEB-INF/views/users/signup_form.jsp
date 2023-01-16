@@ -12,9 +12,9 @@
 <style>
 .container{
 	width : 624px;
-	height : 600px;
+	height : 750px;
 	box-shadow: 0px 5px 20px 0px grey;
-	margin-top : 150px;
+	margin-top : 50px;
 	border-radius : 20px;
 	padding-top : 50px;
 }
@@ -36,6 +36,7 @@ h1{
 			<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
 		</a>		
 	    <h1>SIGN-UP</h1>
+	    <br />
 	    <form action="${pageContext.request.contextPath}/users/signup" method="post" id="myForm">
 	      <div>
 	         <label class="control-label" for="id">ID</label>
@@ -45,23 +46,26 @@ h1{
              <div class="valid-feedback">사용가능한 아이디 입니다.</div>
              <div class="invalid-feedback">사용할 수 없는 아이디 입니다.</div>      
 	      </div>
+	      <br />
 	      <div>
 	         <label class="control-label" for="pwd">PASSWORD</label>
 	         <input class="form-control" type="password" name="pwd" id="pwd"/>
-	         <small class="form-text text-muted">특수 문자를 하나 이상 조합하세요.</small>
+	         <small class="form-text text-muted">특수문자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
 	         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
-
-	      </div>
+		  </div>
+		  <br />
 	      <div>
 	         <label class="control-label" for="pwd2">PASSWORD CONFIRM</label>
 	         <input class="form-control" type="password" name="pwd2" id="pwd2"/>
 	      </div>
+	      <br />
 	      <div>
 	         <label class="control-label" for="email">E-MAIL</label>
 	         <input class="form-control" type="text" name="email" id="email"/>
 	         <div class="invalid-feedback">이메일 형식에 맞게 입력하세요.</div>
 	      </div>
-	      <button class="submit_btn btn btn-primary" type="submit">SIGN-UP</button>
+	      <br />
+	      <button class="btn btn-outline-success" type="submit">SIGN-UP</button>
 	   </form>
 	</div>   
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
@@ -75,7 +79,7 @@ h1{
 	$("#email").on("input", function(){
 		 $(this).removeClass("is-valid is-invalid");
 		 const inputEmail=$(this).val();
-		 const reg=new RegExp("^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$");
+		 const reg=new RegExp("[a-z0-9]+@[a-z]+\.[a-z]{2,3}");
 		
 		 if(!reg.test(inputEmail)){
 		     $(this).addClass("is-invalid");
@@ -95,7 +99,7 @@ h1{
 		const pwd2=document.querySelector("#pwd2").value;
 	
 		//비밀번호를 검증할 정규 표현식
-		const reg = new RegExp("^[a-zA-Z\\d`~!@#$%^&*()-_=+]{8,24}$");
+		const reg=/[\W]/;
 		//만일 정규표현식 검증을 통과 하지 못했다면
 		if(!reg.test(pwd)){
 		document.querySelector("#pwd").classList.add("is-invalid");
@@ -106,9 +110,11 @@ h1{
 		//만일 비밀번호 입력란과 확인란이 다르다면
 		if(pwd != pwd2){
 		   document.querySelector("#pwd").classList.add("is-invalid");
+		   document.querySelector("#pwd").classList.add("is-invalid");
 		   isPwdValid=false;
 		}else{//같다면
 		   document.querySelector("#pwd").classList.add("is-valid");
+		   document.querySelector("#pwd2").classList.add("is-valid");
 		   isPwdValid=true;
 		}
 	}

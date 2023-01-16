@@ -141,6 +141,7 @@
 	right:13%;
 }
 .search_input{
+border : none;
   width: 100%;
   padding: 10px 12px;
   font-size: 14px;
@@ -245,7 +246,7 @@
             <div class="suggest_menu">
 				<c:choose>
 					<c:when test="${ empty keyword}">
-						<h5 style="margin-left:20px;">오늘의 추천 가게</h5>
+						<h5 style="margin-left:20px;">STORE LIST</h5>
 					</c:when>
 					<c:otherwise>
 						<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
@@ -257,7 +258,7 @@
 	                    <div class="card-body">
 	                    	<h5 class="card-title">${tmp.title }</h5>
 	                    	<p class="card-text">${tmp.content }</p>
-	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}"	class="btn btn-primary">가게 정보 보기</a>
+	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}"	class="btn btn-primary">INFO</a>
 
 						</div>
 	                </div>
