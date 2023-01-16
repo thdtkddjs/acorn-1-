@@ -757,7 +757,7 @@ pre {
 															<c:if test="${tmp.num eq tmp.review_group }">
 																<li id="reli${tmp.num }">
 															</c:if>
-															
+															 
 															<dl>
 																<dt class="row">
 																	<div class="col-2">
