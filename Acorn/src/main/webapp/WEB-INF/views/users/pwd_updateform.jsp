@@ -48,18 +48,19 @@ input{
 	   <br>
 	   <form action="${pageContext.request.contextPath}/users/pwd_update" method="post" id="myForm">
 	      <div>
-	         <label for="pwd">OLD P/W</label>
-	         <input type="password" name="pwd" id="pwd"/>
+	         <label class="control-label" for="pwd">OLD P/W</label>
+	         <input class="form-control" type="password" name="pwd" id="pwd"/>
 	      </div>
 	      <br />
 	      <div>
-	         <label for="newPwd">NEW P/W</label>
-	         <input type="password" name="newPwd" id="newPwd"/>
+	         <label class="control-label" for="newPwd">NEW P/W</label>
+	         <input class="form-control" type="password" name="newPwd" id="newPwd"/>
+	         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
 	      </div>
 	      <br />
 	      <div>
-	         <label for="newPwd2">NEW P/W CONFIRM</label>
-	         <input type="password" id="newPwd2"/>
+	         <label class="control-label" for="newPwd2">NEW P/W CONFIRM</label>
+	         <input class="form-control" type="password" id="newPwd2"/>
 	      </div>
 	      <br />
 	      <br />
@@ -68,7 +69,47 @@ input{
 	      <a href="${pageContext.request.contextPath}/users/info" class="btn btn-outline-danger">CANCEL</a>
 	   </form>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
+	
+	let isPwdValid=false;
+	
+	function checkNewPwd(){
+		//먼저 2개의 클래스를 제거하고 
+		document.querySelector("#newPwd").classList.remove("is-valid");
+		document.querySelector("#newPwd").classList.remove("is-invalid");
+		//입력한 두개의 비밀 번호를 읽어와서 
+		const newPwd=document.querySelector("#newPwd").value;
+		const newPwd2=document.querySelector("#newPwd2").value;
+	
+		//비밀번호를 검증할 정규 표현식
+		const reg = new RegExp("^[a-zA-Z\\d`~!@#$%^&*()-_=+]{8,24}$");
+		//만일 정규표현식 검증을 통과 하지 못했다면
+		if(!reg.test(newPwd)){
+		document.querySelector("#newPwd").classList.add("is-invalid");
+		isPwdValid=false;
+		return; //함수를 여기서 끝내라 
+		}
+	
+		//만일 비밀번호 입력란과 확인란이 다르다면
+		if(newPwd != newPwd2){
+		   document.querySelector("#newPwd").classList.add("is-invalid");
+		   isPwdValid=false;
+		}else{//같다면
+		   document.querySelector("#newPwd").classList.add("is-valid");
+		   document.querySelector("#newPwd2").classList.add("is-valid");
+		   isPwdValid=true;
+		}
+	}
+	
+	document.querySelector("#newPwd").addEventListener("input", function(){
+	checkNewPwd();
+	});
+	
+	document.querySelector("#newPwd2").addEventListener("input", function(){
+	checkNewPwd();
+	});
+
    // 폼에 submit 이벤트가 일어났을때 실행할 함수를 등록하고 
    document.querySelector("#myForm").addEventListener("submit", function(e){
       let pwd1 = document.querySelector("#newPwd").value;
