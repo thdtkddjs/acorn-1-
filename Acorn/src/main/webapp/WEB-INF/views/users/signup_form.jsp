@@ -39,11 +39,14 @@ h1{
 	    <form action="${pageContext.request.contextPath}/users/signup" method="post" id="myForm">
 	      <div>
 	         <label class="control-label" for="id">ID</label>
-	         <input class="form-control" type="text" name="id" id="id"/>      
+	         <input class="form-control" type="text" name="id" id="id"/>   
+	         <div class="valid-feedback">사용 가능한 아이디 입니다.</div>
+	  		 <div class="invalid-feedback">경고! 사용할 수 없는 아이디 입니다.</div>   
 	      </div>
 	      <div>
 	         <label class="control-label" for="pwd">PASSWORD</label>
 	         <input class="form-control" type="password" name="pwd" id="pwd"/>   
+	         <div class="invalid-feedback">경고! 비밀 번호가 일치하는지 확인 하세요</div>
 	      </div>
 	      <div>
 	         <label class="control-label" for="pwd2">PASSWORD CONFIRM</label>
@@ -52,10 +55,12 @@ h1{
 	      <div>
 	         <label class="control-label" for="email">E-MAIL</label>
 	         <input class="form-control" type="text" name="email" id="email"/>
+	         <div class="invalid-feedback">경고! 이메일 형식에는 반드시 @가 들어가야 합니다.</div>
 	      </div>
 	      <button class="submit_btn btn btn-primary" type="submit">SIGN-UP</button>
 	   </form>
 </div>  
+
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> 
 
 <script>
@@ -104,7 +109,6 @@ h1{
 	$("#pwd, #pwd2").on("input", function(){
 		checkPwd();
 	});
-	
     
     $("#myForm").on("submit", function(){
     	const isFormValid = isPwdValid && isEmailValid;
