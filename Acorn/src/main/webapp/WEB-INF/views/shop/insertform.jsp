@@ -88,9 +88,11 @@ textarea {
 	<div class="container">
 		<a href="${pageContext.request.contextPath}" class="logo_text">
 			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png"
-			alt="" />
-		</a> <br /> <br />
+			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
+			alt="" style="height: 50px;" />
+		</a>
+		<br />
+		<br />
 		<h1>REGIST STORE</h1>
 		<br />
 		<form action="${pageContext.request.contextPath}/shop/insert"

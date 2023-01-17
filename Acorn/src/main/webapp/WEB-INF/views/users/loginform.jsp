@@ -55,7 +55,9 @@
               </c:otherwise>
           </c:choose>
 	    <a href="${pageContext.request.contextPath}" class="logo_text">
-			<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
+			<img class="logo"
+			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
+			alt="" style="height: 50px;" />
 		</a>		
 	    <h1 class="h3 mb-3 fw-normal">LOGIN</h1>
 	

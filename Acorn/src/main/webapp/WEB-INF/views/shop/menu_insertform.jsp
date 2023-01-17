@@ -78,10 +78,10 @@ textarea {
 	<div class="container">
 		<a href="${pageContext.request.contextPath}" class="logo_text">
 			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png"
-			alt="" />
-		</a> 
-		<br /> 
+			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
+			alt="" style="height: 50px;" />
+		</a>
+		<br />
 		<br />
 		<h1>REGIST MENU</h1>
 		<br />

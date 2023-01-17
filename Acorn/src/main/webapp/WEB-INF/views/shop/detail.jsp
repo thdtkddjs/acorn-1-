@@ -223,8 +223,37 @@ button:hover {
 	overflow: scroll;
 }
 
-th>img {
-	width: 200px;
+.menu_card{
+    width: 18rem;
+    float : left;
+    margin-left: 25px;
+   margin-top: 15px;
+}
+.logo{
+	height:40px;
+	margin:5px;
+}
+.logo_text{
+   display: flex; 
+   position: fixed;
+   text-decoration : none;
+   font-size : 30px;
+   font-weight : bold;
+}
+.user_menu{
+   text-decoration : none;
+   margin-top : 12px;
+   padding : 0px;
+   width : 120px;
+   height : 25px;
+   padding-top:7px;
+}
+.logout_menu{
+   text-decoration : none;
+   margin-top : -2px;
+   padding : 0px;
+   width : 70px;
+   height : 25px;
 }
 
 .menu_card {
@@ -422,15 +451,118 @@ rotate(
 
 .regist_comment_box {
 	width: 623px;
-	height: 106px;
-	background-color: #eeffee;
-	border: 1px solid #c9c9c9;
-	border-radius: 10px;
-	text-align: left;
-	padding: 0px;
-	margin: 0px;
-	margin-left: 3px;
-	padding: 15px;
+    height: 106px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+   text-align : left;
+   padding : 0px;
+   margin : 0px;
+   margin-left : 3px;
+   padding : 15px;
+}
+.comment_form_box{
+    height: 170px; 
+    width: 100%;
+    background-color: white;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+	text-align : left;
+	margin : 0px;
+	margin-left : 3px;
+	padding : 10px
+}
+.regist_btn{
+   width:148px;
+   height : 106px;
+   margin-left:5px;
+    border: 1px solid #c9c9c9;
+    border-radius: 10px;
+}
+.comment_img{
+   width:147px;
+   height:147px;
+   border: 1px solid #c9c9c9;
+   border-radius: 10px;
+}
+#btn_1, #btn_2, #btn_3, #btn_4{
+   background-color : #D5D5D5;
+}
+.rainbow_effect{
+   animation-duration: 1s; 
+   animation-name: rainbowLink; 
+   animation-iteration-count: infinite; 
+}
+@keyframes rainbowLink {     
+ 0% { background-color: #ff2a2a; }
+ 15% { background-color: #ff7a2a; }
+ 30% { background-color: #ffc52a; }
+ 45% { background-color: #43ff2a; }
+ 60% { background-color: #2a89ff; }
+ 75% { background-color: #202082; }
+ 90% { background-color: #6b2aff; } 
+ 100% { background-color: #e82aff; }
+}
+.cloud_effect{
+   animation-duration: 20s; 
+   animation-name: cloudLink; 
+   animation-iteration-count: infinite; 
+}
+@keyframes cloudLink {     
+ 0% { color: #FFA7A7; }
+ 7% { color: #FFC19E; }
+ 14% { color: #FFE08C; }
+ 21% { color: #FAED7D; }
+ 28% { color: #CEF279; }
+ 35% { color: #B7F0B1; }
+ 42% { color: #B2EBF4; } 
+ 49% { color: #B2CCFF; }
+ 56% { color: #D1B2FF; }
+ 63% { color: #FFB2F5; }
+ 70% { color: #FFB2D9; }
+ 77% { color: #B2CCFF; }
+ 84% { color: #D5D5D5; }
+ 91% { color: #BDBDBD; }
+ 100% { color: #353535; }
+}
+.top_menu{
+   padding: 0px;
+    width: 70px;
+    margin-top: 10px;
+}
+.user_menu{
+   text-decoration : none;
+   margin-top : 12px;
+   padding : 0px;
+   width : 120px;
+   height : 25px;
+   padding-top:7px;
+}
+.logout_menu{
+   text-decoration : none;
+   margin-top : -2px;
+   padding : 0px;
+   width : 70px;
+   height : 25px;
+}
+.shop_info{
+   margin-left:100px;
+   margin-top:50px;
+   width : 400px;
+}
+.table1_warpper{
+   height : 400px;
+    width: 600px;
+    margin-top: 50px;
+   position : relative;
+   margin-left:186px;
+   border : 1px solid gray;
+   border-radius : 10px;
+   box-shadow: 2px 2px 3px 0px grey;
+}
+.card-img-top{
+   width:286px;
+   height:200px;
 }
 
 .comment_form_box {
@@ -704,17 +836,17 @@ background-color
 		<div class="header">
 			<c:choose>
 				<c:when test="${ empty sessionScope.id}">
-					<a href="${pageContext.request.contextPath}" class="logo_text"> 
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" /> 
-						HOMEPAGE NAME
+					<a href="${pageContext.request.contextPath}" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/cloud${dto.num}.png" alt="" style ="height:40px; margin:5px;"/>
+						<p class="cloud_effect">FOOD CLOUD</p>
 					</a>
 					<a href="${pageContext.request.contextPath}/users/loginform" class="top_menu btn btn-outline-dark">LOGIN</a>
 					<a href="${pageContext.request.contextPath}/users/signup_form" class="top_menu btn btn-outline-success">SIGN-UP</a>
 				</c:when>
 				<c:when test="${sessionScope.id eq 'admin'}">
-					<a href="${pageContext.request.contextPath}" class="logo_text"> 
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" /> 
-						HOMEPAGE NAME
+					<a href="${pageContext.request.contextPath}" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/cloud${dto.num}.png" alt="" />
+						<p class="cloud_effect">FOOD CLOUD</p>
 					</a>
 					<a href="${pageContext.request.contextPath}/shop/insertform" class="user_menu badge text-bg-success">REGIST SHOP</a>
 					<a href="${pageContext.request.contextPath}/users/list" class="user_menu badge text-bg-warning">USER LIST</a>
@@ -722,9 +854,9 @@ background-color
 					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
 				</c:when>
 				<c:otherwise>
-					<a href="${pageContext.request.contextPath}" class="logo_text"> 
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" /> 
-						HOMEPAGE NAME
+					<a href="${pageContext.request.contextPath}" class="logo_text">
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/cloud${dto.num}.png" alt="" />
+						<p class="cloud_effect">FOOD CLOUD</p>
 					</a>
 					<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
 					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
@@ -771,38 +903,30 @@ background-color
 					</div>
 					<br>
 				</c:forEach>
-			</div>
-			
-		</div>
-		
-		<div class="search_result">
-			<div class="main_content">
-				<div class="content_images">
-					<div class="main_title">
-						<div id="map" style="width: 300px; height: 220px; margin: auto; float: right;"></div>
-						<br> 
-						<br> 
-						<Strong>${dto.title}</Strong>
-						<p>리뷰 ${reviewCount} 회</p>
-						<p style="margin: 0px;"></p>
-					</div>
-					
-					<div class=btn_box>
-						<button type="button" id="btn_1">
-							<span>가게 소개</span>
-						</button>
-						<button type="button" id="btn_2">
-							<span>메뉴</span>
-						</button>
-						<button type="button" id="btn_3">
-							<span>리뷰</span>
-						</button>
-						<button class="rainbow_effect" type="button" id="btn_4">
-							<span class="rainbow_effect">★</span>
-						</button>
-					</div>
-					
-					<div class="table_1" style="display: none;">
+            </div>
+        </div>
+        
+        <div class="search_result">
+                <div class="main_content">
+		            <div class="content_images">
+
+						<div class="main_title">
+							<div id="map"style="width: 300px; height: 220px; margin: auto; float: right; "></div>
+
+							<br>
+							<br> 
+							<Strong style="font-size : 30px;">${dto.title}</Strong>
+							<br /><br /><br />
+							<p>리뷰 ${reviewCount} 회</p>
+							<p style="margin: 0px;"></p>
+						</div>
+						<div class=btn_box>
+							<button type="button" id="btn_1"><span>가게 소개</span></button>
+							<button type="button" id="btn_2"><span>메뉴</span></button>
+							<button type="button" id="btn_3"><span>리뷰</span></button>
+							<button class="rainbow_effect" type="button" id="btn_4"><span class="rainbow_effect">★</span></button>
+						</div>
+					<div class="table_1" style="display:none;">
 						<c:if test="${sessionScope.id eq 'admin'}">
 							<a href="delete?num=${ dto.num}" style="display: block; width: 101%;"
 								class="btn btn-outline-danger">가게 삭제</a>
@@ -882,7 +1006,9 @@ background-color
 												<c:forEach var="tmp" items="${reviewList }">
 													<c:choose>
 														<c:when test="${tmp.deleted eq 'yes' }">
-															<li>삭제된 리뷰 입니다.</li>
+															<dt class="row" style="height:152px; border: 1px solid #c9c9c9; border-radius: 10px; padding-top:60px;">
+																<li>삭제된 리뷰 입니다.</li>
+															</dt>
 														</c:when>
 														<c:otherwise>
 															<c:if test="${tmp.num eq tmp.review_group }">
