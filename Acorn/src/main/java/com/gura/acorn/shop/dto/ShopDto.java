@@ -9,7 +9,7 @@ public class ShopDto {
 	   private String content;
 	   private String imagePath;
 	   private String categorie;
-	   private int reviewCount;
+	   private int reviewCount; //review dto로 이동(추후 삭제)
 	   private String startTime;
 	   private String endTime;
 	   private String telNum;

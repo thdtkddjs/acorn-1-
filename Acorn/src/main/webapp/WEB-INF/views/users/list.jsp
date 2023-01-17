@@ -54,7 +54,7 @@ select{
 </head>
 <body class="text-center">
    <div class="container">
-		<a href="${pageContext.request.contextPath}/index" class="logo_text">
+		<a href="${pageContext.request.contextPath}" class="logo_text">
 			<img class="logo"
 			src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png"
 			alt="" />
@@ -121,6 +121,7 @@ select{
          <select name="condition" id="condition">
             <option value="id" ${condition eq 'id' ? 'selected' : '' }>아이디</option>
          </select>
+         
          <input type="text" name="keyword" placeholder="검색어..." value="${keyword }"/>
          <button type="submit" style="border-radius : 5px;">검색</button>
       </form>

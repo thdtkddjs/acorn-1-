@@ -35,12 +35,6 @@
       FROM board_shop
       <include refid="searchCondition"/>
     </select>   
-
-	<update id="addReviewCount" parameterType="int">
-		update board_shop
-		set reviewCount=reviewCount+1
-		where num=#{num}
-	</update>
 	
 	<select id="getList" resultType="shopDto">
       SELECT *

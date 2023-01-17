@@ -32,7 +32,7 @@ h1{
 </style>
 <body class="text-center">
 <div class="container">
-		<a href="${pageContext.request.contextPath}/index" class="logo_text">
+		<a href="${pageContext.request.contextPath}" class="logo_text">
 			<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
 		</a>	
 	   <h1>CHANGE P/W</h1>

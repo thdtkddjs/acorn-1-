@@ -23,18 +23,13 @@ public interface ShopService {
 	public void deleteContent(int num, HttpServletRequest request);
 	//가게 정보 수정 시 필요한 정보 불러오기
 	public void getData(HttpServletRequest request); 
-	//좋아요 증가
-	public void addLikeCount(int num);
-	//좋아요 증가
-	public void addDislikeCount(int num);
 	//섬네일 저장하는 메소드
 	public Map<String, Object> saveImagePath(HttpServletRequest request, MultipartFile mFile);
 	
 	public void countReview(int num); //리뷰 카운트 증가/감소 (리뷰를 삭제할경우 감소로)
-	public void saveReview(HttpServletRequest request);//댓글 저장
-	public void deleteReview(HttpServletRequest request);//댓글 삭제
-	public void updateReview(ShopReviewDto dto); //댓글 수정 코멘트 기능 구현 후 활성화
-	public void moreReviewList(HttpServletRequest request);//댓글 더보기 기능
+	public void saveReview(HttpServletRequest request);//리뷰 저장
+	public void deleteReview(HttpServletRequest request);//리뷰 삭제
+	public void updateReview(ShopReviewDto dto); //리뷰수정
 	
 	public void saveMenu(ShopMenuDto dto, HttpServletRequest request);
 	public void menuGetList(HttpServletRequest request);

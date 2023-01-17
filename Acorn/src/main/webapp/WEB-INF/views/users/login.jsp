@@ -39,7 +39,7 @@ img{
 	   <c:choose>
 	      <c:when test="${not empty sessionScope.id }">
 	         <script>
-	         	window.location.href = '${pageContext.request.contextPath}/index';
+	         	window.location.href = '${pageContext.request.contextPath}';
 	         </script>
 	      </c:when>
 	      <c:otherwise>

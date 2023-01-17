@@ -188,6 +188,9 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("reviewList", reviewList);
 		request.setAttribute("rvTotalPageCount", rvTotalPageCount);
 		
+		//리뷰개수 추가
+		int rCount = shopReviewDao.getCount(num);
+		request.setAttribute("reviewCount", rCount);
 		
 		//평점 추가
 		if(shopReviewDao.getCount(num)==0) {
@@ -233,17 +236,6 @@ public class ShopServiceImpl implements ShopService{
 		int num = Integer.parseInt(request.getParameter("num"));
 		ShopDto dto = shopDao.getData(num);
 		request.setAttribute("dto", dto);
-	}
-
-	@Override
-	public void addLikeCount(int num) {
-		shopDao.addLikeCount(num);
-		//나중에 별도의 테이블 추가 후 좋아요/싫어요를 이미 누른 글에서는 다시 못누르도록하는 기능 구현 필요
-	}
-
-	@Override
-	public void addDislikeCount(int num) {
-		shopDao.addDislikeCount(num);
 	}
 
 	@Override
@@ -346,48 +338,6 @@ public class ShopServiceImpl implements ShopService{
 	public void updateReview(ShopReviewDto dto) {
 		shopReviewDao.update(dto);
 	}
-
-	@Override
-	public void moreReviewList(HttpServletRequest request) {
-		//로그인된 아이디
-		String id = (String)request.getSession().getAttribute("id");
-		//ajax 요청 파라미터로 넘어오는 댓글의 페이지 번호를 읽어낸다
-		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
-		//ajax 요청 파라미터로 넘어오는 원글의 글 번호를 읽어낸다
-		int num = Integer.parseInt(request.getParameter("num"));
-		/*
-	         [ 댓글 페이징 처리에 관련된 로직 ]
-		 */
-		//한 페이지에 몇개씩 표시할 것인지
-		final int PAGE_ROW_COUNT = 10;
-
-		//보여줄 페이지의 시작 ROWNUM
-		int startRowNum = 1 + (pageNum - 1) * PAGE_ROW_COUNT;
-		//보여줄 페이지의 끝 ROWNUM
-		int endRowNum = pageNum * PAGE_ROW_COUNT;
-
-		//원글의 글번호를 이용해서 해당글에 달린 댓글 목록을 얻어온다.
-		ShopReviewDto reviewDto = new ShopReviewDto();
-		reviewDto.setRef_group(num);
-		//1페이지에 해당하는 startRowNum 과 endRowNum 을 dto 에 담아서  
-		reviewDto.setStartRowNum(startRowNum);
-		reviewDto.setEndRowNum(endRowNum);
-
-		//pageNum에 해당하는 댓글 목록만 select 되도록 한다. 
-		List<ShopReviewDto> reviewList = shopReviewDao.getList(reviewDto);
-		//원글의 글번호를 이용해서 댓글 전체의 갯수를 얻어낸다.
-		int totalRow = shopReviewDao.getCount(num);
-		//댓글 전체 페이지의 갯수
-		int totalPageCount = (int)Math.ceil(totalRow / (double)PAGE_ROW_COUNT);
-
-		//view page 에 필요한 값 request 에 담아주기
-		request.setAttribute("reviewList", reviewList);
-		request.setAttribute("num", num); //원글의 글번호
-		request.setAttribute("pageNum", pageNum); //댓글의 페이지 번호
-	}
-
-	//리뷰 기능 구현 후 리뷰관련 함수 추가 필요
-	
 	
 	//테스트 후 삭제할것
 	//페이징 기능은 유지하되 검색기능 작동하지 않음.

@@ -16,8 +16,8 @@ CREATE TABLE board_shop(
     imagePath VARCHAR2(100), -- 섬네일 또는 가게 대표이미지
     categorie VARCHAR2(100), -- 음식 분류
     reviewCount NUMBER, -- 리뷰/댓글 개수
-  	startTime VARCHAR2(30),
-  	endTime VARCHAR2(30),
+    startTime VARCHAR2(30),
+    endTime VARCHAR2(30),
     telNum VARCHAR2(20), -- 가게 전화번호
     addr VARCHAR2(200) --  주소(불필요시 추후 삭제)
 );
@@ -31,11 +31,10 @@ CREATE TABLE board_shop_review( -- 테이블명 추후 변경 예정
     writer VARCHAR2(100), -- 리뷰의 작성자 아이디
     title VARCHAR2(100),
     content VARCHAR2(500), -- 리뷰 내용
-    target_num VARCHAR2(100), -- 리뷰 대상(글) 번호
     ref_group NUMBER, 
     review_group NUMBER,
     deleted CHAR(3) DEFAULT 'no', --  리뷰 삭제여부
-    grade number, -- 평점 작성 여부(필요시 다른 테이블로 이동)
+    grade number, -- 평점
     imagePath VARCHAR2(200), -- 섬네일
     regdate DATE
 );

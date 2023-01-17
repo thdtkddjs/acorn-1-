@@ -6,9 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>/views/users/loginform.jsp</title>
-<!-- bootstrap css 로딩 -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<!-- custom css -->
 <style>
 	html,
 	body {
@@ -43,7 +41,6 @@
 	  border-top-left-radius: 0;
 	  border-top-right-radius: 0;
 	}
-		
 </style>
 </head>
 <body class="text-center">
@@ -51,13 +48,13 @@
 	  <form action="${pageContext.request.contextPath}/users/login" method="post">
 		  <c:choose>
               <c:when test="${ empty param.url }">
-                 <input type="hidden" name="url" value="${pageContext.request.contextPath}/"/>
+                 <input type="hidden" name="url" value="${pageContext.request.contextPath}"/>
               </c:when>
               <c:otherwise>
                  <input type="hidden" name="url" value="${param.url }"/>
               </c:otherwise>
           </c:choose>
-	    <a href="${pageContext.request.contextPath}/index" class="logo_text">
+	    <a href="${pageContext.request.contextPath}" class="logo_text">
 			<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
 		</a>		
 	    <h1 class="h3 mb-3 fw-normal">LOGIN</h1>

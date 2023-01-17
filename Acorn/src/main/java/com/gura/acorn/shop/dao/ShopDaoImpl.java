@@ -41,25 +41,10 @@ public class ShopDaoImpl implements ShopDao{
 	public ShopDto getData(int num) {
 		return session.selectOne("shop.getData",num);
 	}
+	
 	//검색정보
 	@Override
 	public ShopDto getData(ShopDto dto) {
 		return session.selectOne("shop.getData2", dto);
 	}
-
-	@Override
-	public void addReviewCount(int num) {
-		session.update("shop.addReviewCount", num);
-	}
-
-	@Override
-	public void addLikeCount(int num) {
-		session.update("shop.likeUp", num);
-	}
-
-	@Override
-	public void addDislikeCount(int num) {
-		session.update("shop.dislikeUp", num);
-	}
-
 }

@@ -19,10 +19,4 @@ public interface ShopDao {
 	   public ShopDto getData(int num);
 	   //키워드를 활용하여 글정보 얻어오기
 	   public ShopDto getData(ShopDto dto);
-	   //조회수 증가 시키기
-	   public void addReviewCount(int num);
-	   //좋아요 증가 시키기
-	   public void addLikeCount(int num);
-	   //싫어요 증가 시키기
-	   public void addDislikeCount(int num);
 }
