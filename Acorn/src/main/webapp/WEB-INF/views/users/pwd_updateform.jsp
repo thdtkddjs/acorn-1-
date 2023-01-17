@@ -74,7 +74,7 @@ h1{
 		const newPwd=document.querySelector("#newPwd").value;
 		const newPwd2=document.querySelector("#newPwd2").value;
 	
-		//비밀번호를 검증할 정규 표현식
+		//비밀번호를 검증할 정규 표현식 update
 		const reg= /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 		//만일 정규표현식 검증을 통과 하지 못했다면
 		if(!reg.test(newPwd)){
