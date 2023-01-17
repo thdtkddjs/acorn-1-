@@ -216,7 +216,8 @@ th>img{
    margin-top: 15px;
 }
 .logo{
-   width:50px;
+	height:40px;
+	margin:5px;
 }
 .logo_text{
    display: flex; 
@@ -435,6 +436,28 @@ pre {
  90% { background-color: #6b2aff; } 
  100% { background-color: #e82aff; }
 }
+.cloud_effect{
+   animation-duration: 20s; 
+   animation-name: cloudLink; 
+   animation-iteration-count: infinite; 
+}
+@keyframes cloudLink {     
+ 0% { color: #FFA7A7; }
+ 7% { color: #FFC19E; }
+ 14% { color: #FFE08C; }
+ 21% { color: #FAED7D; }
+ 28% { color: #CEF279; }
+ 35% { color: #B7F0B1; }
+ 42% { color: #B2EBF4; } 
+ 49% { color: #B2CCFF; }
+ 56% { color: #D1B2FF; }
+ 63% { color: #FFB2F5; }
+ 70% { color: #FFB2D9; }
+ 77% { color: #B2CCFF; }
+ 84% { color: #D5D5D5; }
+ 91% { color: #BDBDBD; }
+ 100% { color: #353535; }
+}
 .top_menu{
    padding: 0px;
     width: 70px;
@@ -599,16 +622,16 @@ pre {
 			<c:choose>
 				<c:when test="${ empty sessionScope.id}">
 					<a href="${pageContext.request.contextPath}/index" class="logo_text">
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
-						HOMEPAGE NAME
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/cloud${dto.num}.png" alt="" style ="height:40px; margin:5px;"/>
+						<p class="cloud_effect">FOOD CLOUD</p>
 					</a>
 					<a href="${pageContext.request.contextPath}/users/loginform"  class="top_menu btn btn-outline-dark">LOGIN</a>
 					<a href="${pageContext.request.contextPath}/users/signup_form"  class="top_menu btn btn-outline-success">SIGN-UP</a>
 				</c:when>
 				<c:when test="${sessionScope.id eq 'admin'}">
 					<a href="${pageContext.request.contextPath}/index" class="logo_text">
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
-						HOMEPAGE NAME
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/cloud${dto.num}.png" alt="" />
+						<p class="cloud_effect">FOOD CLOUD</p>
 					</a>
 					<a href="${pageContext.request.contextPath}/shop/insertform" class="user_menu badge text-bg-success">REGIST SHOP</a>
 					<a href="${pageContext.request.contextPath}/users/list" class="user_menu badge text-bg-warning">USER LIST</a>
@@ -617,8 +640,8 @@ pre {
 				</c:when>
 				<c:otherwise>
 					<a href="${pageContext.request.contextPath}/index" class="logo_text">
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png" alt="" />
-						HOMEPAGE NAME
+						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/cloud${dto.num}.png" alt="" />
+						<p class="cloud_effect">FOOD CLOUD</p>
 					</a>
 					<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
 					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
@@ -671,7 +694,9 @@ pre {
 							<div id="map"style="width: 300px; height: 220px; margin: auto; float: right; "></div>
 
 							<br>
-							<br> <Strong>${dto.title}</Strong>
+							<br> 
+							<Strong style="font-size : 30px;">${dto.title}</Strong>
+							<br /><br /><br />
 							<p>리뷰 ${dto.reviewCount} 회</p>
 							<p style="margin: 0px;"></p>
 						</div>
@@ -751,7 +776,9 @@ pre {
 												<c:forEach var="tmp" items="${reviewList }">
 													<c:choose>
 														<c:when test="${tmp.deleted eq 'yes' }">
-															<li>삭제된 리뷰 입니다.</li>
+															<dt class="row" style="height:152px; border: 1px solid #c9c9c9; border-radius: 10px; padding-top:60px;">
+																<li>삭제된 리뷰 입니다.</li>
+															</dt>
 														</c:when>
 														<c:otherwise>
 															<c:if test="${tmp.num eq tmp.review_group }">
