@@ -42,7 +42,7 @@ h1{
 	         <label class="control-label" for="id">ID</label>
 
 	         <input class="form-control" type="text" name="id" id="id"/>
-	         <small class="form-text text-muted">영문자 소문자로 시작하고 5글자~10글자 이내로 입력하세요.</small>
+	         <small class="form-text" style="color:#dc3545; font-size:12px;">영문자 소문자로 시작하고 5글자~10글자 이내로 입력하세요.</small>
              <div class="valid-feedback">사용가능한 아이디 입니다.</div>
              <div class="invalid-feedback">사용할 수 없는 아이디 입니다.</div>      
 	      </div>
@@ -50,13 +50,13 @@ h1{
 	      <div>
 	         <label class="control-label" for="pwd">PASSWORD</label>
 	         <input class="form-control" type="password" name="pwd" id="pwd"/>
-	         <small class="form-text text-muted">특수문자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
 	         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
 		  </div>
 		  <br />
 	      <div>
 	         <label class="control-label" for="pwd2">PASSWORD CONFIRM</label>
 	         <input class="form-control" type="password" name="pwd2" id="pwd2"/>
+	         <small class="form-text" style="color:#dc3545; font-size:12px;">특수문자와 숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
 	      </div>
 	      <br />
 	      <div>
@@ -99,7 +99,7 @@ h1{
 		const pwd2=document.querySelector("#pwd2").value;
 	
 		//비밀번호를 검증할 정규 표현식
-		const reg=/[\W]/;
+		const reg= /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 		//만일 정규표현식 검증을 통과 하지 못했다면
 		if(!reg.test(pwd)){
 		document.querySelector("#pwd").classList.add("is-invalid");

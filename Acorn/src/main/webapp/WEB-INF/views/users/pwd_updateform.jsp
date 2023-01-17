@@ -29,14 +29,6 @@ h1{
 	margin-left:100px;
 	
 }
-label{
-	width : 150px;
-	text-align:left;
-}
-input{
-	border : 1px solid #000000;
-	border-radius:5px;
-}
 </style>
 <body class="text-center">
 <div class="container">
@@ -61,8 +53,8 @@ input{
 	      <div>
 	         <label class="control-label" for="newPwd2">NEW P/W CONFIRM</label>
 	         <input class="form-control" type="password" id="newPwd2"/>
+	         <small class="form-text" style="color:#dc3545; font-size:12px;">특수문자와 숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
 	      </div>
-	      <br />
 	      <br />
 	      <br />
 	      <button type="submit" class="btn btn-outline-warning">CHANGE</button>
@@ -83,7 +75,7 @@ input{
 		const newPwd2=document.querySelector("#newPwd2").value;
 	
 		//비밀번호를 검증할 정규 표현식
-		const reg = new RegExp("^[a-zA-Z\\d`~!@#$%^&*()-_=+]{8,24}$");
+		const reg= /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 		//만일 정규표현식 검증을 통과 하지 못했다면
 		if(!reg.test(newPwd)){
 		document.querySelector("#newPwd").classList.add("is-invalid");
