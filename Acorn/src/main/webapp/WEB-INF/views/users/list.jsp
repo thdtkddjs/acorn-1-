@@ -56,8 +56,8 @@ select{
    <div class="container">
 		<a href="${pageContext.request.contextPath}/index" class="logo_text">
 			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/1_acorn_logo.png"
-			alt="" />
+			src="${pageContext.request.contextPath}/resources/images/logos/angry_cloud.png"
+			alt="" style="height: 50px;" />
 		</a>
 		<br />
 		<br />
