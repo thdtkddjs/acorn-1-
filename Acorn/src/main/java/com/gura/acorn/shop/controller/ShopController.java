@@ -33,6 +33,12 @@ public class ShopController {
 		return "index";
 	}
 	
+	@RequestMapping("/index")
+	public String index2(HttpServletRequest request) {
+		service.getList(request);
+		return "index";
+	}
+	
 	//글 작성폼 이동
 	@GetMapping("/shop/insertform")
 	public String insertform() {

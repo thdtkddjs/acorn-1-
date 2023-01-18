@@ -994,9 +994,6 @@ background-color
 						<table style="width: 950px;">
 							<tbody>
 								<tr>
-									<td>리뷰</td>
-								</tr>
-								<tr>
 									<td>평점 : ${grade}</td>
 								</tr>
 								<tr>

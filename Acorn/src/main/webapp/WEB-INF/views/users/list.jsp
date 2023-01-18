@@ -135,7 +135,7 @@ select{
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
    <script>
       function ban(id){
-         let isBan=confirm("삭제 하시겠습니까?");
+         let isBan=confirm("해당 계정을 정지 처리하시겠습니까?");
          if(isBan){
            //여기서 id 를 활용해서 페이지 전환 없이 원하는 작업을 한다.
            $.ajax({

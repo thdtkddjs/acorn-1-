@@ -256,7 +256,7 @@ border : none;
 		</div>
         <div class="search_menu">
             <div class="search_bar">
-                <form action="${pageContext.request.contextPath}" method="post">
+                <form action="${pageContext.request.contextPath}/index/" method="post">
                     <div class="serch_box">
                     	<button type="submit" style="display:contents"><img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" /></button>
                     	<input class="search_input" type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">

@@ -32,7 +32,7 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	public void getList(HttpServletRequest request) {
 		// 한 페이지에 몇개씩 표시할 것인지
-		final int PAGE_ROW_COUNT = 5;
+		final int PAGE_ROW_COUNT = 15;
 		// 하단 페이지를 몇개씩 표시할 것인지 (css에 따라 삭제 및 변경 있을 수 있음)
 		final int PAGE_DISPLAY_COUNT = 5;
 
@@ -77,7 +77,7 @@ public class ShopServiceImpl implements ShopService{
 		
 		//만일 검색 키워드가 넘어온다면 
 		if(!keyword.equals("")){
-				dto.setTitle(keyword);
+			dto.setTitle(keyword);
 		}
 		
 		// 목록을 select 해 온다.(검색 키워드가 있는경우 키워드에 부합하는 전체 글)
