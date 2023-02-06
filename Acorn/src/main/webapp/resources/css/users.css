@@ -1,0 +1,193 @@
+@charset "UTF-8";
+
+
+<-- 기본 UI -->
+.container {
+	display: grid;
+	grid-template-areas: 
+		"header header header"
+		"search main main";
+	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-rows: 50px 870px;
+	box-shadow: 0px 5px 20px 0px grey;
+	border-right: thin;
+	z-index: 1;
+	min-width: 1320px;
+}
+
+.header {
+	grid-area: header;
+	text-align: right;
+	display: block;
+}
+
+.footer {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 0px;
+	background-color: white;
+	grid-area: footer;
+	bottom: 0px;
+	width: 100%;
+	position: fixed;
+	z-index: 5;
+}
+
+
+
+
+<!-- top menu -->
+.logo{
+	height:40px;
+	margin:5px;
+}
+.logo_text{
+	display: flex; 
+	position: fixed;
+	text-decoration : none;
+	font-size : 30px;
+	font-weight : bold;
+}
+.top_menu{
+	padding: 0px;
+    width: 70px;
+    margin-top: 10px;
+}
+.user_menu{
+	text-decoration : none;
+	margin-top : 12px;
+	padding : 0px;
+	width : 120px;
+	height : 25px;
+	padding-top:7px;
+}
+.logout_menu{
+	text-decoration : none;
+	margin-top : -2px;
+	padding : 0px;
+	width : 70px;
+	height : 25px;
+}
+.card-img-top{
+	width:286px;
+	height:200px;
+}
+
+<-- search menu -->
+.search_box{
+	position: relative;
+}
+.search_img{
+	position : absolute;
+	width: 17px;
+	margin: 0;
+	top:25px;
+	right:13%;
+}
+.search_input{
+border : none;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+.search_bar {
+	border: 3px solid;
+	border-color: rgb(64, 219, 43);
+	border-radius: 5px;
+	margin: 10px;
+	width: 290px;
+}
+.search_bar>form>input {
+	width: 250px;
+	margin: 10px;
+	border: none;
+	font-size: large;
+}
+.search_result {
+	grid-area: main;
+	width: 100%;
+	height: 680px;
+	text-align: center;
+}
+.search_menu {
+	grid-area: search;
+	box-shadow: 2px 2px 3px 0px grey;
+	background-color: white;
+	z-index: 3;
+	position: relative;
+}
+
+
+<-- 좌측 추천 메뉴 -->
+.suggest_menu>.card {
+	margin-left: 10px;
+}
+
+.suggest_menu {
+	height: 763px;
+	overflow: scroll;
+	-ms-overflow-style: none;
+}
+.suggest_menu::-webkit-scrollbar {
+	width : 5px;
+	height : 0px;
+}
+.suggest_menu::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+}
+.suggest_menu::-webkit-scrollbar-track {
+}
+
+
+
+
+<-- map -->
+#map {
+	z-index: 2;
+	box-shadow: 2px 2px 3px 0px grey;
+	width: 972px; 
+	height: 870px;  
+	float: right;
+}
+
+
+<-- effect -->
+.rainbow_effect{
+	animation-duration: 1s; 
+	animation-name: rainbowLink; 
+	animation-iteration-count: infinite; 
+}
+@keyframes rainbowLink {     
+ 0% { background-color: #ff2a2a; }
+ 15% { background-color: #ff7a2a; }
+ 30% { background-color: #ffc52a; }
+ 45% { background-color: #43ff2a; }
+ 60% { background-color: #2a89ff; }
+ 75% { background-color: #202082; }
+ 90% { background-color: #6b2aff; } 
+ 100% { background-color: #e82aff; }
+}
+
+.cloud_effect{
+   animation-duration: 20s; 
+   animation-name: cloudLink; 
+   animation-iteration-count: infinite; 
+}
+@keyframes cloudLink {     
+ 0% { color: #FFA7A7; }
+ 7% { color: #FFC19E; }
+ 14% { color: #FFE08C; }
+ 21% { color: #FAED7D; }
+ 28% { color: #CEF279; }
+ 35% { color: #B7F0B1; }
+ 42% { color: #B2EBF4; } 
+ 49% { color: #B2CCFF; }
+ 56% { color: #D1B2FF; }
+ 63% { color: #FFB2F5; }
+ 70% { color: #FFB2D9; }
+ 77% { color: #B2CCFF; }
+ 84% { color: #D5D5D5; }
+ 91% { color: #BDBDBD; }
+ 100% { color: #353535; }
+}

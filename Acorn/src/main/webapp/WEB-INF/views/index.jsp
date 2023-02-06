@@ -10,250 +10,94 @@
 <title>index.jsp</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="resources/css/index.css">
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link rel="shortcut icon" href="#">
 </head>
-<style>
-.container {
-	display: grid;
-	grid-template-areas: 
-		"header header header"
-		"search main main";
-	grid-template-columns: 1fr 2fr 1fr;
-	grid-template-rows: 50px 870px;
-	box-shadow: 0px 5px 20px 0px grey;
-	border-right: thin;
-	z-index: 1;
-	min-width: 1320px;
-}
 
-.header {
-	grid-area: header;
-	text-align: right;
-	display: block;
-}
-
-.side_menu_a {
-	grid-area: search;
-	width: 100%;
-	text-align: center;
-	background-color: lightgray;
-}
-
-.search_menu {
-	grid-area: search;
-	box-shadow: 2px 2px 3px 0px grey;
-	background-color: white;
-	z-index: 3;
-	position: relative;
-}
-
-.search_result {
-	grid-area: main;
-	width: 100%;
-	height: 680px;
-	text-align: center;
-}
-
-.side_menu_b {
-	grid-area: b;
-	width: 100%;
-	text-align: center;
-	background-color: lightgray;
-}
-
-.footer {
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-top: 0px;
-	background-color: white;
-	grid-area: footer;
-	bottom: 0px;
-	width: 100%;
-	position: fixed;
-	z-index: 5;
-}
-
-
-.search_bar {
-	border: 3px solid;
-	border-color: rgb(64, 219, 43);
-	border-radius: 5px;
-	margin: 10px;
-	width: 290px;
-}
-
-.search_bar>form>input {
-	width: 250px;
-	margin: 10px;
-	border: none;
-	font-size: large;
-}
-
-.suggest_menu>.card {
-	margin-left: 10px;
-}
-
-#map {
-	z-index: 2;
-	box-shadow: 2px 2px 3px 0px grey;
-	width: 972px; 
-	height: 870px;  
-	float: right;
-}
-
-.suggest_menu {
-	height: 763px;
-	overflow: scroll;
-	-ms-overflow-style: none;
-}
-.suggest_menu::-webkit-scrollbar {
-	width : 5px;
-	height : 0px;
-}
-.suggest_menu::-webkit-scrollbar-thumb {
-    background-color: #2f3542;
-    border-radius: 10px;
-}
-.suggest_menu::-webkit-scrollbar-track {
-}
-
-
-.fold_btn {
-	position: absolute;
-	left: 300px;
-	top: 150px;
-	z-index: 5;
-}
-
-.open_btn {
-	position: absolute;
-	left: 200px;
-	top: 150px;
-	z-index: 5;
-}
-.search_box{
-	position: relative;
-}
-.search_img{
-	position : absolute;
-	width: 17px;
-	margin: 0;
-	top:25px;
-	right:13%;
-}
-.search_input{
-border : none;
-  width: 100%;
-  padding: 10px 12px;
-  font-size: 14px;
-}
-.logo{
-	height:40px;
-	margin:5px;
-}
-.logo_text{
-	display: flex; 
-	position: fixed;
-	text-decoration : none;
-	font-size : 30px;
-	font-weight : bold;
-}
-.top_menu{
-	padding: 0px;
-    width: 70px;
-    margin-top: 10px;
-}
-.user_menu{
-	text-decoration : none;
-	margin-top : 12px;
-	padding : 0px;
-	width : 120px;
-	height : 25px;
-	padding-top:7px;
-}
-.logout_menu{
-	text-decoration : none;
-	margin-top : -2px;
-	padding : 0px;
-	width : 70px;
-	height : 25px;
-}
-.card-img-top{
-	width:286px;
-	height:200px;
-}
-.rainbow_effect{
-	animation-duration: 1s; 
-	animation-name: rainbowLink; 
-	animation-iteration-count: infinite; 
-}
-@keyframes rainbowLink {     
- 0% { background-color: #ff2a2a; }
- 15% { background-color: #ff7a2a; }
- 30% { background-color: #ffc52a; }
- 45% { background-color: #43ff2a; }
- 60% { background-color: #2a89ff; }
- 75% { background-color: #202082; }
- 90% { background-color: #6b2aff; } 
- 100% { background-color: #e82aff; }
-}
-.cloud_effect{
-   animation-duration: 20s; 
-   animation-name: cloudLink; 
-   animation-iteration-count: infinite; 
-}
-@keyframes cloudLink {     
- 0% { color: #FFA7A7; }
- 7% { color: #FFC19E; }
- 14% { color: #FFE08C; }
- 21% { color: #FAED7D; }
- 28% { color: #CEF279; }
- 35% { color: #B7F0B1; }
- 42% { color: #B2EBF4; } 
- 49% { color: #B2CCFF; }
- 56% { color: #D1B2FF; }
- 63% { color: #FFB2F5; }
- 70% { color: #FFB2D9; }
- 77% { color: #B2CCFF; }
- 84% { color: #D5D5D5; }
- 91% { color: #BDBDBD; }
- 100% { color: #353535; }
-}
-</style>
 <body>
-    <div class="container">
-        <div class="header">
-			<c:choose>
-				<c:when test="${ empty sessionScope.id}">
-					<a href="${pageContext.request.contextPath}" class="logo_text">
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
-						<p class="cloud_effect">FOOD CLOUD</p>
-					</a>
-					<a href="${pageContext.request.contextPath}/users/loginform"  class="top_menu btn btn-outline-dark">LOGIN</a>
-					<a href="${pageContext.request.contextPath}/users/signup_form"  class="top_menu btn btn-outline-success">SIGN-UP</a>
-				</c:when>
-				<c:when test="${sessionScope.id eq 'admin'}">
-					<a href="${pageContext.request.contextPath}" class="logo_text">
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
-						<p class="cloud_effect">FOOD CLOUD</p>
-					</a>
-					<a href="${pageContext.request.contextPath}/shop/insertform" class="user_menu badge text-bg-success">REGIST SHOP</a>
-					<a href="${pageContext.request.contextPath}/users/list" class="user_menu badge text-bg-warning">USER LIST</a>
-					<a href="${pageContext.request.contextPath}/users/info" class="rainbow_effect user_menu badge">${sessionScope.id }</a>
-					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
-				</c:when>
-				<c:otherwise>
-					<a href="${pageContext.request.contextPath}" class="logo_text">
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
-						<p class="cloud_effect">FOOD CLOUD</p>
-					</a>
-					<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
-					<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger">LOGOUT</a>
-
-				</c:otherwise>
-			</c:choose>
-			
-
+	<div class="header_inner">
+		<div class="sm_menu">
+			<img src="${pageContext.request.contextPath}/resources/images/hidden_menu.png" alt="" />
 		</div>
+	
+		<c:choose>
+			<c:when test="${ empty sessionScope.id}">
+				<a href="${pageContext.request.contextPath}" class="logo_text">
+					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
+					<p class="cloud_effect">FOOD CLOUD</p>
+				</a>
+				<div class="top_menu">
+					<div class="top_nav">
+						<a href="${pageContext.request.contextPath}/">HOME</a>
+						<a href="">CATEGORY</a>
+						<a href="">HOT PLACE</a>
+						<a href="">RESEARCH</a>
+					</div>
+					<div class="top_user">
+						<a href="${pageContext.request.contextPath}/users/loginform"  class="login btn btn-outline-dark">LOGIN</a>
+						<a href="${pageContext.request.contextPath}/users/signup_form"  class="sign_up btn btn-outline-success">SIGN-UP</a>
+					</div>
+				</div>
+			</c:when>
+			<c:when test="${sessionScope.id eq 'admin'}">
+				<a href="${pageContext.request.contextPath}" class="logo_text">
+					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
+					<p class="cloud_effect">FOOD CLOUD</p>
+				</a>
+				<div class="top_menu">
+						<div class="top_nav">
+							<a href="${pageContext.request.contextPath}/">HOME</a>
+							<a href="">CATEGORY</a>
+							<a href="">HOT PLACE</a>
+							<a href="">RESEARCH</a>
+						</div>
+						<div class="top_user">
+							<a href="${pageContext.request.contextPath}/shop/insertform" class="reg_menu badge text-bg-success">REGIST SHOP</a>
+							<a href="${pageContext.request.contextPath}/users/list" class="userList_menu badge text-bg-warning">USER LIST</a>
+							<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
+							<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
+						</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<a href="${pageContext.request.contextPath}" class="logo_text">
+					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
+					<p class="cloud_effect">FOOD CLOUD</p>
+				</a>
+				<div class="top_menu">
+					<div class="top_nav">
+						<a href="${pageContext.request.contextPath}/">HOME</a>
+						<a href="">CATEGORY</a>
+						<a href="">HOT PLACE</a>
+						<a href="">RESEARCH</a>
+					</div>
+					<div class="top_user">
+						<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
+						<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
+					</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
+	</div>
+	<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide"><img src="https://wallpaperaccess.com/full/8108767.jpg" alt="" style="height:100%;"/></div>
+				<div class="swiper-slide"><img src="https://www.sivandesign.com/wp-content/uploads/2016/11/SD-Top-Slides-HOME-civilcad-1920x520-final.jpg" alt="" /></div>
+				<div class="swiper-slide"><img src="https://luxurycottages.com/wp-content/uploads/2020/05/Mam-Tor-1920x520.jpg" alt="" /></div>
+				<div class="swiper-slide"><img src="https://kamauf-zagreb.com/wp-content/uploads/2016/02/bled-1920x520.png" alt="" /></div>
+				<div class="swiper-slide"><img src="https://www.teahub.io/photos/full/280-2809437_best-guitars-for-metal-rock-guitar.jpg" alt="" /></div>
+				<div class="swiper-slide"><img src="https://super-crete.net/wp-content/uploads/2022/09/breadcrumb-02-1920x520-1.png" alt="" /></div>
+				<div class="swiper-slide"><img src="https://www.modern.co.th/wp-content/uploads/2015/04/News-Events-Title-BG-A50-1920x520.jpg" alt="" /></div>
+				<div class="swiper-slide"><img src="https://as2.ftcdn.net/v2/jpg/01/69/70/65/1000_F_169706514_NldOIQGbuDOiIuPGxBbRWm7R4PentIr6.jpg" alt="" /></div>
+				<div class="swiper-slide"><img src="https://www.contentic.io/assets/uploads/2017/03/Mierzenie-ktore-ma-sens-otwarcie-1920x520-1.jpg" alt="" /></div>
+			</div>
+			<div class="swiper-pagination"></div>
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+	</div>
+    <div class="container">
         <div class="search_menu">
             <div class="search_bar">
                 <form action="${pageContext.request.contextPath}/index/" method="post">
@@ -298,7 +142,13 @@ border : none;
         </div>
         <div class="bottom">　</div>
 
-
+   
+   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+   
         
     </div>        
 	
@@ -343,31 +193,54 @@ border : none;
 	});    
 	</script>
 
-	<!-- 메뉴 접기 버튼 잠시 휴식
-     
-	<button class="fold_btn" onclick="fold_menu()"> ◀ </button>
-    <button class="open_btn" onclick="open_menu()" style="display: none;"> ▶ </button>
-    <script>
-        function fold_menu() {
-            document.querySelector(".search_bar").style.display ="none";
-            document.querySelector(".search_menu").style.display ="none";
-            document.querySelector("#map").style.width ="1296px";
-            document.querySelector("#map").style.height ="700px";
-            document.querySelector(".open_btn").style.removeProperty("display");
-            document.querySelector(".fold_btn").style.display="none";
-        };
+	<script>
+		var swiperA = new Swiper('.swiper-container', {
+			  //기본 셋팅
+			  //방향 셋팅 vertical 수직, horizontal 수평 설정이 없으면 수평
+			  direction: 'horizontal',
+			  //한번에 보여지는 페이지 숫자
+			  slidesPerView: 1,
+			  //페이지와 페이지 사이의 간격
+			  spaceBetween: 30,
+			  //드레그 기능 true 사용가능 false 사용불가
+			  debugger: true,
+			  //마우스 휠기능 true 사용가능 false 사용불가
+			  mousewheel: true,
+			  //반복 기능 true 사용가능 false 사용불가
+			  loop: true,
+			  //선택된 슬라이드를 중심으로 true 사용가능 false 사용불가 djqt
+			  centeredSlides: true,
+			  // 페이지 전환효과 slidesPerView효과와 같이 사용 불가
+			  // effect: 'fade',
+			  
+			  
+			  //자동 스크를링
+			  autoplay: {
+			    //시간 1000 이 1초
+			    delay: 3000,
+			    disableOnInteraction: false,
+			   },
+			  
+			  //페이징
+			  pagination: {
+			    //페이지 기능
+			    el: '.swiper-pagination',
+			    //클릭 가능여부
+			    clickable: true,
+			  },
+	
+			  //방향표
+			  navigation: {
+			    //다음페이지 설정
+			    nextEl: '.swiper-button-next',
+			    //이전페이지 설정
+			    prevEl: '.swiper-button-prev',
+			  },
+			  
+			});
+	</script>
 
-        function open_menu() {
-            document.querySelector(".search_bar").style.removeProperty("display");
-            document.querySelector(".search_menu").style.removeProperty("display");
-            document.querySelector("#map").style.width ="972px";
-            document.querySelector("#map").style.height ="700px";
-            document.querySelector(".fold_btn").style.removeProperty("display");
-            document.querySelector(".open_btn").style.display="none";
-        };
-    </script>   -->
-   
-    <div class="footer">
+	<div class="footer">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
           <symbol id="bootstrap" viewBox="0 0 118 94">
             <title>Bootstrap</title>
@@ -387,7 +260,7 @@ border : none;
                 d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
           </symbol>
         </svg>
-    
+    	
     
     
     
