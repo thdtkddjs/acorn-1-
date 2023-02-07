@@ -8,11 +8,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>index.jsp</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/index.css">
-<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
 <link rel="shortcut icon" href="#">
 </head>
 
@@ -36,8 +38,9 @@
 						<a href="">RESEARCH</a>
 					</div>
 					<div class="top_user">
+					<a href="${pageContext.request.contextPath}/users/signup_form"  class="sign_up btn btn-outline-success">SIGN-UP</a>
 						<a href="${pageContext.request.contextPath}/users/loginform"  class="login btn btn-outline-dark">LOGIN</a>
-						<a href="${pageContext.request.contextPath}/users/signup_form"  class="sign_up btn btn-outline-success">SIGN-UP</a>
+						
 					</div>
 				</div>
 			</c:when>
@@ -81,164 +84,117 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
-	<div class="swiper-container">
-			<div class="swiper-wrapper">
-				<div class="swiper-slide"><img src="https://wallpaperaccess.com/full/8108767.jpg" alt="" style="height:100%;"/></div>
-				<div class="swiper-slide"><img src="https://www.sivandesign.com/wp-content/uploads/2016/11/SD-Top-Slides-HOME-civilcad-1920x520-final.jpg" alt="" /></div>
-				<div class="swiper-slide"><img src="https://luxurycottages.com/wp-content/uploads/2020/05/Mam-Tor-1920x520.jpg" alt="" /></div>
-				<div class="swiper-slide"><img src="https://kamauf-zagreb.com/wp-content/uploads/2016/02/bled-1920x520.png" alt="" /></div>
-				<div class="swiper-slide"><img src="https://www.teahub.io/photos/full/280-2809437_best-guitars-for-metal-rock-guitar.jpg" alt="" /></div>
-				<div class="swiper-slide"><img src="https://super-crete.net/wp-content/uploads/2022/09/breadcrumb-02-1920x520-1.png" alt="" /></div>
-				<div class="swiper-slide"><img src="https://www.modern.co.th/wp-content/uploads/2015/04/News-Events-Title-BG-A50-1920x520.jpg" alt="" /></div>
-				<div class="swiper-slide"><img src="https://as2.ftcdn.net/v2/jpg/01/69/70/65/1000_F_169706514_NldOIQGbuDOiIuPGxBbRWm7R4PentIr6.jpg" alt="" /></div>
-				<div class="swiper-slide"><img src="https://www.contentic.io/assets/uploads/2017/03/Mierzenie-ktore-ma-sens-otwarcie-1920x520-1.jpg" alt="" /></div>
+	<div class="roll_screen">
+		<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active" data-bs-interval="5000">
+					<img src="https://www.sivandesign.com/wp-content/uploads/2016/11/SD-Top-Slides-HOME-civilcad-1920x520-final.jpg" class="d-block w-100" alt="...">
+				</div>
+				<div class="carousel-item" data-bs-interval="5000">
+					<img src="https://luxurycottages.com/wp-content/uploads/2020/05/Mam-Tor-1920x520.jpg" class="d-block w-100" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="https://www.teahub.io/photos/full/280-2809437_best-guitars-for-metal-rock-guitar.jpg" class="d-block w-100" alt="...">
+				</div>
 			</div>
-			<div class="swiper-pagination"></div>
-			<div class="swiper-button-prev"></div>
-			<div class="swiper-button-next"></div>
+			<button class="carousel-control-prev" type="button"
+				data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button"
+				data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
 	</div>
-    <div class="container">
-        <div class="search_menu">
-            <div class="search_bar">
-                <form action="${pageContext.request.contextPath}/index/" method="post">
-                    <div class="serch_box">
-                    	<button type="submit" style="display:contents"><img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" /></button>
-                    	<input class="search_input" type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
-                    </div>
-                </form>
-            </div>
-            
-            
-            <hr>
-            <div class="suggest_menu">
-				<c:choose>
-					<c:when test="${ empty keyword}">
-						<h5 style="margin-left:20px;">STORE LIST</h5>
-					</c:when>
-					<c:otherwise>
-						<h5 style="margin-left:20px;"><strong>"${keyword}"</strong>로 검색한 결과</h5>
-					</c:otherwise>
-				</c:choose>
-				<c:forEach var="tmp" items="${list }">
-					<div class="card" style="width: 18rem;">
-	                    <img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
-	                    <div class="card-body">
-	                    	<h5 class="card-title">${tmp.title }</h5>
-	                    	<p class="card-text">${tmp.content }</p>
-	                    	<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}"	class="btn btn-primary">INFO</a>
-
-						</div>
-	                </div>
-                <br>
-				</c:forEach>
-
-
-
-            </div>
-        </div>
-        <div class="search_result">
-            <div id="map"></div>
-            
-        </div>
-        <div class="bottom">　</div>
-
-   
-   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-   <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-   
-        
-    </div>        
-	
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b45a7e1f67e033582e03cb02a068e52&libraries=services"></script>
+	<div class="search_menu">
+		<div class="search_bar">
+			<form action="${pageContext.request.contextPath}/index/"
+				method="post">
+				<div class="search_box">
+					<button type="submit" style="display: contents">
+						<img class="search_img"
+							src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
+							alt="" />
+					</button>
+					<input class="search_input" type="text" name="keyword"
+						value="${keyword}" placeholder="가게 명을 입력하세요...">
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="category">
+		<div class="row">
+			<p class="col">전체</p>
+			<p class="col">한식</p>
+			<p class="col">중식</p>
+			<p class="col">일식</p>
+		</div>
+		<div class="row">
+			<p class="col">양식</p>
+			<p class="col">패스트푸드</p>
+			<p class="col">분식</p>
+			<p class="col">기타</p>
+		</div>
+	</div>
+	<div class="hot_place">
+		<p>HOT PLACE
+		<br />
+		<span>2월 방문자, 평점 </span><strong>TOP 10 !</strong>
+		</p>
+		
+	</div>
+	<div class="roll_screen_store row">
+		<div class="slide slick-slider roller_store">
+			<c:forEach var="tmp" items="${list }">
+				<div class="card" style="width: 18rem;">
+					<img src="${pageContext.request.contextPath}/${tmp.imagePath}"	class="card-img-top" alt="...">
+					<div class="card-body">
+						<h5 class="card-title">${tmp.title }</h5>
+						<p class="card-text">${tmp.content }</p>
+						<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" class="btn btn-primary">INFO</a>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
 	<script>
-	
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
-	    };  
-	
-	// 지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
-	
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new kakao.maps.services.Geocoder();
-	
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch('서울특별시 강남구 테헤란로 124', function(result, status) {
-	
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === kakao.maps.services.Status.OK) {
-	
-	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new kakao.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-	
-	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;">Acorn Academy</div>'
-	        });
-	        infowindow.open(map, marker);
-	
-	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        map.setCenter(coords);
-	    } 
-	});    
-	</script>
-
-	<script>
-		var swiperA = new Swiper('.swiper-container', {
-			  //기본 셋팅
-			  //방향 셋팅 vertical 수직, horizontal 수평 설정이 없으면 수평
-			  direction: 'horizontal',
-			  //한번에 보여지는 페이지 숫자
-			  slidesPerView: 1,
-			  //페이지와 페이지 사이의 간격
-			  spaceBetween: 30,
-			  //드레그 기능 true 사용가능 false 사용불가
-			  debugger: true,
-			  //마우스 휠기능 true 사용가능 false 사용불가
-			  mousewheel: true,
-			  //반복 기능 true 사용가능 false 사용불가
-			  loop: true,
-			  //선택된 슬라이드를 중심으로 true 사용가능 false 사용불가 djqt
-			  centeredSlides: true,
-			  // 페이지 전환효과 slidesPerView효과와 같이 사용 불가
-			  // effect: 'fade',
-			  
-			  
-			  //자동 스크를링
-			  autoplay: {
-			    //시간 1000 이 1초
-			    delay: 3000,
-			    disableOnInteraction: false,
-			   },
-			  
-			  //페이징
-			  pagination: {
-			    //페이지 기능
-			    el: '.swiper-pagination',
-			    //클릭 가능여부
-			    clickable: true,
-			  },
-	
-			  //방향표
-			  navigation: {
-			    //다음페이지 설정
-			    nextEl: '.swiper-button-next',
-			    //이전페이지 설정
-			    prevEl: '.swiper-button-prev',
-			  },
-			  
+		$('.slide.roller_store').slick({
+			  infinite: true,
+			  speed: 1000,
+			  slidesToShow: 1,
+			  variableWidth: true,
+			  arrow:false,
+			  autoplay: true,
+			  autoplaySpeed : 1000,
+			  prevArrow : false,
+			  nextArrow : false,
+			  draggable : false,
 			});
 	</script>
+	<br />
+	
+	
+	
+	
+    <div class="container">
+
+    
+    
+    
+
+        <div class="bottom" style="height:500px;">　
+
+        
+        </div>
+
+
+        
+    </div>        
+
+
 
 	<div class="footer">
         <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
