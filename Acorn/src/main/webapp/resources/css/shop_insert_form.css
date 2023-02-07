@@ -1,0 +1,85 @@
+@charset "UTF-8";
+
+.container {
+	height: 800px;
+	box-shadow: 0px 5px 20px 0px grey;
+	margin-top: 50px;
+	border-radius: 20px;
+	padding-top: 50px;
+	max-width : 624px;
+	overflow : scroll;
+}
+
+h1 {
+	text-align: center;
+}
+
+.upload_img {
+	width: 75px;
+	height: 75px;
+	border-radius: 10px !important;
+}
+
+.submit_btn {
+	width: 100px;
+}
+
+.form-control {
+	width: 400px;
+	margin-left: 100px;
+}
+
+label {
+    width: 100px;
+    margin: 0px !important;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+input {
+	display: inline !important;
+	width: 70% !important;
+	margin: 0px !important;
+	border: 1px solid #000000;
+	border-radius: 5px;
+}
+
+select {
+	display: inline !important;
+	width: 70% !important;
+	height: 36px;
+	margin: 0px !important;
+	border: 1px solid #ced4da;
+	border-radius: 5px;
+}
+
+textarea {
+	display: inline !important;
+	margin: 0px !important;
+	border: 1px solid #000000;
+	border-radius: 5px;
+	width: 70% !important;
+	height: 125px !important;
+}
+/* 이미지 업로드 폼을 숨긴다 */
+#imageForm {
+	display: none;
+}
+
+.container::-webkit-scrollbar {
+	width: 5px;
+	height: 0px;
+}
+
+.container::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
+}
+.col-4{
+	text-align:right;
+}
+.col-8{
+	 text-align:left;
+	 padding-left : 20px;
+}
+

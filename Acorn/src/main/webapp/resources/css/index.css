@@ -1,0 +1,313 @@
+@charset "UTF-8";
+
+
+/* 기본 UI */
+.container {
+	display: grid;
+	grid-template-areas: 
+		"search main main";
+	grid-template-columns: 1fr 2fr 1fr;
+	grid-template-rows: 50px 870px;
+	border-right: thin;
+	z-index: 1;
+	max-width : 1320px;
+	height : 100%;
+	position: relative;
+    top: 50px !important;
+}
+.header_inner {
+	opacity: 0.9;
+    background-color: white;
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    text-align: right;
+    display: block;
+    z-index: 10;
+    padding: 0 80px;
+}
+
+.roll_screen{
+	width : 100%;
+	height : 400px;
+	background-color : #FFFF5A;
+}
+.footer {
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-top: 0px;
+	background-color: white;
+	grid-area: footer;
+	bottom: 0px;
+	width: 100%;
+	position: fixed;
+	z-index: 5;
+}
+
+/* top menu */
+.logo{
+	height:40px;
+	margin:5px;
+}
+.logo_text{
+	display: flex; 
+	position: fixed;
+	text-decoration : none;
+	font-size : 30px;
+	font-weight : bold;
+}
+.top_menu{
+	width : 70%;
+	right : 10%;
+	display: flex;
+    position: fixed;
+	padding : 0px;
+	height : 50px;
+    align-items: center;
+    place-content: center;
+}
+.top_user{
+	position : absolute;
+	right : 0%;
+}
+.top_menu>.top_user>a{
+	text-decoration : none;
+	height :25px;
+	padding-top: 6px;
+	margin-left : 5px;
+}
+.login, .sign_up{
+	padding-top:0px !important; 
+}
+.top_menu>.top_nav{
+	position : absolute;
+	left : 16%;
+}
+.top_nav{
+    width: 500px;
+    height: 50px;
+    display: flex;
+    position: fixed;
+    text-decoration: none;
+    padding: 0px;
+    align-items: center;
+    left: 20%;
+    weight : 10;
+}
+.top_nav>a{
+	text-decoration : none;
+	margin-right : 20px;
+}
+@media (max-width : 1200px){
+	.top_nav{
+		display : none;
+	}
+}
+@media (max-width : 800px){
+	.reg_menu{
+		display : none;
+	}
+}
+@media (max-width : 700px){
+	.userList_menu{
+		display : none;
+	}
+}
+@media (max-width : 600px){
+	.logout_menu{
+		display : none;
+	}
+	.user_menu{
+		right : 10%;
+	}
+}
+.sm_menu{
+	display : none;
+	position : absolute;
+	left : 0%;
+}
+.sm_menu>img{
+	width : 50px;
+	height : 50px;
+	position : fixed;
+}
+@media (max-width : 1200px){
+	.sm_menu{
+		display : flex;
+	}
+}
+
+html, body {
+	position: relative;
+	height: 100vh;
+}
+
+body {
+	background: #eee;
+	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+	font-size: 14px;
+	color: #000;
+	margin: 0;
+	padding: 0;
+}
+
+.swiper-container{
+	width: 100% !important;
+	height: 400px;
+	display: flex;
+	position: inherit;
+	top: 50px;
+	text-align : center;
+}
+
+.swiper-slide {
+	width: 100% !important;
+	overflow : hidden;
+}
+
+.swiper-container-vertical>.swiper-pagination-bullets {
+	top: unset !important;
+	bottom: 10px;
+	left: 0;
+	width: 100%;
+}
+
+.swiper-container-vertical>.swiper-pagination-bullets .swiper-pagination-bullet
+	{
+	display: inline-block !important;
+	margin: 6px 2px !important;
+}
+.swiper-button-prev:after, .swiper-button-next:after{
+	color : gray;
+}
+
+
+
+
+
+
+
+/* search menu */
+.search_box{
+	position: relative;
+}
+.search_img{
+	position : absolute;
+	width: 17px;
+	margin: 0;
+	top:25px;
+	right:13%;
+}
+.search_input{
+border : none;
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+.search_bar {
+	border: 3px solid;
+	border-color: rgb(64, 219, 43);
+	border-radius: 5px;
+	margin: 10px;
+	width: 290px;
+}
+.search_bar>form>input {
+	width: 250px;
+	margin: 10px;
+	border: none;
+	font-size: large;
+}
+.search_result {
+	grid-area: main;
+	width: 100%;
+	height: 680px;
+	text-align: center;
+}
+
+.card-img-top{
+	width:286px;
+	height:200px;
+}
+.search_menu {
+	grid-area: search;
+	background-color: white;
+	z-index: 3;
+	position: relative;
+}
+
+
+/* 좌측 추천 메뉴 */
+.suggest_menu>.card {
+	margin-left: 10px;
+}
+
+.suggest_menu {
+	height: 763px;
+	overflow: scroll;
+	-ms-overflow-style: none;
+}
+.suggest_menu::-webkit-scrollbar {
+	width : 5px;
+	height : 0px;
+}
+.suggest_menu::-webkit-scrollbar-thumb {
+    background-color: #2f3542;
+    border-radius: 10px;
+}
+.suggest_menu::-webkit-scrollbar-track {
+}
+
+
+
+
+/* map */
+#map {
+	z-index: 2;
+	width: 972px; 
+	height: 870px;  
+	float: right;
+}
+
+
+/* effect */
+.rainbow_effect{
+	animation-duration: 1s; 
+	animation-name: rainbowLink; 
+	animation-iteration-count: infinite; 
+}
+@keyframes rainbowLink {     
+ 0% { background-color: #ff2a2a; }
+ 15% { background-color: #ff7a2a; }
+ 30% { background-color: #ffc52a; }
+ 45% { background-color: #43ff2a; }
+ 60% { background-color: #2a89ff; }
+ 75% { background-color: #202082; }
+ 90% { background-color: #6b2aff; } 
+ 100% { background-color: #e82aff; }
+}
+
+.cloud_effect{
+    height: 50px;
+    animation-duration: 20s;
+    animation-name: cloudLink;
+    animation-iteration-count: infinite;
+    display: flex;
+    place-items: center;
+}
+@keyframes cloudLink {     
+ 0% { color: #FFA7A7; }
+ 7% { color: #FFC19E; }
+ 14% { color: #FFE08C; }
+ 21% { color: #FAED7D; }
+ 28% { color: #CEF279; }
+ 35% { color: #B7F0B1; }
+ 42% { color: #B2EBF4; } 
+ 49% { color: #B2CCFF; }
+ 56% { color: #D1B2FF; }
+ 63% { color: #FFB2F5; }
+ 70% { color: #FFB2D9; }
+ 77% { color: #B2CCFF; }
+ 84% { color: #D5D5D5; }
+ 91% { color: #BDBDBD; }
+ 100% { color: #353535; }
+}
