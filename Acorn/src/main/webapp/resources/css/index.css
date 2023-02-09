@@ -2,18 +2,6 @@
 
 
 /* 기본 UI */
-.container {
-	display: grid;
-	grid-template-areas: 
-		"search main main";
-	grid-template-columns: 1fr 2fr 1fr;
-	grid-template-rows: 50px 870px;
-	border-right: thin;
-	z-index: 1;
-	max-width : 1320px;
-	height : 100%;
-	position: relative;
-}
 .header_inner {
 	opacity: 0.9;
     background-color: white;
@@ -151,7 +139,96 @@
 		display : flex;
 	}
 }
+
+
+
+/* search menu */
+.search_menu {
+	padding-top : 30px;
+	height : 120px;
+	grid-area: search;
+	z-index: 3;
+	position: relative;
+}
+.search_box{
+	position: relative;
+}
+.search_img{
+    position: absolute;
+    width: 17px;
+    margin: 0;
+    right: 2%;
+    display: flex;
+    top: 30%;
+}
+.search_input {
+	border: none;
+	width: 100%;
+	padding: 10px 12px;
+	font-size: 14px;
+}
+input:focus{
+	outline : none;
+}
+
+.search_bar {
+	border: 3px solid;
+	border-color: rgb(64, 219, 43);
+	border-radius: 5px;
+	margin: auto;
+	width: 40%;
+}
+.search_bar>form>input {
+	width: 250px;
+	margin: 10px;
+	border: none;
+	font-size: large;
+}
+.search_result {
+	grid-area: main;
+	width: 100%;
+	height: 680px;
+	text-align: center;
+}
+
+.category{
+	display : flex;
+	flex-direction : column;
+	height : 250px;
+}
+.category>.row{
+	flex:1;
+	width : 500px;
+	justify-content: center;
+	height : 125px !important;
+	margin : auto;
+	text-align : center;
+}
+.category>.row>a{
+	flex:1;
+	justify-content: center;
+	text-decoration : none;
+	padding : 0;
+	margin : 0;
+	
+}
+.category>.row>.col{
+	align-self : center;
+}
+.category>.row>a>img{
+	border : 1px solid white;
+	border-radius : 75px;
+	padding : 0;
+	margin : 0;
+	width : 125px;
+	height : 125px;
+	overflow : hidden;
+}
+.block_content{
+	height : 450px;
+}
 .hot_place{
+	background-color : #F2FFED;
 	height : 400px;
 }
 .hot_place>p{
@@ -169,28 +246,37 @@
 	font-weight : bold;
 }
 .roll_screen_store{
+	background-color : #F2FFED;
 	margin : 0;
 	height : 100%;
 	position : relative;
+	margin-right: -1%;
+    margin-left: -1%;
+    margint-bottom : 100px;
+}
+.roll_screen_store>.block_content{
+	background-color : #F2FFED;
+	height : 100px;
+	
 }
 .roll_screen_store::before{
 	content:'';
     position: absolute;
     left: 0;
-    width: 20px;
+    width: 100px;
     height: 100%;
     z-index: 2;
-    background: white;
+    background: linear-gradient(to right, white 10%, transparent);
     opacity : 0.7;
 }
 .roll_screen_store::after{
 	content:'';
     position: absolute;
     right: 0;
-    width: 20px;
+    width: 100px;
     height: 100%;
     z-index: 2;
-    background: white;
+    background: linear-gradient(to left, white 10%, transparent);
     opacity : 0.7;
 }
 .roller_store{
@@ -211,68 +297,23 @@
 	height:200px;
 }
 
-
-/* search menu */
-.search_box{
-	position: relative;
+.research{
+	background : #FFFFE9;
+	height : 900px;
 }
-.search_img{
-    position: absolute;
-    width: 17px;
-    margin: 0;
-    right: 2%;
-    display: flex;
-    top: 30%;
-}
-.search_input{
-border : none;
-  width: 100%;
-  padding: 10px 12px;
-  font-size: 14px;
-}
-.search_bar {
-	border: 3px solid;
-	border-color: rgb(64, 219, 43);
-	border-radius: 5px;
-	margin: auto;
-	width: 30%;
-}
-.search_bar>form>input {
-	width: 250px;
-	margin: 10px;
-	border: none;
-	font-size: large;
-}
-.search_result {
-	grid-area: main;
-	width: 100%;
-	height: 680px;
-	text-align: center;
-}
-
-.search_menu {
-	padding-top : 30px;
-	height : 200px;
-	grid-area: search;
-	z-index: 3;
-	position: relative;
-}
-.category{
-	height : 300px;
-	background-color : lightblue;
-}
-.category>.row{
-	
-	height : 150px !important;
-	margin : 0;
-	padding-right : 30%;
-	padding-left : 30%;
+.research>p{
+	padding-top : 250px;
+	font-size : 50px;
+	color : red;
 	text-align : center;
 }
-.category>.row>.col{
-	width :100px !important;
-	padding-top : 50px;
-	align-self : center;
+.research>p>strong{
+	font-size : 80px;
+}
+.research>p>span{
+	font-size : 75px;
+	color : black;
+	font-weight : bold;
 }
 
 
@@ -317,4 +358,12 @@ border : none;
  84% { color: #D5D5D5; }
  91% { color: #BDBDBD; }
  100% { color: #353535; }
+}
+body::-webkit-scrollbar {
+	width: 5px;
+	height: 0px;
+}
+body::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
 }
