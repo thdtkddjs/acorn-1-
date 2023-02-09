@@ -10,28 +10,36 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <title>list.jsp</title>
 <style>
-   .img-wrapper{
-      height: 250px;
-      transition: transform 0.3s ease-out;
-   }
-   .img-wrapper:hover{
-      transform: scale(1.1);
-   }
-   
-   .card .card-text{
-      display:block;
-      white-space : nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-   }
-   	.img-wrapper img{
-	   	width: 100%;
-	   	height: 100%;
-		object-fit: fill;	
-   	}
-   	.shop_info{
-   margin-top:20px;
-   margin-bottom:20px;
+.img-wrapper {
+	height: 300px;
+}
+
+.img-wrapper img {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+
+.card-body {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+
+.shop_info {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+}
+
+.shopInfo {
+	border-right: 1px solid gray;
+}
+
+.title {
+	text-align : center;
+	font-weight : bold;
+	font-size : 1.5rem;
 }
 </style>
 </head>
@@ -71,47 +79,50 @@
 			<c:forEach var="tmp" items="${list }">
 				<div class="col-sm-8" style="margin : auto;">
 	         		<div class="card mb-3">
-	         			<div class="row g-0">
-	         				<div class="img-wrapper col-md-4">
-		            			<img src="${pageContext.request.contextPath}/${tmp.imagePath}"	class="card-img-top" alt="...">
-		            		</div>
-		            		<div class="col-md-8">
-		            			<div class="card-body">
-		            				<h5 class="card-title">${tmp.title }</h5>
-		            				
-		            				<table class="shop_info" style="content-align : center;">
-										<tbody style="text-align : center;">
-											<tr class=shopInfo>
-												<td style="border-right: 1px solid gray">소개</td>
-												<td>${tmp.content}</td>
-											</tr>
-											<tr style="height: 20px"></tr>
-											<tr class=shopInfo>
-												<td style="border-right: 1px solid gray">카테고리</td>
-												<td>${tmp.categorie}</td>
-											</tr>
-											<tr style="height: 20px"></tr>
-											<tr class=shopInfo>
-												<td style="border-right: 1px solid gray">영업 시간</td>
-												<td>${tmp.startTime}~ ${tmp.endTime}</td>
-											</tr>
-											<tr style="height: 20px"></tr>
-											<tr class=shopInfo>
-												<td style="border-right: 1px solid gray">주소</td>
-												<td>${tmp.addr}</td>
-											</tr>
-											<tr style="height: 20px"></tr>
-											<tr class=shopInfo>
-												<td style="border-right: 1px solid gray">전화 번호</td>
-												<td>${tmp.telNum}</td>
-											</tr>
-										</tbody>
-									</table>
-									
-									<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" class="btn btn-primary mb-2" style="float: right;">INFO</a>
-								</div>
-		            		</div>
-	         			</div>
+	         			<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" style="color: black; text-decoration : none">
+	         				<div class="row g-0">
+		         				<div class="img-wrapper col-md-4">
+			            			<img src="${pageContext.request.contextPath}/${tmp.imagePath}"	class="card-img-top" alt="...">
+			            		</div>
+			            		<div class="img-wrapper col-md-8">
+			            			<div class="card-body">
+			            				<table class="shop_info">
+											<thead>
+												<tr>
+													<th colspan="2" class="title">${tmp.title }</th>
+												</tr>
+											</thead>
+											<tbody class="table-group-divider" style="text-align : center;">
+												<tr>
+													<td class="shopInfo">소개</td>
+													<td>${tmp.content}</td>
+												</tr>
+												
+												<tr>
+													<td class="shopInfo">카테고리</td>
+													<td>${tmp.categorie}</td>
+												</tr>
+												
+												<tr>
+													<td class="shopInfo">영업 시간</td>
+													<td>${tmp.startTime}~ ${tmp.endTime}</td>
+												</tr>
+												
+												<tr>
+													<td class="shopInfo">주소</td>
+													<td>${tmp.addr}</td>
+												</tr>
+												
+												<tr>
+													<td class="shopInfo">전화 번호</td>
+													<td>${tmp.telNum}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+			            		</div>
+	         				</div>
+	         			</a>
 	         		</div>
 	      		</div>
 			</c:forEach>
