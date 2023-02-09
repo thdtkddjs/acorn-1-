@@ -19,7 +19,7 @@ public class ShopDaoImpl implements ShopDao{
 
 	@Override
 	public int getCount(ShopDto dto) {
-		return session.selectOne("shop.getCount");
+		return session.selectOne("shop.getCount", dto);
 	}
 
 	@Override

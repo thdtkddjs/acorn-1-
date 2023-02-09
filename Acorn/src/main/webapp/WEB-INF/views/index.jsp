@@ -127,16 +127,32 @@
 	</div>
 	<div class="category">
 		<div class="row">
-			<p class="col">전체</p>
-			<p class="col">한식</p>
-			<p class="col">중식</p>
-			<p class="col">일식</p>
+			<p class="col">
+				<a href="${pageContext.request.contextPath}/shop/list">전체</a>
+			</p>
+			<p class="col">
+				<a href="${pageContext.request.contextPath}/shop/list?category=한식">한식</a>
+			</p>
+			<p class="col">
+				<a href="${pageContext.request.contextPath}/shop/list?category=중식">중식</a>
+			</p>
+			<p class="col">
+				<a href="${pageContext.request.contextPath}/shop/list?category=일식">일식</a>
+			</p>
 		</div>
 		<div class="row">
-			<p class="col">양식</p>
-			<p class="col">패스트푸드</p>
-			<p class="col">분식</p>
-			<p class="col">기타</p>
+			<p class="col">
+				<a href="${pageContext.request.contextPath}/shop/list?category=양식">양식</a>
+			</p>
+			<p class="col">
+				<a href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">패스트푸드</a>
+			</p>
+			<p class="col">
+				<a href="${pageContext.request.contextPath}/shop/list?category=분식">분식</a>
+			</p>
+			<p class="col">
+				<a href="${pageContext.request.contextPath}/shop/list?category=기타">기타</a>
+			</p>
 		</div>
 	</div>
 	<div class="hot_place">

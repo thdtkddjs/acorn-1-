@@ -32,7 +32,7 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	public void getList(HttpServletRequest request) {
 		// 한 페이지에 몇개씩 표시할 것인지
-		final int PAGE_ROW_COUNT = 15;
+		final int PAGE_ROW_COUNT = 4;
 		// 하단 페이지를 몇개씩 표시할 것인지 (css에 따라 삭제 및 변경 있을 수 있음)
 		final int PAGE_DISPLAY_COUNT = 5;
 
@@ -59,6 +59,8 @@ public class ShopServiceImpl implements ShopService{
 		*/
 		String keyword = request.getParameter("keyword");
 		String condition = request.getParameter("condition");
+		String category = request.getParameter("category");
+		
 		//만일 키워드가 넘어오지 않는다면 
 		if(keyword == null){
 			//키워드와 검색 조건에 빈 문자열을 넣어준다. 
@@ -66,9 +68,13 @@ public class ShopServiceImpl implements ShopService{
 			keyword="";
 			condition=""; 
 		}
+		if(category == null) {
+			category = "";
+		}
 		
 		//특수기호를 인코딩한 키워드를 미리 준비한다. 
 		String encodedK = URLEncoder.encode(keyword);
+		String encodedC = URLEncoder.encode(category);
 		    
 		//CafeDto 객체에 startRowNum 과 endRowNum 을 담는다.
 		ShopDto dto = new ShopDto();
@@ -78,6 +84,9 @@ public class ShopServiceImpl implements ShopService{
 		//만일 검색 키워드가 넘어온다면 
 		if(!keyword.equals("")){
 			dto.setTitle(keyword);
+		}
+		if(!category.equals("")) {
+			dto.setCategorie(category);
 		}
 		
 		// 목록을 select 해 온다.(검색 키워드가 있는경우 키워드에 부합하는 전체 글)
@@ -103,6 +112,8 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("totalPageCount", totalPageCount);
 		request.setAttribute("keyword", keyword);
 		request.setAttribute("encodedK", encodedK);
+		request.setAttribute("category", category);
+		request.setAttribute("encodedC", encodedC);
 		request.setAttribute("totalRow", totalRow);
 		request.setAttribute("condition", condition);
 

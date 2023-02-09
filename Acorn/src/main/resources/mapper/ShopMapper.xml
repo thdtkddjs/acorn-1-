@@ -8,7 +8,7 @@
             WHERE title LIKE '%'||#{title}||'%'
          </when>
          <when test="categorie != null">
-            WHERE title LIKE '%'||#{categorie}||'%'
+            WHERE categorie LIKE '%'||#{categorie}||'%'
          </when>
       </choose>
    </sql>
@@ -36,7 +36,7 @@
       <include refid="searchCondition"/>
     </select>   
 	
-	<select id="getList" resultType="shopDto">
+	<select id="getList" parameterType="shopDto" resultType="shopDto">
       SELECT *
       FROM
          (SELECT result1.*, ROWNUM AS rnum
@@ -50,6 +50,7 @@
       WHERE rnum >= #{startRowNum} AND rnum <= #{endRowNum}
       ]]>
 	</select>
+	
    <select id="getData" parameterType="int" resultType="shopDto">
    		select num,title,content,imagePath,categorie,
       		reviewCount,startTime,endTime,telNum,addr
