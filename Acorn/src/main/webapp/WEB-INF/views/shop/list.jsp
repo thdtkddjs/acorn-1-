@@ -10,20 +10,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <title>list.jsp</title>
 <style>
-   /* card 이미지 부모요소의 높이 지정 */
    .img-wrapper{
       height: 250px;
-      /* transform 을 적용할대 0.3s 동안 순차적으로 적용하기 */
       transition: transform 0.3s ease-out;
    }
-   /* .img-wrapper 에 마우스가 hover 되었을때 적용할 css */
    .img-wrapper:hover{
-      /* 원본 크기의 1.1 배로 확대 시키기*/
       transform: scale(1.1);
    }
    
    .card .card-text{
-      /* 한줄만 text 가 나오고  한줄 넘는 길이에 대해서는 ... 처리 하는 css */
       display:block;
       white-space : nowrap;
       text-overflow: ellipsis;
@@ -32,13 +27,6 @@
    	.img-wrapper img{
 	   	width: 100%;
 	   	height: 100%;
-	   	/* fill | contain | cover | scale-down | none(default) */
-	   	/*	
-	   		cover - 부모의 크기에 맞게 키운 후, 자른다. 비율은 일정하게 증가한다. 
-	   		contain - 안잘린다. 대신 빈 공간이 남을 수 있다.
-	   		fill - 부모의 크기에 딱 맞게, 비율 관계 없이 맞춘다.(이미지가 일그러질 수 있다.)
-	   		scale-down - 가로, 세로 중에 큰 것을 부모의 크기에 맞춘 상태까지만 커지거나 작아지고, 비율은 일정하다.
-	   	*/
 		object-fit: fill;	
    	}
    	.shop_info{
