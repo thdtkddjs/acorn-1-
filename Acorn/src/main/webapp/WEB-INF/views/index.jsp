@@ -120,41 +120,61 @@
 							alt="" />
 					</button>
 					<input class="search_input" type="text" name="keyword"
-						value="${keyword}" placeholder="가게 명을 입력하세요...">
+						value="${keyword}" placeholder="검색어를 입력해주세요...">
 				</div>
 			</form>
 		</div>
 	</div>
 	<div class="category">
 		<div class="row">
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list">전체</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=한식">한식</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=중식">중식</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=일식">일식</a>
-			</p>
+			<a href="${pageContext.request.contextPath}/shop/list"> <img
+				src="${pageContext.request.contextPath}/resources/images/category/all.jpg"
+				alt="전체" title="전체" class="col" />
+
+			</a> <a
+				href="${pageContext.request.contextPath}/shop/list?category=한식">
+				<img
+				src="${pageContext.request.contextPath}/resources/images/category/hansik.jpg"
+				alt="한식" title="한식" class="col" />
+
+			</a> <a
+				href="${pageContext.request.contextPath}/shop/list?category=중식">
+				<img
+				src="${pageContext.request.contextPath}/resources/images/category/jungsik.jpg"
+				alt="중식" title="중식" class="col" />
+
+			</a> <a
+				href="${pageContext.request.contextPath}/shop/list?category=일식">
+				<img
+				src="${pageContext.request.contextPath}/resources/images/category/ilsik.jpg"
+				alt="일식" title="일식" class="col" />
+			</a>
 		</div>
 		<div class="row">
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=양식">양식</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">패스트푸드</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=분식">분식</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=기타">기타</a>
-			</p>
+			<a href="${pageContext.request.contextPath}/shop/list?category=양식">
+				<img
+				src="${pageContext.request.contextPath}/resources/images/category/bunsik.jpg"
+				alt="분식" title="분식" class="col" />
+			</a> <a
+				href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">
+				<img
+				src="${pageContext.request.contextPath}/resources/images/category/yangsik.jpg"
+				alt="양식" title="양식" class="col" />
+			</a> <a
+				href="${pageContext.request.contextPath}/shop/list?category=분식">
+				<img
+				src="${pageContext.request.contextPath}/resources/images/category/fastfood.jpg"
+				alt="패스트푸드" title="패스트푸드" class="col" />
+
+			</a> <a
+				href="${pageContext.request.contextPath}/shop/list?category=기타">
+				<img
+				src="${pageContext.request.contextPath}/resources/images/category/guitar.jpg"
+				alt="기타" title="기타" class="col" />
+			</a>
 		</div>
 	</div>
+	<div class="block_content"></div>
 	<div class="hot_place">
 		<p>HOT PLACE
 		<br />
@@ -175,6 +195,7 @@
 				</div>
 			</c:forEach>
 		</div>
+	<div class="block_content"></div>
 	</div>
 	<script>
 		$('.slide.roller_store').slick({
@@ -190,25 +211,17 @@
 			  draggable : false,
 			});
 	</script>
-	<br />
-	
-	
-	
-	
-    <div class="container">
-
-    
-    
-    
-
-        <div class="bottom" style="height:500px;">　
-
-        
-        </div>
-
-
-        
-    </div>        
+	<div class="research">
+		<p>MZ 세대가 가장 많이 방문한 맛집은?!
+		<br />
+		<span>MZ가 선호하는 트렌드!</span>
+		<br /><br />
+		<strong class="cloud_effect" style="place-content: center;">
+			FOOD RESEARCH 보기
+		</strong>
+		</p>
+		
+	</div>     
 
 
 
