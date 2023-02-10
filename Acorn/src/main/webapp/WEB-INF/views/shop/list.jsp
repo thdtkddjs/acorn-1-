@@ -41,6 +41,40 @@
 	font-weight : bold;
 	font-size : 1.5rem;
 }
+
+.category{
+	display : flex;
+	flex-direction : column;
+	height : 150px;
+}
+.category>.row{
+	flex:1;
+	width : 100%;
+	justify-content: center;
+	height : 125px !important;
+	margin : auto;
+	text-align : center;
+}
+.category>.row>a{
+	flex:1;
+	justify-content: center;
+	text-decoration : none;
+	padding : 0;
+	margin : 0;
+	
+}
+.category>.row>.col{
+	align-self : center;
+}
+.category>.row>a>img{
+	border : 1px solid white;
+	border-radius : 75px;
+	padding : 0;
+	margin : 0;
+	width : 125px;
+	height : 125px;
+	overflow : hidden;
+}
 </style>
 </head>
 <body>
@@ -48,32 +82,49 @@
 		<a href="${pageContext.request.contextPath}/">인덱스로</a><br />
 	   	<h1>임시 리스트</h1>
 	   	
-	   	<div class="row">
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list">전체</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=한식">한식</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=중식">중식</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=일식">일식</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=양식">양식</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">패스트푸드</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=분식">분식</a>
-			</p>
-			<p class="col">
-				<a href="${pageContext.request.contextPath}/shop/list?category=기타">기타</a>
-			</p>
-		</div>
+	   	<div class="category">
+	   		<div class="row">
+				<a href="${pageContext.request.contextPath}/shop/list"> 
+					<img src="${pageContext.request.contextPath}/resources/images/category/all.jpg"
+						alt="전체" title="전체" class="col" />
+				</a> 
+				
+				<a href="${pageContext.request.contextPath}/shop/list?category=한식">
+					<img src="${pageContext.request.contextPath}/resources/images/category/hansik.jpg"
+						alt="한식" title="한식" class="col" />
+				</a> 
+				
+				<a href="${pageContext.request.contextPath}/shop/list?category=중식">
+					<img src="${pageContext.request.contextPath}/resources/images/category/jungsik.jpg"
+						alt="중식" title="중식" class="col" />
+				</a> 
+				
+				<a href="${pageContext.request.contextPath}/shop/list?category=일식">
+					<img src="${pageContext.request.contextPath}/resources/images/category/ilsik.jpg"
+						alt="일식" title="일식" class="col" />
+				</a>
+				
+				<a href="${pageContext.request.contextPath}/shop/list?category=양식">
+					<img src="${pageContext.request.contextPath}/resources/images/category/bunsik.jpg"
+						alt="분식" title="분식" class="col" />
+				</a> 
+				
+				<a href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">
+					<img src="${pageContext.request.contextPath}/resources/images/category/yangsik.jpg"
+						alt="양식" title="양식" class="col" />
+				</a> 
+				
+				<a href="${pageContext.request.contextPath}/shop/list?category=분식">
+					<img src="${pageContext.request.contextPath}/resources/images/category/fastfood.jpg"
+						alt="패스트푸드" title="패스트푸드" class="col" />
+				</a> 
+				
+				<a href="${pageContext.request.contextPath}/shop/list?category=기타">
+					<img src="${pageContext.request.contextPath}/resources/images/category/guitar.jpg"
+						alt="기타" title="기타" class="col" />
+				</a>
+			</div>
+	   	</div>
 	   	
 	   	<div class="row">
 			<c:forEach var="tmp" items="${list }">
