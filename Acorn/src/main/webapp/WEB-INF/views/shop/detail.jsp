@@ -179,12 +179,16 @@
 				</table>
 			</div>
 		</div>
-			
 		<div class="shop_board_separator"></div>
 		<div class="shop_board_body2">
 				<div class="shop_board_menu">				
-					<strong>메뉴</strong>
-					<ul class="shop_board_menu_list">
+				<strong>메뉴</strong>
+				<c:if test="${sessionScope.id eq 'admin'}">
+					<a
+						href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}"
+						class="menu_insert btn btn-outline-warning">+</a>
+				</c:if>
+				<ul class="shop_board_menu_list">
 						<c:forEach var="tmp" items="${menuList }">
 							<li class="menu_item">
 								<div class="menu_name_price">
@@ -195,29 +199,211 @@
 						</c:forEach>
 					</ul>
 				</div>
-						<c:if test="${sessionScope.id eq 'admin'}">
-							<a
-								href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}"
-								style="display: block; width: 101%;"
-								class="btn btn-outline-warning">메뉴 추가</a>
-						</c:if>
-		</div>
-	</div>
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div style="height : 600px;"></div>
+		</div>
+		<div class="shop_board_separator"></div>
+		<div class="shop_board_body3">
+			<div class="shop_board_review">
+				<strong>리뷰</strong>
+				<div class="table_3">
+					<table class="shop_review_table">
+						<tbody>
+							<tr>
+								<td>평점 : ${grade}</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="reviews">
+										<ul>
+											<!-- 유저 프로필 -->
+											<div class="review_profile">
+												<c:if test="${ empty tmp.profile }">
+													<svg class="profile-image"
+														xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														fill="currentColor" class="bi bi-person-circle"
+														viewBox="0 0 16 16">
+					                                <path
+															d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+					                                <path fill-rule="evenodd"
+															d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+					                              </svg>
+												</c:if>
+												<c:if test="${not empty tmp.profile }">
+													<img class="profile-image"
+														src="${pageContext.request.contextPath}${tmp.profile }" />
+												</c:if>
+											</div>
+
+											<c:forEach var="tmp" items="${reviewList }">
+												<c:choose>
+													<c:when test="${tmp.deleted eq 'yes' }">
+														<dt class="row">
+															<li>삭제된 리뷰 입니다.</li>
+														</dt>
+													</c:when>
+													<c:otherwise>
+														<c:if test="${tmp.num eq tmp.review_group }">
+															<li id="reli${tmp.num }">
+														</c:if>
+
+														<dl>
+															<dt class="row">
+																<div class="col-10">
+																	<span class="col">${tmp.writer }</span>
+																	<span class="bg_bar"></span>
+																	<span style="font-weight: 100; font-size : 13px; color : gray;">${tmp.regdate }</span>
+																	<c:choose>
+																		<c:when
+																			test="${ (id ne null) and (tmp.writer eq id) }">
+																			<a data-num="${tmp.num }"
+																				class="update-link btn btn-warning"
+																				href="javascript:" style="font-size : 13px; padding:0 1px;">EDIT</a>
+																			<a data-num="${tmp.num }"
+																				class="delete-link btn btn-danger"
+																				href="javascript:"  style="font-size : 13px; padding:0 1px;">DELETE</a>
+																		</c:when>
+																		<c:when test="${id eq 'admin' }">
+																			<a data-num="${tmp.num }"
+																				class="delete-link btn btn-danger"
+																				href="javascript:">삭제</a>
+																		</c:when>
+																	</c:choose>
+																	<div class="comment_box" id="pre${tmp.num }">
+																		<input class="review_title_box" type="text"
+																			name="title" id="spt${tmp.num }" value="${tmp.title}"
+																			disabled />
+
+																		<div class="startRadio"
+																			style="pointer-events: none; display: inline-block; overflow: hidden; height: 40px; float: right; position: relative; right: 140px; bottom: 5px; z-index: 9;">
+																			<c:forEach var="i" begin="0" end="9">
+																				<label class="startRadio__box"> <input
+																					type="radio" name="grade_number" value=${i }
+																					${tmp.grade eq (i/2+0.5) ? 'class="point"' : '' }>
+																					<span class="startRadio__img"> <span
+																						class="blind">별 ${(i/2+0.5) }개</span>
+																				</span>
+																				</label>
+																			</c:forEach>
+																		</div>
+																		<br />
+																		<textarea class="review_content_box"
+																			id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
+																	</div>
+
+																	<!-- 수정폼 -->
+																	<c:if test="${tmp.writer eq id }">
+																		<form id="updateForm${tmp.num }"
+																			class="review-form update-form"
+																			action="review_update" method="post">
+																			<input type="hidden" name="num" value="${tmp.num }" />
+																			<input type="text" name="title" value="${tmp.title }" />
+																			<div class="startRadio">
+																				<c:forEach var="i" begin="0" end="9">
+																					<label class="startRadio__box"> <input
+																						type="radio" name="grade_number" value=${i }
+																						${tmp.grade eq (i/2+0.5) ? 'checked' : '' }
+																						disabled> <span class="startRadio__img">
+																							<span class="blind">별 ${(i/2+0.5) }개</span>
+																					</span>
+																					</label>
+																				</c:forEach>
+																			</div>
+
+																			<textarea name="content">${tmp.content }</textarea>
+																			<button type="submit" id="ur${tmp.num }"
+																				class=comment_edit_btn>수정</button>
+																		</form>
+																	</c:if>
+																</div>
+
+																
+															</dt>
+
+														</dl>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+											<div class="col-2">
+												<c:choose>
+													<c:when
+														test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
+														<img class="review_img"
+															src="${pageContext.request.contextPath}/resources/images/photo.png" />
+													</c:when>
+													<c:otherwise>
+														<img class="review_img"
+															src="${pageContext.request.contextPath}${tmp.imagePath}" />
+													</c:otherwise>
+												</c:choose>
+											</div>
+
+										</ul>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="left: 10px; position: relative;">
+									<!-- 원글에 리뷰를 작성할 폼 -->
+									<div class="comment_form_box">
+										<form class="review-form insert-form" action="review_insert"
+											method="post">
+											<input type="text" name="title" id="title"
+												placeholder="한줄평 입력..." />
+											<div class="startRadio">
+												<c:forEach var="i" begin="0" end="9">
+													<label class="startRadio__box"> <input type="radio"
+														name="grade_number" value=${i }
+														${i eq 9 ? 'checked' : '' }> <span
+														class="startRadio__img"> <span class="blind">별
+																${(i/2+0.5) }개</span>
+													</span>
+													</label>
+												</c:forEach>
+											</div>
+
+											<!-- 유저가 사진 등록을 위해 클릭하게 될 이미지 -->
+											<a id="thumbnailLink" href="javascript:" style="float: left;">
+												<img class="comment_img"
+												src="${pageContext.request.contextPath}/resources/images/photo.png"
+												alt="" />
+											</a>
+
+											<!-- 실제 폼에 제출되는 이미지 값 -->
+											<input type="hidden" name="imagePath" value="empty" /> <input
+												type="hidden" name="ref_group" value="${dto.num }" />
+											<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
+											<button class="regist_btn" type="submit">등록</button>
+										</form>
+									</div> <!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
+									<form id="imageForm"
+										action="${pageContext.request.contextPath}/shop/review_image_upload"
+										method="post" enctype="multipart/form-data">
+										사진 <input type="file" id="image" name="image"
+											accept=".jpg, .png, .gif, .jpeg" />
+										<button type="submit">업로드</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<div style="height : 600px;"></div>
 	
 	
 	
@@ -278,191 +464,191 @@
 							</c:forEach>
 						</tbody>
 					</table>
+			</div>
+			
+<div class="table_3">
+	<table style="width: 950px;">
+<tbody>
+	<tr>
+		<td>평점 : ${grade}</td>
+</tr>
+<tr>
+	<td>
+		<div class="reviews">
+			<ul>
+				<c:forEach var="tmp" items="${reviewList }">
+<c:choose>
+<c:when test="${tmp.deleted eq 'yes' }">
+<dt class="row" style="height:152px; border: 1px solid #c9c9c9; border-radius: 10px; padding-top:60px;">
+	<li>삭제된 리뷰 입니다.</li>
+</dt>
+</c:when>
+<c:otherwise>
+<c:if test="${tmp.num eq tmp.review_group }">
+	<li id="reli${tmp.num }">
+</c:if>
+
+<dl>
+	<dt class="row">
+		<div class="col-2">
+			<c:choose>
+				<c:when
+					test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
+					<img class="review_img"
+						src="${pageContext.request.contextPath}/resources/images/photo.png" />
+				</c:when>
+				<c:otherwise>
+					<img class="review_img"
+						src="${pageContext.request.contextPath}${tmp.imagePath}" />
+				</c:otherwise>
+			</c:choose>
+		</div>
+		
+		<div class="col-8">
+			<div class="comment_box" id="pre${tmp.num }">
+				<input class="review_title_box" type="text"
+					name="title" id="spt${tmp.num }"
+					value="${tmp.title}" disabled />
+
+				<div class="startRadio"
+					style="pointer-events: none; display: inline-block; overflow: hidden; height: 40px; float: right; position: relative; right: 140px; bottom: 5px; z-index: 9;">
+					<c:forEach var="i" begin="0" end="9">
+						<label class="startRadio__box"> 
+						<input type="radio" name="grade_number" value=${i } ${tmp.grade eq (i/2+0.5) ? 'class="point"' : '' }> 
+						<span class="startRadio__img">
+							<span class="blind">별 ${(i/2+0.5) }개</span>
+						</span>
+						</label>
+					</c:forEach>
 				</div>
+				<br />
+				<textarea class="review_content_box"
+					id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
+			</div>
+			
+			<!-- 수정폼 -->
+			<c:if test="${tmp.writer eq id }">
+				<form id="updateForm${tmp.num }"
+					class="review-form update-form"
+					action="review_update" method="post">
+					<input type="hidden" name="num" value="${tmp.num }" />
+					<input type="text" name="title"
+						value="${tmp.title }" />
+					<div class="startRadio">
+						<c:forEach var="i" begin="0" end="9">
+							<label class="startRadio__box"> 
+							<input type="radio" name="grade_number" value=${i } ${tmp.grade eq (i/2+0.5) ? 'checked' : '' } disabled> 
+							<span class="startRadio__img">
+								<span class="blind">별 ${(i/2+0.5) }개</span>
+							</span>
+							</label>
+						</c:forEach>
+					</div>
+
+					<textarea name="content">${tmp.content }</textarea>
+					<button type="submit" id="ur${tmp.num }"
+						class=comment_edit_btn>수정</button>
+				</form>
+			</c:if>
+		</div>
+		
+		<div class="review_profile col-2 ">
+			<c:if test="${ empty tmp.profile }">
+				<svg class="profile-image"
+					xmlns="http://www.w3.org/2000/svg" width="16"
+					height="16" fill="currentColor"
+					class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path
+						d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd"
+						d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                              </svg>
+			</c:if>
+			<c:if test="${not empty tmp.profile }">
+				<img class="profile-image"
+					src="${pageContext.request.contextPath}${tmp.profile }" />
+			</c:if>
+			<br> <span class="col">${tmp.writer }</span> <br>
+			<span style="font-weight: 100;">${tmp.regdate }</span>
+
+			<br>
+
+			<c:choose>
+				<c:when
+					test="${ (id ne null) and (tmp.writer eq id) }">
+					<a data-num="${tmp.num }"
+						class="update-link btn btn-warning"
+						href="javascript:">수정</a>
+					<a data-num="${tmp.num }"
+						class="delete-link btn btn-danger"
+						href="javascript:">삭제</a>
+				</c:when>
+				<c:when test="${id eq 'admin' }">
+					<a data-num="${tmp.num }"
+						class="delete-link btn btn-danger"
+						href="javascript:">삭제</a>
+				</c:when>
+			</c:choose>
+		</div>
+	</dt>
+
+</dl>
+</c:otherwise>
+</c:choose>
+</c:forEach>
+			</ul>
+		</div>
+	</td>
+</tr>
+<tr>
+	<td style="left: 10px; position: relative;">
+<!-- 원글에 리뷰를 작성할 폼 -->
+<div class="comment_form_box">
+	<form class="review-form insert-form" action="review_insert"
+		method="post">
+		<input type="text" name="title" id="title"
+			placeholder="한줄평 입력..." />
+		<div class="startRadio">
+			<c:forEach var="i" begin="0" end="9">
+<label class="startRadio__box"> 
+<input type="radio" name="grade_number" value=${i } ${i eq 9 ? 'checked' : '' }> 
+<span class="startRadio__img">
+	<span class="blind">별 ${(i/2+0.5) }개</span>
+</span>
+</label>
+</c:forEach>
+</div>
+
+<!-- 유저가 사진 등록을 위해 클릭하게 될 이미지 -->
+<a id="thumbnailLink" href="javascript:"
+	style="float: left;"> <img class="comment_img"
+src="${pageContext.request.contextPath}/resources/images/photo.png"
+	alt="" />
+</a>
+
+<!-- 실제 폼에 제출되는 이미지 값 -->
+<input type="hidden" name="imagePath" value="empty" />
+
+<input type="hidden" name="ref_group" value="${dto.num }" />
+<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
+		<button class="regist_btn" type="submit">등록</button>
+	</form>
+</div> 
+
+<!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
+<form id="imageForm"
+	action="${pageContext.request.contextPath}/shop/review_image_upload"
+					method="post" enctype="multipart/form-data">
+					사진 <input type="file" id="image" name="image"
+						accept=".jpg, .png, .gif, .jpeg" />
+					<button type="submit">업로드</button>
+				</form>
+			</td>
+		</tr>
+	</tbody>
+</table>
 				
-				<div class="table_3" style="display: none;">
-					<table style="width: 950px;">
-						<tbody>
-							<tr>
-								<td>평점 : ${grade}</td>
-							</tr>
-							<tr>
-								<td>
-									<div class="reviews">
-										<ul>
-											<c:forEach var="tmp" items="${reviewList }">
-												<c:choose>
-													<c:when test="${tmp.deleted eq 'yes' }">
-														<dt class="row" style="height:152px; border: 1px solid #c9c9c9; border-radius: 10px; padding-top:60px;">
-															<li>삭제된 리뷰 입니다.</li>
-														</dt>
-													</c:when>
-													<c:otherwise>
-														<c:if test="${tmp.num eq tmp.review_group }">
-															<li id="reli${tmp.num }">
-														</c:if>
-
-														<dl>
-															<dt class="row">
-																<div class="col-2">
-																	<c:choose>
-																		<c:when
-																			test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
-																			<img class="review_img"
-																				src="${pageContext.request.contextPath}/resources/images/photo.png" />
-																		</c:when>
-																		<c:otherwise>
-																			<img class="review_img"
-																				src="${pageContext.request.contextPath}${tmp.imagePath}" />
-																		</c:otherwise>
-																	</c:choose>
-																</div>
-																
-																<div class="col-8">
-																	<div class="comment_box" id="pre${tmp.num }">
-																		<input class="review_title_box" type="text"
-																			name="title" id="spt${tmp.num }"
-																			value="${tmp.title}" disabled />
-
-																		<div class="startRadio"
-																			style="pointer-events: none; display: inline-block; overflow: hidden; height: 40px; float: right; position: relative; right: 140px; bottom: 5px; z-index: 9;">
-																			<c:forEach var="i" begin="0" end="9">
-																				<label class="startRadio__box"> 
-																				<input type="radio" name="grade_number" value=${i } ${tmp.grade eq (i/2+0.5) ? 'class="point"' : '' }> 
-																				<span class="startRadio__img">
-																					<span class="blind">별 ${(i/2+0.5) }개</span>
-																				</span>
-																				</label>
-																			</c:forEach>
-																		</div>
-																		<br />
-																		<textarea class="review_content_box"
-																			id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
-																	</div>
-																	
-																	<!-- 수정폼 -->
-																	<c:if test="${tmp.writer eq id }">
-																		<form id="updateForm${tmp.num }"
-																			class="review-form update-form"
-																			action="review_update" method="post">
-																			<input type="hidden" name="num" value="${tmp.num }" />
-																			<input type="text" name="title"
-																				value="${tmp.title }" />
-																			<div class="startRadio">
-																				<c:forEach var="i" begin="0" end="9">
-																					<label class="startRadio__box"> 
-																					<input type="radio" name="grade_number" value=${i } ${tmp.grade eq (i/2+0.5) ? 'checked' : '' } disabled> 
-																					<span class="startRadio__img">
-																						<span class="blind">별 ${(i/2+0.5) }개</span>
-																					</span>
-																					</label>
-																				</c:forEach>
-																			</div>
-
-																			<textarea name="content">${tmp.content }</textarea>
-																			<button type="submit" id="ur${tmp.num }"
-																				class=comment_edit_btn>수정</button>
-																		</form>
-																	</c:if>
-																</div>
-																
-																<div class="review_profile col-2 ">
-																	<c:if test="${ empty tmp.profile }">
-																		<svg class="profile-image"
-																			xmlns="http://www.w3.org/2000/svg" width="16"
-																			height="16" fill="currentColor"
-																			class="bi bi-person-circle" viewBox="0 0 16 16">
-								                                      <path
-																				d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-								                                      <path fill-rule="evenodd"
-																				d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-								                                    </svg>
-																	</c:if>
-																	<c:if test="${not empty tmp.profile }">
-																		<img class="profile-image"
-																			src="${pageContext.request.contextPath}${tmp.profile }" />
-																	</c:if>
-																	<br> <span class="col">${tmp.writer }</span> <br>
-																	<span style="font-weight: 100;">${tmp.regdate }</span>
-
-																	<br>
-
-																	<c:choose>
-																		<c:when
-																			test="${ (id ne null) and (tmp.writer eq id) }">
-																			<a data-num="${tmp.num }"
-																				class="update-link btn btn-warning"
-																				href="javascript:">수정</a>
-																			<a data-num="${tmp.num }"
-																				class="delete-link btn btn-danger"
-																				href="javascript:">삭제</a>
-																		</c:when>
-																		<c:when test="${id eq 'admin' }">
-																			<a data-num="${tmp.num }"
-																				class="delete-link btn btn-danger"
-																				href="javascript:">삭제</a>
-																		</c:when>
-																	</c:choose>
-																</div>
-															</dt>
-
-														</dl>
-													</c:otherwise>
-												</c:choose>
-											</c:forEach>
-										</ul>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td style="left: 10px; position: relative;">
-									<!-- 원글에 리뷰를 작성할 폼 -->
-									<div class="comment_form_box">
-										<form class="review-form insert-form" action="review_insert"
-											method="post">
-											<input type="text" name="title" id="title"
-												placeholder="한줄평 입력..." />
-											<div class="startRadio">
-												<c:forEach var="i" begin="0" end="9">
-													<label class="startRadio__box"> 
-													<input type="radio" name="grade_number" value=${i } ${i eq 9 ? 'checked' : '' }> 
-													<span class="startRadio__img">
-														<span class="blind">별 ${(i/2+0.5) }개</span>
-													</span>
-													</label>
-												</c:forEach>
-											</div>
-											
-											<!-- 유저가 사진 등록을 위해 클릭하게 될 이미지 -->
-											<a id="thumbnailLink" href="javascript:"
-												style="float: left;"> <img class="comment_img"
-												src="${pageContext.request.contextPath}/resources/images/photo.png"
-												alt="" />
-											</a>
-										
-											<!-- 실제 폼에 제출되는 이미지 값 -->
-											<input type="hidden" name="imagePath" value="empty" />
-											
-											<input type="hidden" name="ref_group" value="${dto.num }" />
-											<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
-											<button class="regist_btn" type="submit">등록</button>
-										</form>
-									</div> 
-									
-									<!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
-									<form id="imageForm"
-										action="${pageContext.request.contextPath}/shop/review_image_upload"
-										method="post" enctype="multipart/form-data">
-										사진 <input type="file" id="image" name="image"
-											accept=".jpg, .png, .gif, .jpeg" />
-										<button type="submit">업로드</button>
-									</form>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					
-					<nav>
+				<nav>
 						<ul class="pagination" style="margin: 10px;">
 							
 							<c:if test="${rvStartPageNum ne 1 }">
@@ -537,153 +723,13 @@
 	    } 
 	});    
 	</script>
-	
-	<!-- tab menu 컨트롤 코드 -->
 	<script>
-		window.onload = function() {
-			if(sessionStorage.getItem("beforePage")==null){
-				var beforePage=1;
-			}else{
-				var beforePage=sessionStorage.getItem("beforePage");
-			}
-
-			if(sessionStorage.getItem("beforePage")==1){
-				$("#btn_1").css({"background-color" : "#B2CCFF"})
-				$("#btn_2").css({"background-color" : "#D5D5D5"})
-				$("#btn_3").css({"background-color" : "#D5D5D5"})
-				$("#btn_4").css({"background-color" : "#D5D5D5"})
-				$(".table_1").show();
-				$(".table_2").hide();
-				$(".table_3").hide();
-				$(".table_4").hide();
-				console.log("온로드 : "+beforePage);
-			}else if(sessionStorage.getItem("beforePage")==2){
-				$("#btn_1").css({"background-color" : "#D5D5D5"})
-				$("#btn_2").css({"background-color" : "#B2CCFF"})
-				$("#btn_3").css({"background-color" : "#D5D5D5"})
-				$("#btn_4").css({"background-color" : "#D5D5D5"})
-				$(".table_1").hide();
-				$(".table_2").show();
-				$(".table_3").hide();
-				$(".table_4").hide();
-				console.log("온로드 : "+beforePage);
-			}else if(sessionStorage.getItem("beforePage")==3){
-				$("#btn_1").css({"background-color" : "#D5D5D5"})
-				$("#btn_2").css({"background-color" : "#D5D5D5"})
-				$("#btn_3").css({"background-color" : "#B2CCFF"})
-				$("#btn_4").css({"background-color" : "#D5D5D5"})
-				$(".table_1").hide();
-				$(".table_2").hide();
-				$(".table_3").show();
-				$(".table_4").hide();
-				console.log("온로드 : "+beforePage);
-			}else if(sessionStorage.getItem("beforePage")==4){
-				$("#btn_1").css({"background-color" : "#D5D5D5"})
-				$("#btn_2").css({"background-color" : "#D5D5D5"})
-				$("#btn_3").css({"background-color" : "#D5D5D5"})
-				$("#btn_4").css({"background-color" : "#B2CCFF"})
-				$(".table_1").hide();
-				$(".table_2").hide();
-				$(".table_3").hide();
-				$(".table_4").show();
-				console.log("온로드 : "+beforePage);
-			}
+		let selector = document.getElementsByClassName("menu_price");
+		for(let i=0; i<selector.length; i++){
+			document.getElementsByClassName("menu_price")[i].innerText = document.getElementsByClassName("menu_price")[i].innerText.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 		}
-		$(document).ready(function() {
-			$(".card-body a").click(function() {
-				$("#btn_1").css({"background-color" : "#B2CCFF"})
-				$("#btn_2").css({"background-color" : "#D5D5D5"})
-				$("#btn_3").css({"background-color" : "#D5D5D5"})
-				$("#btn_4").css({"background-color" : "#D5D5D5"})
-				$(".table_1").show();
-				$(".table_2").hide();
-				$(".table_3").hide();
-				$(".table_4").hide();
-				beforePage=1;
-				sessionStorage.setItem("beforePage", beforePage);
-				console.log("카드인포 : "+beforePage);
-			})
-			$("#btn_1").click(function() {
-				$("#btn_1").css({"background-color" : "#B2CCFF"})
-				$("#btn_2").css({"background-color" : "#D5D5D5"})
-				$("#btn_3").css({"background-color" : "#D5D5D5"})
-				$("#btn_4").css({"background-color" : "#D5D5D5"})
-				$(".table_1").show();
-				$(".table_2").hide();
-				$(".table_3").hide();
-				$(".table_4").hide();
-				beforePage=1;
-				sessionStorage.setItem("beforePage", beforePage);
-				console.log("버튼1 : "+beforePage);
-			})
-			$("#btn_2").click(function() {
-				$("#btn_1").css({"background-color" : "#D5D5D5"})
-				$("#btn_2").css({"background-color" : "#B2CCFF"})
-				$("#btn_3").css({"background-color" : "#D5D5D5"})
-				$("#btn_4").css({"background-color" : "#D5D5D5"})
-				$(".table_1").hide();
-				$(".table_2").show();
-				$(".table_3").hide();
-				$(".table_4").hide();
-				beforePage=2;
-				sessionStorage.setItem("beforePage", beforePage);
-				console.log("버튼2 : "+beforePage);
-			})
-			$("#btn_3").click(function() {
-				$("#btn_1").css({"background-color" : "#D5D5D5"})
-				$("#btn_2").css({"background-color" : "#D5D5D5"})
-				$("#btn_3").css({"background-color" : "#B2CCFF"})
-				$("#btn_4").css({"background-color" : "#D5D5D5"})
-				$(".table_1").hide();
-				$(".table_2").hide();
-				$(".table_3").show();
-				$(".table_4").hide();
-				beforePage=3;
-				sessionStorage.setItem("beforePage", beforePage);
-				console.log("버튼3 : "+beforePage);
-			})
-			$("#btn_4").click(function() {
-				$("#btn_1").css({"background-color" : "#D5D5D5"})
-				$("#btn_2").css({"background-color" : "#D5D5D5"})
-				$("#btn_3").css({"background-color" : "#D5D5D5"})
-				$("#btn_4").css({"background-color" : "#B2CCFF"})
-				$(".table_1").hide();
-				$(".table_2").hide();
-				$(".table_3").hide();
-				$(".table_4").show();
-				beforePage=4;
-				sessionStorage.setItem("beforePage", beforePage);
-				console.log("버튼4 : "+beforePage);
-			})
-			$(".regist_btn").click(function() {
-				$("#btn_1").css({"background-color" : "#D5D5D5"})
-				$("#btn_2").css({"background-color" : "#D5D5D5"})
-				$("#btn_3").css({"background-color" : "#B2CCFF"})
-				$("#btn_4").css({"background-color" : "#D5D5D5"})
-				$(".table_1").hide();
-				$(".table_2").hide();
-				$(".table_3").show();
-				$(".table_4").hide();
-				beforePage=3;
-				sessionStorage.setItem("beforePage", beforePage);
-				console.log("등록버튼 : "+beforePage);
-			})
-			$(".page-link").click(function() {
-				$("#btn_1").css({"background-color" : "#D5D5D5"})
-				$("#btn_2").css({"background-color" : "#D5D5D5"})
-				$("#btn_3").css({"background-color" : "#B2CCFF"})
-				$("#btn_4").css({"background-color" : "#D5D5D5"})
-				$(".table_1").hide();
-				$(".table_2").hide();
-				$(".table_3").show();
-				$(".table_4").hide();
-				beforePage=3;
-				sessionStorage.setItem("beforePage", beforePage);
-				console.log("페이징버튼 : "+beforePage);
-			})
-
-		})
 	</script>
+
 	
 	<div class="footer">
 		<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
