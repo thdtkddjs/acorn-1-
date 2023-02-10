@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,9 +52,8 @@ public class UsersController {
 		return mView;
 	}
 	//로그인 폼 요청 처리
-	@RequestMapping(method=RequestMethod.GET, value="/users/loginform")
-	public String loginForm() {
-		
+	@RequestMapping("/users/loginform")
+	public String loginForm(HttpServletRequest request, HttpServletResponse response) {
 		return "users/loginform";
 	}
 	//로그인 요청 처리
@@ -77,10 +78,17 @@ public class UsersController {
 	}	
 	
 	@RequestMapping("/users/logout")
-	public String logout(HttpSession session) {
+	public ModelAndView logout(ModelAndView mView, HttpSession session, String url) {
 		//세션에서 id 라는 키값으로 저장된 값 삭제 
 		session.removeAttribute("id");
-		return "users/logout";
+
+		String encodedUrl=URLEncoder.encode(url);
+		mView.addObject("url", url);
+		mView.addObject("encodedUrl", encodedUrl);
+		
+		//view page 로 forward 이동해서 응답한다.
+		mView.setViewName("users/logout");
+		return mView;
 	}
 	//개인 정보 보기 요청 처리 
 	@RequestMapping("/users/info")

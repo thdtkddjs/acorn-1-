@@ -57,8 +57,7 @@
 					</div>
 					<div class="top_user">
 					<a href="${pageContext.request.contextPath}/users/signup_form"  class="sign_up btn btn-outline-success">SIGN-UP</a>
-						<a href="${pageContext.request.contextPath}/users/loginform"  class="login btn btn-outline-dark">LOGIN</a>
-						
+						<a id="login" href="javascript:"  class="login btn btn-outline-dark">LOGIN</a>
 					</div>
 				</div>
 			</c:when>
@@ -94,7 +93,7 @@
 						<a href="${pageContext.request.contextPath}/shop/insertform" class="reg_menu badge text-bg-success">REGIST SHOP</a>
 						<a href="${pageContext.request.contextPath}/users/list" class="userList_menu badge text-bg-warning">USER LIST</a>
 						<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
-						<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
+						<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
 					</div>
 				</div>
 			</c:when>
@@ -130,7 +129,7 @@
 						<a href="${pageContext.request.contextPath}/shop/insertform" class="reg_menu badge text-bg-success">REGIST SHOP</a>
 						<a href="${pageContext.request.contextPath}/users/list" class="userList_menu badge text-bg-warning">USER LIST</a>
 						<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
-						<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
+						<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
 					</div>
 				</div>
 			</c:otherwise>
@@ -846,6 +845,43 @@
 				document.querySelector("#thumbnailLink").innerHTML=img;
 			});
 		});
+		if(!isLogin){
+			document.querySelector("#login").addEventListener("click", function(){
+				const url = document.location.href;	
+				console.log(url);
+				var url1 = url.split("/");
+				console.log(url1);
+				var url2 = "/"+url1[4];
+				for(var i = 5; i < url1.length; i++) {
+					 url2 = url2+"/"+url1[i];
+				}
+				console.log(url2);
+				
+				const encodedUrl = encodeURIComponent(url2);
+				console.log(encodedUrl);
+				
+				
+				location.href= "${pageContext.request.contextPath}/users/loginform?url="+url2;
+			});
+		}else{
+			document.querySelector("#logout").addEventListener("click", function(){
+			const url = document.location.href;	
+			console.log(url);
+			var url1 = url.split("/");
+			console.log(url1);
+			var url2 = "/"+url1[4];
+			for(var i = 5; i < url1.length; i++) {
+				 url2 = url2+"/"+url1[i];
+			}
+			console.log(url2);
+			
+			const encodedUrl = encodeURIComponent(url2);
+			console.log(encodedUrl);
+			
+			
+			location.href= "${pageContext.request.contextPath}/users/logout?url="+url2;
+			});
+		}
    </script>
 </body>
 </html>
