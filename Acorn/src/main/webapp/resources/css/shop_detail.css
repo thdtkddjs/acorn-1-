@@ -262,13 +262,13 @@ input:focus{
 	margin-bottom : 25px;
 }
 
-.shop_board_info, .shop_board_menu{
-	padding : 5% 20%;
+.shop_board_info, .shop_board_menu, .shop_board_review{
+	padding : 5% 10%;
 }
 .shop_board_info_table, .shop_board_menu{
 	margin-top : 10px;
 }
-.shop_board_info>strong, .shop_board_menu>strong{
+strong{
 	font-size : 20px;
 }
 .shop_info_icon{
@@ -285,7 +285,6 @@ input:focus{
 }
 .shop_board_body2{
 	width : 60%;
-	height : 300px;
 	margin : auto;
 	background-color : white;
 	border : 1px solid #eaeaea;
@@ -295,7 +294,11 @@ input:focus{
 	height : 50px;
 }
 .shop_board_menu_list{
+	margin-top : 10px;
 	padding : 0;
+}
+.menu_insert{
+	float : right;
 }
 .menu_item{
 	list-style:none;
@@ -317,39 +320,64 @@ input:focus{
 	max-width : 300px;
     padding-left: 10px;
 }
+.shop_board_body3{
+	width : 60%;
+	margin : auto;
+	background-color : white;
+	border : 1px solid #eaeaea;
+}
+.review_img{
+	width : 100px;
+	height : 100px;
+}
+ul{
+	list-style-type: none;
+	padding : 0;
+	position : relative;
+	margin : 0;
+}
+
+.comment_box {
+	text-align: left;
+	height: 152px;
+	width: 590px;
+	padding: 0px;
+	margin: 5px 0 0 0;
+}
+/* 리뷰 프로필 이미지를 작은 원형으로 만든다. */
+.profile-image {
+	width: 30px;
+	height: 30px;
+	border: 1px solid white;
+	border-radius: 10px;
+}
+.review_profile {
+	background-color: white;
+	position: absolute;
+}
+.bg_bar{
+    background-color: #a1a1a1;
+    width: 1px;
+    height: 10px;
+    display: inline-block;
+    margin: 0px 1px;
+}
+#reli1{
+    width: 90%;
+    float: right;
+}
+
+
+
+
+
+
+
+
 
 /* 지도 */
 #map {
 	z-index: 2;
-}
-
-/* 탭 메뉴 */
-.table_1::-webkit-scrollbar, .table_2::-webkit-scrollbar, .table_3::-webkit-scrollbar, .table_4::-webkit-scrollbar {
-	width: 5px;
-	height: 0px;
-}
-.table_1::-webkit-scrollbar-thumb, .table_2::-webkit-scrollbar-thumb, .table_3::-webkit-scrollbar-thumb, .table_4::-webkit-scrollbar-thumb {
-	background-color: #2f3542;
-	border-radius: 10px;
-}
-.table_1::-webkit-scrollbar-track, .table_2::-webkit-scrollbar-track, .table_3::-webkit-scrollbar-track, .table_4::-webkit-scrollbar-track {
-}
-.table_1, .table_2, .table_3, .table_4 {
-	width: 972px;
-	height: 600px;
-	overflow: scroll;
-}
-
-/* 가게 소개 */
-.main_title {
-	height: 220px;
-	background-color: #edfffb;
-}
-.main_table {
-	width: 900px;
-}
-td>img {
-	width: 200px;
 }
 
 /* 리뷰 등록 버튼 */
@@ -365,55 +393,7 @@ button {
 button:hover {
 	background-color: skyblue;
 }
-.shop_info{
-   margin-left:100px;
-   margin-top:50px;
-   width : 400px;
-}
-#btn_1, #btn_2, #btn_3, #btn_4{
-   background-color : #D5D5D5;
-}
 
-#btn_1, #btn_2, #btn_3, #btn_4 {
-	background-color: #D5D5D5;
-}
-
-
-
-/* 리뷰 관련 스타일 */
-.content {
-	border: 1px dotted gray;
-}
-/* 리뷰 프로필 이미지를 작은 원형으로 만든다. */
-.profile-image {
-	width: 30px;
-	height: 30px;
-	border: 1px solid #cecece;
-	border-radius: 50%;
-}
-/* ul 요소의 기본 스타일 제거 */
-.reviews ul {
-	padding: 0;
-	margin: 0;
-	list-style-type: none;
-}
-
-.reviews dt {
-	margin-top: 10px;
-	position: relative;
-}
-
-.reviews dd {
-	margin-left: 50px;
-}
-
-.review-form textarea, .review-form button {
-	float: left;
-}
-
-.reviews li {
-	clear: left;
-}
 
 /* 댓글에 댓글을 다는 폼과 수정폼은 일단 숨긴다. */
 .reviews .review-form {
@@ -427,77 +407,26 @@ button:hover {
 	padding: 15px;
 }
 
-pre {
-	display: block;
-	padding: 9.5px;
-	margin: 0 0 10px;
-	font-size: 13px;
-	line-height: 1.42857143;
-	color: #333333;
-	word-break: break-all;
-	word-wrap: break-word;
-	background-color: #eeffee;
-	border: 1px solid #c9c9c9;
-	border-radius: 10px
-}
-
-@keyframes rotateAni { 
-	0%{transform: rotate(0deg);}
-	100%{transform;rotate(360deg);}
-}
-#profileImage {
-	width: 147px;
-	height: 147px;
-	border: 1px solid #cecece;
-	border-radius: 10px;
-}
 #imageForm {
 	display: none;
 }
 .col-2 {
 	width: auto;
-	border: 1px solid #c9c9c9;
-	border-radius: 10px;
 	padding: 0px;
 	overflow: hidden;
 }
 .col-8 {
 	padding: 0px;
 }
-.comment_box {
-	border: 1px solid #c9c9c9;
-	border-radius: 10px;
-	text-align: left;
-	height: 152px;
-	width: 590px;
-	padding: 0px;
-	margin: 0px;
-	margin-left: 3px;
-	padding: 15px;
-}
 
-.review_profile {
-	background-color: #feffe6;
-	right: 0px;
-	height: 152px;
-	width: 150px;
-	position: absolute;
-	padding: 10px;
-}
+
+
 
 .profile-image {
 	width: 50px;
 	height: 50px;
 }
 
-.review_img {
-	width: 200px;
-	height: 150px;
-}
-
-.row {
-	margin-left: 10px;
-}
 
 .update-link {
 	font-size: 15px;
@@ -521,17 +450,15 @@ pre {
 	left: 3px;
 	height: 35px;
 }
-.regist_comment_box {
+.regist_comment_box  {
 	width: 623px;
-    height: 106px;
-    background-color: #eeffee;
-    border: 1px solid #c9c9c9;
-    border-radius: 10px;
-   text-align : left;
-   padding : 0px;
-   margin : 0px;
-   margin-left : 3px;
-   padding : 15px;
+	height: 106px;
+	background-color: #eeffee;
+	border: 1px solid #c9c9c9;
+	border-radius: 10px;
+	text-align: left;
+	padding: 0px;
+	margin: 0px;
 }
 .comment_form_box{
     height: 170px; 
@@ -641,6 +568,7 @@ pre {
 	position: relative;
 	right: 370px;
 	bottom: 5px;
+	z-index : 1;
 }
 .startRadio:after {
 	content: "";
@@ -667,10 +595,10 @@ pre {
 	position: absolute !important;
 }
 .startRadio__box .point+.startRadio__img {
-	background-color: yellow;
+	background-color: #FFF136;
 }
 .startRadio__box input:checked+.startRadio__img {
-	background-color: yellow;
+	background-color: #FFF136;
 }
 .startRadio__img {
 	display: block;
@@ -719,26 +647,21 @@ pre {
 	right: 190px;
 }
 .review_title_box {
-	padding-left: 10px;
-	padding-right: 10px;
-	background-color: #eeffee;
-	border: 1px solid #c9c9c9;
-	border-radius: 5px;
+	background-color: white;
+	border: none;
 	position: relative;
 	left: 3px;
 	height: 35px;
 }
 .review_content_box {
-	width: 555px;
 	height: 80px;
-	background-color: #eeffee;
-	border: 1px solid #c9c9c9;
-	border-radius: 10px;
+	background-color: white;
+	border:none;
 	text-align: left;
 	padding: 0px;
 	margin: 0px;
 	margin-left: 3px;
-	padding: 15px;
+	resize: none;
 }
 
 
