@@ -3,7 +3,7 @@
 
 /* 기본 UI */
 .header_inner {
-	opacity: 0.9;
+	opacity: 95%;
     background-color: white;
     position: fixed;
     width: 100%;
@@ -43,6 +43,7 @@
 	margin:5px;
 }
 .logo_text{
+	width:300px;
 	display: flex; 
 	position: fixed;
 	text-decoration : none;
@@ -50,7 +51,7 @@
 	font-weight : bold;
 }
 .top_menu{
-	width : 70%;
+	width : 67%;
 	right : 10%;
 	display: flex;
     position: fixed;
@@ -74,35 +75,81 @@
 }
 .top_menu>.top_nav{
 	position : absolute;
-	left : 16%;
+	left : 7%;
+	z-index : 1;
 }
 .top_nav{
-    width: 500px;
+    width: 41%;
     height: 50px;
     display: flex;
     position: fixed;
     text-decoration: none;
+    text-wieght : bold;
     padding: 0px;
     align-items: center;
-    left: 20%;
     weight : 10;
 }
 .top_nav>a{
+	color : black;
+	font-weight : bold;
 	text-decoration : none;
 	margin-right : 20px;
 }
-@media (max-width : 1200px){
-	.top_nav{
+
+@media (max-width : 1425px){
+	#research{
 		display : none;
 	}
 }
-@media (max-width : 800px){
+@media (max-width : 1300px){
+	.top_menu>.top_nav{
+		left : 14%;
+	}
+}
+@media (max-width : 1200px){
+	#hot_place{
+		display : none;
+	}
+	.top_user>.sign_up{
+		display : none;
+	}
+	.logout_menu{
+		display : none;
+	}
+}
+@media (max-width : 1100px){
+	.top_menu>.top_nav{
+		left : 21%;
+	}
+}
+@media (max-width : 1000px){
+	#category{
+		display:none;
+	}
+	.top_menu>.top_nav{
+		left : 30%;
+	}
+}
+@media (max-width : 875px){
+	.top_menu>.top_nav{
+		display : none;
+	}
 	.reg_menu{
 		display : none;
 	}
 }
+@media (max-width : 750px){
+	.top_menu>.search_menu{
+		right : -13%;
+	}
+
+}
+
 @media (max-width : 700px){
 	.userList_menu{
+		display : none;
+	}
+	.top_menu>.search_menu{
 		display : none;
 	}
 }
@@ -117,6 +164,9 @@
 @media (max-width : 520px){
 	.top_user>.login{
 		display : none;
+	}
+	.logo_text{
+	    place-content: center;
 	}
 }
 @media (max-width : 620px){
@@ -134,21 +184,19 @@
 	height : 50px;
 	position : fixed;
 }
-@media (max-width : 1200px){
-	.sm_menu{
-		display : flex;
-	}
-}
 
 
 
 /* search menu */
 .search_menu {
-	padding-top : 30px;
-	height : 120px;
-	grid-area: search;
-	z-index: 3;
-	position: relative;
+    width: auto;
+    display: flex;
+    height: 50px;
+    z-index: 3;
+    position: relative;
+    flex: auto;
+    right: -15%;
+    z-index :0;
 }
 .search_box{
 	position: relative;
@@ -176,7 +224,7 @@ input:focus{
 	border-color: rgb(64, 219, 43);
 	border-radius: 5px;
 	margin: auto;
-	width: 40%;
+	width: 25%;
 }
 .search_bar>form>input {
 	width: 250px;
@@ -184,12 +232,7 @@ input:focus{
 	border: none;
 	font-size: large;
 }
-.search_result {
-	grid-area: main;
-	width: 100%;
-	height: 680px;
-	text-align: center;
-}
+
 
 .category{
 	display : flex;
@@ -223,6 +266,9 @@ input:focus{
 	width : 125px;
 	height : 125px;
 	overflow : hidden;
+}
+.block_content_top{
+	height : 50px;
 }
 .block_content{
 	height : 450px;

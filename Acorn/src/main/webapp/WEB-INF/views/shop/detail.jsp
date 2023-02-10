@@ -7,397 +7,493 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>detail.jsp</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-	crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
-	integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
-	crossorigin="anonymous"></script>
+<title>index.jsp</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<link rel="shortcut icon" href="#">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 	<link rel="stylesheet" type="text/css" href="../resources/css/shop_detail.css">
 </head>
 
 <body>
-	<div class="container">
-		<div class="header">
-			<c:choose>
-				<c:when test="${ empty sessionScope.id}">
-					<a href="${pageContext.request.contextPath}" class="logo_text">
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/cloud${dto.num}.png" alt="" style ="height:40px; margin:5px;"/>
-						<p class="cloud_effect">FOOD CLOUD</p>
-					</a>
-					<a id="login" href="javascript:" class="top_menu btn btn-outline-dark">LOGIN</a>
-					<a href="${pageContext.request.contextPath}/users/signup_form" class="top_menu btn btn-outline-success">SIGN-UP</a>
-				</c:when>
-				<c:when test="${sessionScope.id eq 'admin'}">
-					<a href="${pageContext.request.contextPath}" class="logo_text">
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/cloud${dto.num}.png" alt="" />
-						<p class="cloud_effect">FOOD CLOUD</p>
-					</a>
-					<a href="${pageContext.request.contextPath}/shop/insertform" class="user_menu badge text-bg-success">REGIST SHOP</a>
-					<a href="${pageContext.request.contextPath}/users/list" class="user_menu badge text-bg-warning">USER LIST</a>
-					<a href="${pageContext.request.contextPath}/users/info" class="rainbow_effect user_menu badge">${sessionScope.id }</a>
-					<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger">LOGOUT</a>
-				</c:when>
-				<c:otherwise>
-					<a href="${pageContext.request.contextPath}" class="logo_text">
-						<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/cloud${dto.num}.png" alt="" />
-						<p class="cloud_effect">FOOD CLOUD</p>
-					</a>
-					<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
-					<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger">LOGOUT</a>
-				</c:otherwise>
-			</c:choose>
+	<div class="header_inner">
+		<div class="sm_menu">
+			<img src="${pageContext.request.contextPath}/resources/images/hidden_menu.png" alt="" />
 		</div>
-		
-		<div class="search_menu">
-			<div class="search_bar">
-				<form action="${pageContext.request.contextPath}/index/" method="post">
-					<div class="serch_box">
-						<button type="submit" style="display: contents">
-							<img class="search_img" src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png" alt="" />
-						</button>
-						<input class="search_input" type="text" name="keyword" value="${keyword}" placeholder="가게 명을 입력하세요...">
+	
+		<c:choose>
+			<c:when test="${ empty sessionScope.id}">
+				<a href="${pageContext.request.contextPath}" class="logo_text">
+					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
+					<p class="cloud_effect">FOOD CLOUD</p>
+				</a>
+				<div class="top_menu">
+					<div class="top_nav">
+						<a href="${pageContext.request.contextPath}/" id="top">TOP</a>
+						<a href="" id="info">INFO</a>
+						<a href="" id="menu">MENU</a>
+						<a href="" id="review">REVIEW</a>
 					</div>
-				</form>
+					<div class="search_menu">
+						<div class="search_bar">
+							<form action="${pageContext.request.contextPath}/index/"
+								method="post">
+								<div class="search_box">
+									<button type="submit" style="display: contents">
+										<img class="search_img"
+											src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
+											alt="" />
+									</button>
+									<input class="search_input" type="text" name="keyword"
+										value="${keyword}" placeholder="검색어를 입력해주세요...">
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="top_user">
+					<a href="${pageContext.request.contextPath}/users/signup_form"  class="sign_up btn btn-outline-success">SIGN-UP</a>
+						<a id="login" href="javascript:"  class="login btn btn-outline-dark">LOGIN</a>
+					</div>
+				</div>
+			</c:when>
+			<c:when test="${sessionScope.id eq 'admin'}">
+				<a href="${pageContext.request.contextPath}" class="logo_text">
+					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
+					<p class="cloud_effect">FOOD CLOUD</p>
+				</a>
+				<div class="top_menu">
+						<div class="top_nav">
+							<a href="${pageContext.request.contextPath}/ id="top">TOP</a>
+							<a href="" id="info">INFO</a>
+							<a href="" id="menu">MENU</a>
+							<a href="" id="review">REVIEW</a>
+						</div>
+						<div class="search_menu">
+							<div class="search_bar">
+								<form action="${pageContext.request.contextPath}/index/"
+									method="post">
+									<div class="search_box">
+										<button type="submit" style="display: contents">
+											<img class="search_img"
+												src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
+												alt="" />
+										</button>
+										<input class="search_input" type="text" name="keyword"
+											value="${keyword}" placeholder="검색어를 입력해주세요...">
+									</div>
+								</form>
+							</div>
+						</div>
+					<div class="top_user">
+						<a href="${pageContext.request.contextPath}/shop/insertform" class="reg_menu badge text-bg-success">REGIST SHOP</a>
+						<a href="${pageContext.request.contextPath}/users/list" class="userList_menu badge text-bg-warning">USER LIST</a>
+						<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
+						<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
+					</div>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<a href="${pageContext.request.contextPath}" class="logo_text">
+					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
+					<p class="cloud_effect">FOOD CLOUD</p>
+				</a>
+				<div class="top_menu">
+					<div class="top_nav">
+						<a href="${pageContext.request.contextPath}/">HOME</a>
+						<a href="">CATEGORY</a>
+						<a href="">HOT PLACE</a>
+						<a href="">RESEARCH</a>
+					</div>
+					<div class="search_menu">
+						<div class="search_bar">
+							<form action="${pageContext.request.contextPath}/index/"
+								method="post">
+								<div class="search_box">
+									<button type="submit" style="display: contents">
+										<img class="search_img"
+											src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
+											alt="" />
+									</button>
+									<input class="search_input" type="text" name="keyword"
+										value="${keyword}" placeholder="검색어를 입력해주세요...">
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="top_user">
+						<a href="${pageContext.request.contextPath}/shop/insertform" class="reg_menu badge text-bg-success">REGIST SHOP</a>
+						<a href="${pageContext.request.contextPath}/users/list" class="userList_menu badge text-bg-warning">USER LIST</a>
+						<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
+						<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
+					</div>
+				</div>
+			</c:otherwise>
+		</c:choose>
+	</div>
+	<div class="shop">
+		<div class="shop_board_top">
+			<h1>대충 가게 전경 사진 올리는 곳</h1>
+		</div>
+		<div class="shop_board_body1">
+			<div class="shop_board_title">
+				${dto.title }
+				<br />
+				소개 : ${dto.content}
+				<br />
+				총 리뷰 수 :  ${reviewCount} 회
+				<br />
+				# ${dto.categorie}
+				
 			</div>
 
-			<hr>
-			<div class="suggest_menu">
-				<c:choose>
-					<c:when test="${ empty keyword}">
-						<h5 style="margin-left: 20px;">STORE LIST</h5>
-					</c:when>
-					<c:otherwise>
-						<h5 style="margin-left: 20px;">
-							<strong>"${keyword}"</strong>로 검색한 결과
-						</h5>
-					</c:otherwise>
-				</c:choose>
-
-				<c:forEach var="tmp" items="${list }">
-					<div class="card" style="width: 18rem;">
-						<img src="${pageContext.request.contextPath}/${tmp.imagePath}" class="card-img-top" alt="...">
-						
-						<div class="card-body">
-							<h5 class="card-title">${tmp.title }</h5>
-							<p class="card-text">${tmp.content}</p>
-							<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}"
-								class="btn btn-primary" id="card_info">INFO</a>
-						</div>
-						
-					</div>
-					<br>
-				</c:forEach>
-            </div>
-        </div>
-        
-        <div class="search_result">
-                <div class="main_content">
-		            <div class="content_images">
-
-						<div class="main_title">
-							<div id="map"style="width: 300px; height: 220px; margin: auto; float: right; "></div>
-
-							<br>
-							<br> 
-							<Strong style="font-size : 30px;">${dto.title}</Strong>
-							<br /><br /><br />
-							<p>리뷰 ${reviewCount} 회</p>
-							<p style="margin: 0px;"></p>
-						</div>
-						<div class=btn_box>
-							<button type="button" id="btn_1"><span>가게 소개</span></button>
-							<button type="button" id="btn_2"><span>메뉴</span></button>
-							<button type="button" id="btn_3"><span>리뷰</span></button>
-							<button class="rainbow_effect" type="button" id="btn_4"><span class="rainbow_effect">★</span></button>
-						</div>
-					<div class="table_1" style="display:none;">
+			<div class="shop_board_info">
+				<strong>가게 정보</strong>
+				<table class="shop_board_info_table">
+					<tbody>
+						<tr>
+							<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png" alt="주소" class="shop_info_icon" title="주소"/></td>
+							<td class="table_content">${dto.addr}</td>
+						</tr>
+						<tr>
+							<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/runningtime.png" alt="영업시간" class="shop_info_icon" title="영업 시간"/></td>
+							<td class="table_content">영업 시작 : ${startTime}</td>
+						</tr>
+						<tr>
+							<td class="table_icon"></td>
+							<td class="table_content">영업 종료 : ${endTime}</td>
+						</tr>
+						<tr>
+							<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/callnumber.png" alt="전화번호" class="shop_info_icon" title="전화번호"/></td>
+							<td class="table_content">${dto.telNum}</td>
+						</tr>
+						<tr>
+							<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/hashtag.png" alt="대표 키워드" class="shop_info_icon" title="대표 키워드"/></td>
+							<td class="table_content">평점 몇점 이상 #맛집, 리뷰 많으면 #이구역최대리뷰 </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+			
+		<div class="shop_board_separator"></div>
+		<div class="shop_board_body2">
+				<div class="shop_board_menu">				
+					<strong>메뉴</strong>
+					<ul class="shop_board_menu_list">
+						<c:forEach var="tmp" items="${menuList }">
+							<li class="menu_item">
+								<div class="menu_name_price">
+									<span class="menu_name">${tmp.name}</span>
+									<span class="menu_price">${tmp.price}</span>
+								</div>
+							</li>
+						</c:forEach>
+					</ul>
+				</div>
 						<c:if test="${sessionScope.id eq 'admin'}">
-							<a href="delete?num=${ dto.num}" style="display: block; width: 101%;"
-								class="btn btn-outline-danger">가게 삭제</a>
+							<a
+								href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}"
+								style="display: block; width: 101%;"
+								class="btn btn-outline-warning">메뉴 추가</a>
+						</c:if>
+		</div>
+	</div>
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div style="height : 600px;"></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<div class="container">
+
+       
+       <div class="search_result">
+               <div class="main_content">
+	            <div class="content_images">
+
+					<div class="main_title">
+						<div id="map"style="width: 300px; height: 220px; margin: auto; float: right; "></div>
+
+						<br>
+						<br> 
+						<Strong style="font-size : 30px;">${dto.title}</Strong>
+						<br /><br /><br />
+						<p>리뷰 ${reviewCount} 회</p>
+						<p style="margin: 0px;"></p>
+					</div>
+					<div class=btn_box>
+						<button type="button" id="btn_1"><span>가게 소개</span></button>
+						<button type="button" id="btn_2"><span>메뉴</span></button>
+						<button type="button" id="btn_3"><span>리뷰</span></button>
+						<button class="rainbow_effect" type="button" id="btn_4"><span class="rainbow_effect">★</span></button>
+					</div>
+
+				
+				<div class="table_2" style="display: none;">
+					<table>
+						<c:if test="${sessionScope.id eq 'admin'}">
+							<a
+								href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}"
+								style="display: block; width: 101%;"
+								class="btn btn-outline-warning">메뉴 추가</a>
 						</c:if>
 						
-						<div class="table1_warpper">
-							<table class="shop_info">
-								<tbody>
-									<tr class=shopInfo>
-										<td style="border-right: 1px solid gray">소개</td>
-										<td>${dto.content}</td>
-									</tr>
-									<tr style="height: 40px"></tr>
-									<tr class=shopInfo>
-										<td style="border-right: 1px solid gray">카테고리</td>
-										<td>${dto.categorie}</td>
-									</tr>
-									<tr style="height: 40px"></tr>
-									<tr class=shopInfo>
-										<td style="border-right: 1px solid gray">영업 시간</td>
-										<td>${startTime}~ ${endTime}</td>
-									</tr>
-									<tr style="height: 40px"></tr>
-									<tr class=shopInfo>
-										<td style="border-right: 1px solid gray">주소</td>
-										<td>${dto.addr}</td>
-									</tr>
-									<tr style="height: 40px"></tr>
-									<tr class=shopInfo>
-										<td style="border-right: 1px solid gray">전화 번호</td>
-										<td>${dto.telNum}</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-					
-					<div class="table_2" style="display: none;">
-						<table>
-							<c:if test="${sessionScope.id eq 'admin'}">
-								<a
-									href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}"
-									style="display: block; width: 101%;"
-									class="btn btn-outline-warning">메뉴 추가</a>
-							</c:if>
-							
-							<tbody>
-								<c:forEach var="tmp" items="${menuList }">
-									<div class="menu_card card">
-										<img src="${pageContext.request.contextPath}/${tmp.imagePath}"
-											class="card-img-top" alt="...">
-										
-										<div class="card-body">
-											<h5 class="card-title">${tmp.name}</h5>
-											<p class="card-text">${tmp.content}</p>
-											<p class="btn btn-primary">${tmp.price }원</p>
-										</div>
+						<tbody>
+							<c:forEach var="tmp" items="${menuList }">
+								<div class="menu_card card">
+									<img src="${pageContext.request.contextPath}/${tmp.imagePath}"
+										class="card-img-top" alt="...">
+									
+									<div class="card-body">
+										<h5 class="card-title">${tmp.name}</h5>
+										<p class="card-text">${tmp.content}</p>
+										<p class="btn btn-primary">${tmp.price }원</p>
 									</div>
-								</c:forEach>
-							</tbody>
-						</table>
-					</div>
-					
-					<div class="table_3" style="display: none;">
-						<table style="width: 950px;">
-							<tbody>
-								<tr>
-									<td>평점 : ${grade}</td>
-								</tr>
-								<tr>
-									<td>
-										<div class="reviews">
-											<ul>
-												<c:forEach var="tmp" items="${reviewList }">
-													<c:choose>
-														<c:when test="${tmp.deleted eq 'yes' }">
-															<dt class="row" style="height:152px; border: 1px solid #c9c9c9; border-radius: 10px; padding-top:60px;">
-																<li>삭제된 리뷰 입니다.</li>
-															</dt>
-														</c:when>
-														<c:otherwise>
-															<c:if test="${tmp.num eq tmp.review_group }">
-																<li id="reli${tmp.num }">
-															</c:if>
+								</div>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				
+				<div class="table_3" style="display: none;">
+					<table style="width: 950px;">
+						<tbody>
+							<tr>
+								<td>평점 : ${grade}</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="reviews">
+										<ul>
+											<c:forEach var="tmp" items="${reviewList }">
+												<c:choose>
+													<c:when test="${tmp.deleted eq 'yes' }">
+														<dt class="row" style="height:152px; border: 1px solid #c9c9c9; border-radius: 10px; padding-top:60px;">
+															<li>삭제된 리뷰 입니다.</li>
+														</dt>
+													</c:when>
+													<c:otherwise>
+														<c:if test="${tmp.num eq tmp.review_group }">
+															<li id="reli${tmp.num }">
+														</c:if>
 
-															<dl>
-																<dt class="row">
-																	<div class="col-2">
-																		<c:choose>
-																			<c:when
-																				test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
-																				<img class="review_img"
-																					src="${pageContext.request.contextPath}/resources/images/photo.png" />
-																			</c:when>
-																			<c:otherwise>
-																				<img class="review_img"
-																					src="${pageContext.request.contextPath}${tmp.imagePath}" />
-																			</c:otherwise>
-																		</c:choose>
+														<dl>
+															<dt class="row">
+																<div class="col-2">
+																	<c:choose>
+																		<c:when
+																			test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
+																			<img class="review_img"
+																				src="${pageContext.request.contextPath}/resources/images/photo.png" />
+																		</c:when>
+																		<c:otherwise>
+																			<img class="review_img"
+																				src="${pageContext.request.contextPath}${tmp.imagePath}" />
+																		</c:otherwise>
+																	</c:choose>
+																</div>
+																
+																<div class="col-8">
+																	<div class="comment_box" id="pre${tmp.num }">
+																		<input class="review_title_box" type="text"
+																			name="title" id="spt${tmp.num }"
+																			value="${tmp.title}" disabled />
+
+																		<div class="startRadio"
+																			style="pointer-events: none; display: inline-block; overflow: hidden; height: 40px; float: right; position: relative; right: 140px; bottom: 5px; z-index: 9;">
+																			<c:forEach var="i" begin="0" end="9">
+																				<label class="startRadio__box"> 
+																				<input type="radio" name="grade_number" value=${i } ${tmp.grade eq (i/2+0.5) ? 'class="point"' : '' }> 
+																				<span class="startRadio__img">
+																					<span class="blind">별 ${(i/2+0.5) }개</span>
+																				</span>
+																				</label>
+																			</c:forEach>
+																		</div>
+																		<br />
+																		<textarea class="review_content_box"
+																			id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
 																	</div>
 																	
-																	<div class="col-8">
-																		<div class="comment_box" id="pre${tmp.num }">
-																			<input class="review_title_box" type="text"
-																				name="title" id="spt${tmp.num }"
-																				value="${tmp.title}" disabled />
-
-																			<div class="startRadio"
-																				style="pointer-events: none; display: inline-block; overflow: hidden; height: 40px; float: right; position: relative; right: 140px; bottom: 5px; z-index: 9;">
+																	<!-- 수정폼 -->
+																	<c:if test="${tmp.writer eq id }">
+																		<form id="updateForm${tmp.num }"
+																			class="review-form update-form"
+																			action="review_update" method="post">
+																			<input type="hidden" name="num" value="${tmp.num }" />
+																			<input type="text" name="title"
+																				value="${tmp.title }" />
+																			<div class="startRadio">
 																				<c:forEach var="i" begin="0" end="9">
 																					<label class="startRadio__box"> 
-																					<input type="radio" name="grade_number" value=${i } ${tmp.grade eq (i/2+0.5) ? 'class="point"' : '' }> 
+																					<input type="radio" name="grade_number" value=${i } ${tmp.grade eq (i/2+0.5) ? 'checked' : '' } disabled> 
 																					<span class="startRadio__img">
 																						<span class="blind">별 ${(i/2+0.5) }개</span>
 																					</span>
 																					</label>
 																				</c:forEach>
 																			</div>
-																			<br />
-																			<textarea class="review_content_box"
-																				id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
-																		</div>
-																		
-																		<!-- 수정폼 -->
-																		<c:if test="${tmp.writer eq id }">
-																			<form id="updateForm${tmp.num }"
-																				class="review-form update-form"
-																				action="review_update" method="post">
-																				<input type="hidden" name="num" value="${tmp.num }" />
-																				<input type="text" name="title"
-																					value="${tmp.title }" />
-																				<div class="startRadio">
-																					<c:forEach var="i" begin="0" end="9">
-																						<label class="startRadio__box"> 
-																						<input type="radio" name="grade_number" value=${i } ${tmp.grade eq (i/2+0.5) ? 'checked' : '' } disabled> 
-																						<span class="startRadio__img">
-																							<span class="blind">별 ${(i/2+0.5) }개</span>
-																						</span>
-																						</label>
-																					</c:forEach>
-																				</div>
 
-																				<textarea name="content">${tmp.content }</textarea>
-																				<button type="submit" id="ur${tmp.num }"
-																					class=comment_edit_btn>수정</button>
-																			</form>
-																		</c:if>
-																	</div>
-																	
-																	<div class="review_profile col-2 ">
-																		<c:if test="${ empty tmp.profile }">
-																			<svg class="profile-image"
-																				xmlns="http://www.w3.org/2000/svg" width="16"
-																				height="16" fill="currentColor"
-																				class="bi bi-person-circle" viewBox="0 0 16 16">
-									                                      <path
-																					d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-									                                      <path fill-rule="evenodd"
-																					d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-									                                    </svg>
-																		</c:if>
-																		<c:if test="${not empty tmp.profile }">
-																			<img class="profile-image"
-																				src="${pageContext.request.contextPath}${tmp.profile }" />
-																		</c:if>
-																		<br> <span class="col">${tmp.writer }</span> <br>
-																		<span style="font-weight: 100;">${tmp.regdate }</span>
+																			<textarea name="content">${tmp.content }</textarea>
+																			<button type="submit" id="ur${tmp.num }"
+																				class=comment_edit_btn>수정</button>
+																		</form>
+																	</c:if>
+																</div>
+																
+																<div class="review_profile col-2 ">
+																	<c:if test="${ empty tmp.profile }">
+																		<svg class="profile-image"
+																			xmlns="http://www.w3.org/2000/svg" width="16"
+																			height="16" fill="currentColor"
+																			class="bi bi-person-circle" viewBox="0 0 16 16">
+								                                      <path
+																				d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+								                                      <path fill-rule="evenodd"
+																				d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+								                                    </svg>
+																	</c:if>
+																	<c:if test="${not empty tmp.profile }">
+																		<img class="profile-image"
+																			src="${pageContext.request.contextPath}${tmp.profile }" />
+																	</c:if>
+																	<br> <span class="col">${tmp.writer }</span> <br>
+																	<span style="font-weight: 100;">${tmp.regdate }</span>
 
-																		<br>
+																	<br>
 
-																		<c:choose>
-																			<c:when
-																				test="${ (id ne null) and (tmp.writer eq id) }">
-																				<a data-num="${tmp.num }"
-																					class="update-link btn btn-warning"
-																					href="javascript:">수정</a>
-																				<a data-num="${tmp.num }"
-																					class="delete-link btn btn-danger"
-																					href="javascript:">삭제</a>
-																			</c:when>
-																			<c:when test="${id eq 'admin' }">
-																				<a data-num="${tmp.num }"
-																					class="delete-link btn btn-danger"
-																					href="javascript:">삭제</a>
-																			</c:when>
-																		</c:choose>
-																	</div>
-																</dt>
+																	<c:choose>
+																		<c:when
+																			test="${ (id ne null) and (tmp.writer eq id) }">
+																			<a data-num="${tmp.num }"
+																				class="update-link btn btn-warning"
+																				href="javascript:">수정</a>
+																			<a data-num="${tmp.num }"
+																				class="delete-link btn btn-danger"
+																				href="javascript:">삭제</a>
+																		</c:when>
+																		<c:when test="${id eq 'admin' }">
+																			<a data-num="${tmp.num }"
+																				class="delete-link btn btn-danger"
+																				href="javascript:">삭제</a>
+																		</c:when>
+																	</c:choose>
+																</div>
+															</dt>
 
-															</dl>
-														</c:otherwise>
-													</c:choose>
+														</dl>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</ul>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="left: 10px; position: relative;">
+									<!-- 원글에 리뷰를 작성할 폼 -->
+									<div class="comment_form_box">
+										<form class="review-form insert-form" action="review_insert"
+											method="post">
+											<input type="text" name="title" id="title"
+												placeholder="한줄평 입력..." />
+											<div class="startRadio">
+												<c:forEach var="i" begin="0" end="9">
+													<label class="startRadio__box"> 
+													<input type="radio" name="grade_number" value=${i } ${i eq 9 ? 'checked' : '' }> 
+													<span class="startRadio__img">
+														<span class="blind">별 ${(i/2+0.5) }개</span>
+													</span>
+													</label>
 												</c:forEach>
-											</ul>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td style="left: 10px; position: relative;">
-										<!-- 원글에 리뷰를 작성할 폼 -->
-										<div class="comment_form_box">
-											<form class="review-form insert-form" action="review_insert"
-												method="post">
-												<input type="text" name="title" id="title"
-													placeholder="한줄평 입력..." />
-												<div class="startRadio">
-													<c:forEach var="i" begin="0" end="9">
-														<label class="startRadio__box"> 
-														<input type="radio" name="grade_number" value=${i } ${i eq 9 ? 'checked' : '' }> 
-														<span class="startRadio__img">
-															<span class="blind">별 ${(i/2+0.5) }개</span>
-														</span>
-														</label>
-													</c:forEach>
-												</div>
-												
-												<!-- 유저가 사진 등록을 위해 클릭하게 될 이미지 -->
-												<a id="thumbnailLink" href="javascript:"
-													style="float: left;"> <img class="comment_img"
-													src="${pageContext.request.contextPath}/resources/images/photo.png"
-													alt="" />
-												</a>
+											</div>
 											
-												<!-- 실제 폼에 제출되는 이미지 값 -->
-												<input type="hidden" name="imagePath" value="empty" />
-												
-												<input type="hidden" name="ref_group" value="${dto.num }" />
-												<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
-												<button class="regist_btn" type="submit">등록</button>
-											</form>
-										</div> 
+											<!-- 유저가 사진 등록을 위해 클릭하게 될 이미지 -->
+											<a id="thumbnailLink" href="javascript:"
+												style="float: left;"> <img class="comment_img"
+												src="${pageContext.request.contextPath}/resources/images/photo.png"
+												alt="" />
+											</a>
 										
-										<!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
-										<form id="imageForm"
-											action="${pageContext.request.contextPath}/shop/review_image_upload"
-											method="post" enctype="multipart/form-data">
-											사진 <input type="file" id="image" name="image"
-												accept=".jpg, .png, .gif, .jpeg" />
-											<button type="submit">업로드</button>
+											<!-- 실제 폼에 제출되는 이미지 값 -->
+											<input type="hidden" name="imagePath" value="empty" />
+											
+											<input type="hidden" name="ref_group" value="${dto.num }" />
+											<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
+											<button class="regist_btn" type="submit">등록</button>
 										</form>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						
-						<nav>
-							<ul class="pagination" style="margin: 10px;">
-								
-								<c:if test="${rvStartPageNum ne 1 }">
-									<li class="page-item"><a class="page-link"
-										href="detail?num=${dto.num}&rvPageNum=${rvStartPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
-									</li>
-								</c:if>
-								
-								<c:forEach var="i" begin="${rvStartPageNum }"
-									end="${rvEndPageNum }">
-									<li class="page-item ${rvPageNum eq i ? 'active' : '' }">
-										<a class="page-link"
-										href="detail?num=${dto.num }&rvPageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
-									</li>
-								</c:forEach>
-							
-								<c:if test="${rvEndPageNum lt rvTotalPageCount }">
-									<li class="page-item"><a class="page-link"
-										href="detail?num=${dto.num }&rvPageNum=${rvEndPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
-									</li>
-								</c:if>
-							</ul>
-						</nav>
-					</div>
+									</div> 
+									
+									<!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
+									<form id="imageForm"
+										action="${pageContext.request.contextPath}/shop/review_image_upload"
+										method="post" enctype="multipart/form-data">
+										사진 <input type="file" id="image" name="image"
+											accept=".jpg, .png, .gif, .jpeg" />
+										<button type="submit">업로드</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 					
-					<div class="table_4" style="display: none;">
-						<!-- 임시 페이지 입니다.(추후 기능 구현 시 사용) -->
-					</div>
+					<nav>
+						<ul class="pagination" style="margin: 10px;">
+							
+							<c:if test="${rvStartPageNum ne 1 }">
+								<li class="page-item"><a class="page-link"
+									href="detail?num=${dto.num}&rvPageNum=${rvStartPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
+								</li>
+							</c:if>
+							
+							<c:forEach var="i" begin="${rvStartPageNum }"
+								end="${rvEndPageNum }">
+								<li class="page-item ${rvPageNum eq i ? 'active' : '' }">
+									<a class="page-link"
+									href="detail?num=${dto.num }&rvPageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
+								</li>
+							</c:forEach>
+						
+							<c:if test="${rvEndPageNum lt rvTotalPageCount }">
+								<li class="page-item"><a class="page-link"
+									href="detail?num=${dto.num }&rvPageNum=${rvEndPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
+								</li>
+							</c:if>
+						</ul>
+					</nav>
+				</div>
+				
+				<div class="table_4" style="display: none;">
+					<!-- 임시 페이지 입니다.(추후 기능 구현 시 사용) -->
 				</div>
 			</div>
 		</div>
+	</div>
 		<div class="bottom"></div>
 	</div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b45a7e1f67e033582e03cb02a068e52&libraries=services"></script>
