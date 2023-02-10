@@ -32,10 +32,26 @@
 				</a>
 				<div class="top_menu">
 					<div class="top_nav">
-						<a href="${pageContext.request.contextPath}/">HOME</a>
-						<a href="">CATEGORY</a>
-						<a href="">HOT PLACE</a>
-						<a href="">RESEARCH</a>
+						<a href="${pageContext.request.contextPath}/" id="home">HOME</a>
+						<a href="${pageContext.request.contextPath}/" id="category">CATEGORY</a>
+						<a href="${pageContext.request.contextPath}/" id="hot_place">HOT PLACE</a>
+						<a href="${pageContext.request.contextPath}/" id="research">RESEARCH</a>
+					</div>
+					<div class="search_menu">
+						<div class="search_bar">
+							<form action="${pageContext.request.contextPath}/index/"
+								method="post">
+								<div class="search_box">
+									<button type="submit" style="display: contents">
+										<img class="search_img"
+											src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
+											alt="" />
+									</button>
+									<input class="search_input" type="text" name="keyword"
+										value="${keyword}" placeholder="검색어를 입력해주세요...">
+								</div>
+							</form>
+						</div>
 					</div>
 					<div class="top_user">
 					<a href="${pageContext.request.contextPath}/users/signup_form"  class="sign_up btn btn-outline-success">SIGN-UP</a>
@@ -51,10 +67,26 @@
 				</a>
 				<div class="top_menu">
 						<div class="top_nav">
-							<a href="${pageContext.request.contextPath}/">HOME</a>
-							<a href="">CATEGORY</a>
-							<a href="">HOT PLACE</a>
-							<a href="">RESEARCH</a>
+						<a href="${pageContext.request.contextPath}/" id="home">HOME</a>
+						<a href="${pageContext.request.contextPath}/" id="category">CATEGORY</a>
+						<a href="${pageContext.request.contextPath}/" id="hot_place">HOT PLACE</a>
+						<a href="${pageContext.request.contextPath}/" id="research">RESEARCH</a>
+						</div>
+						<div class="search_menu">
+							<div class="search_bar">
+								<form action="${pageContext.request.contextPath}/index/"
+									method="post">
+									<div class="search_box">
+										<button type="submit" style="display: contents">
+											<img class="search_img"
+												src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
+												alt="" />
+										</button>
+										<input class="search_input" type="text" name="keyword"
+											value="${keyword}" placeholder="검색어를 입력해주세요...">
+									</div>
+								</form>
+							</div>
 						</div>
 						<div class="top_user">
 							<a href="${pageContext.request.contextPath}/shop/insertform" class="reg_menu badge text-bg-success">REGIST SHOP</a>
@@ -71,10 +103,26 @@
 				</a>
 				<div class="top_menu">
 					<div class="top_nav">
-						<a href="${pageContext.request.contextPath}/">HOME</a>
-						<a href="">CATEGORY</a>
-						<a href="">HOT PLACE</a>
-						<a href="">RESEARCH</a>
+						<a href="${pageContext.request.contextPath}/" id="home">HOME</a>
+						<a href="${pageContext.request.contextPath}/" id="category">CATEGORY</a>
+						<a href="${pageContext.request.contextPath}/" id="hot_place">HOT PLACE</a>
+						<a href="${pageContext.request.contextPath}/" id="research">RESEARCH</a>
+					</div>
+					<div class="search_menu">
+						<div class="search_bar">
+							<form action="${pageContext.request.contextPath}/index/"
+								method="post">
+								<div class="search_box">
+									<button type="submit" style="display: contents">
+										<img class="search_img"
+											src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
+											alt="" />
+									</button>
+									<input class="search_input" type="text" name="keyword"
+										value="${keyword}" placeholder="검색어를 입력해주세요...">
+								</div>
+							</form>
+						</div>
 					</div>
 					<div class="top_user">
 						<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
@@ -84,6 +132,7 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
+	<div class="block_content_top"></div>
 	<div class="roll_screen">
 		<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
 			<div class="carousel-inner">
@@ -109,22 +158,7 @@
 			</button>
 		</div>
 	</div>
-	<div class="search_menu">
-		<div class="search_bar">
-			<form action="${pageContext.request.contextPath}/index/"
-				method="post">
-				<div class="search_box">
-					<button type="submit" style="display: contents">
-						<img class="search_img"
-							src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-							alt="" />
-					</button>
-					<input class="search_input" type="text" name="keyword"
-						value="${keyword}" placeholder="검색어를 입력해주세요...">
-				</div>
-			</form>
-		</div>
-	</div>
+
 	<div class="category">
 		<div class="row">
 			<a href="${pageContext.request.contextPath}/shop/list"> <img
@@ -209,6 +243,7 @@
 			  prevArrow : false,
 			  nextArrow : false,
 			  draggable : false,
+			  pauseOnHover : true,
 			});
 	</script>
 	<div class="research">
