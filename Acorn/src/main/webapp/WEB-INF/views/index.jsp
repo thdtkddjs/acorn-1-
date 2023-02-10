@@ -31,15 +31,15 @@
 					<p class="cloud_effect">FOOD CLOUD</p>
 				</a>
 				<div class="top_menu">
-					<div class="top_nav">
+					<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
 						<a href="${pageContext.request.contextPath}/">HOME</a>
-						<a href="">CATEGORY</a>
-						<a href="">HOT PLACE</a>
-						<a href="">RESEARCH</a>
+						<a href="#simple-list-item-1">CATEGORY</a>
+						<a href="#simple-list-item-2">HOT PLACE</a>
+						<a href="#simple-list-item-3">RESEARCH</a>
 					</div>
 					<div class="top_user">
 					<a href="${pageContext.request.contextPath}/users/signup_form"  class="sign_up btn btn-outline-success">SIGN-UP</a>
-						<a href="${pageContext.request.contextPath}/users/loginform"  class="login btn btn-outline-dark">LOGIN</a>
+						<a id="login" href="javascript:"  class="login btn btn-outline-dark">LOGIN</a>
 						
 					</div>
 				</div>
@@ -50,17 +50,17 @@
 					<p class="cloud_effect">FOOD CLOUD</p>
 				</a>
 				<div class="top_menu">
-						<div class="top_nav">
+						<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
 							<a href="${pageContext.request.contextPath}/">HOME</a>
-							<a href="">CATEGORY</a>
-							<a href="">HOT PLACE</a>
-							<a href="">RESEARCH</a>
+							<a href="#simple-list-item-1">CATEGORY</a>
+							<a href="#simple-list-item-2">HOT PLACE</a>
+							<a href="#simple-list-item-3">RESEARCH</a>
 						</div>
 						<div class="top_user">
 							<a href="${pageContext.request.contextPath}/shop/insertform" class="reg_menu badge text-bg-success">REGIST SHOP</a>
 							<a href="${pageContext.request.contextPath}/users/list" class="userList_menu badge text-bg-warning">USER LIST</a>
 							<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
-							<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
+							<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
 						</div>
 				</div>
 			</c:when>
@@ -70,157 +70,159 @@
 					<p class="cloud_effect">FOOD CLOUD</p>
 				</a>
 				<div class="top_menu">
-					<div class="top_nav">
+					<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
 						<a href="${pageContext.request.contextPath}/">HOME</a>
-						<a href="">CATEGORY</a>
-						<a href="">HOT PLACE</a>
-						<a href="">RESEARCH</a>
+						<a href="#simple-list-item-1">CATEGORY</a>
+						<a href="#simple-list-item-2">HOT PLACE</a>
+						<a href="#simple-list-item-3">RESEARCH</a>
 					</div>
 					<div class="top_user">
 						<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
-						<a href="${pageContext.request.contextPath}/users/logout" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
+						<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
 					</div>
 				</div>
 			</c:otherwise>
 		</c:choose>
 	</div>
-	<div class="roll_screen">
-		<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-			<div class="carousel-inner">
-				<div class="carousel-item active" data-bs-interval="5000">
-					<img src="https://www.sivandesign.com/wp-content/uploads/2016/11/SD-Top-Slides-HOME-civilcad-1920x520-final.jpg" class="d-block w-100" alt="...">
-				</div>
-				<div class="carousel-item" data-bs-interval="5000">
-					<img src="https://luxurycottages.com/wp-content/uploads/2020/05/Mam-Tor-1920x520.jpg" class="d-block w-100" alt="...">
-				</div>
-				<div class="carousel-item">
-					<img src="https://www.teahub.io/photos/full/280-2809437_best-guitars-for-metal-rock-guitar.jpg" class="d-block w-100" alt="...">
-				</div>
-			</div>
-			<button class="carousel-control-prev" type="button"
-				data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Previous</span>
-			</button>
-			<button class="carousel-control-next" type="button"
-				data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-				<span class="carousel-control-next-icon" aria-hidden="true"></span>
-				<span class="visually-hidden">Next</span>
-			</button>
-		</div>
-	</div>
-	<div class="search_menu">
-		<div class="search_bar">
-			<form action="${pageContext.request.contextPath}/index/"
-				method="post">
-				<div class="search_box">
-					<button type="submit" style="display: contents">
-						<img class="search_img"
-							src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-							alt="" />
-					</button>
-					<input class="search_input" type="text" name="keyword"
-						value="${keyword}" placeholder="검색어를 입력해주세요...">
-				</div>
-			</form>
-		</div>
-	</div>
-	<div class="category">
-		<div class="row">
-			<a href="${pageContext.request.contextPath}/shop/list"> <img
-				src="${pageContext.request.contextPath}/resources/images/category/all.jpg"
-				alt="전체" title="전체" class="col" />
-
-			</a> <a
-				href="${pageContext.request.contextPath}/shop/list?category=한식">
-				<img
-				src="${pageContext.request.contextPath}/resources/images/category/hansik.jpg"
-				alt="한식" title="한식" class="col" />
-
-			</a> <a
-				href="${pageContext.request.contextPath}/shop/list?category=중식">
-				<img
-				src="${pageContext.request.contextPath}/resources/images/category/jungsik.jpg"
-				alt="중식" title="중식" class="col" />
-
-			</a> <a
-				href="${pageContext.request.contextPath}/shop/list?category=일식">
-				<img
-				src="${pageContext.request.contextPath}/resources/images/category/ilsik.jpg"
-				alt="일식" title="일식" class="col" />
-			</a>
-		</div>
-		<div class="row">
-			<a href="${pageContext.request.contextPath}/shop/list?category=양식">
-				<img
-				src="${pageContext.request.contextPath}/resources/images/category/bunsik.jpg"
-				alt="분식" title="분식" class="col" />
-			</a> <a
-				href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">
-				<img
-				src="${pageContext.request.contextPath}/resources/images/category/yangsik.jpg"
-				alt="양식" title="양식" class="col" />
-			</a> <a
-				href="${pageContext.request.contextPath}/shop/list?category=분식">
-				<img
-				src="${pageContext.request.contextPath}/resources/images/category/fastfood.jpg"
-				alt="패스트푸드" title="패스트푸드" class="col" />
-
-			</a> <a
-				href="${pageContext.request.contextPath}/shop/list?category=기타">
-				<img
-				src="${pageContext.request.contextPath}/resources/images/category/guitar.jpg"
-				alt="기타" title="기타" class="col" />
-			</a>
-		</div>
-	</div>
-	<div class="block_content"></div>
-	<div class="hot_place">
-		<p>HOT PLACE
-		<br />
-		<span>2월 방문자, 평점 </span><strong>TOP 10 !</strong>
-		</p>
-		
-	</div>
-	<div class="roll_screen_store row">
-		<div class="slide slick-slider roller_store">
-			<c:forEach var="tmp" items="${list }">
-				<div class="card" style="width: 18rem;">
-					<img src="${pageContext.request.contextPath}/${tmp.imagePath}"	class="card-img-top" alt="...">
-					<div class="card-body">
-						<h5 class="card-title">${tmp.title }</h5>
-						<p class="card-text">${tmp.content }</p>
-						<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" class="btn btn-primary">INFO</a>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+		<div class="roll_screen">
+			<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+				<div class="carousel-inner">
+					<div class="carousel-item active" data-bs-interval="5000">
+						<img src="https://www.sivandesign.com/wp-content/uploads/2016/11/SD-Top-Slides-HOME-civilcad-1920x520-final.jpg" class="d-block w-100" alt="...">
+					</div>
+					<div class="carousel-item" data-bs-interval="5000">
+						<img src="https://luxurycottages.com/wp-content/uploads/2020/05/Mam-Tor-1920x520.jpg" class="d-block w-100" alt="...">
+					</div>
+					<div class="carousel-item">
+						<img src="https://www.teahub.io/photos/full/280-2809437_best-guitars-for-metal-rock-guitar.jpg" class="d-block w-100" alt="...">
 					</div>
 				</div>
-			</c:forEach>
+				<button class="carousel-control-prev" type="button"
+					data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Previous</span>
+				</button>
+				<button class="carousel-control-next" type="button"
+					data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<span class="visually-hidden">Next</span>
+				</button>
+			</div>
 		</div>
-	<div class="block_content"></div>
-	</div>
-	<script>
-		$('.slide.roller_store').slick({
-			  infinite: true,
-			  speed: 1000,
-			  slidesToShow: 1,
-			  variableWidth: true,
-			  arrow:false,
-			  autoplay: true,
-			  autoplaySpeed : 1000,
-			  prevArrow : false,
-			  nextArrow : false,
-			  draggable : false,
-			});
-	</script>
-	<div class="research">
-		<p>MZ 세대가 가장 많이 방문한 맛집은?!
-		<br />
-		<span>MZ가 선호하는 트렌드!</span>
-		<br /><br />
-		<strong class="cloud_effect" style="place-content: center;">
-			FOOD RESEARCH 보기
-		</strong>
-		</p>
-		
+		<div class="search_menu">
+			<div class="search_bar">
+				<form action="${pageContext.request.contextPath}/index/"
+					method="post">
+					<div class="search_box">
+						<button type="submit" style="display: contents">
+							<img class="search_img"
+								src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
+								alt="" />
+						</button>
+						<input class="search_input" type="text" name="keyword"
+							value="${keyword}" placeholder="검색어를 입력해주세요...">
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="simple-list-item-1" class="category">
+			<div class="row">
+				<a href="${pageContext.request.contextPath}/shop/list"> <img
+					src="${pageContext.request.contextPath}/resources/images/category/all.jpg"
+					alt="전체" title="전체" class="col" />
+	
+				</a> <a
+					href="${pageContext.request.contextPath}/shop/list?category=한식">
+					<img
+					src="${pageContext.request.contextPath}/resources/images/category/hansik.jpg"
+					alt="한식" title="한식" class="col" />
+	
+				</a> <a
+					href="${pageContext.request.contextPath}/shop/list?category=중식">
+					<img
+					src="${pageContext.request.contextPath}/resources/images/category/jungsik.jpg"
+					alt="중식" title="중식" class="col" />
+	
+				</a> <a
+					href="${pageContext.request.contextPath}/shop/list?category=일식">
+					<img
+					src="${pageContext.request.contextPath}/resources/images/category/ilsik.jpg"
+					alt="일식" title="일식" class="col" />
+				</a>
+			</div>
+			<div class="row">
+				<a href="${pageContext.request.contextPath}/shop/list?category=양식">
+					<img
+					src="${pageContext.request.contextPath}/resources/images/category/bunsik.jpg"
+					alt="분식" title="분식" class="col" />
+				</a> <a
+					href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">
+					<img
+					src="${pageContext.request.contextPath}/resources/images/category/yangsik.jpg"
+					alt="양식" title="양식" class="col" />
+				</a> <a
+					href="${pageContext.request.contextPath}/shop/list?category=분식">
+					<img
+					src="${pageContext.request.contextPath}/resources/images/category/fastfood.jpg"
+					alt="패스트푸드" title="패스트푸드" class="col" />
+	
+				</a> <a
+					href="${pageContext.request.contextPath}/shop/list?category=기타">
+					<img
+					src="${pageContext.request.contextPath}/resources/images/category/guitar.jpg"
+					alt="기타" title="기타" class="col" />
+				</a>
+			</div>
+		</div>
+		<div class="block_content"></div>
+		<div id="simple-list-item-2" class="hot_place">
+			<p>HOT PLACE
+			<br />
+			<span>2월 방문자, 평점 </span><strong>TOP 10 !</strong>
+			</p>
+			
+		</div>
+		<div class="roll_screen_store row">
+			<div class="slide slick-slider roller_store">
+				<c:forEach var="tmp" items="${list }">
+					<div class="card" style="width: 18rem;">
+						<img src="${pageContext.request.contextPath}/${tmp.imagePath}"	class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">${tmp.title }</h5>
+							<p class="card-text">${tmp.content }</p>
+							<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" class="btn btn-primary">INFO</a>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+		<div class="block_content"></div>
+		</div>
+		<script>
+			$('.slide.roller_store').slick({
+				  infinite: true,
+				  speed: 1000,
+				  slidesToShow: 1,
+				  variableWidth: true,
+				  arrow:false,
+				  autoplay: true,
+				  autoplaySpeed : 1000,
+				  prevArrow : false,
+				  nextArrow : false,
+				  draggable : false,
+				});
+		</script>
+		<div id="simple-list-item-3" class="research">
+			<p>MZ 세대가 가장 많이 방문한 맛집은?!
+			<br />
+			<span>MZ가 선호하는 트렌드!</span>
+			<br /><br />
+			<strong class="cloud_effect" style="place-content: center;">
+				FOOD RESEARCH 보기
+			</strong>
+			</p>
+			
+		</div>
 	</div>     
 
 
@@ -273,5 +275,46 @@
         </footer>
     
     </div>
+    
+    <script>
+    	let isLogin=${ not empty id };
+	    if(!isLogin){
+			document.querySelector("#login").addEventListener("click", function(){
+				const url = document.location.href;	
+				console.log(url);
+				var url1 = url.split("/");
+				console.log(url1);
+				var url2 = "/"+url1[4];
+				for(var i = 5; i < url1.length; i++) {
+					 url2 = url2+"/"+url1[i];
+				}
+				console.log(url2);
+				
+				const encodedUrl = encodeURIComponent(url2);
+				console.log(encodedUrl);
+				
+				
+				location.href= "${pageContext.request.contextPath}/users/loginform?url="+url2;
+			});
+		}else{
+			document.querySelector("#logout").addEventListener("click", function(){
+			const url = document.location.href;	
+			console.log(url);
+			var url1 = url.split("/");
+			console.log(url1);
+			var url2 = "/"+url1[4];
+			for(var i = 5; i < url1.length; i++) {
+				 url2 = url2+"/"+url1[i];
+			}
+			console.log(url2);
+			
+			const encodedUrl = encodeURIComponent(url2);
+			console.log(encodedUrl);
+			
+			
+			location.href= "${pageContext.request.contextPath}/users/logout?url="+url2;
+			});
+		}
+    </script>
 </body>
 </html>
