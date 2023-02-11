@@ -385,24 +385,24 @@
 						</tbody>
 					</table>
 					<nav>
-						<ul class="pagination" style="margin:5% 4% 0 0;">
+						<ul class="pagination" style="margin: 10px;">
 							
 							<c:if test="${rvStartPageNum ne 1 }">
-								<li class="page-item" style="border-top:none"><a class="page-link"
+								<li class="page-item"><a class="page-link"
 									href="detail?num=${dto.num}&rvPageNum=${rvStartPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
 								</li>
 							</c:if>
 							
 							<c:forEach var="i" begin="${rvStartPageNum }"
 								end="${rvEndPageNum }">
-								<li class="page-item ${rvPageNum eq i ? 'active' : '' }" style="border-top:none">
+								<li class="page-item ${rvPageNum eq i ? 'active' : '' }">
 									<a class="page-link"
 									href="detail?num=${dto.num }&rvPageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
 								</li>
 							</c:forEach>
 						
 							<c:if test="${rvEndPageNum lt rvTotalPageCount }">
-								<li class="page-item" style="border-top:none"><a class="page-link"
+								<li class="page-item"><a class="page-link"
 									href="detail?num=${dto.num }&rvPageNum=${rvEndPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
 								</li>
 							</c:if>
@@ -427,7 +427,283 @@
 
 		<div style="height : 600px;"></div>
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<div class="container">
 
+       
+       <div class="search_result">
+               <div class="main_content">
+	            <div class="content_images">
+
+					<div class="main_title">
+						<div id="map"style="width: 300px; height: 220px; margin: auto; float: right; "></div>
+
+						<br>
+						<br> 
+						<Strong style="font-size : 30px;">${dto.title}</Strong>
+						<br /><br /><br />
+						<p>리뷰 ${reviewCount} 회</p>
+						<p style="margin: 0px;"></p>
+					</div>
+					<div class=btn_box>
+						<button type="button" id="btn_1"><span>가게 소개</span></button>
+						<button type="button" id="btn_2"><span>메뉴</span></button>
+						<button type="button" id="btn_3"><span>리뷰</span></button>
+						<button class="rainbow_effect" type="button" id="btn_4"><span class="rainbow_effect">★</span></button>
+					</div>
+
+				
+				<div class="table_2" style="display: none;">
+					<table>
+						<c:if test="${sessionScope.id eq 'admin'}">
+							<a
+								href="${pageContext.request.contextPath}/shop/menu_insertform?num=${dto.num}"
+								style="display: block; width: 101%;"
+								class="btn btn-outline-warning">메뉴 추가</a>
+						</c:if>
+						
+						<tbody>
+							<c:forEach var="tmp" items="${menuList }">
+								<div class="menu_card card">
+									<img src="${pageContext.request.contextPath}/${tmp.imagePath}"
+										class="card-img-top" alt="...">
+									
+									<div class="card-body">
+										<h5 class="card-title">${tmp.name}</h5>
+										<p class="card-text">${tmp.content}</p>
+										<p class="btn btn-primary">${tmp.price }원</p>
+									</div>
+								</div>
+							</c:forEach>
+						</tbody>
+					</table>
+			</div>
+			
+<div class="table_3">
+	<table style="width: 950px;">
+<tbody>
+	<tr>
+		<td>평점 : ${grade}</td>
+</tr>
+<tr>
+	<td>
+		<div class="reviews">
+			<ul>
+				<c:forEach var="tmp" items="${reviewList }">
+<c:choose>
+<c:when test="${tmp.deleted eq 'yes' }">
+<dt class="row" style="height:152px; border: 1px solid #c9c9c9; border-radius: 10px; padding-top:60px;">
+	<li>삭제된 리뷰 입니다.</li>
+</dt>
+</c:when>
+<c:otherwise>
+<c:if test="${tmp.num eq tmp.review_group }">
+	<li id="reli${tmp.num }">
+</c:if>
+
+<dl>
+	<dt class="row">
+		<div class="col-2">
+			<c:choose>
+				<c:when
+					test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
+					<img class="review_img"
+						src="${pageContext.request.contextPath}/resources/images/photo.png" />
+				</c:when>
+				<c:otherwise>
+					<img class="review_img"
+						src="${pageContext.request.contextPath}${tmp.imagePath}" />
+				</c:otherwise>
+			</c:choose>
+		</div>
+		
+		<div class="col-8">
+			<div class="comment_box" id="pre${tmp.num }">
+				<input class="review_title_box" type="text"
+					name="title" id="spt${tmp.num }"
+					value="${tmp.title}" disabled />
+
+				<div class="startRadio"
+					style="pointer-events: none; display: inline-block; overflow: hidden; height: 40px; float: right; position: relative; right: 140px; bottom: 5px; z-index: 9;">
+					<c:forEach var="i" begin="0" end="9">
+						<label class="startRadio__box"> 
+						<input type="radio" name="grade_number" value=${i } ${tmp.grade eq (i/2+0.5) ? 'class="point"' : '' }> 
+						<span class="startRadio__img">
+							<span class="blind">별 ${(i/2+0.5) }개</span>
+						</span>
+						</label>
+					</c:forEach>
+				</div>
+				<br />
+				<textarea class="review_content_box"
+					id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
+			</div>
+			
+			<!-- 수정폼 -->
+			<c:if test="${tmp.writer eq id }">
+				<form id="updateForm${tmp.num }"
+					class="review-form update-form"
+					action="review_update" method="post">
+					<input type="hidden" name="num" value="${tmp.num }" />
+					<input type="text" name="title"
+						value="${tmp.title }" />
+					<div class="startRadio">
+						<c:forEach var="i" begin="0" end="9">
+							<label class="startRadio__box"> 
+							<input type="radio" name="grade_number" value=${i } ${tmp.grade eq (i/2+0.5) ? 'checked' : '' } disabled> 
+							<span class="startRadio__img">
+								<span class="blind">별 ${(i/2+0.5) }개</span>
+							</span>
+							</label>
+						</c:forEach>
+					</div>
+
+					<textarea name="content">${tmp.content }</textarea>
+					<button type="submit" id="ur${tmp.num }"
+						class=comment_edit_btn>수정</button>
+				</form>
+			</c:if>
+		</div>
+		
+		<div class="review_profile col-2 ">
+			<c:if test="${ empty tmp.profile }">
+				<svg class="profile-image"
+					xmlns="http://www.w3.org/2000/svg" width="16"
+					height="16" fill="currentColor"
+					class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path
+						d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd"
+						d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                              </svg>
+			</c:if>
+			<c:if test="${not empty tmp.profile }">
+				<img class="profile-image"
+					src="${pageContext.request.contextPath}${tmp.profile }" />
+			</c:if>
+			<br> <span class="col">${tmp.writer }</span> <br>
+			<span style="font-weight: 100;">${tmp.regdate }</span>
+
+			<br>
+
+			<c:choose>
+				<c:when
+					test="${ (id ne null) and (tmp.writer eq id) }">
+					<a data-num="${tmp.num }"
+						class="update-link btn btn-warning"
+						href="javascript:">수정</a>
+					<a data-num="${tmp.num }"
+						class="delete-link btn btn-danger"
+						href="javascript:">삭제</a>
+				</c:when>
+				<c:when test="${id eq 'admin' }">
+					<a data-num="${tmp.num }"
+						class="delete-link btn btn-danger"
+						href="javascript:">삭제</a>
+				</c:when>
+			</c:choose>
+		</div>
+	</dt>
+
+</dl>
+</c:otherwise>
+</c:choose>
+</c:forEach>
+			</ul>
+		</div>
+	</td>
+</tr>
+<tr>
+	<td style="left: 10px; position: relative;">
+<!-- 원글에 리뷰를 작성할 폼 -->
+<div class="comment_form_box">
+	<form class="review-form insert-form" action="review_insert"
+		method="post">
+		<input type="text" name="title" id="title"
+			placeholder="한줄평 입력..." />
+		<div class="startRadio">
+			<c:forEach var="i" begin="0" end="9">
+<label class="startRadio__box"> 
+<input type="radio" name="grade_number" value=${i } ${i eq 9 ? 'checked' : '' }> 
+<span class="startRadio__img">
+	<span class="blind">별 ${(i/2+0.5) }개</span>
+</span>
+</label>
+</c:forEach>
+</div>
+
+<!-- 유저가 사진 등록을 위해 클릭하게 될 이미지 -->
+<a id="thumbnailLink" href="javascript:"
+	style="float: left;"> <img class="comment_img"
+src="${pageContext.request.contextPath}/resources/images/photo.png"
+	alt="" />
+</a>
+
+<!-- 실제 폼에 제출되는 이미지 값 -->
+<input type="hidden" name="imagePath" value="empty" />
+
+<input type="hidden" name="ref_group" value="${dto.num }" />
+<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
+		<button class="regist_btn" type="submit">등록</button>
+	</form>
+</div> 
+
+<!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
+<form id="imageForm"
+	action="${pageContext.request.contextPath}/shop/review_image_upload"
+					method="post" enctype="multipart/form-data">
+					사진 <input type="file" id="image" name="image"
+						accept=".jpg, .png, .gif, .jpeg" />
+					<button type="submit">업로드</button>
+				</form>
+			</td>
+		</tr>
+	</tbody>
+</table>
+				
+				<nav>
+						<ul class="pagination" style="margin: 10px;">
+							
+							<c:if test="${rvStartPageNum ne 1 }">
+								<li class="page-item"><a class="page-link"
+									href="detail?num=${dto.num}&rvPageNum=${rvStartPageNum - 1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
+								</li>
+							</c:if>
+							
+							<c:forEach var="i" begin="${rvStartPageNum }"
+								end="${rvEndPageNum }">
+								<li class="page-item ${rvPageNum eq i ? 'active' : '' }">
+									<a class="page-link"
+									href="detail?num=${dto.num }&rvPageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
+								</li>
+							</c:forEach>
+						
+							<c:if test="${rvEndPageNum lt rvTotalPageCount }">
+								<li class="page-item"><a class="page-link"
+									href="detail?num=${dto.num }&rvPageNum=${rvEndPageNum + 1 }&condition=${condition}&keyword=${encodedK}">Next</a>
+								</li>
+							</c:if>
+						</ul>
+					</nav>
+				</div>
+				
+				<div class="table_4" style="display: none;">
+					<!-- 임시 페이지 입니다.(추후 기능 구현 시 사용) -->
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="bottom"></div>
+	</div>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b45a7e1f67e033582e03cb02a068e52&libraries=services"></script>
 	
 	<!-- 지도 생성 script -->
