@@ -1,22 +1,22 @@
 
 package com.gura.acorn;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 //import com.gura.acorn.users.service.UsersEmailSenderService;
 
 @SpringBootApplication
-public class AcornApplication {
+public class AcornApplication extends SpringBootServletInitializer{
 	//@Autowired
 	//private UsersEmailSenderService senderService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(AcornApplication.class, args);
 	}
+	
+	
 	
 	/* 회원가입할때 이메일인증을 거치는 코드 추후 구현하겠음
 	@EventListener(ApplicationReadyEvent.class)
