@@ -2,6 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shopReview">
 
+   <select id="getReviewCount" parameterType="shopReviewDto" resultType="int">
+      SELECT NVL(MAX(ROWNUM), 0)
+      FROM board_shop_review
+      <choose>
+         <when test="content != null">
+            WHERE content LIKE '%'||#{content}||'%'
+         </when>
+      </choose>
+   </select>
+   
+   <select id="getReviewList" parameterType="shopReviewDto" resultType="shopReviewDto">
+      SELECT *
+      FROM
+         (SELECT result1.*, ROWNUM AS rnum
+         FROM
+            (SELECT num, writer, title, content, ref_group, 
+            review_group, deleted, imagePath, grade,
+            TO_CHAR(board_shop_review.regdate, 'YY.MM.DD HH24:MI') AS regdate
+            FROM board_shop_review
+            <choose>
+               <when test="content != null">
+                  WHERE content LIKE '%'||#{content}||'%'
+               </when>
+            </choose>
+            
+            ORDER BY num ASC) result1)
+      WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}  
+   </select>
+   
+   
    <select id="getList" parameterType="shopReviewDto" resultType="shopReviewDto">
 		SELECT *
 		FROM
@@ -11,6 +41,13 @@
 				review_group, deleted, imagePath, grade,
 				TO_CHAR(board_shop_review.regdate, 'YY.MM.DD HH24:MI') AS regdate, profile
 				FROM board_shop_review
+				
+				<choose>
+	               <when test="title != null">
+	                  WHERE title LIKE '%'||#{title}||'%'
+	               </when>
+	            </choose>
+				
 				INNER JOIN users
 				ON board_shop_review.writer = users.id
 				WHERE ref_group = #{ref_group}
