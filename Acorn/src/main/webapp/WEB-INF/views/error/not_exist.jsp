@@ -12,6 +12,7 @@
 
 </head>
 <body class="text-center">
+<%@include file ="../../views/include/navbar.jsp"%>
 	<div class="container">
 		<img src="${pageContext.request.contextPath}/resources/images/access_denied.png" alt="" />
 		<br />

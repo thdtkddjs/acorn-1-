@@ -43,7 +43,9 @@
 	margin:5px;
 }
 .logo_text{
+	margin-left : 50px;
 	width:300px;
+	height:50px;
 	display: flex; 
 	position: fixed;
 	text-decoration : none;
@@ -240,9 +242,15 @@ input:focus{
 	flex-direction : column;
 }
 .shop_board_top{
+	margin : auto;
+	width : 60%;
 	padding-top:50px;
 	background-color : orange;
-	height : 200px;
+	height : 300px;
+}
+.shop_board_top>img{
+	width : 100%;
+	overflow : hidden;
 }
 .shop_board_body1{
 	width : 60%;
@@ -259,6 +267,27 @@ input:focus{
 	text-align:center;
 	box-shadow:  0px 2px 5px 0px grey;
 	margin-bottom : 25px;
+}
+.shop_title{
+	font-size : 20px;
+    font-weight: bold;
+    margin : 0;
+}
+
+.shop_desc{
+	font-size : 13px;
+	color : gray;
+}
+.shop_review_count{
+	color : blue;
+	font-weight:bold;
+}
+.category_tag{
+	padding : 3px;
+	font-size : 13px;
+	font-weight : bold;
+	border : 1px solid;
+	border-radius : 5px;
 }
 
 .shop_board_info, .shop_board_menu, .shop_board_review{
@@ -282,6 +311,11 @@ strong{
 	font-size : 13px;
 	
 }
+.best_store, .best_store:focus{
+	margin : 0;
+	padding : 3px;
+	font-size : 10px;	
+}
 .shop_board_body2{
 	width : 60%;
 	margin : auto;
@@ -293,13 +327,15 @@ strong{
 	height : 50px;
 }
 .shop_board_menu_list{
-	margin-top : 10px;
+	border-top: 1px solid #f2f2f2;
+	margin-top : 15px;
 	padding : 0;
 }
 .menu_insert{
 	float : right;
 }
 .menu_item{
+	border : none;
 	list-style:none;
 	padding: 2px 0;
     border-bottom: 0;
@@ -365,10 +401,6 @@ ul{
     display: inline-block;
     margin: 0px 1px;
 }
-#reli1{
-    width: 90%;
-    float: right;
-}
 ul>.row{
     border-top: 1px solid #f2f2f2;
 	min-height : 100px;
@@ -383,7 +415,11 @@ ul>li{
 	margint-top:5px;
 }
 .avg_score{
+	font-weight : bold;
 	font-size : 25px;
+}
+.shop_review_table{
+	width : 100%;
 }
 
 .comment_area{
@@ -497,7 +533,6 @@ display: flex;
 	margin: 0px;
 }
 .regist_comment_box:focus{
-	//outline : none;
 }
 .comment_form_box{
     height: 170px; 

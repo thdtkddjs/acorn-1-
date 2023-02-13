@@ -13,142 +13,26 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
+<link rel="stylesheet" type="text/css" href="resources/css/index.css">
 <link rel="shortcut icon" href="#">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-	<link rel="stylesheet" type="text/css" href="../resources/css/shop_detail.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/shop_detail.css">
 </head>
 
 <body>
-	<div class="header_inner">
-		<div class="sm_menu">
-			<img src="${pageContext.request.contextPath}/resources/images/hidden_menu.png" alt="" />
-		</div>
-	
-		<c:choose>
-			<c:when test="${ empty sessionScope.id}">
-				<a href="${pageContext.request.contextPath}" class="logo_text">
-					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
-					<p class="cloud_effect">FOOD CLOUD</p>
-				</a>
-				<div class="top_menu">
-					<div class="top_nav">
-						<a href="${pageContext.request.contextPath}/" id="top">TOP</a>
-						<a href="" id="info">INFO</a>
-						<a href="" id="menu">MENU</a>
-						<a href="" id="review">REVIEW</a>
-					</div>
-					<div class="search_menu">
-						<div class="search_bar">
-							<form action="${pageContext.request.contextPath}/index/"
-								method="post">
-								<div class="search_box">
-									<button type="submit" style="display: contents">
-										<img class="search_img"
-											src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-											alt="" />
-									</button>
-									<input class="search_input" type="text" name="keyword"
-										value="${keyword}" placeholder="검색어를 입력해주세요...">
-								</div>
-							</form>
-						</div>
-					</div>
-					<div class="top_user">
-					<a href="${pageContext.request.contextPath}/users/signup_form"  class="sign_up btn btn-outline-success">SIGN-UP</a>
-						<a id="login" href="javascript:"  class="login btn btn-outline-dark">LOGIN</a>
-					</div>
-				</div>
-			</c:when>
-			<c:when test="${sessionScope.id eq 'admin'}">
-				<a href="${pageContext.request.contextPath}" class="logo_text">
-					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
-					<p class="cloud_effect">FOOD CLOUD</p>
-				</a>
-				<div class="top_menu">
-						<div class="top_nav">
-							<a href="${pageContext.request.contextPath}/ id="top">TOP</a>
-							<a href="" id="info">INFO</a>
-							<a href="" id="menu">MENU</a>
-							<a href="" id="review">REVIEW</a>
-						</div>
-						<div class="search_menu">
-							<div class="search_bar">
-								<form action="${pageContext.request.contextPath}/index/"
-									method="post">
-									<div class="search_box">
-										<button type="submit" style="display: contents">
-											<img class="search_img"
-												src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-												alt="" />
-										</button>
-										<input class="search_input" type="text" name="keyword"
-											value="${keyword}" placeholder="검색어를 입력해주세요...">
-									</div>
-								</form>
-							</div>
-						</div>
-					<div class="top_user">
-						<a href="${pageContext.request.contextPath}/shop/insertform" class="reg_menu badge text-bg-success">REGIST SHOP</a>
-						<a href="${pageContext.request.contextPath}/users/list" class="userList_menu badge text-bg-warning">USER LIST</a>
-						<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
-						<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
-					</div>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<a href="${pageContext.request.contextPath}" class="logo_text">
-					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
-					<p class="cloud_effect">FOOD CLOUD</p>
-				</a>
-				<div class="top_menu">
-					<div class="top_nav">
-						<a href="${pageContext.request.contextPath}/">HOME</a>
-						<a href="">CATEGORY</a>
-						<a href="">HOT PLACE</a>
-						<a href="">RESEARCH</a>
-					</div>
-					<div class="search_menu">
-						<div class="search_bar">
-							<form action="${pageContext.request.contextPath}/index/"
-								method="post">
-								<div class="search_box">
-									<button type="submit" style="display: contents">
-										<img class="search_img"
-											src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-											alt="" />
-									</button>
-									<input class="search_input" type="text" name="keyword"
-										value="${keyword}" placeholder="검색어를 입력해주세요...">
-								</div>
-							</form>
-						</div>
-					</div>
-					<div class="top_user">
-						<a href="${pageContext.request.contextPath}/shop/insertform" class="reg_menu badge text-bg-success">REGIST SHOP</a>
-						<a href="${pageContext.request.contextPath}/users/list" class="userList_menu badge text-bg-warning">USER LIST</a>
-						<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
-						<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
-					</div>
-				</div>
-			</c:otherwise>
-		</c:choose>
-	</div>
+<%@include file ="../../views/include/navbar.jsp"%>
 	<div class="shop">
 		<div class="shop_board_top">
-			<h1>대충 사진 올리는 곳</h1>
+			<img src="https://i.pinimg.com/736x/59/4f/22/594f229ad803a615c4dc1766829dd13c.jpg" alt="" />
 		</div>
 		<div class="shop_board_body1">
 			<div class="shop_board_title">
-				${dto.title }
-				<br />
-				소개 : ${dto.content}
-				<br />
-				총 리뷰 수 :  ${reviewCount} 회
-				<br />
-				# ${dto.categorie}
-				
+			<br />
+				<p class="shop_title">${dto.title }</p>
+				<p class="shop_desc">${dto.content}</p>
+				<p class="shop_review_count"><span style="color:black; font-weight:bold">리뷰</span> ${reviewCount}</p>
+				<a class="category_tag btn btn-outline-danger" href="${pageContext.request.contextPath}/shop/list?category=${dto.categorie}">#${dto.categorie}</a>
 			</div>
 
 			<div class="shop_board_info">
@@ -173,7 +57,15 @@
 						</tr>
 						<tr>
 							<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/hashtag.png" alt="대표 키워드" class="shop_info_icon" title="대표 키워드"/></td>
-							<td class="table_content">평점 몇점 이상 #맛집, 리뷰 많으면 #이구역최대리뷰 </td>
+							<td class="table_content">
+							<c:if test="${grade gt 4.5}">
+								<p class="best_store btn btn-danger">🌟4.5↑</p>
+							</c:if>
+							<c:if test="${reviewCount gt 50}">
+								<p class="best_store btn btn-success">✏️50↑</p>
+							</c:if>
+							평점 몇점 이상 #맛집, 리뷰 많으면 #이구역최대리뷰 기준은 추가해나갑시다
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -209,7 +101,14 @@
 					<table class="shop_review_table">
 						<tbody>
 							<tr>
-								<td class="avg_score">평점 : ${grade}</td>
+								<c:choose>
+									<c:when test="${grade eq 0}">
+										<td class="avg_score"><span style="color:gray; font-size:18px;">등록 된 리뷰가 없습니다</span></td>
+									</c:when>
+									<c:otherwise>
+										<td class="avg_score">평점 : <span style="color : red;">${grade}</span>점</td>
+									</c:otherwise> 
+								</c:choose>
 							</tr>
 							<tr>
 								<td>
@@ -356,12 +255,12 @@
 											<button class="regist_btn btn btn-outline-warning" type="submit">등록</button>
 											<div class="text_box">
 												<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
-												<a id ="thumbnailLink" href="javascript:" style="margin:auto">
+												<a id ="thumbnailLink" href="javascript:" style="margin:auto; text-decoration:none; color:gray;">
 												<!-- 유저가 사진 등록을 위해 클릭하게 될 이미지 -->
 												<svg class="camera_img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
-												  <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
-												  <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
-												 </svg>
+												    <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
+												    <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+											    </svg>
 												</a>
 											</div>
 											<input class="review_title_box" type="text" name="title" id="title"

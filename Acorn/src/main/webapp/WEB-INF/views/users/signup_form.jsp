@@ -8,15 +8,16 @@
 <title>/users/signup_form.jsp</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
+
 </head>
 <style>
 .container{
 	width : 624px;
 	height : 750px;
-	box-shadow: 0px 5px 20px 0px grey;
-	margin-top : 50px;
-	border-radius : 20px;
+	border : 1px solid #CECECE;
 	padding-top : 50px;
+	margin-bottom:50px;
 }
 h1{
 	text-align : center;
@@ -29,14 +30,20 @@ h1{
 	margin-left:100px;
 	
 }
+body::-webkit-scrollbar {
+	width: 5px;
+	height: 0px;
+}
+body::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
+}
 </style>
 <body class="text-center">
+<%@include file ="../../views/include/navbar.jsp"%>
+
 	<div class="container">
-		<a href="${pageContext.request.contextPath}" class="logo_text">
-			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
-			alt="" style="height: 50px;" />
-		</a>		
+	<br /><br /><br />
 	    <h1>SIGN-UP</h1>
 	    <br />
 	    <form action="${pageContext.request.contextPath}/users/signup" method="post" id="myForm">

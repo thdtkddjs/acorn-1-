@@ -15,6 +15,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 	crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <style>
 /* 프로필 이미지를 작은 원형으로 만든다 */
 #profileImage {
@@ -27,10 +28,9 @@
 .container {
 	width: 624px;
 	height: 600px;
-	box-shadow: 0px 5px 20px 0px grey;
-	margin-top: 150px;
-	border-radius: 20px;
+	border : 1px solid #CECECE;
 	padding-top: 50px;
+	margin-bottom:50px;
 }
 
 h1 {
@@ -72,12 +72,9 @@ a {
 </style>
 </head>
 <body class="text-center">
+<%@include file ="../../views/include/navbar.jsp"%>
 	<div class="container">
-		<a href="${pageContext.request.contextPath}" class="logo_text">
-			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
-			alt="" style="height: 50px;" />
-		</a>
+<br /><br />
 		<h1>INFO</h1>
 		<br>
 		<table>
@@ -124,9 +121,11 @@ a {
 			</tr>
 			<tr style="height: 10px;"></tr>
 		</table>
-		<br> <br> <a href="javascript:" id="edit_link"
-			class="btn btn-outline-warning">EDIT</a> <a
-			href="javascript:deleteConfirm()" class="btn btn-outline-danger">DROP-OUT</a>
+		<br> <br> 
+			<a href="${pageContext.request.contextPath}/shop/insertform" class="btn btn-outline-success">REGIST SHOP</a> 
+			<a href="${pageContext.request.contextPath}/users/list" class="btn btn-outline-secondary">USER LIST</a> 
+			<a href="javascript:" id="edit_link" class="btn btn-outline-warning">EDIT</a>
+			<a href="javascript:deleteConfirm()" class="btn btn-outline-danger">DROP-OUT</a>
 
 		<form id="imageForm"
 			action="${pageContext.request.contextPath}/users/profile_upload"

@@ -8,187 +8,109 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/shop_list.css">
 <title>list.jsp</title>
-<style>
-.img-wrapper {
-	height: 300px;
-}
-
-.img-wrapper img {
-	width: 100%;
-	height: 100%;
-	object-fit: fill;
-}
-
-.card-body {
-	width: 100%;
-	height: 100%;
-	object-fit: fill;
-}
-
-.shop_info {
-	width: 100%;
-	height: 100%;
-	object-fit: fill;
-}
-
-.shopInfo {
-	border-right: 1px solid gray;
-}
-
-.title {
-	text-align : center;
-	font-weight : bold;
-	font-size : 1.5rem;
-}
-
-.category{
-	display : flex;
-	flex-direction : column;
-	height : 150px;
-}
-.category>.row{
-	flex:1;
-	width : 100%;
-	justify-content: center;
-	height : 125px !important;
-	margin : auto;
-	text-align : center;
-}
-.category>.row>a{
-	flex:1;
-	justify-content: center;
-	text-decoration : none;
-	padding : 0;
-	margin : 0;
-	
-}
-.category>.row>.col{
-	align-self : center;
-}
-.category>.row>a>img{
-	border : 1px solid white;
-	border-radius : 75px;
-	padding : 0;
-	margin : 0;
-	width : 125px;
-	height : 125px;
-	overflow : hidden;
-}
-</style>
 </head>
 <body>
-	<div class="container">
-		<a href="${pageContext.request.contextPath}/">인덱스로</a><br />
-	   	<h1>임시 리스트</h1>
-	   	
-	   	<div class="category">
-	   		<div class="row">
-				<a href="${pageContext.request.contextPath}/shop/list"> 
-					<img src="${pageContext.request.contextPath}/resources/images/category/all.jpg"
-						alt="전체" title="전체" class="col" />
+<%@include file ="../../views/include/navbar.jsp"%>
+    <div class="block_content_top"></div>
+    <div class="category_bar">
+    	<div class="row">
+    			<a href="${pageContext.request.contextPath}/shop/list">
+    			전체
 				</a> 
 				
 				<a href="${pageContext.request.contextPath}/shop/list?category=한식">
-					<img src="${pageContext.request.contextPath}/resources/images/category/hansik.jpg"
-						alt="한식" title="한식" class="col" />
+				한식
 				</a> 
 				
 				<a href="${pageContext.request.contextPath}/shop/list?category=중식">
-					<img src="${pageContext.request.contextPath}/resources/images/category/jungsik.jpg"
-						alt="중식" title="중식" class="col" />
+				중식
 				</a> 
 				
 				<a href="${pageContext.request.contextPath}/shop/list?category=일식">
-					<img src="${pageContext.request.contextPath}/resources/images/category/ilsik.jpg"
-						alt="일식" title="일식" class="col" />
+				일식
 				</a>
 				
 				<a href="${pageContext.request.contextPath}/shop/list?category=양식">
-					<img src="${pageContext.request.contextPath}/resources/images/category/bunsik.jpg"
-						alt="분식" title="분식" class="col" />
+				양식
 				</a> 
 				
 				<a href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">
-					<img src="${pageContext.request.contextPath}/resources/images/category/yangsik.jpg"
-						alt="양식" title="양식" class="col" />
+				패스트푸드
 				</a> 
 				
 				<a href="${pageContext.request.contextPath}/shop/list?category=분식">
-					<img src="${pageContext.request.contextPath}/resources/images/category/fastfood.jpg"
-						alt="패스트푸드" title="패스트푸드" class="col" />
+				분식
 				</a> 
 				
 				<a href="${pageContext.request.contextPath}/shop/list?category=기타">
-					<img src="${pageContext.request.contextPath}/resources/images/category/guitar.jpg"
-						alt="기타" title="기타" class="col" />
+				기타
 				</a>
-			</div>
-	   	</div>
-	   	
-	   	<div class="row">
+    	</div>
+    
+    </div>
+    
+    <div class="block_content_top" style = "height : 200px; text-align : center;">약간의 <br />공간을 <br />띄우면<br /> 좋을 것<br /> 같은데</div>
+    
+    
+	<div class="container">
+		<div class="shop_list">
+			<p class="list_title">
+				${category} 맛집 검색 결과  <span style="font-size : 20px; font-weight:bold;color : red;">${totalRow}개</span>
+				<span>
+				<c:choose>
+					<c:when test="${category ne '' }">
+						<strong style="color:black;">${category}</strong>카테고리 평점 기준으로 정렬한 맛집 리스트 입니다.
+					</c:when>
+					<c:otherwise>
+						<strong style="color:black;">전체</strong> 카테고리 평점 기준으로 정렬한 맛집 리스트 입니다.
+					</c:otherwise>
+				</c:choose>
+				
+
+				
+				</span>
+			</p>
+			<ul>
 			<c:forEach var="tmp" items="${list }">
-				<div class="col-sm-8" style="margin : auto;">
-	         		<div class="card mb-3">
-	         			<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" style="color: black; text-decoration : none">
-	         				<div class="row g-0">
-		         				<div class="img-wrapper col-md-4">
-			            			<img src="${pageContext.request.contextPath}/${tmp.imagePath}"	class="card-img-top" alt="...">
-			            		</div>
-			            		<div class="img-wrapper col-md-8">
-			            			<div class="card-body">
-			            				<table class="shop_info">
-											<thead>
-												<tr>
-													<th colspan="2" class="title">${tmp.title }</th>
-												</tr>
-											</thead>
-											<tbody class="table-group-divider" style="text-align : center;">
-												<tr>
-													<td class="shopInfo">소개</td>
-													<td>${tmp.content}</td>
-												</tr>
-												
-												<tr>
-													<td class="shopInfo">카테고리</td>
-													<td>${tmp.categorie}</td>
-												</tr>
-												
-												<tr>
-													<td class="shopInfo">영업 시간</td>
-													<td>${tmp.startTime}~ ${tmp.endTime}</td>
-												</tr>
-												
-												<tr>
-													<td class="shopInfo">주소</td>
-													<td>${tmp.addr}</td>
-												</tr>
-												
-												<tr>
-													<td class="shopInfo">전화 번호</td>
-													<td>${tmp.telNum}</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-			            		</div>
-	         				</div>
-	         			</a>
-	         		</div>
-	      		</div>
+	   		<li class="shop_item_wrapper">
+	   			<div class="shop_item">
+	   				<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" style="color: black; text-decoration : none">
+	   					<span class="shop_item_img">
+	   						<img src="${pageContext.request.contextPath}/${tmp.imagePath}" alt="...">
+	   					</span>
+		   				<div class="shop_item_content">
+		   					<span>평점 넘어오게</span>
+		   					<div class="shop_title">${tmp.title}</div>
+		   					<ul>
+		   						<li class="shop_item_content_detail"><img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png" alt="주소" class="shop_info_icon" title="주소"/>${tmp.addr }</li>
+		   						<li class="shop_item_content_detail">${tmp.content }</li>
+		   						<li class="shop_item_content_detail">${tmp.categorie}, ${tmp.startTime}~ ${tmp.endTime}, ${tmp.telNum}</li>
+		   						<li class="shop_item_content_detail">👀 999+, review 999+, etc..</li>
+		   					</ul>
+		   				</div>	   					
+	   					
+	   					
+	   				</a>
+
+	   			</div>
+	   		</li>
 			</c:forEach>
-	   	</div>
+	   		</ul>
+		</div>
+	   	
 	   	<nav>
 		<ul class="pagination justify-content-center">
 			<c:choose>
 				<c:when test="${startPageNum ne 1 }">
 					<li class="page-item">
-	               		<a class="page-link" href="list?pageNum=${startPageNum - 1}&category=${category }&condition=${condition}&keyword=${encodedK}">Prev</a>
+	               		<a class="page-link" href="list?pageNum=${startPageNum - 1}&category=${category }&condition=${condition}&keyword=${encodedK}">◀</a>
 	            	</li>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item disabled">
-	               		<a class="page-link" href="javascript:">Prev</a>
+	               		<a class="page-link" href="javascript:">◀</a>
 	            	</li>
 				</c:otherwise>
 			</c:choose>
@@ -200,12 +122,12 @@
 			<c:choose>
 				<c:when test="${endPageNum lt totalPageCount }">
 					<li class="page-item">
-	               		<a class="page-link" href="list?pageNum=${endPageNum + 1}&category=${category }&condition=${condition}&keyword=${encodedK}"">Next</a>
+	               		<a class="page-link" href="list?pageNum=${endPageNum + 1}&category=${category }&condition=${condition}&keyword=${encodedK}"">▶</a>
 	            	</li>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item disabled">
-	               		<a class="page-link" href="javascript:">Next</a>
+	               		<a class="page-link" href="javascript:">▶</a>
 	            	</li>
 				</c:otherwise>
 			</c:choose>
