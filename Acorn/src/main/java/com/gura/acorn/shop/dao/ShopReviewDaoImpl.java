@@ -53,4 +53,15 @@ public class ShopReviewDaoImpl implements ShopReviewDao{
 	public double getGrade(int ref_group) {
 		return session.selectOne("shopReview.getGrade",ref_group);
 	}
+	
+	@Override
+	public int getReviewCount(ShopReviewDto dto) {
+		return session.selectOne("shopReview.getReviewCount", dto);
+	}
+
+	@Override
+	public List<ShopReviewDto> getReviewList(ShopReviewDto dto) {
+		return session.selectList("shopReview.getReviewList", dto);
+	}
+
 }
