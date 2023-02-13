@@ -6,15 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <title>list.jsp</title>
 <style>
 .container{
 	width : 624px !important;
-	height : 800px;
-	box-shadow: 0px 5px 20px 0px grey;
-	margin-top : 50px;
-	border-radius : 20px;
+	height : 700px;
+	border : 1px solid #CECECE;
 	padding-top : 50px;
+	margin-bottom:50px;
 }
 h1{
 	text-align : center;
@@ -38,9 +38,6 @@ input{
 .pagination{
 	width : 500px;
 }
-form{
-	width : 624px;
-}
 a{
 	text-decoration : none;
 }
@@ -53,15 +50,12 @@ select{
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </head>
 <body class="text-center">
+<%@include file ="../../views/include/navbar.jsp"%>
    <div class="container">
-		<a href="${pageContext.request.contextPath}" class="logo_text">
-			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/logos/angry_cloud.png"
-			alt="" style="height: 50px;" />
-		</a>
+		
 		<br />
 		<br />
-		<h3>USER ADMIN.</h3>
+		<h3>USER ADMIN</h3>
       	<br />
       	<div style="    border-radius: 10px;
 					    border: solid 1px white;

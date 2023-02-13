@@ -205,10 +205,10 @@ public class ShopServiceImpl implements ShopService{
 		
 		//평점 추가
 		if(shopReviewDao.getCount(num)==0) {
-	         request.setAttribute("grade", "입력된 평점이 없습니다.");
+	        request.setAttribute("grade", 0 );
 	    }else if(shopReviewDao.getCount(num)!=0) {
 	    	double grade=Math.round(shopReviewDao.getGrade(num)*100)/100.0;
-	        request.setAttribute("grade", grade+" 점");
+	        request.setAttribute("grade", grade);
 	    }
 		
 		//영업 시간 추가

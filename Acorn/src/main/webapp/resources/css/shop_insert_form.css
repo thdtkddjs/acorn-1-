@@ -3,7 +3,6 @@
 .container {
 	height: 800px;
 	box-shadow: 0px 5px 20px 0px grey;
-	margin-top: 50px;
 	border-radius: 20px;
 	padding-top: 50px;
 	max-width : 624px;
@@ -14,10 +13,9 @@ h1 {
 	text-align: center;
 }
 
-.upload_img {
-	width: 75px;
-	height: 75px;
-	border-radius: 10px !important;
+.camera_img {
+	width: 50px;
+	height: 50px;
 }
 
 .submit_btn {
@@ -36,11 +34,10 @@ label {
     padding-bottom: 6px;
 }
 
-input {
+.col-8>input {
 	display: inline !important;
 	width: 70% !important;
 	margin: 0px !important;
-	border: 1px solid #000000;
 	border-radius: 5px;
 }
 
