@@ -26,6 +26,20 @@ public class ShopController {
 	@Autowired
 	private ShopService service;
 	
+	@RequestMapping("shop/review_list")
+	public String reviewList(HttpServletRequest request) {
+		service.getReviewList(request);
+		return "shop/review_list";
+	}
+   
+	@RequestMapping("shop/search")
+	public String search(HttpServletRequest request) {
+		service.getList(request);
+		service.getReviewList(request);
+		return "shop/search";
+	}
+
+	
 	//index 페이지에서 가게리스트 출력
 	@RequestMapping("/")
 	public String index(HttpServletRequest request) {
