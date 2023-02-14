@@ -34,7 +34,7 @@ public class ShopController {
    
 	@RequestMapping("shop/search")
 	public String search(HttpServletRequest request) {
-		service.getList(request);
+		service.getSearchList(request);
 		service.getReviewList(request);
 		return "shop/search";
 	}

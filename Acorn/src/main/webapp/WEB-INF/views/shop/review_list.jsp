@@ -18,7 +18,6 @@
          <thead class="table-dark">
             <tr>
                <th>번호</th>
-               <th>제목</th>
                <th>내용</th>
                <th>등록일</th>
             </tr>
@@ -28,9 +27,8 @@
                <tr>
                   <td>${tmp.num }</td>
                   <td>
-                     <a href="detail?num=${tmp.ref_group }&condition=${condition}&keyword=${encodedK}">${tmp.title }</a>
+                  	<a href="detail?num=${tmp.ref_group }">${tmp.content }</a>
                   </td>
-                  <td>${tmp.content }</td>
                   <td>${tmp.regdate }</td>
                </tr>
             </c:forEach>
