@@ -72,8 +72,11 @@ a {
 </style>
 </head>
 <body class="text-center">
-<%@include file ="../../views/include/navbar.jsp"%>
-	<div class="container">
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="user04" name="thisPage"/>
+	</jsp:include>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+	<div id="simple-list-item-1" class="container">
 <br /><br />
 		<h1>INFO</h1>
 		<br>
@@ -151,6 +154,7 @@ a {
 			<button id="edit_submit" type="submit">수정</button>
 			<button type="reset">취소</button>
 		</form>
+	</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
 		integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="

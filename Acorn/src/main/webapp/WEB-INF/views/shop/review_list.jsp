@@ -37,15 +37,18 @@
 }
 </style>
 <body>
-	<%@include file="../../views/include/navbar.jsp"%>
-	<div class="review_search_result">
-		<p style="font-weight : bold">
-			<span class="keyword_style">"${rvencodedK}"</span>
-			에 대해 리뷰리스트 검색 결과 총 
-			<span class="result_style">${rvtotalRow}건</span>
-			이 검색 되었습니다.
-		</p>
-	</div>
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="search03" name="thisPage"/>
+	</jsp:include>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+		<div id="simple-list-item-1"></div>
+
+		<div class="review_search_result">
+			<p style="font-weight: bold">
+				<span class="keyword_style">"${rvkeyword}"</span> 에 대해 리뷰리스트 검색 결과
+				총 <span class="result_style">${rvtotalRow}건</span> 이 검색 되었습니다.
+			</p>
+		</div>
 		<div class="review_list">
 			<div class="reviews">
 				<ul>
@@ -60,11 +63,11 @@
 								<c:if test="${tmp.num eq tmp.review_group }">
 									<li id="reli${tmp.num }">
 								</c:if>
-	
+
 								<dl>
 									<dt class="row">
-										<div class="comment_box">											
-										<!-- 유저 프로필 -->
+										<div class="comment_box">
+											<!-- 유저 프로필 -->
 											<div class="review_profile col">
 												<c:if test="${ empty tmp.profile }">
 													<svg class="profile-image"
@@ -82,70 +85,67 @@
 														src="${pageContext.request.contextPath}${tmp.profile }" />
 												</c:if>
 											</div>
-											<span class="col">${tmp.writer }</span>
-											<span class="bg_bar"></span>
-											<span style="font-weight: 100; font-size : 13px; color : gray;">${tmp.regdate }</span>
+											<span class="col">${tmp.writer }</span> <span class="bg_bar"></span>
+											<span style="font-weight: 100; font-size: 13px; color: gray;">${tmp.regdate }</span>
 											<c:choose>
-												<c:when
-													test="${ (id ne null) and (tmp.writer eq id) }">
+												<c:when test="${ (id ne null) and (tmp.writer eq id) }">
 													<a data-num="${tmp.num }"
-														class="update-link btn btn-warning"
-														href="javascript:" style="font-size : 13px; padding:0 1px;">EDIT</a>
+														class="update-link btn btn-warning" href="javascript:"
+														style="font-size: 13px; padding: 0 1px;">EDIT</a>
 													<a data-num="${tmp.num }"
-														class="delete-link btn btn-danger"
-														href="javascript:"  style="font-size : 13px; padding:0 1px;">DELETE</a>
+														class="delete-link btn btn-danger" href="javascript:"
+														style="font-size: 13px; padding: 0 1px;">DELETE</a>
 												</c:when>
 												<c:when test="${id eq 'admin' }">
 													<a data-num="${tmp.num }"
-														class="delete-link btn btn-danger"
-														href="javascript:">삭제</a>
+														class="delete-link btn btn-danger" href="javascript:">삭제</a>
 												</c:when>
 											</c:choose>
-												<div class="startRadio" style="pointer-events: none;">																			<c:forEach var="i" begin="0" end="9">
-														<label class="startRadio__box"> <input
-															type="radio" name="grade_number" value=${i }
-															${tmp.grade eq (i/2+0.5) ? 'class="point"' : '' }>
-															<span class="startRadio__img"> <span
-																class="blind">별 ${(i/2+0.5) }개</span>
-														</span>
-														</label>
-													</c:forEach>
-												</div>
-												<textarea class="review_content_box"
-													id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
-																													<div class="comment_box" id="pre${tmp.num }">
-												<input class="review_title_box" type="text"
-													name="title" id="spt${tmp.num }" value="${tmp.title}"
-													disabled />
+											<div class="startRadio" style="pointer-events: none;">
+												<c:forEach var="i" begin="0" end="9">
+													<label class="startRadio__box"> <input type="radio"
+														name="grade_number" value=${i }
+														${tmp.grade eq (i/2+0.5) ? 'class="point"' : '' }>
+														<span class="startRadio__img"> <span class="blind">별
+																${(i/2+0.5) }개</span>
+													</span>
+													</label>
+												</c:forEach>
 											</div>
-	
+											<textarea class="review_content_box" id="spc${tmp.num }"
+												name="content" disabled>${tmp.content}</textarea>
+											<div class="comment_box" id="pre${tmp.num }">
+												<input class="review_title_box" type="text" name="title"
+													id="spt${tmp.num }" value="${tmp.title}" disabled />
+											</div>
+
 											<!-- 수정폼 -->
 											<c:if test="${tmp.writer eq id }">
 												<form id="updateForm${tmp.num }"
-													class="review-form update-form"
-													action="review_update" method="post">
-													<input type="hidden" name="num" value="${tmp.num }" />
-													<input type="text" name="title" value="${tmp.title }" />
+													class="review-form update-form" action="review_update"
+													method="post">
+													<input type="hidden" name="num" value="${tmp.num }" /> <input
+														type="text" name="title" value="${tmp.title }" />
 													<div class="startRadio">
 														<c:forEach var="i" begin="0" end="9">
 															<label class="startRadio__box"> <input
 																type="radio" name="grade_number" value=${i }
-																${tmp.grade eq (i/2+0.5) ? 'checked' : '' }
-																disabled> <span class="startRadio__img">
-																	<span class="blind">별 ${(i/2+0.5) }개</span>
+																${tmp.grade eq (i/2+0.5) ? 'checked' : '' } disabled>
+																<span class="startRadio__img"> <span
+																	class="blind">별 ${(i/2+0.5) }개</span>
 															</span>
 															</label>
 														</c:forEach>
 													</div>
-	
+
 													<textarea name="content">${tmp.content }</textarea>
 													<button type="submit" id="ur${tmp.num }"
 														class=comment_edit_btn>수정</button>
 												</form>
 											</c:if>
 										</div>
-	
-										
+
+
 									</dt>
 									<div class="col-2">
 										<c:choose>
@@ -166,39 +166,40 @@
 					</c:forEach>
 				</ul>
 			</div>
-			<nav>
-			    <ul class="pagination justify-content-center">
-			    <c:choose>
-			      <c:when test="${rvstartPageNum ne 1 }">
-			         <li class="page-item">
-			                  <a class="page-link" href="review_list?pageNum=${rvstartPageNum - 1}&category=${category }&condition=${condition}&keyword=${encodedK}">Prev</a>
-			            </li>
-			      </c:when>
-			      <c:otherwise>
-			         <li class="page-item disabled">
-			                  <a class="page-link" href="javascript:">Prev</a>
-			            </li>
-			      </c:otherwise>
-			   </c:choose>
-			   <c:forEach var="i" begin="${rvstartPageNum }" end="${rvendPageNum }">
-			      <li class="page-item ${rvpageNum eq i ? 'active' : '' }">
-			         <a class="page-link" href="review_list?pageNum=${i }&category=${rvcategory }&condition=${rvcondition}&keyword=${rvencodedK}">${i }</a>
-			      </li>
-			   </c:forEach>
-			   <c:choose>
-			      <c:when test="${rvendPageNum lt rvtotalPageCount }">
-			         <li class="page-item">
-			                  <a class="page-link" href="review_list?pageNum=${rvendPageNum + 1}&category=${category }&condition=${condition}&keyword=${encodedK}"">Next</a>
-			            </li>
-			      </c:when>
-			      <c:otherwise>
-			         <li class="page-item disabled">
-			                  <a class="page-link" href="javascript:">Next</a>
-			            </li>
-			      </c:otherwise>
-			   </c:choose>
-			   </ul>
+			<nav class="mb-3">
+				<ul class="pagination justify-content-center">
+					<c:choose>
+						<c:when test="${rvstartPageNum ne 1 }">
+							<li class="page-item"><a class="page-link"
+								href="review_list?pageNum=${rvstartPageNum - 1}&category=${category }&condition=${condition}&keyword=${encodedK}">Prev</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item disabled"><a class="page-link"
+								href="javascript:">Prev</a></li>
+						</c:otherwise>
+					</c:choose>
+					<c:forEach var="i" begin="${rvstartPageNum }"
+						end="${rvendPageNum }">
+						<li class="page-item ${rvpageNum eq i ? 'active' : '' }"><a
+							class="page-link"
+							href="review_list?pageNum=${i }&category=${rvcategory }&condition=${rvcondition}&keyword=${rvencodedK}">${i }</a>
+						</li>
+					</c:forEach>
+					<c:choose>
+						<c:when test="${rvendPageNum lt rvtotalPageCount }">
+							<li class="page-item"><a class="page-link"
+								href="review_list?pageNum=${rvendPageNum + 1}&category=${category }&condition=${condition}&keyword=${encodedK}"">Next</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item disabled"><a class="page-link"
+								href="javascript:">Next</a></li>
+						</c:otherwise>
+					</c:choose>
+				</ul>
 			</nav>
 		</div>
+	</div>
 </body>
 </html>

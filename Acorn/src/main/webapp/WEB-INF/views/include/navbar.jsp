@@ -13,10 +13,10 @@
 				</a>
 				<div class="top_menu">
 					<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
-						<a href="${pageContext.request.contextPath}/">HOME</a>
-						<a href="#simple-list-item-1" id="category">CATEGORY</a>
-						<a href="#simple-list-item-2" id="hot_place">HOT PLACE</a>
-						<a href="#simple-list-item-3" id="research">RESEARCH</a>
+						<a href="#simple-list-item-1">TOP</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-2" : "../shop/list" } id="category">CATEGORY</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-3" : "#" } id="hot_place">HOT PLACE</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "#" } id="research">RESEARCH</a>
     		    </div>
 					<div class="search_menu">
 						<div class="search_bar">
@@ -46,10 +46,10 @@
 				</a>
 				<div class="top_menu">
 						<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
-						<a href="${pageContext.request.contextPath}/">HOME</a>
-						<a href="#simple-list-item-1" id="category">CATEGORY</a>
-						<a href="#simple-list-item-2" id="hot_place">HOT PLACE</a>
-						<a href="#simple-list-item-3" id="research">RESEARCH</a>
+						<a href="#simple-list-item-1">TOP</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-2" : "../shop/list" } id="category">CATEGORY</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-3" : "#" } id="hot_place">HOT PLACE</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "#" } id="research">RESEARCH</a>
             </div>
             <div class="search_menu">
               <div class="search_bar">
@@ -79,10 +79,10 @@
 				</a>
 				<div class="top_menu">
 					<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
-						<a href="${pageContext.request.contextPath}/">HOME</a>
-						<a href="#simple-list-item-1" id="category">CATEGORY</a>
-						<a href="#simple-list-item-2" id="hot_place">HOT PLACE</a>
-						<a href="#simple-list-item-3" id="research">RESEARCH</a>
+						<a href="#simple-list-item-1">TOP</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-2" : "../shop/list" } id="category">CATEGORY</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-3" : "#" } id="hot_place">HOT PLACE</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "#" } id="research">RESEARCH</a>
          			</div>
 					<div class="search_menu">
 						<div class="search_bar">
@@ -108,3 +108,43 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
+	<script>
+    	let isLogin=${ not empty id };
+	    if(!isLogin){
+			document.querySelector("#login").addEventListener("click", function(){
+				const url = document.location.href;	
+				console.log(url);
+				var url1 = url.split("/");
+				console.log(url1);
+				var url2 = "/"+url1[4];
+				for(var i = 5; i < url1.length; i++) {
+					 url2 = url2+"/"+url1[i];
+				}
+				console.log(url2);
+				
+				const encodedUrl = encodeURIComponent(url2);
+				console.log(encodedUrl);
+				
+				
+				location.href= "${pageContext.request.contextPath}/users/loginform?url="+url2;
+			});
+		}else{
+			document.querySelector("#logout").addEventListener("click", function(){
+			const url = document.location.href;	
+			console.log(url);
+			var url1 = url.split("/");
+			console.log(url1);
+			var url2 = "/"+url1[4];
+			for(var i = 5; i < url1.length; i++) {
+				 url2 = url2+"/"+url1[i];
+			}
+			console.log(url2);
+			
+			const encodedUrl = encodeURIComponent(url2);
+			console.log(encodedUrl);
+			
+			
+			location.href= "${pageContext.request.contextPath}/users/logout?url="+url2;
+			});
+		}
+    </script>

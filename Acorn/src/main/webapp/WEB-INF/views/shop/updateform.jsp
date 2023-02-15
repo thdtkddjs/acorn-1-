@@ -45,8 +45,11 @@ button{
 </style>
 </head>
 <body class="text-center">
-<%@include file ="../../views/include/navbar.jsp"%>
-	<div class="container">
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="admin03" name="thisPage"/>
+	</jsp:include>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+	<div id="simple-list-item-1" class="container">
 		<h1>UPDATE STORE</h1>
 		<form action="${pageContext.request.contextPath}/shop/update"
 			method="Get" id="updateForm">
@@ -164,6 +167,7 @@ button{
 				accept=".jpg, .png, .gif, .jpeg" />
 			<button type="submit">업로드</button>
 		</form>
+	</div>
 	</div>
 
 	<script

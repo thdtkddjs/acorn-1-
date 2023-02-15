@@ -74,7 +74,9 @@ textarea {
 </style>
 </head>
 <body class="text-center">
-<%@include file ="../../views/include/navbar.jsp"%>
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="admin04" name="thisPage"/>
+	</jsp:include>
 	<div class="container">
 		<br />
 		<br />
