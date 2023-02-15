@@ -15,8 +15,8 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 	crossorigin="anonymous"></script>
-
-
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/shop_insert_form.css">
 
 <!-- 가게정보 수정 기능 구현 시 사용 -->
 
@@ -34,81 +34,126 @@ textarea {
 }
 
 #profileImage {
-	width: 100px;
-	height: 100px;
+	width: 90px;
+	height: 90px;
 	border: 1px solid #cecece;
-	border-radius: 50%;
+	border-radius: 10%;
+}
+button{
+	margin : auto;
 }
 </style>
 </head>
-<body>
+<body class="text-center">
+<%@include file ="../../views/include/navbar.jsp"%>
 	<div class="container">
-		<h1>상점 정보 변경 요청폼</h1>
-		<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
-			alt="" style="height: 50px;" />
+		<h1>UPDATE STORE</h1>
 		<form action="${pageContext.request.contextPath}/shop/update"
 			method="Get" id="updateForm">
 			<!-- 숨겨진 imageform을 통해 등록된 이미지를 폼에 제출할 수 있도록 하는 hidden input -->
 			<input type="hidden" name="imagePath"
 				value="${ empty dto.imagePath ? 'empty' : dto.imagePath }" /> <input
 				type="hidden" name="num" value="${dto.num }" />
+				<br />
 			<!-- 점포명 input -->
-			<div class="mb-3">
-				<label class="form-label" for="title">점포명</label> <input
-					class="form-control" type="text" name="title" id="title"
-					value="${dto.title }" />
+			<div class="row">
+				<div class = "col-4">
+					<label class="form-label" for="title">NAME</label>					
+				</div>
+				<div class = "col-8">
+					<input class="form-control" type="text" name="title" id="title" value="${dto.title }"/>
+				</div>
 			</div>
 			<!-- 카테고리 input -->
-			<div class="mb-3">
-				<label class="form-label" for="categorie">카테고리</label> <input
-					class="form-control" type="text" name="categorie" id="categorie"
-					value="${dto.categorie }" />
+
+			<br />
+			<div class="row">
+				<div class="col-4" style="text-align: right;">
+					<label class="form-label" for="categorie">CATEGORIES</label>
+				</div>
+				<div class="col-8" style="text-align: left; padding-left: 20px;">
+					<select class="dropdown" name="categorie" id="categorie">
+						<option value="선택" <c:if test="${dto.categorie eq '선택'}">selected</c:if> >선택</option>
+						<option value="한식" <c:if test="${dto.categorie eq '한식'}">selected</c:if> >한식</option>
+						<option value="분식" <c:if test="${dto.categorie eq '분식'}">selected</c:if>>분식</option>
+						<option value="일식" <c:if test="${dto.categorie eq '일식'}">selected</c:if>>일식</option>
+						<option value="양식" <c:if test="${dto.categorie eq '양식'}">selected</c:if>>양식</option>
+						<option value="중식" <c:if test="${dto.categorie eq '중식'}">selected</c:if>>중식</option>
+						<option value="패스트푸드" <c:if test="${dto.categorie eq '패스트푸드'}">selected</c:if>>패스트푸드</option>
+						<option value="기타" <c:if test="${dto.categorie eq '기타'}">selected</c:if>>기타</option>
+					</select>
+				</div>
 			</div>
+			<br />
 			<!-- 번호 input -->
-			<div class="mb-3">
-				<label class="form-label" for="telNum">전화번호</label> <input
-					class="form-control" type="text" name="telNum" id="telNum"
-					value="${dto.telNum }" />
+			<div class="row">
+				<div class = "col-4">
+					<label class="form-label" for="telNum">TEL NO.</label>					
+				</div>
+				<div class = "col-8">
+					<input class="form-control" type="text" name="telNum" id="telNum" value="${dto.telNum }" />
+				</div>
 			</div>
-			<!-- 주소 input -->
-			<div class="mb-3">
-				<label class="form-label" for="addr">주소</label> <input
-					class="form-control" type="text" name="addr" id="addr"
-					value="${dto.addr }" />
+			<br/>
+
+			<!-- 주소 input -->			
+			<div class="row">
+				<div class = "col-4">
+					<label class="form-label" for="addr">ADDRESS</label>				
+				</div>
+				<div class = "col-8">
+					<input	class="form-control" type="text" name="addr" id="addr" value='${dto.addr }'/>
+				</div>
 			</div>
+			<br/>
+
 			<!-- 영업 시간 -->
-			<div class="mb-3">
-				<label class="form-label" for="startTime">개점 시간</label> <input
-					class="form-control" type="time" name="startTime"
-					value="${dto.startTime }" /> <br /> <label class="form-label"
-					for="endTime">폐점 시간</label> <input class="form-control" type="time"
-					name="endTime" value="${dto.endTime }" />
+			<div class="row">
+				<div class = "col-4">
+					<label class="form-label" for="startTime">OPEN</label>			
+				</div>
+				<div class = "col-8">
+					<input	class="form-control" type="time" name="startTime" value="${dto.startTime }"/>
+				</div>
 			</div>
-			
-			<!-- content input -->
-			<div class="mb-3">
-				<label class="form-label" for="content">내용</label>
-				<textarea class="form-control" name="content" id="content">${dto.content }</textarea>
+			<br/>
+			<div class="row">
+				<div class = "col-4">
+					<label	class="form-label" for="endTime">CLOSE</label> 	
+				</div>
+				<div class = "col-8">
+					<input	class="form-control" type="time" name="endTime" value="${dto.endTime }" />
+				</div>
 			</div>
-			<a id="profileLink" href="javascript:"> <c:choose>
-					<c:when test="${ empty dto.imagePath }">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-							fill="currentColor" class="bi bi-person-circle"
-							viewBox="0 0 16 16">
-                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                 <path fill-rule="evenodd"
-								d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-               </svg>
-					</c:when>
-					<c:otherwise>
-						<img id="profileImage"
-							src="${pageContext.request.contextPath }${ dto.imagePath}">
-					</c:otherwise>
-				</c:choose>
-			</a>
-			<button class="btn btn-primary" type="submit">저장</button>
-			<!-- 이미지 등록용 숨겨진 form -->
+			<br />
+			<!-- 설명 입력 textbox -->
+			<div class="row">
+				<!-- 가게 섬네일 등록을 위해 클릭하게 될 이미지 -->
+				<div class = "col-4">
+					<label class="form-label" for="content" style="inline-size: -webkit-fill-available;">EXPAIN</label>
+					<a id="profileLink" href="javascript:"> <c:choose>
+							<c:when test="${ empty dto.imagePath }">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+									fill="currentColor" class="bi bi-person-circle"
+									viewBox="0 0 16 16">
+		                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+		                 <path fill-rule="evenodd"
+											d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+		               </svg>
+							</c:when>
+							<c:otherwise>
+								<img id="profileImage"
+									src="${pageContext.request.contextPath }${ dto.imagePath}">
+							</c:otherwise>
+						</c:choose>
+					</a>
+				</div>
+				<div class = "col-8">
+					<textarea class="form-control" name="content" id="content">${dto.content }</textarea>
+				</div>
+			</div>
+			<br />
+			<button class="btn btn-outline-success" type="submit">REGIST</button>
 
 		</form>
 

@@ -19,7 +19,6 @@
 
 <body>
 <%@include file ="../views/include/navbar.jsp"%>
-
 	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
     <div class="block_content_top"></div>
 		<div class="roll_screen">
