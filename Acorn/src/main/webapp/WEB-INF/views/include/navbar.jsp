@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 	<div class="header_inner" style="border : 1px solid #ededed">
 		<div class="sm_menu">
@@ -19,7 +20,7 @@
     		    </div>
 					<div class="search_menu">
 						<div class="search_bar">
-							<form action="${pageContext.request.contextPath}/index/"
+              				  <form action="${pageContext.request.contextPath}/shop/search"
 								method="post">
 								<div class="search_box">
 									<button type="submit" style="display: contents">
@@ -52,7 +53,7 @@
             </div>
             <div class="search_menu">
               <div class="search_bar">
-                <form action="${pageContext.request.contextPath}/index/"
+     			<form action="${pageContext.request.contextPath}/shop/search"
                   method="post">
                   <div class="search_box">
                     <button type="submit" style="display: contents">
@@ -66,10 +67,10 @@
                 </form>
               </div>
             </div>
-						<div class="top_user">
-							<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
-							<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
-						</div>
+			<div class="top_user">
+				<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
+				<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
+			</div>
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -85,7 +86,7 @@
          			</div>
 					<div class="search_menu">
 						<div class="search_bar">
-							<form action="${pageContext.request.contextPath}/index/"
+     						<form action="${pageContext.request.contextPath}/shop/search"
 								method="post">
 								<div class="search_box">
 									<button type="submit" style="display: contents">

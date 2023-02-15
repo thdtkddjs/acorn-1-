@@ -2,11 +2,10 @@
 
 .container{
 	width : 624px;
-	height : 600px;
+	height : 700px;
 	box-shadow: 0px 5px 20px 0px grey;
-	margin-top : 150px;
 	border-radius : 20px;
-	padding-top : 50px;
+	padding-top : 150px;
 }
 h1{
 	text-align : center;
