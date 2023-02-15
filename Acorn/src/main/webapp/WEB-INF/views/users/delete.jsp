@@ -9,11 +9,10 @@
 </head>
 <body>
 	<div class="container">
-		<h1>알림</h1>
-		<p>
-			<strong>${reqeustScope.id }</strong> 님 탈퇴처리 되었습니다.
-			<a href="${pageContext.request.contextPath}">인덱스로 가기</a>
-		</p>
+		<script>
+			alert("탈퇴처리 되었습니다")
+			window.location.href = '${pageContext.request.contextPath}/users/loginform';
+		</script>
 	</div>
 </body>
 </html>

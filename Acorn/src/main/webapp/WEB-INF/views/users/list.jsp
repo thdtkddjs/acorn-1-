@@ -44,6 +44,9 @@ a{
 select{
 	border-radius : 5px;
 }
+ul{
+	margin:auto;
+}
 
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -85,31 +88,39 @@ select{
       </div>
       <br />
       <nav>
-         <ul class="pagination">
-            <%--
-               startPageNum 이 1 이 아닌 경우에만 Prev 링크를 제공한다. 
-               &condition=${condition}&keyword=${encodedK}
-             --%>
-            <c:if test="${startPageNum ne 1 }">
-               <li class="page-item">
-                  <a class="page-link" href="list?pageNum=${startPageNum-1 }&condition=${condition}&keyword=${encodedK}">Prev</a>
-               </li>
-            </c:if>
-            <c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
-               <li class="page-item ${pageNum eq i ? 'active' : '' }">
-                  <a class="page-link" href="list?pageNum=${i }&condition=${condition}&keyword=${encodedK}">${i }</a>
-               </li>
-            </c:forEach>
-            <%--
-               마지막 페이지 번호가 전체 페이지의 갯수보다 작으면 Next 링크를 제공한다. 
-             --%>
-            <c:if test="${endPageNum lt totalPageCount }">
-               <li class="page-item">
-                  <a class="page-link" href="list?pageNum=${endPageNum+1 }&condition=${condition}&keyword=${encodedK}">Next</a>
-               </li>
-            </c:if>
-         </ul>
-      </nav>
+		<ul class="pagination justify-content-center">
+			<c:choose>
+				<c:when test="${startPageNum ne 1 }">
+					<li class="page-item">
+	               		<a class="page-link" href="list?pageNum=${startPageNum - 1}&category=${category }&condition=${condition}&keyword=${encodedK}">◀</a>
+	            	</li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled">
+	               		<a class="page-link" href="javascript:">◀</a>
+	            	</li>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="i" begin="${startPageNum }" end="${endPageNum }">
+				<li class="page-item ${pageNum eq i ? 'active' : '' }">
+					<a class="page-link" href="list?pageNum=${i }&category=${category }&condition=${condition}&keyword=${encodedK}">${i }</a>
+				</li>
+			</c:forEach>
+			<c:choose>
+				<c:when test="${endPageNum lt totalPageCount }">
+					<li class="page-item">
+	               		<a class="page-link" href="list?pageNum=${endPageNum + 1}&category=${category }&condition=${condition}&keyword=${encodedK}"">▶</a>
+	            	</li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item disabled">
+	               		<a class="page-link" href="javascript:">▶</a>
+	            	</li>
+				</c:otherwise>
+			</c:choose>
+	      </ul>
+	   </nav>
+      
       <!-- 검색 폼 -->
       <form action="list" method="get"> 
          <select name="condition" id="condition">

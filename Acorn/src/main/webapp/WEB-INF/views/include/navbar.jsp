@@ -20,7 +20,7 @@
     		    </div>
 					<div class="search_menu">
 						<div class="search_bar">
-              				  <form action="${pageContext.request.contextPath}/shop/search"
+							<form action="${pageContext.request.contextPath}/shop/search"
 								method="post">
 								<div class="search_box">
 									<button type="submit" style="display: contents">
@@ -53,7 +53,7 @@
             </div>
             <div class="search_menu">
               <div class="search_bar">
-     			<form action="${pageContext.request.contextPath}/shop/search"
+                <form action="${pageContext.request.contextPath}/shop/search"
                   method="post">
                   <div class="search_box">
                     <button type="submit" style="display: contents">
