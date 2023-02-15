@@ -40,43 +40,46 @@ body::-webkit-scrollbar-thumb {
 }
 </style>
 <body class="text-center">
-<%@include file ="../../views/include/navbar.jsp"%>
-
-	<div class="container">
-	<br /><br /><br />
-	    <h1>SIGN-UP</h1>
-	    <br />
-	    <form action="${pageContext.request.contextPath}/users/signup" method="post" id="myForm">
-	      <div>
-	         <label class="control-label" for="id">ID</label>
-
-	         <input class="form-control" type="text" name="id" id="id"/>
-	         <small class="form-text" style="color:#dc3545; font-size:12px;">영문자 소문자로 시작하고 5글자~10글자 이내로 입력하세요.</small>
-             <div class="valid-feedback">사용가능한 아이디 입니다.</div>
-             <div class="invalid-feedback">사용할 수 없는 아이디 입니다.</div>      
-	      </div>
-	      <br /> 
-	      <div>
-	         <label class="control-label" for="pwd">PASSWORD</label>
-	         <input class="form-control" type="password" name="pwd" id="pwd"/>
-	         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
-		  </div>
-		  <br />
-	      <div>
-	         <label class="control-label" for="pwd2">PASSWORD CONFIRM</label>
-	         <input class="form-control" type="password" name="pwd2" id="pwd2"/>
-	         <small class="form-text" style="color:#dc3545; font-size:12px;">특수문자와 숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
-	      </div>
-	      <br />
-	      <div>
-	         <label class="control-label" for="email">E-MAIL</label>
-	         <input class="form-control" type="text" name="email" id="email"/>
-	         <div class="invalid-feedback">이메일 형식에 맞게 입력하세요.</div>
-	      </div>
-	      <br />
-	      <button class="btn btn-outline-success" type="submit">SIGN-UP</button>
-	   </form>
-	</div>   
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="user02" name="thisPage"/>
+	</jsp:include>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+		<div id="simple-list-item-1" class="container">
+		<br /><br /><br />
+		    <h1>SIGN-UP</h1>
+		    <br />
+		    <form action="${pageContext.request.contextPath}/users/signup" method="post" id="myForm">
+		      <div>
+		         <label class="control-label" for="id">ID</label>
+	
+		         <input class="form-control" type="text" name="id" id="id"/>
+		         <small class="form-text" style="color:#dc3545; font-size:12px;">영문자 소문자로 시작하고 5글자~10글자 이내로 입력하세요.</small>
+	             <div class="valid-feedback">사용가능한 아이디 입니다.</div>
+	             <div class="invalid-feedback">사용할 수 없는 아이디 입니다.</div>      
+		      </div>
+		      <br /> 
+		      <div>
+		         <label class="control-label" for="pwd">PASSWORD</label>
+		         <input class="form-control" type="password" name="pwd" id="pwd"/>
+		         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
+			  </div>
+			  <br />
+		      <div>
+		         <label class="control-label" for="pwd2">PASSWORD CONFIRM</label>
+		         <input class="form-control" type="password" name="pwd2" id="pwd2"/>
+		         <small class="form-text" style="color:#dc3545; font-size:12px;">특수문자와 숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
+		      </div>
+		      <br />
+		      <div>
+		         <label class="control-label" for="email">E-MAIL</label>
+		         <input class="form-control" type="text" name="email" id="email"/>
+		         <div class="invalid-feedback">이메일 형식에 맞게 입력하세요.</div>
+		      </div>
+		      <br />
+		      <button class="btn btn-outline-success" type="submit">SIGN-UP</button>
+		   </form>
+		</div>   
+	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
 	

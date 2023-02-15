@@ -15,7 +15,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 	crossorigin="anonymous"></script>
-
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 
 
 <!-- 가게정보 수정 기능 구현 시 사용 -->
@@ -42,7 +42,11 @@ textarea {
 </style>
 </head>
 <body>
-	<div class="container">
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="admin03" name="thisPage"/>
+	</jsp:include>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+	<div id="simple-list-item-1" class="container">
 		<h1>상점 정보 변경 요청폼</h1>
 		<img class="logo"
 			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
@@ -119,6 +123,7 @@ textarea {
 				accept=".jpg, .png, .gif, .jpeg" />
 			<button type="submit">업로드</button>
 		</form>
+	</div>
 	</div>
 
 	<script

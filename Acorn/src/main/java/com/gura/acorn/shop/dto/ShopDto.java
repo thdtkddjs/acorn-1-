@@ -4,23 +4,26 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("shopDto")
 public class ShopDto {
-	   private int num;
-	   private String title;
-	   private String content;
-	   private String imagePath;
-	   private String categorie;
-	   private int reviewCount; //review dto로 이동(추후 삭제)
-	   private String startTime;
-	   private String endTime;
-	   private String telNum;
-	   private String addr;
-	   private int startRowNum;
-	   private int endRowNum;
-	   
-	   public ShopDto() {}
+	private int num;
+	private String title;
+	private String content;
+	private String imagePath;
+	private String categorie;
+	private int reviewCount;
+	private double grade;
+	private String startTime;
+	private String endTime;
+	private String telNum;
+	private String addr;
+	private int startRowNum;
+	private int endRowNum;
+
+	public ShopDto() {
+	}
 
 	public ShopDto(int num, String title, String content, String imagePath, String categorie, int reviewCount,
-			String startTime, String endTime, String telNum, String addr, int startRowNum, int endRowNum) {
+			double grade, String startTime, String endTime, String telNum, String addr, int startRowNum,
+			int endRowNum) {
 		super();
 		this.num = num;
 		this.title = title;
@@ -28,6 +31,7 @@ public class ShopDto {
 		this.imagePath = imagePath;
 		this.categorie = categorie;
 		this.reviewCount = reviewCount;
+		this.grade = grade;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.telNum = telNum;
@@ -38,6 +42,14 @@ public class ShopDto {
 
 	public int getNum() {
 		return num;
+	}
+
+	public double getGrade() {
+		return grade;
+	}
+
+	public void setGrade(double grade) {
+		this.grade = grade;
 	}
 
 	public void setNum(int num) {

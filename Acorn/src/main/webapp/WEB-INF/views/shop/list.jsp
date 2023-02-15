@@ -12,8 +12,11 @@
 <title>list.jsp</title>
 </head>
 <body>
-<%@include file ="../../views/include/navbar.jsp"%>
-    <div class="block_content_top"></div>
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="list" name="thisPage"/>
+	</jsp:include>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+    <div id="simple-list-item-1" class="block_content_top"></div>
     <div class="category_bar">
     	<div class="row">
     			<a href="${pageContext.request.contextPath}/shop/list">
@@ -133,6 +136,7 @@
 			</c:choose>
 	      </ul>
 	   </nav>   
+	</div>
 	</div>
 </body>
 </html>

@@ -39,36 +39,41 @@ h1{
 }
 </style>
 <body class="text-center">
-<%@include file ="../../views/include/navbar.jsp"%>
-<div class="container">
-<br />
-	
-	   <h1>CHANGE P/W</h1>
-	   <br>
-	   <br>
-	   <form action="${pageContext.request.contextPath}/users/pwd_update" method="post" id="myForm">
-	      <div>
-	         <label class="control-label" for="pwd">OLD P/W</label>
-	         <input class="form-control" type="password" name="pwd" id="pwd"/>
-	      </div>
-	      <br />
-	      <div>
-	         <label class="control-label" for="newPwd">NEW P/W</label>
-	         <input class="form-control" type="password" name="newPwd" id="newPwd"/>
-	         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
-	      </div>
-	      <br />
-	      <div>
-	         <label class="control-label" for="newPwd2">NEW P/W CONFIRM</label>
-	         <input class="form-control" type="password" id="newPwd2"/>
-	         <small class="form-text" style="color:#dc3545; font-size:12px;">특수문자와 숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
-	      </div>
-	      <br />
-	      <br />
-	      <button type="submit" class="btn btn-outline-warning">CHANGE</button>
-	      <a href="${pageContext.request.contextPath}/users/info" class="btn btn-outline-danger">CANCEL</a>
-	   </form>
-</div>
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="user05" name="thisPage"/>
+	</jsp:include>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+		<div id="simple-list-item-1" class="container">
+			<br />
+
+			<h1>CHANGE P/W</h1>
+			<br> <br>
+			<form action="${pageContext.request.contextPath}/users/pwd_update"
+				method="post" id="myForm">
+				<div>
+					<label class="control-label" for="pwd">OLD P/W</label> <input
+						class="form-control" type="password" name="pwd" id="pwd" />
+				</div>
+				<br />
+				<div>
+					<label class="control-label" for="newPwd">NEW P/W</label> <input
+						class="form-control" type="password" name="newPwd" id="newPwd" />
+					<div class="invalid-feedback">비밀번호를 확인 하세요</div>
+				</div>
+				<br />
+				<div>
+					<label class="control-label" for="newPwd2">NEW P/W CONFIRM</label>
+					<input class="form-control" type="password" id="newPwd2" /> <small
+						class="form-text" style="color: #dc3545; font-size: 12px;">특수문자와
+						숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
+				</div>
+				<br /> <br />
+				<button type="submit" class="btn btn-outline-warning">CHANGE</button>
+				<a href="${pageContext.request.contextPath}/users/info"
+					class="btn btn-outline-danger">CANCEL</a>
+			</form>
+		</div>
+	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
 	

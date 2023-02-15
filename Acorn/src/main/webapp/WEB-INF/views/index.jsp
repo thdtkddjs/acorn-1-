@@ -18,11 +18,13 @@
 </head>
 
 <body>
-<%@include file ="../views/include/navbar.jsp"%>
+	<jsp:include page="../views/include/navbar.jsp">
+		<jsp:param value="index" name="thisPage"/>
+	</jsp:include>
 
 	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
     <div class="block_content_top"></div>
-		<div class="roll_screen">
+		<div id="simple-list-item-1" class="roll_screen">
 			<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-inner">
 					<div class="carousel-item active" data-bs-interval="5000">
@@ -48,7 +50,7 @@
 			</div>
 		</div>
 
-		<div id="simple-list-item-1" class="category">
+		<div id="simple-list-item-2" class="category">
 			<div class="row">
 				<a href="${pageContext.request.contextPath}/shop/list"> <img
 					src="${pageContext.request.contextPath}/resources/images/category/all.jpg"
@@ -98,7 +100,7 @@
 			</div>
 		</div>
 		<div class="block_content"></div>
-		<div id="simple-list-item-2" class="hot_place">
+		<div id="simple-list-item-3" class="hot_place">
 			<p>HOT PLACE
 			<br />
 			<span>2월 방문자, 평점 </span><strong>TOP 10 !</strong>
@@ -134,7 +136,7 @@
 				  draggable : false,
 				});
 		</script>
-		<div id="simple-list-item-3" class="research">
+		<div id="simple-list-item-4" class="research">
 			<p>MZ 세대가 가장 많이 방문한 맛집은?!
 			<br />
 			<span>MZ가 선호하는 트렌드!</span>
@@ -197,46 +199,5 @@
         </footer>
     
     </div>
-    
-    <script>
-    	let isLogin=${ not empty id };
-	    if(!isLogin){
-			document.querySelector("#login").addEventListener("click", function(){
-				const url = document.location.href;	
-				console.log(url);
-				var url1 = url.split("/");
-				console.log(url1);
-				var url2 = "/"+url1[4];
-				for(var i = 5; i < url1.length; i++) {
-					 url2 = url2+"/"+url1[i];
-				}
-				console.log(url2);
-				
-				const encodedUrl = encodeURIComponent(url2);
-				console.log(encodedUrl);
-				
-				
-				location.href= "${pageContext.request.contextPath}/users/loginform?url="+url2;
-			});
-		}else{
-			document.querySelector("#logout").addEventListener("click", function(){
-			const url = document.location.href;	
-			console.log(url);
-			var url1 = url.split("/");
-			console.log(url1);
-			var url2 = "/"+url1[4];
-			for(var i = 5; i < url1.length; i++) {
-				 url2 = url2+"/"+url1[i];
-			}
-			console.log(url2);
-			
-			const encodedUrl = encodeURIComponent(url2);
-			console.log(encodedUrl);
-			
-			
-			location.href= "${pageContext.request.contextPath}/users/logout?url="+url2;
-			});
-		}
-    </script>
 </body>
 </html>
