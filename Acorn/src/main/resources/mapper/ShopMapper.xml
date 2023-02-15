@@ -45,7 +45,7 @@
 			FROM
 				(SELECT s.num, s.title, s.content, s.imagePath, s.categorie, s.reviewCount, s.startTime, s.endTime, s.telNum, s.addr, r.grade
       			 from board_shop s, (SELECT ref_group, avg(grade) grade FROM board_shop_review where deleted = 'no' group by ref_group) r
-				 where s.num = r.ref_group)
+				 where s.num = r.ref_group(+))
 			<include refid="searchCondition"/>
 			ORDER BY num DESC) result1)
       <![CDATA[ 

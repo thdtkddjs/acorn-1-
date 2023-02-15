@@ -243,8 +243,11 @@
 									<td>
 										<!-- 원글에 리뷰를 작성할 폼 -->
 										<div class="comment_form_box">
-											<form class="review-form insert-form" action="review_insert"
-												method="post">
+											<form class="review-form insert-form" action="review_insert" method="post">
+												<!-- 실제 폼에 제출되는 이미지 값 -->
+												<input type="hidden" name="imagePath" value="empty" /> <input
+													type="hidden" name="ref_group" value="${dto.num }" />
+													
 												<div class="startRadio" style="float: left; left: 0%;">
 													<c:forEach var="i" begin="0" end="9">
 														<label class="startRadio__box"> <input type="radio"
@@ -259,23 +262,21 @@
 												<button class="regist_btn btn btn-outline-warning" type="submit">등록</button>
 												<div class="text_box">
 													<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
-													<a id ="thumbnailLink" href="javascript:" style="margin:auto; text-decoration:none; color:gray;">
+													
+													<a id="thumbnailLink" href="javascript:" style="margin:auto; text-decoration:none; color:gray;">
 													<!-- 유저가 사진 등록을 위해 클릭하게 될 이미지 -->
-													<svg class="camera_img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
-													    <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
-													    <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
-												    </svg>
+														<svg class="camera_img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
+														    <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
+														    <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+													    </svg>
 													</a>
 												</div>
 												<input class="review_title_box" type="text" name="title" id="title"
 													placeholder="한줄평 입력..." />
 	
-	
-												<!-- 실제 폼에 제출되는 이미지 값 -->
-												<input type="hidden" name="imagePath" value="empty" /> <input
-													type="hidden" name="ref_group" value="${dto.num }" />
 											</form>
-										</div> <!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
+										</div> 
+										<!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
 										<form id="imageForm"
 											action="${pageContext.request.contextPath}/shop/review_image_upload"
 											method="post" enctype="multipart/form-data">
