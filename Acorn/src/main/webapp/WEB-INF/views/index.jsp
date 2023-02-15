@@ -21,7 +21,6 @@
 	<jsp:include page="../views/include/navbar.jsp">
 		<jsp:param value="index" name="thisPage"/>
 	</jsp:include>
-
 	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
     <div class="block_content_top"></div>
 		<div id="simple-list-item-1" class="roll_screen">

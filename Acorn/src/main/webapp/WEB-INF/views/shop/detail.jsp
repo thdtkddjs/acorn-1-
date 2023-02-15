@@ -36,6 +36,7 @@
 					<p class="shop_desc">${dto.content}</p>
 					<p class="shop_review_count"><span style="color:black; font-weight:bold">리뷰</span> ${reviewCount}</p>
 					<a class="category_tag btn btn-outline-danger" href="${pageContext.request.contextPath}/shop/list?category=${dto.categorie}">#${dto.categorie}</a>
+					<a href="${pageContext.request.contextPath}/shop/updateform?num=${dto.num }">정보 수정</a>
 				</div>
 	
 				<div class="shop_board_info">

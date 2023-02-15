@@ -20,7 +20,6 @@
 		<h3>LOGIN FAIL</h3>
 		<br />
 		<p>Your ID is in the BAN LIST.</p>
-		<p>Please, Contact the manager</p>
 		<a class="btn btn-outline-warning" href="loginform?url=${requestScope.encodedUrl }">LOGIN PAGE</a>
 	</div>
 </body>
