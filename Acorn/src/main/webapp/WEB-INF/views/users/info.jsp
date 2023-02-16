@@ -125,8 +125,12 @@ a {
 			<tr style="height: 10px;"></tr>
 		</table>
 		<br> <br> 
-			<a href="${pageContext.request.contextPath}/shop/insertform" class="btn btn-outline-success">REGIST SHOP</a> 
-			<a href="${pageContext.request.contextPath}/users/list" class="btn btn-outline-secondary">USER LIST</a> 
+			<c:choose>
+				<c:when test="${sessionScope.id eq 'admin'}">
+					<a href="${pageContext.request.contextPath}/shop/insertform" class="btn btn-outline-success">REGIST SHOP</a> 
+					<a href="${pageContext.request.contextPath}/users/list" class="btn btn-outline-secondary">USER LIST</a>
+				</c:when>
+			</c:choose>
 			<a href="javascript:" id="edit_link" class="btn btn-outline-warning">EDIT</a>
 			<a href="javascript:deleteConfirm()" class="btn btn-outline-danger">DROP-OUT</a>
 
