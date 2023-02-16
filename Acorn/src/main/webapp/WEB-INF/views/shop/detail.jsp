@@ -18,6 +18,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link rel="stylesheet" type="text/css" href="../resources/css/shop_detail.css">
+
 </head>
 
 <body>
@@ -88,8 +89,10 @@
 							<c:forEach var="tmp" items="${menuList }">
 								<li class="menu_item">
 									<div class="menu_name_price">
-										<span class="menu_name">${tmp.name}</span>
+										<img src="${pageContext.request.contextPath}${tmp.imagePath}" id="${tmp.menuNum }"class="gallery" height="50px" alt="small_image" hidden/>
+										<span class="menu_name" id="${pageContext.request.contextPath}${tmp.imagePath}">${tmp.name}</span>
 										<span class="menu_price">${tmp.price}</span>
+										
 									</div>
 								</li>
 							</c:forEach>
@@ -97,6 +100,28 @@
 					</div>
 	
 			</div>
+			
+				<script type="text/javascript">
+				    $(document).ready(function() {
+				        var xOffset = 10;
+				        var yOffset = 30;
+				        
+				        //마우스 오버시 preview 생성
+				        $(document).on("mouseover",".menu_name",function(e){
+				            $("body").append("<p id='preview'><img src='" + $(this).attr("id") + "' width='400px'/></p>");
+				            $("#preview")
+				            .css("position", "fixed")
+				            .css("top", "25%")
+				            .css("left","35%")
+				            .css("z-index", 5)
+				            .fadeIn("slow");
+				        });
+				        //마우스 아웃시 preview 제거
+				        $(document).on("mouseout",".menu_name",function(){
+				            $("#preview").remove();
+				        });
+				    });
+				</script>
 			<div class="shop_board_separator"></div>
 			<div class="shop_board_body3">
 				<div class="shop_board_review">
@@ -428,10 +453,10 @@
 	</div>
 	<script src="${pageContext.request.contextPath}/resources/js/gura_util.js"></script>
 	
+
+	
 	<!-- 리뷰 관리 script -->
 	<script>
-      //로그인 여부 확인
-      let isLogin=${ not empty id };
       
       document.querySelector(".insert-form")
          .addEventListener("submit", function(e){
