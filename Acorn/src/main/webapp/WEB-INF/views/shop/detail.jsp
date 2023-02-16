@@ -13,7 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<link rel="stylesheet" type="text/css" href="resources/css/index.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <link rel="shortcut icon" href="#">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -180,12 +180,12 @@
 																					</label>
 																				</c:forEach>
 																			</div>
-																			<textarea class="review_content_box"
-																				id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
-																																				<div class="comment_box" id="pre${tmp.num }">
+																		<div class="comment_box" id="pre${tmp.num }">
 																			<input class="review_title_box" type="text"
 																				name="title" id="spt${tmp.num }" value="${tmp.title}"
 																				disabled />
+																			<textarea class="review_content_box"
+																			id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
 																		</div>
 	
 																		<!-- 수정폼 -->
@@ -194,7 +194,6 @@
 																				class="review-form update-form"
 																				action="review_update" method="post">
 																				<input type="hidden" name="num" value="${tmp.num }" />
-																				<input type="text" name="title" value="${tmp.title }" />
 																				<div class="startRadio">
 																					<c:forEach var="i" begin="0" end="9">
 																						<label class="startRadio__box"> <input
@@ -234,7 +233,6 @@
 													</c:choose>
 												</c:forEach>
 	
-	
 											</ul>
 										</div>
 									</td>
@@ -263,8 +261,8 @@
 												<div class="text_box">
 													<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
 													
-													<a id="thumbnailLink" href="javascript:" style="margin:auto; text-decoration:none; color:gray;">
 													<!-- 유저가 사진 등록을 위해 클릭하게 될 이미지 -->
+													<a id="thumbnailLink" href="javascript:" style="margin:auto; text-decoration:none; color:gray;">
 														<svg class="camera_img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
 														    <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
 														    <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
@@ -275,15 +273,15 @@
 													placeholder="한줄평 입력..." />
 	
 											</form>
+											<!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
+											<form id="imageForm"
+												action="${pageContext.request.contextPath}/shop/review_image_upload"
+												method="post" enctype="multipart/form-data">
+												사진 <input type="file" id="image" name="image"
+													accept=".jpg, .png, .gif, .jpeg" />
+												<button type="submit">업로드</button>
+											</form>
 										</div> 
-										<!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
-										<form id="imageForm"
-											action="${pageContext.request.contextPath}/shop/review_image_upload"
-											method="post" enctype="multipart/form-data">
-											사진 <input type="file" id="image" name="image"
-												accept=".jpg, .png, .gif, .jpeg" />
-											<button type="submit">업로드</button>
-										</form>
 									</td>
 								</tr>
 							</tbody>
@@ -431,15 +429,12 @@
 	
 	<!-- 리뷰 관리 script -->
 	<script>
-      //로그인 여부 확인
-      let isLogin=${ not empty id };
-      
       document.querySelector(".insert-form")
          .addEventListener("submit", function(e){
             if(!isLogin){
                e.preventDefault();
                location.href=
-                  "${pageContext.request.contextPath}/users/loginform?url=${pageContext.request.contextPath}/shop/detail?num=${dto.num}";
+                  "${pageContext.request.contextPath}/users/loginform?url=/shop/detail?num=${dto.num}";
             }
          });
       
@@ -449,7 +444,7 @@
       addDeleteListener(".delete-link");
        
       function addUpdateListener(sel){
-         let updateLinks=document.querySelectorAll(sel);
+         let updateLinks = document.querySelectorAll(sel);
          for(let i=0; i<updateLinks.length; i++){
             updateLinks[i].addEventListener("click", function(){
                const num=this.getAttribute("data-num");
@@ -458,21 +453,21 @@
                
                let current = this.innerText;
                
-               if(current == "수정"){
+               if(current == "EDIT"){
             	   form.style.display="block";
             	   form2.style.display="none";
                    form.classList.add("animate__flash");
-                   this.innerText="취소";   
+                   this.innerText="CANCEL";   
                    form.addEventListener("animationend", function(){
                       form.classList.remove("animate__flash");
                    }, {once:true});
                    document.querySelector("#ur"+num).addEventListener("click", function(){
                 	   form2.style.display="block";	
-                	   updateLinks[i].innerText = "수정";
+                	   updateLinks[i].innerText = "EDIT";
 				   });
-                 }else if(current == "취소"){
+                 }else if(current == "CANCEL"){
                     form.classList.add("animate__fadeOut");
-                    this.innerText="수정";
+                    this.innerText="EDIT";
                     form.addEventListener("animationend", function(){
                        form.classList.remove("animate__fadeOut");
                        form.style.display="none";
@@ -516,9 +511,7 @@
                .then(function(data){
                   if(data.isSuccess){
                      const num = form.querySelector("input[name=num]").value;
-                     const title = form.querySelector("input[name=title]").value;
                      const content = form.querySelector("textarea[name=content]").value;
-                     document.querySelector("#spt"+num).value=title;
                      document.querySelector("#spc"+num).innerText=content;
                      form.style.display="none";
                   }
@@ -527,7 +520,7 @@
          }
       }
       
-		document.querySelector("#thumbnailLink").addEventListener("click", function(){
+      document.querySelector("#thumbnailLink").addEventListener("click", function(){
 			document.querySelector("#image").click();	
 		});   
 		document.querySelector("#image").addEventListener("change", function(){
