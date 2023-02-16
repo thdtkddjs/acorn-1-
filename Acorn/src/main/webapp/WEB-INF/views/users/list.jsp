@@ -126,7 +126,7 @@ ul{
       
       <!-- 검색 폼 -->
       <form action="list" method="get"> 
-         <select name="condition" id="condition">
+         <select name="condition" id="condition" style="display:none;">
             <option value="id" ${condition eq 'id' ? 'selected' : '' }>아이디</option>
          </select>
          
