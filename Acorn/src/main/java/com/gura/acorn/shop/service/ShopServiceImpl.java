@@ -294,10 +294,7 @@ public class ShopServiceImpl implements ShopService{
 		//폼 전송되는 파라미터 추출 
 		int ref_group = Integer.parseInt(request.getParameter("ref_group"));//원글의 글번호
 		//평점을 구현하는 문단
-		double GN= Double.parseDouble(request.getParameter("grade_number"));
-		//여기까지
-		
-		
+		double GN= Double.parseDouble(request.getParameter("grade_number"))/2 + 0.5;
 		
 		String title = request.getParameter("title"); // 리뷰 제목
 		String content = request.getParameter("content"); //리뷰 내용

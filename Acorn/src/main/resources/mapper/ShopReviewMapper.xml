@@ -51,7 +51,7 @@
 				INNER JOIN users
 				ON board_shop_review.writer = users.id
 				WHERE ref_group = #{ref_group}
-				ORDER BY review_group ASC, num ASC) result1)
+				ORDER BY review_group DESC, num DESC) result1)
 		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}   
 	</select>
 	
@@ -77,7 +77,7 @@
 	
 	<update id="update" parameterType="shopReviewDto">
 		UPDATE board_shop_review
-		SET title = #{title}, content = #{content}
+		SET content = #{content}
 		WHERE num = #{num}
 	</update>
 	
