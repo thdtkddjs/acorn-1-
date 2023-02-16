@@ -77,7 +77,7 @@ a {
 	</jsp:include>
 	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
 	<div id="simple-list-item-1" class="container">
-<br /><br />
+		<br /><br />
 		<h1>INFO</h1>
 		<br>
 		<table>

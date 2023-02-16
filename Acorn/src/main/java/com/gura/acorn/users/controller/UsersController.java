@@ -93,6 +93,11 @@ public class UsersController {
 	//개인 정보 보기 요청 처리 
 	@RequestMapping("/users/info")
 	public ModelAndView info(HttpSession session, ModelAndView mView) {
+		String id = (String)session.getAttribute("id");
+		if(id == null) {
+			mView.setViewName("error/need_login");
+			return mView;
+		}
 		
 		service.getInfo(session, mView);
 		
