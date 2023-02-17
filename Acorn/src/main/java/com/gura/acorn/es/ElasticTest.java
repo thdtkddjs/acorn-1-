@@ -71,10 +71,10 @@ public class ElasticTest {
 		map2.put("작동", "155");
 		map2.put("확인", "153");
 		System.out.println(map2);
-		
-		ElasticUtil.getInstance().create(index, id, map2);
+		ElasticUtil ES=ElasticUtil.getInstance();
+		ES.create(index, id, map2);
 				
-	
+		System.out.println(ES.simplesearch());
 		
 	}
 	

@@ -2,6 +2,8 @@ package com.gura.acorn.es;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -16,6 +18,8 @@ import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Cancellable;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.Response;
@@ -24,6 +28,11 @@ import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.RestHighLevelClientBuilder;
 import org.elasticsearch.common.Strings;
+import org.elasticsearch.common.document.DocumentField;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.xcontent.XContentBuilder;
 import org.elasticsearch.xcontent.XContentFactory;
 import org.elasticsearch.xcontent.XContentType;
@@ -99,4 +108,44 @@ public class ElasticUtil {
 		);
 		return response;
 	}
+	
+	//search
+	public List<Map<String, Object>> simplesearch(){
+		//search의 결과를 담아둘 List
+		List<Map<String, Object>> result=new ArrayList<>();
+		SearchRequest searchRequest = new SearchRequest("gaia"); 
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder(); 
+		searchSourceBuilder.query(QueryBuilders.matchAllQuery()); 
+		searchRequest.source(searchSourceBuilder);
+		
+//		Cancellable response=client.searchAsync(searchRequest, RequestOptions.DEFAULT, new ActionListener<SearchResponse>() {
+//		    @Override
+//		    public void onResponse(SearchResponse searchResponse) {
+//		        System.out.println("ES로부터 정보를 가져옵니다.");
+//		        SearchHits hits=searchResponse.getHits();
+//		        for(SearchHit hit:hits) {
+//		        	result.add(hit.getSourceAsMap());
+//		        }
+//		    }
+//
+//		    @Override
+//		    public void onFailure(Exception e) {
+//		        System.out.println("search작업 실패");
+//		        System.out.println(e);
+//		    }
+//		});
+		try {
+			SearchResponse response=client.search(searchRequest, RequestOptions.DEFAULT);
+			SearchHits hits=response.getHits();
+			for (SearchHit hit:hits) {
+				result.add(hit.getSourceAsMap());
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
 }

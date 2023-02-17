@@ -36,7 +36,8 @@ public class ShopController {
 	public String index(HttpServletRequest request) {
 		service.getList(request);
 		//이 메소드가 실행될때 ES의 /gaia/_doc/1에 Map2의 정보가 전달되어 기록된다.
-		//메소드가 실행될때마다 덮어써진다. 나중에 id나 index를 바꾸면서 기록할 필요가 있어보인다.
+		//메소드가 실행될때마다 덮어써진다.
+		//id나 index를 바꾸면서 기록할 필요가 있어보인다.
 		//덮어쓰기 말고 추가되는 방식을 찾아봤지만 아직은 못찾았다.
 		String index = "gaia";
 		String id = "1";
