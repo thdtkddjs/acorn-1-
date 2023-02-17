@@ -37,7 +37,18 @@
 					<p class="shop_desc">${dto.content}</p>
 					<p class="shop_review_count"><span style="color:black; font-weight:bold">리뷰</span> ${reviewCount}</p>
 					<a class="category_tag btn btn-outline-danger" href="${pageContext.request.contextPath}/shop/list?category=${dto.categorie}">#${dto.categorie}</a>
-					<a href="${pageContext.request.contextPath}/shop/updateform?num=${dto.num }">정보 수정</a>
+					<c:if test="${sessionScope.id eq 'admin'}">
+						<div class="shop_info_edit">
+							<a href="${pageContext.request.contextPath}/shop/updateform?num=${dto.num }">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+									<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+									<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+								</svg>
+							</a>
+						</div>
+					</c:if>
+					
+
 				</div>
 	
 				<div class="shop_board_info">
@@ -146,7 +157,7 @@
 												<c:forEach var="tmp" items="${reviewList }">
 													<c:choose>
 														<c:when test="${tmp.deleted eq 'yes' }">
-															<dt class="row">
+															<dt class="row" style="border-top: 1px solid #f2f2f2; height : 75px; item-align : center; text-align:center; align-items: center;">
 																<li>삭제된 리뷰 입니다.</li>
 															</dt>
 														</c:when>
@@ -221,7 +232,7 @@
 																				<input type="hidden" name="num" value="${tmp.num }" />
 																				<div class="startRadio">
 																					<c:forEach var="i" begin="0" end="9">
-																						<label class="startRadio__box"> <input
+																						<label class="startRadio__box" hidden> <input
 																							type="radio" name="grade_number" value=${i }
 																							${tmp.grade eq (i/2+0.5) ? 'checked' : '' }
 																							disabled> <span class="startRadio__img">
@@ -244,8 +255,6 @@
 																	<c:choose>
 																		<c:when
 																			test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
-																			<img class="review_img"
-																				src="${pageContext.request.contextPath}/resources/images/photo.png" />
 																		</c:when>
 																		<c:otherwise>
 																			<img class="review_img"
@@ -463,7 +472,7 @@
                location.href=
                   "${pageContext.request.contextPath}/users/loginform?url=/shop/detail?num=${dto.num}";
             }
-         });
+      });
       
       //댓글에 이벤트 리스너 등록 하기 
       addUpdateFormListener(".update-form");
