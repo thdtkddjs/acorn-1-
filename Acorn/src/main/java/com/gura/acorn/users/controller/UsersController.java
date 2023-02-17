@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gura.acorn.exception.loginException;
 import com.gura.acorn.users.dto.UsersDto;
 import com.gura.acorn.users.service.UsersService;
 
@@ -29,7 +30,13 @@ public class UsersController {
 	private UsersService service;
 	
 	@RequestMapping("/users/list")
-	public String getList(HttpServletRequest request) {
+	public String getList(HttpServletRequest request, HttpSession session) {
+		String id = (String)session.getAttribute("id");
+		if(id == null) {
+			throw new loginException("needLogin");
+		}else if(!id.equals("admin")) {
+			throw new loginException("needAuthority");
+		}
 		service.getList(request);
 		
 		return "users/list";
@@ -95,8 +102,7 @@ public class UsersController {
 	public ModelAndView info(HttpSession session, ModelAndView mView) {
 		String id = (String)session.getAttribute("id");
 		if(id == null) {
-			mView.setViewName("error/need_login");
-			return mView;
+			throw new loginException("needLogin");
 		}
 		
 		service.getInfo(session, mView);
@@ -106,8 +112,11 @@ public class UsersController {
 	}	
 	//비밀번호 수정폼 요청 처리
 	@RequestMapping("/users/pwd_updateform")
-	public String pwdUpdateForm() {
-	
+	public String pwdUpdateForm(HttpSession session) {
+		String id = (String)session.getAttribute("id");
+		if(id == null) {
+			throw new loginException("needLogin");
+		}
 		return "users/pwd_updateform";
 	}	
 	

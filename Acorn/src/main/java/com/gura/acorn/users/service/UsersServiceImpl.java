@@ -1,7 +1,6 @@
 package com.gura.acorn.users.service;
 
 import java.io.File;
-
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gura.acorn.exception.BanException;
+import com.gura.acorn.exception.loginException;
 import com.gura.acorn.users.dao.UsersDao;
 import com.gura.acorn.users.dto.UsersDto;
 
@@ -63,11 +62,11 @@ public class UsersServiceImpl implements UsersService{
 			//Bcrypt 클래스의 static 메소드를 이용해서 입력한 비밀번호와 암호화 해서 저장된 비밀번호 일치 여부를 알아내야한다.
 			isValid = BCrypt.checkpw(dto.getPwd(), resultDto.getPwd());
 		}else {
-			throw new BanException("notExist");
+			throw new loginException("notExist");
 		}
 		
 		if(resultDto.getBan() != null) { // 만일 getBan 에 담긴 값이 없다면? => 일반유저
-			throw new BanException("banUser");
+			throw new loginException("banUser");
 		}
 		
 		//만일 유효한 정보이면 

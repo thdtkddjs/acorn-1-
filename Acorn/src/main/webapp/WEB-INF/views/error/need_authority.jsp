@@ -16,9 +16,9 @@
 		<br />
 		<br />
 		<br />
-		<h3>로그인이 필요한 페이지 입니다</h3>
+		<h3>관리자 권한이 필요한 페이지 입니다</h3>
 		<br />
-		<a class="btn btn-outline-warning" href="../users/loginform?url=${requestScope.encodedUrl }">LOGIN PAGE</a>
+		<a class="btn btn-outline-warning" href="${pageContext.request.contextPath}">HOME PAGE</a>
 	</div>
 </body>
 </html>
