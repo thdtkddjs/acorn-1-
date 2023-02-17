@@ -75,17 +75,17 @@
 				</a>
 			</div>
 			<div class="row">
-				<a href="${pageContext.request.contextPath}/shop/list?category=양식">
+				<a href="${pageContext.request.contextPath}/shop/list?category=분식">
 					<img
 					src="${pageContext.request.contextPath}/resources/images/category/bunsik.jpg"
 					alt="분식" title="분식" class="col" />
 				</a> <a
-					href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">
+					href="${pageContext.request.contextPath}/shop/list?category=양식">
 					<img
 					src="${pageContext.request.contextPath}/resources/images/category/yangsik.jpg"
 					alt="양식" title="양식" class="col" />
 				</a> <a
-					href="${pageContext.request.contextPath}/shop/list?category=분식">
+					href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">
 					<img
 					src="${pageContext.request.contextPath}/resources/images/category/fastfood.jpg"
 					alt="패스트푸드" title="패스트푸드" class="col" />

@@ -95,7 +95,7 @@ body::-webkit-scrollbar-thumb {
 	<main class="form-signin w-100 m-auto">
 
 	  <form action="${pageContext.request.contextPath}/users/login" method="post">
-	  	<a href="${pageContext.request.contextPath}" class="logo_text">
+	  	<a href="../" class="logo_text">
 			<p class="cloud_effect">FOOD CLOUD</p>
 		</a>
 		  <c:choose>
