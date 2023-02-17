@@ -64,7 +64,7 @@ h1{
 				<div>
 					<label class="control-label" for="newPwd2">NEW P/W CONFIRM</label>
 					<input class="form-control" type="password" id="newPwd2" /> <small
-						class="form-text" style="color: #dc3545; font-size: 12px;">특수문자와
+						class="form-text" style="color: #cecece; font-size: 12px;">특수문자와
 						숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
 				</div>
 				<br /> <br />

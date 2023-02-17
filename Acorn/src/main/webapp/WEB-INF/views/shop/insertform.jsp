@@ -15,6 +15,9 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 	crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <link rel="stylesheet" type="text/css" href="../resources/css/shop_insert_form.css">
 <style>
@@ -92,14 +95,14 @@ body::-webkit-scrollbar-thumb {
 				</div>
 			</div>
 			<br/>
-			
+			 
 			<!-- 영업 시간 -->
 			<div class="row">
 				<div class = "col-4">
-					<label class="form-label" for="startTime">OPEN</label>			
+					<label class=" form-label" for="startTime">OPEN</label>			
 				</div>
 				<div class = "col-8">
-					<input	class="form-control" type="time" name="startTime" />
+					<input	class="form-control" type="time" name="startTime" value="00:00" max="12:59"/>
 				</div>
 			</div>
 			<br/>
@@ -108,7 +111,7 @@ body::-webkit-scrollbar-thumb {
 					<label	class="form-label" for="endTime">CLOSE</label> 	
 				</div>
 				<div class = "col-8">
-					<input	class="form-control" type="time" name="endTime" />
+					<input	class="form-control" type="time" name="endTime" value="00:00" max="12:59" />
 				</div>
 			</div>
 			<br />
@@ -143,6 +146,7 @@ body::-webkit-scrollbar-thumb {
 	</div>
 
 	<script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
+
 
 	<!-- 섬네일 등록 script -->
 	<script>

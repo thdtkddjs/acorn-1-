@@ -12,7 +12,7 @@ h1 {
 	text-align: center;
 }
 
-.camera_img {
+.camera_img, .upload_img {
 	width: 50px;
 	height: 50px;
 }
