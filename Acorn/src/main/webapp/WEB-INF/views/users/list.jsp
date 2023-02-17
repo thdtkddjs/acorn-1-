@@ -65,13 +65,14 @@ ul{
       	<br />
       	<div style="    border-radius: 10px;
 					    border: solid 1px white;
-					    overflow: hidden;">
-      	<table class="table table-striped" style="width : auto; margin : 0px;">
+					    overflow: hidden;
+					    font-size:15px;">
+      	<table class="table table-striped" style="width : 100%; margin : 0px;">
          <thead class="table-dark">
             <tr>
-               <th>ID</th>
-               <th>E-MAIL</th>
-               <th>REGIST DATE</th>
+               <th style="width:105px;">ID</th>
+               <th style="width:180px;">E-MAIL</th>
+               <th>REGIST DATE</th>	
                <th>BAN</th>
                <th>STATUS</th>
             </tr>
@@ -79,11 +80,11 @@ ul{
          <tbody>
          <c:forEach var="tmp" items="${list }">
             <tr>
-               <td style="width:150px;">${tmp.id }</td>
-               <td style="width:250px;">${tmp.email }</td>
-               <td style="width:200px;">${tmp.regdate }</td>
-               <td style="width:100px;"><a href="javascript:ban('${tmp.id }')" class="btn btn-outline-danger">BAN</a></td>
-               <td style="width:100px;" id="${tmp.id }">${tmp.ban }</td>
+               <td >${tmp.id }</td>
+               <td>${tmp.email }</td>
+               <td>${tmp.regdate }</td>
+               <td><a href="javascript:ban('${tmp.id }')" class="btn btn-outline-danger">BAN</a></td>
+               <td id="${tmp.id }">${tmp.ban }</td>
             </tr>
          </c:forEach>
          </tbody>
