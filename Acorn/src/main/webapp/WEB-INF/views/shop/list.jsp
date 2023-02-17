@@ -60,11 +60,13 @@
 	<div class="container">
 		<div class="shop_list">
 			<p class="list_title">
-				${category} 맛집 검색 결과  <span style="font-size : 20px; font-weight:bold;color : red;">${totalRow}개</span>
 				<span>
 				<c:choose>
 					<c:when test="${category ne '' }">
-						<strong style="color:black;">${category}</strong>카테고리 평점 기준으로 정렬한 맛집 리스트 입니다.
+					<span style="color : black !important; font-size:20px; font-weight:bold;">"${category}" 검색 결과 : </span> 
+					
+					<span style="font-size : 20px; font-weight:bold;color : red;">${totalRow}개</span>
+						|<strong style="color:black;"> ${category} </strong>카테고리 평점 기준으로 정렬한 맛집 리스트 입니다.
 					</c:when>
 					<c:otherwise>
 						<strong style="color:black;">전체</strong> 카테고리 평점 기준으로 정렬한 맛집 리스트 입니다.

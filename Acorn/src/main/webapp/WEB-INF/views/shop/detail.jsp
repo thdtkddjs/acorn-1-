@@ -13,7 +13,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<link rel="stylesheet" type="text/css" href="resources/css/index.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <link rel="shortcut icon" href="#">
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
@@ -37,7 +37,18 @@
 					<p class="shop_desc">${dto.content}</p>
 					<p class="shop_review_count"><span style="color:black; font-weight:bold">리뷰</span> ${reviewCount}</p>
 					<a class="category_tag btn btn-outline-danger" href="${pageContext.request.contextPath}/shop/list?category=${dto.categorie}">#${dto.categorie}</a>
-					<a href="${pageContext.request.contextPath}/shop/updateform?num=${dto.num }">정보 수정</a>
+					<c:if test="${sessionScope.id eq 'admin'}">
+						<div class="shop_info_edit">
+							<a href="${pageContext.request.contextPath}/shop/updateform?num=${dto.num }">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+									<path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+									<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+								</svg>
+							</a>
+						</div>
+					</c:if>
+					
+
 				</div>
 	
 				<div class="shop_board_info">
@@ -146,7 +157,7 @@
 												<c:forEach var="tmp" items="${reviewList }">
 													<c:choose>
 														<c:when test="${tmp.deleted eq 'yes' }">
-															<dt class="row">
+															<dt class="row" style="border-top: 1px solid #f2f2f2; height : 75px; item-align : center; text-align:center; align-items: center;">
 																<li>삭제된 리뷰 입니다.</li>
 															</dt>
 														</c:when>
@@ -205,12 +216,12 @@
 																					</label>
 																				</c:forEach>
 																			</div>
-																			<textarea class="review_content_box"
-																				id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
-																																				<div class="comment_box" id="pre${tmp.num }">
+																		<div class="comment_box" id="pre${tmp.num }">
 																			<input class="review_title_box" type="text"
 																				name="title" id="spt${tmp.num }" value="${tmp.title}"
 																				disabled />
+																			<textarea class="review_content_box"
+																			id="spc${tmp.num }" name="content" disabled>${tmp.content}</textarea>
 																		</div>
 	
 																		<!-- 수정폼 -->
@@ -219,10 +230,9 @@
 																				class="review-form update-form"
 																				action="review_update" method="post">
 																				<input type="hidden" name="num" value="${tmp.num }" />
-																				<input type="text" name="title" value="${tmp.title }" />
 																				<div class="startRadio">
 																					<c:forEach var="i" begin="0" end="9">
-																						<label class="startRadio__box"> <input
+																						<label class="startRadio__box" hidden> <input
 																							type="radio" name="grade_number" value=${i }
 																							${tmp.grade eq (i/2+0.5) ? 'checked' : '' }
 																							disabled> <span class="startRadio__img">
@@ -245,8 +255,6 @@
 																	<c:choose>
 																		<c:when
 																			test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
-																			<img class="review_img"
-																				src="${pageContext.request.contextPath}/resources/images/photo.png" />
 																		</c:when>
 																		<c:otherwise>
 																			<img class="review_img"
@@ -259,7 +267,6 @@
 													</c:choose>
 												</c:forEach>
 	
-	
 											</ul>
 										</div>
 									</td>
@@ -268,8 +275,11 @@
 									<td>
 										<!-- 원글에 리뷰를 작성할 폼 -->
 										<div class="comment_form_box">
-											<form class="review-form insert-form" action="review_insert"
-												method="post">
+											<form class="review-form insert-form" action="review_insert" method="post">
+												<!-- 실제 폼에 제출되는 이미지 값 -->
+												<input type="hidden" name="imagePath" value="empty" /> <input
+													type="hidden" name="ref_group" value="${dto.num }" />
+													
 												<div class="startRadio" style="float: left; left: 0%;">
 													<c:forEach var="i" begin="0" end="9">
 														<label class="startRadio__box"> <input type="radio"
@@ -284,30 +294,28 @@
 												<button class="regist_btn btn btn-outline-warning" type="submit">등록</button>
 												<div class="text_box">
 													<textarea class="regist_comment_box" name="content">${empty id ? '댓글 작성을 위해 로그인이 필요 합니다.' : '' }</textarea>
-													<a id ="thumbnailLink" href="javascript:" style="margin:auto; text-decoration:none; color:gray;">
+													
 													<!-- 유저가 사진 등록을 위해 클릭하게 될 이미지 -->
-													<svg class="camera_img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
-													    <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
-													    <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
-												    </svg>
+													<a id="thumbnailLink" href="javascript:" style="margin:auto; text-decoration:none; color:gray;">
+														<svg class="camera_img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera" viewBox="0 0 16 16">
+														    <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
+														    <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+													    </svg>
 													</a>
 												</div>
 												<input class="review_title_box" type="text" name="title" id="title"
 													placeholder="한줄평 입력..." />
 	
-	
-												<!-- 실제 폼에 제출되는 이미지 값 -->
-												<input type="hidden" name="imagePath" value="empty" /> <input
-													type="hidden" name="ref_group" value="${dto.num }" />
 											</form>
-										</div> <!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
-										<form id="imageForm"
-											action="${pageContext.request.contextPath}/shop/review_image_upload"
-											method="post" enctype="multipart/form-data">
-											사진 <input type="file" id="image" name="image"
-												accept=".jpg, .png, .gif, .jpeg" />
-											<button type="submit">업로드</button>
-										</form>
+											<!-- 리뷰 테이블에 이미지 업로드를 위한 폼 -->
+											<form id="imageForm"
+												action="${pageContext.request.contextPath}/shop/review_image_upload"
+												method="post" enctype="multipart/form-data">
+												사진 <input type="file" id="image" name="image"
+													accept=".jpg, .png, .gif, .jpeg" />
+												<button type="submit">업로드</button>
+											</form>
+										</div> 
 									</td>
 								</tr>
 							</tbody>
@@ -457,15 +465,14 @@
 	
 	<!-- 리뷰 관리 script -->
 	<script>
-      
       document.querySelector(".insert-form")
          .addEventListener("submit", function(e){
             if(!isLogin){
                e.preventDefault();
                location.href=
-                  "${pageContext.request.contextPath}/users/loginform?url=${pageContext.request.contextPath}/shop/detail?num=${dto.num}";
+                  "${pageContext.request.contextPath}/users/loginform?url=/shop/detail?num=${dto.num}";
             }
-         });
+      });
       
       //댓글에 이벤트 리스너 등록 하기 
       addUpdateFormListener(".update-form");
@@ -473,7 +480,7 @@
       addDeleteListener(".delete-link");
        
       function addUpdateListener(sel){
-         let updateLinks=document.querySelectorAll(sel);
+         let updateLinks = document.querySelectorAll(sel);
          for(let i=0; i<updateLinks.length; i++){
             updateLinks[i].addEventListener("click", function(){
                const num=this.getAttribute("data-num");
@@ -482,21 +489,21 @@
                
                let current = this.innerText;
                
-               if(current == "수정"){
+               if(current == "EDIT"){
             	   form.style.display="block";
             	   form2.style.display="none";
                    form.classList.add("animate__flash");
-                   this.innerText="취소";   
+                   this.innerText="CANCEL";   
                    form.addEventListener("animationend", function(){
                       form.classList.remove("animate__flash");
                    }, {once:true});
                    document.querySelector("#ur"+num).addEventListener("click", function(){
                 	   form2.style.display="block";	
-                	   updateLinks[i].innerText = "수정";
+                	   updateLinks[i].innerText = "EDIT";
 				   });
-                 }else if(current == "취소"){
+                 }else if(current == "CANCEL"){
                     form.classList.add("animate__fadeOut");
-                    this.innerText="수정";
+                    this.innerText="EDIT";
                     form.addEventListener("animationend", function(){
                        form.classList.remove("animate__fadeOut");
                        form.style.display="none";
@@ -540,9 +547,7 @@
                .then(function(data){
                   if(data.isSuccess){
                      const num = form.querySelector("input[name=num]").value;
-                     const title = form.querySelector("input[name=title]").value;
                      const content = form.querySelector("textarea[name=content]").value;
-                     document.querySelector("#spt"+num).value=title;
                      document.querySelector("#spc"+num).innerText=content;
                      form.style.display="none";
                   }
@@ -551,7 +556,7 @@
          }
       }
       
-		document.querySelector("#thumbnailLink").addEventListener("click", function(){
+      document.querySelector("#thumbnailLink").addEventListener("click", function(){
 			document.querySelector("#image").click();	
 		});   
 		document.querySelector("#image").addEventListener("change", function(){
