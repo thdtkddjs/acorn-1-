@@ -32,7 +32,7 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	public void getList(HttpServletRequest request) {
 		// 한 페이지에 몇개씩 표시할 것인지
-		final int PAGE_ROW_COUNT = 5;
+		final int PAGE_ROW_COUNT = 8;
 		// 하단 페이지를 몇개씩 표시할 것인지 (css에 따라 삭제 및 변경 있을 수 있음)
 		final int PAGE_DISPLAY_COUNT = 5;
 

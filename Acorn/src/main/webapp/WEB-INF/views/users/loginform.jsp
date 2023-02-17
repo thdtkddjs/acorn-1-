@@ -100,7 +100,7 @@ body::-webkit-scrollbar-thumb {
 		</a>
 		  <c:choose>
               <c:when test="${ empty param.url }">
-                 <input type="hidden" name="url" value="${pageContext.request.contextPath}"/>
+                 <input type="hidden" name="url" value="${pageContext.request.contextPath}/"/>
               </c:when>
               <c:otherwise>
                  <input type="hidden" name="url" value="${param.url }"/>

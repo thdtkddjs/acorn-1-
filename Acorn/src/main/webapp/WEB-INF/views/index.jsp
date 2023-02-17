@@ -112,7 +112,7 @@
 				<c:forEach var="tmp" items="${list }">
 						<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" style="margin-right : 20px; background-color:white; height:367px; border-radius:10px; overflow:hidden;">
 		   					<span class="shop_item_img">
-		   						<img src="${pageContext.request.contextPath}/${tmp.imagePath}" alt="...">
+		   						<img src="${pageContext.request.contextPath}${tmp.imagePath}" alt="...">
 		   					</span>
 			   				<div class="shop_item_content">
 			   					<span>${tmp.grade }</span>

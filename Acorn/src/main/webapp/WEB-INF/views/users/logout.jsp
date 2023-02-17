@@ -10,7 +10,7 @@
 <body>
 	<script>
 		alert("로그아웃 하였습니다.")
-		location.href="..${requestScope.url }";
+		location.href="${pageContext.request.contextPath}${requestScope.url }";
 	</script>
 </body>
 </html>

@@ -26,7 +26,7 @@
                   WHERE content LIKE '%'||#{content}||'%'
                </when>
             </choose>
-            ORDER BY num ASC) result1)
+            ORDER BY num DESC) result1)
       WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}  
    </select>
    
