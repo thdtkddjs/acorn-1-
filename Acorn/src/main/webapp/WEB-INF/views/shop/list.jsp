@@ -54,8 +54,6 @@
     
     </div>
     
-    <div class="block_content_top" style = "height : 200px; text-align : center;">약간의 <br />공간을 <br />띄우면<br /> 좋을 것<br /> 같은데</div>
-    
     
 	<div class="container">
 		<div class="shop_list">
@@ -80,24 +78,25 @@
 			<ul>
 			<c:forEach var="tmp" items="${list }">
 	   		<li class="shop_item_wrapper">
-	   			<div class="shop_item">
+	   			<div class="shop_item"  style="margin-right : 20px; background-color:white; border-radius:10px; overflow:hidden;">
 	   				<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" style="color: black; text-decoration : none">
 	   					<span class="shop_item_img">
 	   						<img src="${pageContext.request.contextPath}/${tmp.imagePath}" alt="...">
 	   					</span>
 		   				<div class="shop_item_content">
-		   					<span>평점 넘어오게</span>
+		   					<span style="font-weight:bold; color:red; font-size:20px;">${tmp.grade }</span>
 		   					<div class="shop_title">${tmp.title}</div>
+		   					   					
+	   				</a>
 		   					<ul>
 		   						<li class="shop_item_content_detail"><img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png" alt="주소" class="shop_info_icon" title="주소"/>${tmp.addr }</li>
 		   						<li class="shop_item_content_detail">${tmp.content }</li>
 		   						<li class="shop_item_content_detail">${tmp.categorie}, ${tmp.startTime}~ ${tmp.endTime}, ${tmp.telNum}</li>
-		   						<li class="shop_item_content_detail">👀 999+, review 999+, etc..</li>
+		   						<li class="shop_item_content_detail">👀 <b style="color:blue;">999+</b>, 리뷰 <b style="color:red;"'>${tmp.reviewCount }</b>, etc..</li>
 		   					</ul>
 		   				</div>	   					
 	   					
-	   					
-	   				</a>
+
 
 	   			</div>
 	   		</li>

@@ -18,7 +18,6 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link rel="stylesheet" type="text/css" href="../resources/css/shop_detail.css">
-
 </head>
 
 <body>
@@ -203,7 +202,7 @@
 																			<c:when test="${id eq 'admin' }">
 																				<a data-num="${tmp.num }"
 																					class="delete-link btn btn-danger"
-																					href="javascript:">삭제</a>
+																					href="javascript:">DELETE</a>
 																			</c:when>
 																		</c:choose>
 																			<div class="startRadio" style="pointer-events: none;">																			<c:forEach var="i" begin="0" end="9">

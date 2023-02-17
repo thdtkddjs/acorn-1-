@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="../resources/css/index.css">
@@ -16,9 +17,27 @@
 .review_search_result{
 	width : 60%;
 	padding-top : 100px;
-	height : 200px;
+	height : 180px;
 	margin : auto;
 	text-align : center;
+}
+.result_header{
+	position : relative;
+	display: flex;
+    align-items: center;
+}
+.result_title{
+	font-size : 20px;
+	font-weight : bold;
+	margin-bottom:5px;
+}
+.more_info{
+	display: flex;
+    position: absolute;
+    right: 1%;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
 }
 .review_list{
 	width : 60%;
@@ -35,6 +54,13 @@
 	font-weight : bold; 
 	color : blue;
 }
+.reviews>ul{
+	padding : 5px;
+	border-top : 3px solid blue;
+	border-left : 1px solid #cecece;
+	border-right : 1px solid #cecece;
+	border-bottom : 1px solid #cecece;
+}
 </style>
 <body>
 	<jsp:include page="../../views/include/navbar.jsp">
@@ -48,7 +74,16 @@
 				<span class="keyword_style">"${rvkeyword}"</span> 에 대해 리뷰리스트 검색 결과
 				총 <span class="result_style">${rvtotalRow}건</span> 이 검색 되었습니다.
 			</p>
+			<div class="result_header">
+				<c:choose>
+					<c:when test="${rvtotalRow gt 5}">
+						<a class="more_info" href="${pageContext.request.contextPath}/shop/review_list?keyword=${rvkeyword}">더보기 > </a>
+					</c:when>
+				</c:choose>
+				<p class="result_title">리뷰 목록(${rvtotalRow}건)</p>
+			</div>
 		</div>
+
 		<div class="review_list">
 			<div class="reviews">
 				<ul>
@@ -151,11 +186,9 @@
 										<c:choose>
 											<c:when
 												test="${empty tmp.imagePath or tmp.imagePath eq 'empty' }">
-												<img class="review_img"
-													src="${pageContext.request.contextPath}/resources/images/photo.png" />
 											</c:when>
 											<c:otherwise>
-												<img class="review_img"
+												<img class="review_img" id="${pageContext.request.contextPath}${tmp.imagePath}"
 													src="${pageContext.request.contextPath}${tmp.imagePath}" />
 											</c:otherwise>
 										</c:choose>
@@ -202,4 +235,26 @@
 		</div>
 	</div>
 </body>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var xOffset = 10;
+        var yOffset = 30;
+        
+        //마우스 오버시 preview 생성
+        $(document).on("mouseover",".review_img",function(e){
+            $("body").append("<p id='preview'><img src='" + $(this).attr("id") + "' width='400px' '/></p>");
+            $("#preview")
+            .css("position", "fixed")
+            .css("top", "25%")
+            .css("left","35%")
+            .css("z-index", 5)
+            .fadeIn("slow");
+        });
+        //마우스 아웃시 preview 제거
+        $(document).on("mouseout",".review_img",function(){
+            $("#preview").remove();
+        });
+    });
+</script>
 </html>

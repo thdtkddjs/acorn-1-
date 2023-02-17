@@ -617,7 +617,16 @@ display: flex;
  100% { color: #353535; }
 }
 
-
+.comment_startRadio .startradio{
+	display: inline-block;
+    overflow: hidden;
+    height: 40px;
+    position: relative;
+    bottom: 5px;
+    z-index: 1;
+    float: left;
+    left : 0%;
+}
 /* 별점 라디오 버튼 */
 .blind {
 	position: absolute;
