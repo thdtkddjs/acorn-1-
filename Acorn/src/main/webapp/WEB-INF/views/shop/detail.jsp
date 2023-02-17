@@ -79,9 +79,11 @@
 								<c:if test="${reviewCount gt 50}">
 									<p class="best_store btn btn-success">✏️50↑</p>
 								</c:if>
-								평점 몇점 이상 #맛집, 리뷰 많으면 #이구역최대리뷰 기준은 추가해나갑시다
+								<br />
+								<span style="color:gray;">* 평점이 4.5 이상이면 별 마크가, 리뷰가 50개 이상이면 리뷰 마크가 표시되는 공간입니다</span>
 								</td>
 							</tr>
+							
 						</tbody>
 					</table>
 				</div>
