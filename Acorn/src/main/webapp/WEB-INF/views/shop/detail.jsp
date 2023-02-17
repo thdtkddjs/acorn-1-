@@ -101,8 +101,8 @@
 							<c:forEach var="tmp" items="${menuList }">
 								<li class="menu_item">
 									<div class="menu_name_price">
-										<img src="${pageContext.request.contextPath}${tmp.imagePath}" id="${tmp.menuNum }"class="gallery" height="50px" alt="small_image" hidden/>
-										<span class="menu_name" id="${pageContext.request.contextPath}${tmp.imagePath}">${tmp.name}</span>
+										<img src="${pageContext.request.contextPath}${tmp.imagePath}" id="${tmp.menuNum }" class="gallery" height="50px" alt="small_image" hidden/>
+										<span class="menu_name" id="${pageContext.request.contextPath}${tmp.imagePath}" data-image="${tmp.content}" >${tmp.name}</span>
 										<span class="menu_price">${tmp.price}</span>
 										
 									</div>
@@ -120,12 +120,15 @@
 				        
 				        //마우스 오버시 preview 생성
 				        $(document).on("mouseover",".menu_name",function(e){
-				            $("body").append("<p id='preview'><img src='" + $(this).attr("id") + "' width='400px'/></p>");
+				        	var image_data = $(this).data("image");
+				            var add_caption = (image_data != undefined) ? "<br/>" + "ℹ️" +image_data : "" ;
+				            $("body").append("<p id='preview'><img src='" + $(this).attr("id") + "' width='400px'/>"+ add_caption +"</p>");
 				            $("#preview")
 				            .css("position", "fixed")
 				            .css("top", "25%")
 				            .css("left","35%")
 				            .css("z-index", 5)
+				          	.css("border", "1px solid #cecece")
 				            .fadeIn("slow");
 				        });
 				        //마우스 아웃시 preview 제거
