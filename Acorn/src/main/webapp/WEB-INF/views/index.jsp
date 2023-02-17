@@ -12,6 +12,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/index.css">
+<link rel="stylesheet" type="text/css" href="resources/css/shop_list.css">
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="shortcut icon" href="#">
@@ -109,14 +110,21 @@
 		<div class="roll_screen_store row">
 			<div class="slide slick-slider roller_store">
 				<c:forEach var="tmp" items="${list }">
-					<div class="card" style="width: 18rem;">
-						<img src="${pageContext.request.contextPath}/${tmp.imagePath}"	class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">${tmp.title }</h5>
-							<p class="card-text">${tmp.content }</p>
-							<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" class="btn btn-primary">INFO</a>
-						</div>
-					</div>
+						<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" style="margin-right : 20px; background-color:white; height:367px; border-radius:10px; overflow:hidden;">
+		   					<span class="shop_item_img">
+		   						<img src="${pageContext.request.contextPath}/${tmp.imagePath}" alt="...">
+		   					</span>
+			   				<div class="shop_item_content">
+			   					<span>${tmp.grade }</span>
+			   					<div class="shop_title">${tmp.title}</div>
+			   					<ul>
+			   						<li class="shop_item_content_detail"><img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png" alt="주소" class="shop_info_icon" title="주소"/>${tmp.addr }</li>
+			   						<li class="shop_item_content_detail">${tmp.content }</li>
+			   						<li class="shop_item_content_detail">${tmp.categorie}, ${tmp.startTime}~ ${tmp.endTime}, ${tmp.telNum}</li>
+			   						<li class="shop_item_content_detail">👀 999+, review 999+, etc..</li>
+			   					</ul>
+			   				</div>	 
+						</a>
 				</c:forEach>
 			</div>
 		<div class="block_content"></div>
@@ -135,13 +143,13 @@
 				  draggable : false,
 				});
 		</script>
-		<div id="simple-list-item-4" class="research">
+		<div id="simple-list-item-4" class="statistics">
 			<p>MZ 세대가 가장 많이 방문한 맛집은?!
 			<br />
 			<span>MZ가 선호하는 트렌드!</span>
 			<br /><br />
 			<strong class="cloud_effect" style="place-content: center;">
-				FOOD RESEARCH 보기
+				FOOD STATISTICS 보기
 			</strong>
 			</p>
 			

@@ -99,19 +99,11 @@
 }
 
 @media (max-width : 1425px){
-	#research{
+	.top_nav{
 		display : none;
-	}
-}
-@media (max-width : 1300px){
-	.top_menu>.top_nav{
-		left : 14%;
 	}
 }
 @media (max-width : 1200px){
-	#hot_place{
-		display : none;
-	}
 	.top_user>.sign_up{
 		display : none;
 	}
@@ -119,23 +111,7 @@
 		display : none;
 	}
 }
-@media (max-width : 1100px){
-	.top_menu>.top_nav{
-		left : 21%;
-	}
-}
-@media (max-width : 1000px){
-	#category{
-		display:none;
-	}
-	.top_menu>.top_nav{
-		left : 30%;
-	}
-}
 @media (max-width : 875px){
-	.top_menu>.top_nav{
-		display : none;
-	}
 	.reg_menu{
 		display : none;
 	}
@@ -162,14 +138,15 @@
 	.user_menu{
 		right : 10%;
 	}
+	.logo_text{
+	    place-content: center;
+	}
 }
 @media (max-width : 520px){
 	.top_user>.login{
 		display : none;
 	}
-	.logo_text{
-	    place-content: center;
-	}
+
 }
 @media (max-width : 620px){
 	.top_user>.sign_up{
@@ -240,7 +217,7 @@ input:focus{
 	display : flex;
 	flex-direction : column;
 	height : 250px;
-	padding-top:50px;
+	padding-top:100px;
 }
 .category>.row{
 	flex:1;
@@ -274,7 +251,7 @@ input:focus{
 	height : 50px;
 }
 .block_content{
-	height : 450px;
+	height : 200px;
 }
 .hot_place{
 	background-color : #F2FFED;
@@ -301,7 +278,7 @@ input:focus{
 	position : relative;
 	margin-right: -1%;
     margin-left: -1%;
-    margint-bottom : 100px;
+    padding-bottom : 100px;
 }
 .roll_screen_store>.block_content{
 	background-color : #F2FFED;
@@ -336,6 +313,9 @@ input:focus{
 	padding : 0;
 	margin-right : 30px !important;
 }
+a{
+	text-decoration : none;
+}
 .card-body>a{
 	position : absolute;
 	bottom : 15px;
@@ -346,20 +326,20 @@ input:focus{
 	height:200px;
 }
 
-.research{
+.statistics{
 	background : #FFFFE9;
 	height : 900px;
 }
-.research>p{
+.statistics>p{
 	padding-top : 250px;
 	font-size : 50px;
 	color : red;
 	text-align : center;
 }
-.research>p>strong{
+.statistics>p>strong{
 	font-size : 80px;
 }
-.research>p>span{
+.statistics>p>span{
 	font-size : 75px;
 	color : black;
 	font-weight : bold;
@@ -416,3 +396,4 @@ body::-webkit-scrollbar-thumb {
 	background-color: #2f3542;
 	border-radius: 10px;
 }
+
