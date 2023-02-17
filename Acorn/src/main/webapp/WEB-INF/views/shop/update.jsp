@@ -11,7 +11,7 @@
 <body>
 	<script>
 		alert("게시글이 수정되었습니다.")
-		location.href = "${pageContext.request.contextPath}";
+		location.href = "${pageContext.request.contextPath}/shop/detail?num=${param.num }";
 	</script>
 </body>
 </html>

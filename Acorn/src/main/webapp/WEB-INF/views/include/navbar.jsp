@@ -8,14 +8,16 @@
 		</div>
 		<c:choose>
 			<c:when test="${ empty sessionScope.id}">
-				<a href="${pageContext.request.contextPath}" class="logo_text">
+				<a href="${pageContext.request.contextPath}/" class="logo_text">
 					<p class="cloud_effect">FOOD CLOUD</p>
 				</a>
 				<div class="top_menu">
 					<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
 						<a href="#simple-list-item-1">TOP</a>
 						<a href=${param.thisPage eq "index" ? "#simple-list-item-2" : "../shop/list" } id="category">CATEGORY</a>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-3" : "#" } id="hot_place" ${param.thisPage ne "index" ? "hidden" : ""}>HOT PLACE</a>
+						<c:if test="${param.thisPage eq 'index' }">
+							<a href="#simple-list-item-3" id="hot_place">HOT PLACE</a>
+						</c:if>
 						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "#" } id="research">RESEARCH</a>
     		    </div>
 					<div class="search_menu">
@@ -41,7 +43,7 @@
 				</div>
 			</c:when>
 			<c:when test="${sessionScope.id eq 'admin'}">
-				<a href="${pageContext.request.contextPath}" class="logo_text">
+				<a href="${pageContext.request.contextPath}/" class="logo_text">
 					<p class="cloud_effect">FOOD CLOUD</p>
 				</a>
 				<div class="top_menu">
@@ -74,7 +76,7 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<a href="${pageContext.request.contextPath}" class="logo_text">
+				<a href="${pageContext.request.contextPath}/" class="logo_text">
 					<p class="cloud_effect">FOOD CLOUD</p>
 				</a>
 				<div class="top_menu">
@@ -116,8 +118,8 @@
 				console.log(url);
 				var url1 = url.split("/");
 				console.log(url1);
-				var url2 = "/"+url1[4];
-				for(var i = 5; i < url1.length; i++) {
+				var url2 = "/"+url1[3];
+				for(var i = 4; i < url1.length; i++) {
 					 url2 = url2+"/"+url1[i];
 				}
 				console.log(url2);
@@ -134,8 +136,8 @@
 			console.log(url);
 			var url1 = url.split("/");
 			console.log(url1);
-			var url2 = "/"+url1[4];
-			for(var i = 5; i < url1.length; i++) {
+			var url2 = "/"+url1[3];
+			for(var i = 4; i < url1.length; i++) {
 				 url2 = url2+"/"+url1[i];
 			}
 			console.log(url2);

@@ -81,7 +81,7 @@
 	   			<div class="shop_item"  style="margin-right : 20px; background-color:white; border-radius:10px; overflow:hidden;">
 	   				<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" style="color: black; text-decoration : none">
 	   					<span class="shop_item_img">
-	   						<img src="${pageContext.request.contextPath}/${tmp.imagePath}" alt="...">
+	   						<img src="${pageContext.request.contextPath}${tmp.imagePath}" alt="...">
 	   					</span>
 		   				<div class="shop_item_content">
 		   					<span style="font-weight:bold; color:red; font-size:20px;">${tmp.grade }</span>

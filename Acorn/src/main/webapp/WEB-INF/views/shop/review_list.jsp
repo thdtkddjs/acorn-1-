@@ -75,11 +75,6 @@
 				총 <span class="result_style">${rvtotalRow}건</span> 이 검색 되었습니다.
 			</p>
 			<div class="result_header">
-				<c:choose>
-					<c:when test="${rvtotalRow gt 5}">
-						<a class="more_info" href="${pageContext.request.contextPath}/shop/review_list?keyword=${rvkeyword}">더보기 > </a>
-					</c:when>
-				</c:choose>
 				<p class="result_title">리뷰 목록(${rvtotalRow}건)</p>
 			</div>
 		</div>
@@ -122,20 +117,6 @@
 											</div>
 											<span class="col">${tmp.writer }</span> <span class="bg_bar"></span>
 											<span style="font-weight: 100; font-size: 13px; color: gray;">${tmp.regdate }</span>
-											<c:choose>
-												<c:when test="${ (id ne null) and (tmp.writer eq id) }">
-													<a data-num="${tmp.num }"
-														class="update-link btn btn-warning" href="javascript:"
-														style="font-size: 13px; padding: 0 1px;">EDIT</a>
-													<a data-num="${tmp.num }"
-														class="delete-link btn btn-danger" href="javascript:"
-														style="font-size: 13px; padding: 0 1px;">DELETE</a>
-												</c:when>
-												<c:when test="${id eq 'admin' }">
-													<a data-num="${tmp.num }"
-														class="delete-link btn btn-danger" href="javascript:">삭제</a>
-												</c:when>
-											</c:choose>
 											<div class="startRadio" style="pointer-events: none;">
 												<c:forEach var="i" begin="0" end="9">
 													<label class="startRadio__box"> <input type="radio"
