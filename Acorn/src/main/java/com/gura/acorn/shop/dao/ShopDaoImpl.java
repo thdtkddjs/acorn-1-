@@ -47,4 +47,9 @@ public class ShopDaoImpl implements ShopDao{
 	public ShopDto getData(ShopDto dto) {
 		return session.selectOne("shop.getData2", dto);
 	}
+
+	@Override
+	public List<ShopDto> getTopList(ShopDto dto) {
+		return session.selectList("shop.getTopList", dto);
+	}
 }

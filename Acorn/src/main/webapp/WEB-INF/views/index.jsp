@@ -121,7 +121,7 @@
 			   						<li class="shop_item_content_detail"><img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png" alt="주소" class="shop_info_icon" title="주소"/>${tmp.addr }</li>
 			   						<li class="shop_item_content_detail">${tmp.content }</li>
 			   						<li class="shop_item_content_detail">${tmp.categorie}, ${tmp.startTime}~ ${tmp.endTime}, ${tmp.telNum}</li>
-			   						<li class="shop_item_content_detail">👀 999+, review 999+, etc..</li>
+			   						<li class="shop_item_content_detail">👀 999+, ${tmp.rCount}, etc..</li>
 			   					</ul>
 			   				</div>	 
 						</a>

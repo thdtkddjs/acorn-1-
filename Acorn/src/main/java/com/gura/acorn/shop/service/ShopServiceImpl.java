@@ -604,8 +604,14 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("encodedC", encodedC);
 		request.setAttribute("totalRow", totalRow);
 		request.setAttribute("condition", condition);
-		
 	}
 
+	@Override
+	public void getTopList(HttpServletRequest request) {
 
+		ShopDto dto = new ShopDto();
+		List<ShopDto> list = shopDao.getTopList(dto);
+
+		request.setAttribute("list", list);
+	}
 }

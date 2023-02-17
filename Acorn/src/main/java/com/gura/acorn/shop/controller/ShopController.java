@@ -49,8 +49,8 @@ public class ShopController {
 	
 	//index 페이지에서 가게리스트 출력
 	@RequestMapping("/")
-	public String index(HttpServletRequest request) {
-		service.getList(request);
+	public String index(HttpServletRequest request, HttpSession session) {
+		service.getTopList(request);
 		//이 메소드가 실행될때 ES의 /gaia/_doc/1에 Map2의 정보가 전달되어 기록된다.
 		//메소드가 실행될때마다 덮어써진다.
 		//id나 index를 바꾸면서 기록할 필요가 있어보인다.
@@ -60,7 +60,7 @@ public class ShopController {
 		
 		Map<String,Object> map2  = new HashMap<>();
 		map2.put("web_adress", request.getRequestURL().toString());
-		map2.put("id", request.getParameter("id"));
+		map2.put("id", session.getAttribute("id"));
 		map2.put("date", LocalDate.now().toString()+" "+LocalTime.now().toString());
 		System.out.println(map2);
 		
@@ -76,7 +76,7 @@ public class ShopController {
 	
 	@RequestMapping("/index")
 	public String index2(HttpServletRequest request) {
-		service.getList(request);
+		service.getTopList(request);
 		return "index";
 		
 	}
@@ -118,7 +118,6 @@ public class ShopController {
 	//가게정보 상세보기
 	@GetMapping("/shop/detail")
 	public String detail(HttpServletRequest request) {
-		service.getList(request);
 		service.getDetail(request);
 		service.menuGetList(request);
 		return "shop/detail";
