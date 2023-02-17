@@ -16,10 +16,9 @@
 		<br />
 		<br />
 		<br />
-		<h3>LOGIN FAIL</h3>
+		<h3>로그인이 필요한 페이지 입니다</h3>
 		<br />
-		<p>Your ID is in the BAN LIST.</p>
-		<a class="btn btn-outline-warning" href="loginform?url=${requestScope.encodedUrl }">LOGIN PAGE</a>
+		<a class="btn btn-outline-warning" href="../users/loginform?url=${requestScope.encodedUrl }">LOGIN PAGE</a>
 	</div>
 </body>
 </html>

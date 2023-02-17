@@ -17,10 +17,10 @@ package com.gura.acorn.exception;
  *  ex)
  *  throw new NotDeleteException("남의 파일 지우기 없기");
  */
-public class BanException extends RuntimeException{
+public class loginException extends RuntimeException{
 	
 	// 생성자
-	public BanException(String message) {
+	public loginException(String message) {
 		super(message);
 	}
 }

@@ -14,16 +14,22 @@ public class ExceptionController {
 	
 	// spring framework 가 동작하는 중에 BanException type 의
 	// 예외가 발생하면 호출하는 메소드
-	@ExceptionHandler(BanException.class)
-	public ModelAndView ban(BanException ban) {
+	@ExceptionHandler(loginException.class)
+	public ModelAndView check(loginException check) {
 		ModelAndView mView = new ModelAndView();
 		// exception 이라는 키 값으로 예외 객체를 담고
-		if(ban.getMessage().equals("notExist")) {
-			mView.addObject("exception", ban);
+		if(check.getMessage().equals("notExist")) {
+			mView.addObject("exception", check);
 			mView.setViewName("error/not_exist");
-		}else if(ban.getMessage().equals("banUser")){
-			mView.addObject("exception", ban);
+		}else if(check.getMessage().equals("banUser")){
+			mView.addObject("exception", check);
 			mView.setViewName("error/ban_user");	
+		}else if(check.getMessage().equals("needLogin")) {
+			mView.addObject("exception", check);
+			mView.setViewName("error/need_login");
+		}else if(check.getMessage().equals("needAuthority")) {
+			mView.addObject("exception", check);
+			mView.setViewName("error/need_authority");
 		}
 		return mView;
 	}
