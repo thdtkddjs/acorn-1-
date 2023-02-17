@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>/views/shop/insertform.jsp</title>
+<title>점포 등록</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -15,21 +15,30 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 	crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script> 
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <link rel="stylesheet" type="text/css" href="../resources/css/shop_insert_form.css">
 <style>
+body::-webkit-scrollbar {
+	width: 5px;
+	height: 0px;
+}
+body::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
+}
 
 </style>
 </head>
 
 <body class="text-center">
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="admin03" name="thisPage"/>
+	</jsp:include>
 	<div class="container">
-		<a href="${pageContext.request.contextPath}" class="logo_text">
-			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
-			alt="" style="height: 50px;" />
-		</a>
-		<br />
-		<br />
+	<br />
 		<h1>REGIST STORE</h1>
 		<br />
 		<form action="${pageContext.request.contextPath}/shop/insert" method="post" id="insertForm">
@@ -86,14 +95,14 @@
 				</div>
 			</div>
 			<br/>
-			
+			 
 			<!-- 영업 시간 -->
 			<div class="row">
 				<div class = "col-4">
-					<label class="form-label" for="startTime">OPEN</label>			
+					<label class=" form-label" for="startTime">OPEN</label>			
 				</div>
 				<div class = "col-8">
-					<input	class="form-control" type="time" name="startTime" />
+					<input	class="form-control" type="time" name="startTime" value="00:00" max="12:59"/>
 				</div>
 			</div>
 			<br/>
@@ -102,7 +111,7 @@
 					<label	class="form-label" for="endTime">CLOSE</label> 	
 				</div>
 				<div class = "col-8">
-					<input	class="form-control" type="time" name="endTime" />
+					<input	class="form-control" type="time" name="endTime" value="00:00" max="12:59" />
 				</div>
 			</div>
 			<br />
@@ -112,7 +121,10 @@
 				<div class = "col-4">
 					<label class="form-label" for="content" style="inline-size: -webkit-fill-available;">EXPAIN</label>
 					<a id="thumbnailLink" href="javascript:">
-						<img src="${pageContext.request.contextPath}/resources/images/photo.png" alt="" class="upload_img" />
+						<svg class="camera_img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="upload_img bi bi-camera" viewBox="0 0 16 16">
+						    <path d="M15 12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h1.172a3 3 0 0 0 2.12-.879l.83-.828A1 1 0 0 1 6.827 3h2.344a1 1 0 0 1 .707.293l.828.828A3 3 0 0 0 12.828 5H14a1 1 0 0 1 1 1v6zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z"/>
+						    <path d="M8 11a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z"/>
+					    </svg>
 					</a>
 				</div>
 				<div class = "col-8">
@@ -134,6 +146,7 @@
 	</div>
 
 	<script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
+
 
 	<!-- 섬네일 등록 script -->
 	<script>

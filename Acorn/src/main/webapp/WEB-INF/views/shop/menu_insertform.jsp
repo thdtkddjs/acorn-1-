@@ -15,13 +15,13 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 	crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <style>
 .container {
 	width: 624px;
 	height: 650px;
-	box-shadow: 0px 5px 20px 0px grey;
-	margin-top: 50px;
-	border-radius: 20px;
+	border : 1px solid #CECECE;
 	padding-top: 50px;
 }
 
@@ -52,11 +52,10 @@ label {
 	text-align: left;
 }
 
-input {
+.form-control {
 	display: inline !important;
 	width: 250px !important;
 	margin: 0px !important;
-	border: 1px solid #000000;
 	border-radius: 5px;
 }
 
@@ -75,12 +74,10 @@ textarea {
 </style>
 </head>
 <body class="text-center">
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="admin04" name="thisPage"/>
+	</jsp:include>
 	<div class="container">
-		<a href="${pageContext.request.contextPath}" class="logo_text">
-			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
-			alt="" style="height: 50px;" />
-		</a>
 		<br />
 		<br />
 		<h1>REGIST MENU</h1>

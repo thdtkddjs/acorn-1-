@@ -12,127 +12,18 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="resources/css/index.css">
+<link rel="stylesheet" type="text/css" href="resources/css/shop_list.css">
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
 <link rel="shortcut icon" href="#">
 </head>
 
 <body>
-	<div class="header_inner">
-		<div class="sm_menu">
-			<img src="${pageContext.request.contextPath}/resources/images/hidden_menu.png" alt="" />
-		</div>
-		<c:choose>
-			<c:when test="${ empty sessionScope.id}">
-				<a href="${pageContext.request.contextPath}" class="logo_text">
-					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
-					<p class="cloud_effect">FOOD CLOUD</p>
-				</a>
-				<div class="top_menu">
-					<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
-						<a href="${pageContext.request.contextPath}/">HOME</a>
-						<a href="#simple-list-item-1">CATEGORY</a>
-						<a href="#simple-list-item-2">HOT PLACE</a>
-						<a href="#simple-list-item-3">RESEARCH</a>
-          </div>
-					<div class="search_menu">
-						<div class="search_bar">
-							<form action="${pageContext.request.contextPath}/index/"
-								method="post">
-								<div class="search_box">
-									<button type="submit" style="display: contents">
-										<img class="search_img"
-											src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-											alt="" />
-									</button>
-									<input class="search_input" type="text" name="keyword"
-										value="${keyword}" placeholder="검색어를 입력해주세요...">
-								</div>
-							</form>
-						</div>
-					</div>
-					<div class="top_user">
-					<a href="${pageContext.request.contextPath}/users/signup_form"  class="sign_up btn btn-outline-success">SIGN-UP</a>
-						<a id="login" href="javascript:"  class="login btn btn-outline-dark">LOGIN</a>
-					</div>
-				</div>
-			</c:when>
-			<c:when test="${sessionScope.id eq 'admin'}">
-				<a href="${pageContext.request.contextPath}" class="logo_text">
-					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
-					<p class="cloud_effect">FOOD CLOUD</p>
-				</a>
-				<div class="top_menu">
-						<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
-							<a href="${pageContext.request.contextPath}/">HOME</a>
-							<a href="#simple-list-item-1">CATEGORY</a>
-							<a href="#simple-list-item-2">HOT PLACE</a>
-							<a href="#simple-list-item-3">RESEARCH</a>
-            </div>
-            <div class="search_menu">
-              <div class="search_bar">
-                <form action="${pageContext.request.contextPath}/index/"
-                  method="post">
-                  <div class="search_box">
-                    <button type="submit" style="display: contents">
-                      <img class="search_img"
-                        src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-                        alt="" />
-                    </button>
-                    <input class="search_input" type="text" name="keyword"
-                      value="${keyword}" placeholder="검색어를 입력해주세요...">
-                  </div>
-                </form>
-              </div>
-            </div>
-						<div class="top_user">
-							<a href="${pageContext.request.contextPath}/shop/insertform" class="reg_menu badge text-bg-success">REGIST SHOP</a>
-							<a href="${pageContext.request.contextPath}/users/list" class="userList_menu badge text-bg-warning">USER LIST</a>
-							<a href="${pageContext.request.contextPath}/users/info" class="user_menu rainbow_effect user_menu badge">${sessionScope.id }</a>
-							<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
-						</div>
-				</div>
-			</c:when>
-			<c:otherwise>
-				<a href="${pageContext.request.contextPath}" class="logo_text">
-					<img class="logo" src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png" alt="" />
-					<p class="cloud_effect">FOOD CLOUD</p>
-				</a>
-				<div class="top_menu">
-					<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
-						<a href="${pageContext.request.contextPath}/">HOME</a>
-						<a href="#simple-list-item-1">CATEGORY</a>
-						<a href="#simple-list-item-2">HOT PLACE</a>
-						<a href="#simple-list-item-3">RESEARCH</a>
-          </div>
-					<div class="search_menu">
-						<div class="search_bar">
-							<form action="${pageContext.request.contextPath}/index/"
-								method="post">
-								<div class="search_box">
-									<button type="submit" style="display: contents">
-										<img class="search_img"
-											src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
-											alt="" />
-									</button>
-									<input class="search_input" type="text" name="keyword"
-										value="${keyword}" placeholder="검색어를 입력해주세요...">
-								</div>
-							</form>
-						</div>
-					</div>
-					<div class="top_user">
-						<a href="${pageContext.request.contextPath}/users/info" class="user_menu badge text-bg-primary">${sessionScope.id }</a>
-						<a id="logout" href="javascript:" class="logout_menu btn btn-outline-danger" style="padding-top:0px;">LOGOUT</a>
-					</div>
-				</div>
-			</c:otherwise>
-		</c:choose>
-	</div>
-  
+	<jsp:include page="../views/include/navbar.jsp">
+		<jsp:param value="index" name="thisPage"/>
+	</jsp:include>
 	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
-    <div class="block_content_top"></div>
+    <div id="simple-list-item-1" class="block_content_top"></div>
 		<div class="roll_screen">
 			<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
 				<div class="carousel-inner">
@@ -159,7 +50,7 @@
 			</div>
 		</div>
 
-		<div id="simple-list-item-1" class="category">
+		<div id="simple-list-item-2" class="category">
 			<div class="row">
 				<a href="${pageContext.request.contextPath}/shop/list"> <img
 					src="${pageContext.request.contextPath}/resources/images/category/all.jpg"
@@ -185,17 +76,17 @@
 				</a>
 			</div>
 			<div class="row">
-				<a href="${pageContext.request.contextPath}/shop/list?category=양식">
+				<a href="${pageContext.request.contextPath}/shop/list?category=분식">
 					<img
 					src="${pageContext.request.contextPath}/resources/images/category/bunsik.jpg"
 					alt="분식" title="분식" class="col" />
 				</a> <a
-					href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">
+					href="${pageContext.request.contextPath}/shop/list?category=양식">
 					<img
 					src="${pageContext.request.contextPath}/resources/images/category/yangsik.jpg"
 					alt="양식" title="양식" class="col" />
 				</a> <a
-					href="${pageContext.request.contextPath}/shop/list?category=분식">
+					href="${pageContext.request.contextPath}/shop/list?category=패스트푸드">
 					<img
 					src="${pageContext.request.contextPath}/resources/images/category/fastfood.jpg"
 					alt="패스트푸드" title="패스트푸드" class="col" />
@@ -209,7 +100,7 @@
 			</div>
 		</div>
 		<div class="block_content"></div>
-		<div id="simple-list-item-2" class="hot_place">
+		<div id="simple-list-item-3" class="hot_place">
 			<p>HOT PLACE
 			<br />
 			<span>2월 방문자, 평점 </span><strong>TOP 10 !</strong>
@@ -219,14 +110,21 @@
 		<div class="roll_screen_store row">
 			<div class="slide slick-slider roller_store">
 				<c:forEach var="tmp" items="${list }">
-					<div class="card" style="width: 18rem;">
-						<img src="${pageContext.request.contextPath}/${tmp.imagePath}"	class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">${tmp.title }</h5>
-							<p class="card-text">${tmp.content }</p>
-							<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" class="btn btn-primary">INFO</a>
-						</div>
-					</div>
+						<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" style="margin-right : 20px; background-color:white; height:367px; border-radius:10px; overflow:hidden;">
+		   					<span class="shop_item_img">
+		   						<img src="${pageContext.request.contextPath}${tmp.imagePath}" alt="...">
+		   					</span>
+			   				<div class="shop_item_content">
+			   					<span>${tmp.grade }</span>
+			   					<div class="shop_title">${tmp.title}</div>
+			   					<ul>
+			   						<li class="shop_item_content_detail"><img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png" alt="주소" class="shop_info_icon" title="주소"/>${tmp.addr }</li>
+			   						<li class="shop_item_content_detail">${tmp.content }</li>
+			   						<li class="shop_item_content_detail">${tmp.categorie}, ${tmp.startTime}~ ${tmp.endTime}, ${tmp.telNum}</li>
+			   						<li class="shop_item_content_detail">👀 999+, review 999+, etc..</li>
+			   					</ul>
+			   				</div>	 
+						</a>
 				</c:forEach>
 			</div>
 		<div class="block_content"></div>
@@ -245,13 +143,13 @@
 				  draggable : false,
 				});
 		</script>
-		<div id="simple-list-item-3" class="research">
+		<div id="simple-list-item-4" class="statistics">
 			<p>MZ 세대가 가장 많이 방문한 맛집은?!
 			<br />
 			<span>MZ가 선호하는 트렌드!</span>
 			<br /><br />
 			<strong class="cloud_effect" style="place-content: center;">
-				FOOD RESEARCH 보기
+				FOOD STATISTICS 보기
 			</strong>
 			</p>
 			
@@ -308,46 +206,5 @@
         </footer>
     
     </div>
-    
-    <script>
-    	let isLogin=${ not empty id };
-	    if(!isLogin){
-			document.querySelector("#login").addEventListener("click", function(){
-				const url = document.location.href;	
-				console.log(url);
-				var url1 = url.split("/");
-				console.log(url1);
-				var url2 = "/"+url1[4];
-				for(var i = 5; i < url1.length; i++) {
-					 url2 = url2+"/"+url1[i];
-				}
-				console.log(url2);
-				
-				const encodedUrl = encodeURIComponent(url2);
-				console.log(encodedUrl);
-				
-				
-				location.href= "${pageContext.request.contextPath}/users/loginform?url="+url2;
-			});
-		}else{
-			document.querySelector("#logout").addEventListener("click", function(){
-			const url = document.location.href;	
-			console.log(url);
-			var url1 = url.split("/");
-			console.log(url1);
-			var url2 = "/"+url1[4];
-			for(var i = 5; i < url1.length; i++) {
-				 url2 = url2+"/"+url1[i];
-			}
-			console.log(url2);
-			
-			const encodedUrl = encodeURIComponent(url2);
-			console.log(encodedUrl);
-			
-			
-			location.href= "${pageContext.request.contextPath}/users/logout?url="+url2;
-			});
-		}
-    </script>
 </body>
 </html>

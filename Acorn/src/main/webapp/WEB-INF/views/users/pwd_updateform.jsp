@@ -9,14 +9,22 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </head>
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <style>
 .container{
 	width : 624px;
 	height : 600px;
-	box-shadow: 0px 5px 20px 0px grey;
-	margin-top : 150px;
-	border-radius : 20px;
+	border : 1px solid #CECECE;
 	padding-top : 50px;
+	margin-bottom:50px;
+}
+body::-webkit-scrollbar {
+	width: 5px;
+	height: 0px;
+}
+body::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
 }
 h1{
 	text-align : center;
@@ -31,38 +39,41 @@ h1{
 }
 </style>
 <body class="text-center">
-<div class="container">
-		<a href="${pageContext.request.contextPath}" class="logo_text">
-			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
-			alt="" style="height: 50px;" />
-		</a>	
-	   <h1>CHANGE P/W</h1>
-	   <br>
-	   <br>
-	   <form action="${pageContext.request.contextPath}/users/pwd_update" method="post" id="myForm">
-	      <div>
-	         <label class="control-label" for="pwd">OLD P/W</label>
-	         <input class="form-control" type="password" name="pwd" id="pwd"/>
-	      </div>
-	      <br />
-	      <div>
-	         <label class="control-label" for="newPwd">NEW P/W</label>
-	         <input class="form-control" type="password" name="newPwd" id="newPwd"/>
-	         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
-	      </div>
-	      <br />
-	      <div>
-	         <label class="control-label" for="newPwd2">NEW P/W CONFIRM</label>
-	         <input class="form-control" type="password" id="newPwd2"/>
-	         <small class="form-text" style="color:#dc3545; font-size:12px;">특수문자와 숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
-	      </div>
-	      <br />
-	      <br />
-	      <button type="submit" class="btn btn-outline-warning">CHANGE</button>
-	      <a href="${pageContext.request.contextPath}/users/info" class="btn btn-outline-danger">CANCEL</a>
-	   </form>
-</div>
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="user05" name="thisPage"/>
+	</jsp:include>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+		<div id="simple-list-item-1" class="container">
+			<br />
+
+			<h1>CHANGE P/W</h1>
+			<br> <br>
+			<form action="${pageContext.request.contextPath}/users/pwd_update"
+				method="post" id="myForm">
+				<div>
+					<label class="control-label" for="pwd">OLD P/W</label> <input
+						class="form-control" type="password" name="pwd" id="pwd" />
+				</div>
+				<br />
+				<div>
+					<label class="control-label" for="newPwd">NEW P/W</label> <input
+						class="form-control" type="password" name="newPwd" id="newPwd" />
+					<div class="invalid-feedback">비밀번호를 확인 하세요</div>
+				</div>
+				<br />
+				<div>
+					<label class="control-label" for="newPwd2">NEW P/W CONFIRM</label>
+					<input class="form-control" type="password" id="newPwd2" /> <small
+						class="form-text" style="color: #cecece; font-size: 12px;">특수문자와
+						숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
+				</div>
+				<br /> <br />
+				<button type="submit" class="btn btn-outline-warning">CHANGE</button>
+				<a href="${pageContext.request.contextPath}/users/info"
+					class="btn btn-outline-danger">CANCEL</a>
+			</form>
+		</div>
+	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
 	

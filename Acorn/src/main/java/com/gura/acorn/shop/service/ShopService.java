@@ -33,4 +33,7 @@ public interface ShopService {
 	
 	public void saveMenu(ShopMenuDto dto, HttpServletRequest request);
 	public void menuGetList(HttpServletRequest request);
+	public void getReviewList(HttpServletRequest request);
+	public void getSearchList(HttpServletRequest request);
+
 }

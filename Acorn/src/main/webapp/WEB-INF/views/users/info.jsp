@@ -15,6 +15,7 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
 	crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <style>
 /* 프로필 이미지를 작은 원형으로 만든다 */
 #profileImage {
@@ -27,10 +28,9 @@
 .container {
 	width: 624px;
 	height: 600px;
-	box-shadow: 0px 5px 20px 0px grey;
-	margin-top: 150px;
-	border-radius: 20px;
+	border : 1px solid #CECECE;
 	padding-top: 50px;
+	margin-bottom:50px;
 }
 
 h1 {
@@ -72,12 +72,12 @@ a {
 </style>
 </head>
 <body class="text-center">
-	<div class="container">
-		<a href="${pageContext.request.contextPath}" class="logo_text">
-			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
-			alt="" style="height: 50px;" />
-		</a>
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="user04" name="thisPage"/>
+	</jsp:include>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+	<div id="simple-list-item-1" class="container">
+		<br /><br />
 		<h1>INFO</h1>
 		<br>
 		<table>
@@ -124,9 +124,15 @@ a {
 			</tr>
 			<tr style="height: 10px;"></tr>
 		</table>
-		<br> <br> <a href="javascript:" id="edit_link"
-			class="btn btn-outline-warning">EDIT</a> <a
-			href="javascript:deleteConfirm()" class="btn btn-outline-danger">DROP-OUT</a>
+		<br> <br> 
+			<c:choose>
+				<c:when test="${sessionScope.id eq 'admin'}">
+					<a href="${pageContext.request.contextPath}/shop/insertform" class="btn btn-outline-success">REGIST SHOP</a> 
+					<a href="${pageContext.request.contextPath}/users/list" class="btn btn-outline-secondary">USER LIST</a>
+				</c:when>
+			</c:choose>
+			<a href="javascript:" id="edit_link" class="btn btn-outline-warning">EDIT</a>
+			<a href="javascript:deleteConfirm()" class="btn btn-outline-danger">DROP-OUT</a>
 
 		<form id="imageForm"
 			action="${pageContext.request.contextPath}/users/profile_upload"
@@ -152,6 +158,7 @@ a {
 			<button id="edit_submit" type="submit">수정</button>
 			<button type="reset">취소</button>
 		</form>
+	</div>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.0.slim.js"
 		integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="

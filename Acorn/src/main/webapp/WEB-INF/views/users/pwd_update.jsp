@@ -11,10 +11,9 @@
 <div class="container">
    <c:choose>
       <c:when test="${isSuccess }">
-         <p>
-            <strong>${id }</strong> 님의 비밀번호를 수정하고 로그아웃 하였습니다.
-            <a href="${pageContext.request.contextPath}/users/loginform">다시 로그인 하기</a>
-         </p>
+         <script>
+	         	window.location.href = '${pageContext.request.contextPath}/users/loginform';
+         </script>
       </c:when>
       <c:otherwise>
          <p>

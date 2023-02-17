@@ -2,6 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shopReview">
 
+   <select id="getReviewCount" parameterType="shopReviewDto" resultType="int">
+      SELECT NVL(MAX(ROWNUM), 0)
+      FROM board_shop_review
+      <choose>
+         <when test="content != null">
+            WHERE content LIKE '%'||#{content}||'%'
+         </when>
+      </choose>
+   </select>
+   
+   <select id="getReviewList" parameterType="shopReviewDto" resultType="shopReviewDto">
+      SELECT *
+      FROM
+         (SELECT result1.*, ROWNUM AS rnum
+         FROM
+            (SELECT *
+            FROM (SELECT r.num, r.writer, r.ref_group, r.content, r.deleted, r.imagePath, r.grade, TO_CHAR(r.regdate, 'YY.MM.DD HH24:MI') AS regdate, s.title
+    				from board_shop_review r, (SELECT num, title FROM board_shop) s
+					where r.ref_group = s.num)
+            <choose>
+               <when test="content != null">
+                  WHERE content LIKE '%'||#{content}||'%'
+               </when>
+            </choose>
+            ORDER BY num DESC) result1)
+      WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}  
+   </select>
+   
+   
    <select id="getList" parameterType="shopReviewDto" resultType="shopReviewDto">
 		SELECT *
 		FROM
@@ -11,10 +40,17 @@
 				review_group, deleted, imagePath, grade,
 				TO_CHAR(board_shop_review.regdate, 'YY.MM.DD HH24:MI') AS regdate, profile
 				FROM board_shop_review
+				
+				<choose>
+	               <when test="title != null">
+	                  WHERE title LIKE '%'||#{title}||'%'
+	               </when>
+	            </choose>
+				
 				INNER JOIN users
 				ON board_shop_review.writer = users.id
 				WHERE ref_group = #{ref_group}
-				ORDER BY review_group ASC, num ASC) result1)
+				ORDER BY review_group DESC, num DESC) result1)
 		WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}   
 	</select>
 	
@@ -40,7 +76,7 @@
 	
 	<update id="update" parameterType="shopReviewDto">
 		UPDATE board_shop_review
-		SET title = #{title}, content = #{content}
+		SET content = #{content}
 		WHERE num = #{num}
 	</update>
 	

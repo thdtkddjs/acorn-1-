@@ -1,6 +1,7 @@
 package com.gura.acorn.shop.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gura.acorn.es.ElasticUtil;
+import com.gura.acorn.exception.loginException;
 import com.gura.acorn.shop.dto.ShopDto;
 import com.gura.acorn.shop.dto.ShopMenuDto;
 import com.gura.acorn.shop.dto.ShopReviewDto;
@@ -30,6 +32,20 @@ public class ShopController {
 
 	@Autowired
 	private ShopService service;
+	
+	@RequestMapping("shop/review_list")
+	public String reviewList(HttpServletRequest request) {
+		service.getReviewList(request);
+		return "shop/review_list";
+	}
+   
+	@RequestMapping("shop/search")
+	public String search(HttpServletRequest request) {
+		service.getSearchList(request);
+		service.getReviewList(request);
+		return "shop/search";
+	}
+
 	
 	//index 페이지에서 가게리스트 출력
 	@RequestMapping("/")
@@ -73,7 +89,13 @@ public class ShopController {
 	
 	//글 작성폼 이동
 	@GetMapping("/shop/insertform")
-	public String insertform() {
+	public String insertform(HttpSession session) {
+		String id = (String)session.getAttribute("id");
+		if(id == null) {
+			throw new loginException("needLogin");
+		}else if(!id.equals("admin")) {
+			throw new loginException("needAuthority");
+		}
 		return "shop/insertform";
 	}
 	
@@ -104,7 +126,13 @@ public class ShopController {
 	
 	//가게 정보 업데이트 (가게정보 수정 기능 구현 후 사용)
 	@GetMapping("/shop/updateform")
-	public String updateform(HttpServletRequest request) {
+	public String updateform(HttpServletRequest request, HttpSession session) {
+		String id = (String)session.getAttribute("id");
+		if(id == null) {
+			throw new loginException("needLogin");
+		}else if(!id.equals("admin")) {
+			throw new loginException("needAuthority");
+		}
 		service.getData(request);
 		return "shop/updateform";
 	}
@@ -116,7 +144,13 @@ public class ShopController {
 	}
 	
 	@GetMapping("/shop/delete")
-	public String delete(int num, HttpServletRequest request) {
+	public String delete(int num, HttpServletRequest request, HttpSession session) {
+		String id = (String)session.getAttribute("id");
+		if(id == null) {
+			throw new loginException("needLogin");
+		}else if(!id.equals("admin")) {
+			throw new loginException("needAuthority");
+		}
 		service.deleteContent(num, request);
 		return "redirect:/";
 	}
@@ -162,7 +196,13 @@ public class ShopController {
 	}
 	
 	@RequestMapping("/shop/menu_insertform")
-	public String menuinsertform() {
+	public String menuinsertform(HttpSession session) {
+		String id = (String)session.getAttribute("id");
+		if(id == null) {
+			throw new loginException("needLogin");
+		}else if(!id.equals("admin")) {
+			throw new loginException("needAuthority");
+		}
 		return "shop/menu_insertform";
 	}
 	

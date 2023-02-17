@@ -8,15 +8,16 @@
 <title>/users/signup_form.jsp</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="../resources/css/index.css">
+
 </head>
 <style>
 .container{
 	width : 624px;
 	height : 750px;
-	box-shadow: 0px 5px 20px 0px grey;
-	margin-top : 50px;
-	border-radius : 20px;
+	border : 1px solid #CECECE;
 	padding-top : 50px;
+	margin-bottom:50px;
 }
 h1{
 	text-align : center;
@@ -29,47 +30,57 @@ h1{
 	margin-left:100px;
 	
 }
+body::-webkit-scrollbar {
+	width: 5px;
+	height: 0px;
+}
+body::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
+}
 </style>
 <body class="text-center">
-	<div class="container">
-		<a href="${pageContext.request.contextPath}" class="logo_text">
-			<img class="logo"
-			src="${pageContext.request.contextPath}/resources/images/logos/logo_A1.png"
-			alt="" style="height: 50px;" />
-		</a>		
-	    <h1>SIGN-UP</h1>
-	    <br />
-	    <form action="${pageContext.request.contextPath}/users/signup" method="post" id="myForm">
-	      <div>
-	         <label class="control-label" for="id">ID</label>
-
-	         <input class="form-control" type="text" name="id" id="id"/>
-	         <small class="form-text" style="color:#dc3545; font-size:12px;">영문자 소문자로 시작하고 5글자~10글자 이내로 입력하세요.</small>
-             <div class="valid-feedback">사용가능한 아이디 입니다.</div>
-             <div class="invalid-feedback">사용할 수 없는 아이디 입니다.</div>      
-	      </div>
-	      <br /> 
-	      <div>
-	         <label class="control-label" for="pwd">PASSWORD</label>
-	         <input class="form-control" type="password" name="pwd" id="pwd"/>
-	         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
-		  </div>
-		  <br />
-	      <div>
-	         <label class="control-label" for="pwd2">PASSWORD CONFIRM</label>
-	         <input class="form-control" type="password" name="pwd2" id="pwd2"/>
-	         <small class="form-text" style="color:#dc3545; font-size:12px;">특수문자와 숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
-	      </div>
-	      <br />
-	      <div>
-	         <label class="control-label" for="email">E-MAIL</label>
-	         <input class="form-control" type="text" name="email" id="email"/>
-	         <div class="invalid-feedback">이메일 형식에 맞게 입력하세요.</div>
-	      </div>
-	      <br />
-	      <button class="btn btn-outline-success" type="submit">SIGN-UP</button>
-	   </form>
-	</div>   
+	<jsp:include page="../../views/include/navbar.jsp">
+		<jsp:param value="user02" name="thisPage"/>
+	</jsp:include>
+	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
+		<div id="simple-list-item-1" class="container">
+			<br /><br /><br />
+		    <h1>SIGN-UP</h1>
+		    <br />
+		    <form action="${pageContext.request.contextPath}/users/signup" method="post" id="myForm">
+		      <div>
+		         <label class="control-label" for="id">ID</label>
+	
+		         <input class="form-control" type="text" name="id" id="id"/>
+		         <small class="form-text" style="color:#CECECE; font-size:12px;">영문자 소문자로 시작하고 5글자~10글자 이내로 입력하세요.</small>
+	             <div class="valid-feedback">사용가능한 아이디 입니다.</div>
+	             <div class="invalid-feedback">사용할 수 없는 아이디 입니다.</div>      
+		      </div>
+		      <br /> 
+		      <div>
+		         <label class="control-label" for="pwd">PASSWORD</label>
+		         <input class="form-control" type="password" name="pwd" id="pwd"/>
+		         <div class="invalid-feedback">비밀번호를 확인 하세요</div>
+			  </div>
+			  <br />
+		      <div>
+		         <label class="control-label" for="pwd2">PASSWORD CONFIRM</label>
+		         <input class="form-control" type="password" name="pwd2" id="pwd2"/>
+		         <small class="form-text" style="color:#CECECE; font-size:12px;">특수문자와 숫자를 포함한 8글자 이상의 비밀번호를 입력해주세요</small>
+		      </div>
+		      <br />
+		      <div>
+		         <label class="control-label" for="email">E-MAIL</label>
+		         <input class="form-control" type="text" name="email" id="email"/>
+		         <div class="invalid-feedback">이메일 형식에 맞게 입력하세요.</div>
+		         <small class="form-text" style="color:#CECECE; font-size:12px;">foodcloud@acorn.com 과 같은 이메일 정규표현식으로 입력해주세요</small>
+		      </div>
+		      <br />
+		      <button class="btn btn-outline-success" type="submit">SIGN-UP</button>
+		   </form>
+		</div>   
+	</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
 	
