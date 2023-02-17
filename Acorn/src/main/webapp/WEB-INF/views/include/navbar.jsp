@@ -116,7 +116,7 @@
 				console.log(url);
 				var url1 = url.split("/");
 				console.log(url1);
-				var url2 = "/"+url1[4];
+				var url2 = "/"+url1[3];
 				for(var i = 5; i < url1.length; i++) {
 					 url2 = url2+"/"+url1[i];
 				}
@@ -134,7 +134,7 @@
 			console.log(url);
 			var url1 = url.split("/");
 			console.log(url1);
-			var url2 = "/"+url1[4];
+			var url2 = "/"+url1[3];
 			for(var i = 5; i < url1.length; i++) {
 				 url2 = url2+"/"+url1[i];
 			}

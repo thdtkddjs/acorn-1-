@@ -76,7 +76,9 @@ public class UsersController {
 		
 		//로그인 후에 가야할 목적지 정보를 인코딩 하지 않는것과 인코딩 한 것을 모두 ModelAndView 객체에 담고 
 		String encodedUrl=URLEncoder.encode(url);
-		mView.addObject("url", url);
+		if(!url.equals("/acorn")) {
+			mView.addObject("url", url);
+		}
 		mView.addObject("encodedUrl", encodedUrl);
 		
 		//view page 로 forward 이동해서 응답한다.
