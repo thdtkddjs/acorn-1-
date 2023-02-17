@@ -73,44 +73,19 @@
 		<dependency>
 		    <groupId>org.elasticsearch</groupId>
 		    <artifactId>elasticsearch</artifactId>
-		    <version>8.6.1</version>
+		    <version>7.17.0</version>
 		</dependency>
-		<!-- Rest client로 ElasticSearch를 제어하게 해주는 부분 -->
 		<!-- https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-client -->
 		<dependency>
 		    <groupId>org.elasticsearch.client</groupId>
 		    <artifactId>elasticsearch-rest-client</artifactId>
-		    <version>8.6.1</version>
+		    <version>7.17.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
-		<dependency>
-		    <groupId>org.springframework.data</groupId>
-		    <artifactId>spring-data-elasticsearch</artifactId>
-		    <version>5.0.1</version>
-		</dependency>
-		<!-- 데이터를 제어하는 method부분을 담당하는 부분 			
-			이쪽을 먼저 해보자.
-		-->
 		<!-- https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-high-level-client -->
 		<dependency>
 		    <groupId>org.elasticsearch.client</groupId>
 		    <artifactId>elasticsearch-rest-high-level-client</artifactId>
-		    <version>7.17.9</version>
-		</dependency>
-		<!-- high level client와 마찬가지로 method 제어 부분
-			비슷한 기능이라는데 한번 같이 써보자.
-		 -->
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch -->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-		    <version>3.0.2</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch -->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-		    <version>3.0.2</version>
+		    <version>7.17.0</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
@@ -119,28 +94,27 @@
 		    <version>1.18.26</version>
 		    <scope>provided</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-elasticsearch -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+		    <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
 		    <version>3.0.2</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		
+		<!-- AOP용 추가 라이브러리 -->
 		<dependency>
-		    <groupId>com.h2database</groupId>
-		    <artifactId>h2</artifactId>
-		    <version>2.1.214</version>
-		    <scope>test</scope>
-		</dependency>
-		
-		
-		
-		
-		
-		
-		
-
+         <groupId>org.aspectj</groupId>
+         <artifactId>aspectjweaver</artifactId>
+         <version>1.8.0</version>
+	     </dependency>
+	    <dependency>
+	         <groupId>cglib</groupId>
+	         <artifactId>cglib</artifactId>
+	         <version>3.2.0</version>
+	     </dependency>   
+	     
 	</dependencies>
+		
 
 	<build>
 		<plugins>

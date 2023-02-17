@@ -1,9 +1,3 @@
-server:
-  port: 9000
-
 elasticsearch:
   host: 34.125.190.255
   port: 9200
-  indecies:
-    studentsIndexName: students
-    testIndexName: tests
