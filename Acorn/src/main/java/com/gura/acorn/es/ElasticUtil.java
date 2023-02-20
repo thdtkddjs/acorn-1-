@@ -59,10 +59,10 @@ public class ElasticUtil {
 		return self;
 	}
 	//특정 index/id에 있는 정보를 Map<String,Obect>형태로 받아온다.
-	public Map<String,Object> getReponse(String index, String id) {
+	public Map<String,Object> getReponse(String index) {
 		GetResponse response = null; 
 		
-		GetRequest getRequest = new GetRequest(index, id);
+		GetRequest getRequest = new GetRequest(index);
 		RequestOptions options = RequestOptions.DEFAULT;
 		try {
 		response = client.get(getRequest, options);
@@ -76,17 +76,16 @@ public class ElasticUtil {
 	//특정 index/id에 Map<String, Object>방식으로 저장된 data를 전달하여 저장한다.
 	//본래는 json방식으로 전달해야하지만 request 과정에서 자동으로 변환해준다.
 	//다만 type이 상당히 엄격하다.
-	public Cancellable create(String index, String id, Map<String, Object> data ) throws IOException {
+	public Cancellable create(String index, Map<String, Object> data ) throws IOException {
 		ActionListener<IndexResponse> listener= null;
 		
-		IndexRequest indexRequest = new IndexRequest(index).id(id).source(data);
+		IndexRequest indexRequest = new IndexRequest(index).source(data);
 		System.out.println(indexRequest);
 		//비동기 방식으로 index 작업을 진행한다.
 		Cancellable response = client.indexAsync(indexRequest, RequestOptions.DEFAULT, listener = new ActionListener<IndexResponse>() {
 		    @Override
 		    public void onResponse(IndexResponse indexResponse) {
 		        System.out.println("성공!");
-		        System.out.println(indexResponse);
 		    }
 
 		    @Override
@@ -105,7 +104,8 @@ public class ElasticUtil {
 		List<Map<String, Object>> result=new ArrayList<>();
 		SearchRequest searchRequest = new SearchRequest("gaia"); 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder(); 
-		searchSourceBuilder.query(QueryBuilders.matchAllQuery()); 
+		searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+		
 		searchRequest.source(searchSourceBuilder);
 		
 //		Cancellable response=client.searchAsync(searchRequest, RequestOptions.DEFAULT, new ActionListener<SearchResponse>() {
@@ -125,11 +125,14 @@ public class ElasticUtil {
 //		    }
 //		});
 		try {
-			SearchResponse response=client.search(searchRequest, RequestOptions.DEFAULT);
-			SearchHits hits=response.getHits();
+			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			String scrollId = searchResponse.getScrollId();
+			
+			SearchHits hits = searchResponse.getHits();
 			for (SearchHit hit:hits) {
 				result.add(hit.getSourceAsMap());
 			}
+			System.out.println(searchResponse.getHits().getTotalHits().value);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -39,7 +39,6 @@ public class ElasticTest {
 	
 	public static void main(String[] args) throws IOException {
 		String index = "gaia";
-		String id = "1";
 //		//id와 password 입력
 //		CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
 //		credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("elastic", "acorn"));
@@ -62,19 +61,19 @@ public class ElasticTest {
 //		
 //		
 //		System.out.println(simpleSearch(null, null, null, null));
-		
-		Map<String, Object> result=ElasticUtil.getInstance().getReponse(index, id);
-		
-		System.out.println(result);
-		
-		Map<String,Object> map2  = new HashMap<>();
-		map2.put("작동", "155");
-		map2.put("확인", "153");
-		System.out.println(map2);
-		ElasticUtil ES=ElasticUtil.getInstance();
-		ES.create(index, id, map2);
-				
-		System.out.println(ES.simplesearch());
+//		
+//		Map<String, Object> result=ElasticUtil.getInstance().getReponse(index);
+//		
+//		System.out.println(result);
+//	
+//		Map<String,Object> map2  = new HashMap<>();
+//		map2.put("작동", "155");
+//		map2.put("확인", "153");
+//		System.out.println(map2);
+//		ElasticUtil ES=ElasticUtil.getInstance();
+//		ES.create(index, map2);
+//				
+//		System.out.println(ES.simplesearch());
 		
 	}
 	

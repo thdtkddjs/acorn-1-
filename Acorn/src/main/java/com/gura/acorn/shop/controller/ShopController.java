@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gura.acorn.es.ElasticUtil;
+import com.gura.acorn.es.ElasticsearchService;
 import com.gura.acorn.exception.loginException;
 import com.gura.acorn.shop.dto.ShopDto;
 import com.gura.acorn.shop.dto.ShopMenuDto;
@@ -32,14 +33,16 @@ public class ShopController {
 
 	@Autowired
 	private ShopService service;
+	@Autowired
+	private ElasticsearchService Esservice;
 	
-	@RequestMapping("shop/review_list")
+	@RequestMapping("/shop/review_list")
 	public String reviewList(HttpServletRequest request) {
 		service.getReviewList(request);
 		return "shop/review_list";
 	}
    
-	@RequestMapping("shop/search")
+	@RequestMapping("/shop/search")
 	public String search(HttpServletRequest request) {
 		service.getSearchList(request);
 		service.getReviewList(request);
@@ -56,22 +59,38 @@ public class ShopController {
 		//id나 index를 바꾸면서 기록할 필요가 있어보인다.
 		//덮어쓰기 말고 추가되는 방식을 찾아봤지만 아직은 못찾았다.
 		String index = "gaia";
-		String id = "1";
 		
 		Map<String,Object> map2  = new HashMap<>();
 		map2.put("web_adress", request.getRequestURL().toString());
 		map2.put("id", session.getAttribute("id"));
 		map2.put("date", LocalDate.now().toString()+" "+LocalTime.now().toString());
-		System.out.println(map2);
 		
 		try {
-			ElasticUtil.getInstance().create(index, id, map2);
+			ElasticUtil.getInstance().create(index, map2);
+			System.out.println(Esservice.getSourceOfIdFromIndex(index, "1"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return "index";
+	}
+	
+	@RequestMapping("/es/test")
+	@ResponseBody
+	public Map<String, Object> test(){
+		String index = "gaia";
+		
+		Map<String, Object> map = new HashMap<>();
+		try {
+			map.put("idList", Esservice.fetchAllIdsFromIndex(index));
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return map;
 	}
 	
 	@RequestMapping("/index")
