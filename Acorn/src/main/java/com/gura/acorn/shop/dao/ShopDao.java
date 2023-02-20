@@ -7,6 +7,7 @@ import com.gura.acorn.shop.dto.ShopDto;
 public interface ShopDao {
 	   //글목록
 	   public List<ShopDto> getList(ShopDto dto);
+	   public List<ShopDto> getTopList(ShopDto dto);
 	   //글의 갯수
 	   public int getCount(ShopDto dto);
 	   //글 추가

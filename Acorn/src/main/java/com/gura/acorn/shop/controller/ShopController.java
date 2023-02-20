@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gura.acorn.shop.service.ShopService;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.gura.acorn.es.ElasticUtil;
 import com.gura.acorn.exception.loginException;
 import com.gura.acorn.shop.dto.ShopDto;
 import com.gura.acorn.shop.dto.ShopMenuDto;
@@ -44,15 +49,36 @@ public class ShopController {
 	
 	//index 페이지에서 가게리스트 출력
 	@RequestMapping("/")
-	public String index(HttpServletRequest request) {
-		service.getList(request);
+	public String index(HttpServletRequest request, HttpSession session) {
+		service.getTopList(request);
+		//이 메소드가 실행될때 ES의 /gaia/_doc/1에 Map2의 정보가 전달되어 기록된다.
+		//메소드가 실행될때마다 덮어써진다.
+		//id나 index를 바꾸면서 기록할 필요가 있어보인다.
+		//덮어쓰기 말고 추가되는 방식을 찾아봤지만 아직은 못찾았다.
+		String index = "gaia";
+		String id = "1";
+		
+		Map<String,Object> map2  = new HashMap<>();
+		map2.put("web_adress", request.getRequestURL().toString());
+		map2.put("id", session.getAttribute("id"));
+		map2.put("date", LocalDate.now().toString()+" "+LocalTime.now().toString());
+		System.out.println(map2);
+		
+		try {
+			ElasticUtil.getInstance().create(index, id, map2);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "index";
 	}
 	
 	@RequestMapping("/index")
 	public String index2(HttpServletRequest request) {
-		service.getList(request);
+		service.getTopList(request);
 		return "index";
+		
 	}
 	
 	@RequestMapping("/shop/list")
@@ -92,7 +118,6 @@ public class ShopController {
 	//가게정보 상세보기
 	@GetMapping("/shop/detail")
 	public String detail(HttpServletRequest request) {
-		service.getList(request);
 		service.getDetail(request);
 		service.menuGetList(request);
 		return "shop/detail";

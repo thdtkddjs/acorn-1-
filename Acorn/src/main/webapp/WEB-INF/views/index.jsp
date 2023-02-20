@@ -121,7 +121,7 @@
 			   						<li class="shop_item_content_detail"><img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png" alt="주소" class="shop_info_icon" title="주소"/>${tmp.addr }</li>
 			   						<li class="shop_item_content_detail">${tmp.content }</li>
 			   						<li class="shop_item_content_detail">${tmp.categorie}, ${tmp.startTime}~ ${tmp.endTime}, ${tmp.telNum}</li>
-			   						<li class="shop_item_content_detail">👀 999+, review 999+, etc..</li>
+			   						<li class="shop_item_content_detail">👀 999+, ${tmp.rCount}, etc..</li>
 			   					</ul>
 			   				</div>	 
 						</a>
@@ -149,8 +149,17 @@
 			<span>MZ가 선호하는 트렌드!</span>
 			<br /><br />
 			<strong class="cloud_effect" style="place-content: center;">
-				FOOD STATISTICS 보기
+			FOOD STATISTICS
 			</strong>
+			<br />
+			<a class="btn btn-success" href="${pageContext.request.contextPath}/statistics/statistics" style="    height: 50px;
+		    width: 200px;
+		    text-decoration: none;
+		    font-weight: bold;
+		    display: flex;
+		    align-items: center;
+		    justify-content: center;
+		    margin: auto;">지금 보러가기</a>
 			</p>
 			
 		</div>

@@ -89,7 +89,7 @@
 	<select id="getCount" parameterType="int" resultType="int">
 		SELECT NVL(MAX(ROWNUM), 0)
 		FROM board_shop_review
-		WHERE ref_group = #{ref_group}
+		WHERE ref_group = #{ref_group} and deleted='no'
 	</select>
 	<!-- Grade 계산용 deleted는 제외 -->
 	<select id="getGrade" parameterType="int" resultType="double">

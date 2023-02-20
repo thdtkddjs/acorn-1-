@@ -43,14 +43,23 @@
          FROM
             (SELECT *
 			FROM
-				(SELECT s.num, s.title, s.content, s.imagePath, s.categorie, s.reviewCount, s.startTime, s.endTime, s.telNum, s.addr, r.grade
-      			 from board_shop s, (SELECT ref_group, avg(grade) grade FROM board_shop_review where deleted = 'no' group by ref_group) r
+				(SELECT s.num, s.title, s.content, s.imagePath, s.categorie, s.reviewCount, s.startTime, s.endTime, s.telNum, s.addr, r.grade, r.rCount
+      			 from board_shop s, (SELECT ref_group, ROUND(avg(grade), 2) grade, COUNT(num) rCount FROM board_shop_review where deleted = 'no' group by ref_group) r
 				     where s.num = r.ref_group(+))
 			<include refid="searchCondition"/>
 			ORDER BY num DESC) result1)
       <![CDATA[ 
       WHERE rnum >= #{startRowNum} AND rnum <= #{endRowNum}
       ]]>
+	</select>
+	
+	<select id="getTopList" parameterType="shopDto" resultType="shopDto">
+		SELECT *
+		FROM (SELECT s.num, s.title, s.content, s.imagePath, s.categorie, s.reviewCount, s.startTime, s.endTime, s.telNum, s.addr, r.grade, r.rCount
+		   			 FROM board_shop s, (SELECT ref_group, ROUND(avg(grade), 2) grade, COUNT(num) rCount FROM board_shop_review where deleted = 'no' group by ref_group) r
+				     WHERE s.num = r.ref_group
+				     ORDER BY r.grade DESC)
+		<![CDATA[ WHERE ROWNUM < 11 ]]>
 	</select>
 	
    <select id="getData" parameterType="int" resultType="shopDto">
