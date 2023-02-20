@@ -80,7 +80,7 @@ textarea {
 	<div class="container">
 		<br />
 		<br />
-		<h1>REGIST MENU</h1>
+		<h1>INSERT MENU</h1>
 		<br />
 		<form action="${pageContext.request.contextPath}/shop/menu_insert"
 			method="get" id="insertForm">
@@ -117,7 +117,7 @@ textarea {
 
 				<textarea class="form-control" name="content" id="content"></textarea>
 			</div>
-			<button class="btn btn-outline-success" type="submit">REGIST</button>
+			<button class="btn btn-outline-success" type="submit">INSERT</button>
 		</form>
 
 		<!-- 이미지 등록용 숨겨진 form -->

@@ -39,7 +39,7 @@ body::-webkit-scrollbar-thumb {
 	</jsp:include>
 	<div class="container">
 	<br />
-		<h1>REGIST STORE</h1>
+		<h1>INSERT SHOP</h1>
 		<br />
 		<form action="${pageContext.request.contextPath}/shop/insert" method="post" id="insertForm">
 			<!-- 실제 제출 될 이미지 값 -->
@@ -132,7 +132,7 @@ body::-webkit-scrollbar-thumb {
 				</div>
 			</div>
 			<br />
-			<button class="btn btn-outline-success" type="submit">REGIST</button>
+			<button class="btn btn-outline-success" type="submit">INSERT</button>
 		</form>
 
 		<!-- 가게 섬네일 등록을 위한 폼 -->
