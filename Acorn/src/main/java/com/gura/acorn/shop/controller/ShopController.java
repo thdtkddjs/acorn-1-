@@ -1,5 +1,13 @@
 package com.gura.acorn.shop.controller;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -7,16 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.gura.acorn.shop.service.ShopService;
-
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +25,7 @@ import com.gura.acorn.exception.loginException;
 import com.gura.acorn.shop.dto.ShopDto;
 import com.gura.acorn.shop.dto.ShopMenuDto;
 import com.gura.acorn.shop.dto.ShopReviewDto;
+import com.gura.acorn.shop.service.ShopService;
 
 @Controller
 public class ShopController {
@@ -80,10 +79,15 @@ public class ShopController {
 	@ResponseBody
 	public Map<String, Object> test(){
 		String index = "gaia";
-		
 		Map<String, Object> map = new HashMap<>();
 		try {
-			map.put("idList", Esservice.fetchAllIdsFromIndex(index));
+			List<String> ids = Esservice.fetchAllIdsFromIndex(index);
+			List<String> date, address = new ArrayList<>();
+			for(int i = 0; i < ids.size(); i++) {
+				Esservice.getSourceOfIdFromIndex(index, ids.get(i));
+			}
+		
+			map.put("idList", ids);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
