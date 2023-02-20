@@ -92,7 +92,7 @@
 		   						<li class="shop_item_content_detail"><img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png" alt="주소" class="shop_info_icon" title="주소"/>${tmp.addr }</li>
 		   						<li class="shop_item_content_detail">${tmp.content }</li>
 		   						<li class="shop_item_content_detail">${tmp.categorie}, ${tmp.startTime}~ ${tmp.endTime}, ${tmp.telNum}</li>
-		   						<li class="shop_item_content_detail">👀 <b style="color:blue;">999+</b>, 리뷰 <b style="color:red;"'>${tmp.reviewCount }</b>, etc..</li>
+		   						<li class="shop_item_content_detail">👀 <b style="color:blue;">999+</b>, 리뷰 <b style="color:red;">${tmp.reviewCount }</b>, etc..</li>
 		   					</ul>
 		   				</div>	   					
 	   					
