@@ -33,6 +33,7 @@ public class ShopController {
 	@Autowired
 	private ShopService service;
 	
+	
 	@RequestMapping("shop/review_list")
 	public String reviewList(HttpServletRequest request) {
 		service.getReviewList(request);
@@ -118,6 +119,7 @@ public class ShopController {
 	//가게정보 상세보기
 	@GetMapping("/shop/detail")
 	public String detail(HttpServletRequest request) {
+
 		service.getDetail(request);
 		service.menuGetList(request);
 		return "shop/detail";
@@ -212,4 +214,12 @@ public class ShopController {
 		return "shop/menu_insert";
 	}
 
+	
+	//테스트용 statistic 
+	@RequestMapping("/statistics/example_1")
+	public String ex1(HttpServletRequest request) {
+		service.getDetail(request);
+		service.menuGetList(request);
+		return "statistics/example_1";
+	}
 }

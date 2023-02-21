@@ -67,7 +67,7 @@ p{
 	border-top : 3px solid blue;
 }
 ul>li{
-	border-top: none;
+	border: none;
 	padding-top: 0;
 }
 ul, li{

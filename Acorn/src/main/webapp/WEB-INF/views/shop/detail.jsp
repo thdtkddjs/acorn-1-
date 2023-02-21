@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>index.jsp</title>
+<title>detail.jsp</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -15,9 +15,10 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <link rel="shortcut icon" href="#">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link rel="stylesheet" type="text/css" href="../resources/css/shop_detail.css">
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
 </head>
 
 <body>
@@ -60,11 +61,11 @@
 							</tr>
 							<tr>
 								<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/runningtime.png" alt="영업시간" class="shop_info_icon" title="영업 시간"/></td>
-								<td class="table_content">영업 시작 : ${startTime}</td>
+								<td class="table_content">영업 시작 : ${dto.startTime}</td>
 							</tr>
 							<tr>
 								<td class="table_icon"></td>
-								<td class="table_content">영업 종료 : ${endTime}</td>
+								<td class="table_content">영업 종료 : ${dto.endTime}</td>
 							</tr>
 							<tr>
 								<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/callnumber.png" alt="전화번호" class="shop_info_icon" title="전화번호"/></td>
@@ -353,63 +354,99 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-		<div style="height : 600px;"></div>
+	
 	
 
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b45a7e1f67e033582e03cb02a068e52&libraries=services"></script>
+
+		<div style="height : 600px;">
+		
+			<div class="" style="width:400px" height="400px">
+		    	<div class="statistics" >
+		   		 		<canvas id="myChart" ref="acquisitions" width="400" height="200"></canvas>
+		    	</div>
+			</div>
+		</div>
 	
-	<!-- 지도 생성 script -->
-	<script>
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
-	    };  
+<script>
+const app = Vue.createApp({
+	setup() {
+		const arr = Vue.ref([0, 0, 0, 0, 0]); // arr를 ref로 만들어서 반응성을 추가합니다.
+		const chartData = Vue.reactive({
+				labels: ["★", "★★", "★★★", "★★★★", "★★★★★"],
+				datasets: [{
+					label: "리뷰 별점 수",
+					axis: 'y',
+					barThickness: 10,
+					backgroundColor: "rgba(255, 99, 132, 0.2)",
+					borderColor: "rgba(255,99,132,1)",
+					borderWidth: 1,
+					data: arr.value, // arr의 값을 참조합니다.
+				},
+				],
+			});
 	
-	// 지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
+			// window.onload 대신에 Vue.watchEffect를 사용합니다.
+			// arr의 값이 변경될 때마다 chartData.datasets[0].data도 변경됩니다.
+			Vue.watchEffect(() => {
+				const length = document.getElementsByClassName("point").length;
+				arr.value = [0, 0, 0, 0, 0]; // 초기화
+				for (let i = 0; i < length; i++) {
+				    let score = document.getElementsByClassName("point")[i].value / 2 + 0.5;
+				    if (score == 1) {
+				      arr.value[0]++;
+				    } else if (score == 2) {
+				      arr.value[1]++;
+				    } else if (score == 3) {
+				      arr.value[2]++;
+				    } else if (score == 4) {
+				      arr.value[3]++;
+				    } else {
+				      arr.value[4]++;
+				    }
+			  }
+			  chartData.datasets[0].data = arr.value; // 데이터 갱신
+			});
 	
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new kakao.maps.services.Geocoder();
+			return {
+		    	chartData,
+			};
+	},
+	mounted() {
+		const ctx = document.getElementById("myChart").getContext("2d");
+		const myChart = new Chart(ctx, {
+			type: "bar",
+			data: this.chartData,
+			options: {
+				plugins: {
+				legend: {
+				display: false
+			},},
+			indexAxis: 'y',
+		       scales: {
+				x:{
+			        ticks: {display: false},
+		            grid: {display: false},
+				},
+				y: {
+					beginAtZero: true, // y축이 0부터 시작하도록 설정
+					offset: true,
+					grid: {
+					    display: false
+				  	},
+				    ticks: {
+				    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
+				    },
+				},
+		       },
+		     },
+		   });
+	  },
+});
 	
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch( '${dto.addr}' , function(result, status) {
-	
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === kakao.maps.services.Status.OK) {
-	
-	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new kakao.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-	
-	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;"> ${dto.title} </div>'
-	        });
-	        infowindow.open(map, marker);
-	
-	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        map.setCenter(coords);
-	    } 
-	});    
-	</script>
+		app.mount(".statistics");
+</script>
+
+
 	<script>
 		let selector = document.getElementsByClassName("menu_price");
 		for(let i=0; i<selector.length; i++){
@@ -535,7 +572,7 @@
                   });
                }
             });
-         }  
+         }
       }
       
       function addUpdateFormListener(sel){

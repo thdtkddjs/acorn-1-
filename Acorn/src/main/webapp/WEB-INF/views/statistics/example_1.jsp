@@ -51,10 +51,13 @@
 .statistics_topic>a{
 	margin : 5%;
 }
-.statistics_bot{
+.statistics_mid{
 	width : 600px;
 	display:flex;
 	margin : auto;
+}
+.statistics_bot{
+	height : 100px;
 }
 </style>
 </head>
@@ -80,75 +83,52 @@
     		이곳은 통계 페이지 임을 보여주는 것
     	</div>
     	<div class="statistics_mid">
-    	<div class="row">
-		    <div class="statistics_topic">
-		    	<a href="${pageContext.request.contextPath}/statistics/example_1">
-	    			<img src="https://youthpress.net/xe/files/attach/images/9794/484/657/24886b2473d0171dfa8b7e82c10486e4.jpg" alt="" />
-	    		</a>
-	    	</div>
-	    	<div class="statistics_topic">
-	    		<a href="">
-	    			<img src="https://blog.kakaocdn.net/dn/b6bbD5/btqDc3E1G6F/2dQiURlRhkefcuI3CfF6X1/img.jpg" alt="" />
-	    		</a>
-	    	</div>
-    	</div>
-		<div class="row">
-		   	<div class="statistics_topic">
-		   		<a href="">
-		   			<img src="https://img.freepik.com/free-vector/world-food-set_1284-12898.jpg" alt="" />
-		   		</a>
-		   	</div>
-		   	<div class="statistics_topic">
-		   		<a href="">
-		   			<img src="https://en.pimg.jp/062/773/146/1/62773146.jpg" alt="" />
-	   			</a>
-		   	</div>
-		</div>
-
+   		 	<canvas id="myChart" ref="acquisitions" width="400" height="400"></canvas>
     	</div>
     	
     	<div class="statistics_bot">
-    		<canvas ref="acquisitions"></canvas>
+
     	</div>
 	</div>
 </body>
 <script>
-  const { createApp } = Vue
+const { createApp } = Vue
 
-  createApp({
-    data() {
-      return {
-        message: 'Hello Vue!'
-      }
-    },
-    mounted() {
-      const data = [
-        { year: 2010, count: 10 },
-        { year: 2011, count: 20 },
-        { year: 2012, count: 15 },
-        { year: 2013, count: 25 },
-        { year: 2014, count: 22 },
-        { year: 2015, count: 30 },
-        { year: 2016, count: 28 },
-      ];
-
-      new Chart(
-        this.$refs.acquisitions,
-        {
-          type: 'bar',
-          data: {
-            labels: data.map(row => row.year),
-            datasets: [
-              {
-                label: 'Acquisitions by year',
-                data: data.map(row => row.count)
-              }
-            ]
-          }
-        }
-      );
+createApp({
+  data() {
+    return {
+      message: 'Hello Vue!'
     }
-    
-  }).mount('.statistics_bot')
+  },
+  mounted() {
+    const data = [
+      { year: 2010, count: 10 },
+      { year: 2011, count: 20 },
+      { year: 2012, count: 15 },
+      { year: 2013, count: 25 },
+      { year: 2014, count: 22 },
+      { year: 2015, count: 30 },
+      { year: 2016, count: 28 },
+    ];
+
+    new Chart(
+      this.$refs.acquisitions,
+      {
+        type: 'bar',
+        data: {
+          labels: data.map(row => row.year),
+          datasets: [
+            {
+              label: 'Acquisitions by year',
+              data: data.map(row => row.count)
+            }
+          ]
+        }
+      }
+    );
+  }
+  
+}).mount('.statistics_mid')
 </script>
+
 </html>

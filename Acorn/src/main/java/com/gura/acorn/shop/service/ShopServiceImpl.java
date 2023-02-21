@@ -497,7 +497,7 @@ public class ShopServiceImpl implements ShopService{
 		if (endPageNum > totalPageCount) {
 			endPageNum = totalPageCount; // 보정해 준다.
 		}
-    
+		
 		// view page에 전달하기 위해 request scope에 담기
 		request.setAttribute("rvlist", list);
 		request.setAttribute("rvpageNum", pageNum);
@@ -614,4 +614,7 @@ public class ShopServiceImpl implements ShopService{
 
 		request.setAttribute("list", list);
 	}
+
+	
+	
 }

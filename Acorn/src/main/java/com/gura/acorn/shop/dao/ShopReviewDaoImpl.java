@@ -64,4 +64,5 @@ public class ShopReviewDaoImpl implements ShopReviewDao{
 		return session.selectList("shopReview.getReviewList", dto);
 	}
 
+
 }

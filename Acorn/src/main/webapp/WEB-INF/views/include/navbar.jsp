@@ -18,7 +18,7 @@
 						<c:if test="${param.thisPage eq 'index' }">
 							<a href="#simple-list-item-3" id="hot_place">HOT PLACE</a>
 						</c:if>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "#" } id="research">RESEARCH</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "../statistics/statistics"  } id="research">RESEARCH</a>
     		    </div>
 					<div class="search_menu">
 						<div class="search_bar">
@@ -50,8 +50,7 @@
 						<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
 						<a href="#simple-list-item-1">TOP</a>
 						<a href=${param.thisPage eq "index" ? "#simple-list-item-2" : "../shop/list" } id="category">CATEGORY</a>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-3" : "#" } id="hot_place">HOT PLACE</a>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "#" } id="research">RESEARCH</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "../statistics/statistics" } id="research">RESEARCH</a>
             </div>
             <div class="search_menu">
               <div class="search_bar">
@@ -83,8 +82,7 @@
 					<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
 						<a href="#simple-list-item-1">TOP</a>
 						<a href=${param.thisPage eq "index" ? "#simple-list-item-2" : "../shop/list" } id="category">CATEGORY</a>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-3" : "#" } id="hot_place">HOT PLACE</a>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "#" } id="research">RESEARCH</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "../statistics/statistics" } id="research">RESEARCH</a>
          			</div>
 					<div class="search_menu">
 						<div class="search_bar">
