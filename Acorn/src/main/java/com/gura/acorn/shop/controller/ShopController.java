@@ -3,7 +3,6 @@ package com.gura.acorn.shop.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,7 +65,6 @@ public class ShopController {
 		
 		try {
 			ElasticUtil.getInstance().create(index, map2);
-			System.out.println(Esservice.getSourceOfIdFromIndex(index, "1"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -77,24 +75,17 @@ public class ShopController {
 	
 	@RequestMapping("/es/test")
 	@ResponseBody
-	public Map<String, Object> test(){
+	public List<Map<String, Object>> test(){
 		String index = "gaia";
-		Map<String, Object> map = new HashMap<>();
+		String date = "2023-02-20";
 		try {
-			List<String> ids = Esservice.fetchAllIdsFromIndex(index);
-			List<String> date, address = new ArrayList<>();
-			for(int i = 0; i < ids.size(); i++) {
-				Esservice.getSourceOfIdFromIndex(index, ids.get(i));
-			}
-		
-			map.put("idList", ids);
-			
+			System.out.println(Esservice.getAllDataFromIndex(index, date).size());
+			return Esservice.getAllDataFromIndex(index, date);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return map;
+		return null;
 	}
 	
 	@RequestMapping("/index")

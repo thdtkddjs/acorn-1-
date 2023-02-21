@@ -3,11 +3,15 @@ package com.gura.acorn.es;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.search.ClearScrollRequest;
+import org.elasticsearch.action.search.ClearScrollResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchScrollRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.core.TimeValue;
@@ -31,7 +35,7 @@ public class ElasticsearchService {
             .withBasicAuth("elastic", "acorn")
             .build();
     
-    public String getSourceOfIdFromIndex(String indexName, String id) throws IOException {
+    public ESTestDto getSourceOfIdFromIndex(String indexName, String id) throws IOException {
         
         RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
 
@@ -39,7 +43,16 @@ public class ElasticsearchService {
 
         GetResponse getResponse = client.get(getRequest, RequestOptions.DEFAULT);
 
-        return getResponse.getSourceAsString();
+        String date = getResponse.getSourceAsMap().get("date").toString();
+        String address = getResponse.getSourceAsMap().get("adress").toString();
+        String user = getResponse.getSourceAsMap().get("id").toString();
+        
+        ESTestDto dto = new ESTestDto();
+        dto.setAddress(address);
+        dto.setDate(date);
+        dto.setUser(user);
+        
+        return dto;
     }
     
     public List<String> fetchAllIdsFromIndex(String indexName) throws IOException {
@@ -64,6 +77,103 @@ public class ElasticsearchService {
         }
         
         return idList;
+    }
+    
+    public long getCountOfIdsFromIndex(String indexName) throws IOException {
+
+        RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+
+        SearchRequest searchRequest = new SearchRequest(indexName);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchSourceBuilder.size(0); // 결과를 받지 않고 개수만 필요한 경우 0으로 설정
+        searchSourceBuilder.timeout(TimeValue.timeValueMinutes(2));
+
+        searchRequest.source(searchSourceBuilder);
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+
+        return searchResponse.getHits().getTotalHits().value;
+    }
+    
+    public void getAllSourcesFromIndex(String indexName) throws IOException {
+
+        RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+
+        SearchRequest searchRequest = new SearchRequest(indexName);
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchSourceBuilder.size(10000);
+
+        searchRequest.source(searchSourceBuilder);
+        searchRequest.scroll(TimeValue.timeValueMinutes(1L));
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+        String scrollId = searchResponse.getScrollId();
+
+        while (true) {
+            searchResponse = client.scroll(new SearchScrollRequest(scrollId)
+                    .scroll(TimeValue.timeValueSeconds(30L)), RequestOptions.DEFAULT);
+            SearchHit[] hits = searchResponse.getHits().getHits();
+
+            if (hits == null || hits.length == 0) {
+                break;
+            }
+
+            for (SearchHit hit : hits) {
+                String sourceAsString = hit.getSourceAsString();
+                System.out.println(sourceAsString);
+            }
+
+            scrollId = searchResponse.getScrollId();
+        }
+
+        ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
+        clearScrollRequest.addScrollId(scrollId);
+        ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
+        boolean succeeded = clearScrollResponse.isSucceeded();
+    }
+    
+    public List<Map<String, Object>> getAllDataFromIndex(String indexName, String date) throws IOException {
+    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+    	
+        List<Map<String, Object>> dataList = new ArrayList<>();
+
+        SearchRequest searchRequest = new SearchRequest(indexName);
+        searchRequest.scroll(TimeValue.timeValueMinutes(1L));
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchSourceBuilder.size(1000); // 한 번에 가져올 문서 개수
+
+        searchRequest.source(searchSourceBuilder);
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+        String scrollId = searchResponse.getScrollId();
+        SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+        while (searchHits != null && searchHits.length > 0) {
+            for (SearchHit hit : searchHits) {
+                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+//                dataList.add(sourceAsMap);
+                if(sourceAsMap.get("date").toString().indexOf(date) >= 0) {
+                	dataList.add(sourceAsMap);
+                }
+            }
+
+            SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
+            scrollRequest.scroll(TimeValue.timeValueMinutes(1L));
+            SearchResponse scrollResponse = client.scroll(scrollRequest, RequestOptions.DEFAULT);
+            scrollId = scrollResponse.getScrollId();
+            searchHits = scrollResponse.getHits().getHits();
+        }
+
+        ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
+        clearScrollRequest.addScrollId(scrollId);
+        ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
+
+        return dataList;
     }
 }
 
