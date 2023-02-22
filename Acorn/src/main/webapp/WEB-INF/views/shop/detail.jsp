@@ -19,6 +19,8 @@
 <link rel="stylesheet" type="text/css" href="../resources/css/shop_detail.css">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </head>
 
 <body>
@@ -74,14 +76,16 @@
 							<tr>
 								<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/hashtag.png" alt="대표 키워드" class="shop_info_icon" title="대표 키워드"/></td>
 								<td class="table_content">
-								<c:if test="${grade gt 4.5}">
-									<p class="best_store btn btn-danger">🌟4.5↑</p>
-								</c:if>
-								<c:if test="${reviewCount gt 50}">
-									<p class="best_store btn btn-success">✏️50↑</p>
-								</c:if>
-								<br />
-								<span style="color:gray;">* 평점이 4.5 이상이면 별 마크가, 리뷰가 50개 이상이면 리뷰 마크가 표시되는 공간입니다</span>
+									<c:if test="${grade ge 4 && reviewCount ge 5}">
+										<p class="best_store btn btn-danger">🌟4.0↑</p>
+									</c:if>
+									<c:if test="${reviewCount ge 30}">
+										<p class="best_store btn btn-success">✏️30↑</p>
+									</c:if>
+									<c:if test="${reviewCount lt 30 && grade lt 4}">
+										<span style="color:gray;">* 평점이 4.0 이상(리뷰 5개 이상)이면 별 마크가, 리뷰가 50개 이상이면 리뷰 마크가 표시됩니다</span>
+									</c:if>
+								
 								</td>
 							</tr>
 							
@@ -142,10 +146,10 @@
 			<div class="shop_board_body3">
 				<div class="shop_board_review">
 					<strong>리뷰</strong>
-					<div class="table_3">
+					<div class="table_3" style="position:relative;">
 						<table class="shop_review_table">
 							<tbody>
-								<tr>
+								<tr style="height : 150px;">
 									<c:choose>
 										<c:when test="${grade eq 0}">
 											<td class="avg_score"><span style="color:gray; font-size:18px;">등록 된 리뷰가 없습니다</span></td>
@@ -154,12 +158,25 @@
 											<td class="avg_score">평점 : <span style="color : red;">${grade}</span>점</td>
 										</c:otherwise> 
 									</c:choose>
+									<div class="" style="width:250px;height:150px;float: right;position: absolute;right: 0%;" >
+								    	<div class="statistics" >
+								   		 		<canvas id="myChart" ref="acquisitions" style="display: block;box-sizing: border-box;height: 150px;width: 250px;padding: 10px;"></canvas>
+								    	</div>
+								    	
+								    	<!-- 리뷰 별점 데이터 받아오기 -->
+								    	<c:forEach var="tmp" items="${testList}">
+								    		<li hidden>
+								    			<input value="${tmp.gCount}" class="score_count_${tmp.grade}"></input>
+								    		
+								    		</li>
+								    	</c:forEach>
+									</div>
 								</tr>
 								<tr>
 									<td>
 										<div class="reviews">
 											<ul>
-												<c:forEach var="tmp" items="${reviewList }">
+												<c:forEach var="tmp" items="${reviewList}">
 													<c:choose>
 														<c:when test="${tmp.deleted eq 'yes' }">
 															<dt class="row" style="border-top: 1px solid #f2f2f2; height : 75px; item-align : center; text-align:center; align-items: center;">
@@ -211,10 +228,11 @@
 																					href="javascript:">DELETE</a>
 																			</c:when>
 																		</c:choose>
-																			<div class="startRadio" style="pointer-events: none;">																			<c:forEach var="i" begin="0" end="9">
-																					<label class="startRadio__box"> <input
-																						type="radio" name="grade_number" value=${i }
-																						${tmp.grade eq (i/2+0.5) ? 'class="point"' : '' }>
+																			<div class="startRadio" style="pointer-events: none;">																			
+																				<c:forEach var="i" begin="0" end="9">
+																					<label class="startRadio__box" > 
+																					<input type="radio" name="grade_number" value=${i }
+																						${tmp.grade eq (i/2+0.5) ? 'class="point"' : ''} >
 																						<span class="startRadio__img"> <span
 																							class="blind">별 ${(i/2+0.5) }개</span>
 																					</span>
@@ -289,7 +307,9 @@
 													<c:forEach var="i" begin="0" end="9">
 														<label class="startRadio__box"> <input type="radio"
 															name="grade_number" value=${i }
-															${i eq 9 ? 'checked' : '' }> <span
+															${i eq 9 ? 'checked' : '' }
+															${i%2 eq 0  ? 'disabled' : ''} > 
+															<span
 															class="startRadio__img"> <span class="blind">별
 																	${(i/2+0.5) }개</span>
 														</span>
@@ -357,20 +377,15 @@
 	
 	
 
-
-		<div style="height : 600px;">
 		
-			<div class="" style="width:400px" height="400px">
-		    	<div class="statistics" >
-		   		 		<canvas id="myChart" ref="acquisitions" width="400" height="200"></canvas>
-		    	</div>
-			</div>
-		</div>
+
 	
 <script>
+
+
 const app = Vue.createApp({
 	setup() {
-		const arr = Vue.ref([0, 0, 0, 0, 0]); // arr를 ref로 만들어서 반응성을 추가합니다.
+		const arr = Vue.ref([0, 0, 0, 0, 0]); // arr를 ref로 만들어서 반응성을 추가
 		const chartData = Vue.reactive({
 				labels: ["★", "★★", "★★★", "★★★★", "★★★★★"],
 				datasets: [{
@@ -385,26 +400,21 @@ const app = Vue.createApp({
 				],
 			});
 	
-			// window.onload 대신에 Vue.watchEffect를 사용합니다.
-			// arr의 값이 변경될 때마다 chartData.datasets[0].data도 변경됩니다.
+			// window.onload 대신에 Vue.watchEffect를 사용
+			// arr의 값이 변경될 때마다 chartData.datasets[0].data도 변경
 			Vue.watchEffect(() => {
-				const length = document.getElementsByClassName("point").length;
 				arr.value = [0, 0, 0, 0, 0]; // 초기화
-				for (let i = 0; i < length; i++) {
-				    let score = document.getElementsByClassName("point")[i].value / 2 + 0.5;
-				    if (score == 1) {
-				      arr.value[0]++;
-				    } else if (score == 2) {
-				      arr.value[1]++;
-				    } else if (score == 3) {
-				      arr.value[2]++;
-				    } else if (score == 4) {
-				      arr.value[3]++;
-				    } else {
-				      arr.value[4]++;
-				    }
-			  }
-			  chartData.datasets[0].data = arr.value; // 데이터 갱신
+				console.log(arr.value[0]);
+				for (let i=1; i < 6; i++) {
+					if(document.getElementsByClassName("score_count_"+i+".0")[0]==null){
+						
+					}
+					else{
+						arr.value[i-1] = Number(document.getElementsByClassName("score_count_"+i+".0")[0].value);
+					}
+					
+			  	}
+				chartData.datasets[0].data = arr.value; // 데이터 갱신
 			});
 	
 			return {
@@ -416,28 +426,56 @@ const app = Vue.createApp({
 		const myChart = new Chart(ctx, {
 			type: "bar",
 			data: this.chartData,
+			plugins : [ChartDataLabels],
 			options: {
 				plugins: {
-				legend: {
-				display: false
-			},},
-			indexAxis: 'y',
-		       scales: {
-				x:{
-			        ticks: {display: false},
-		            grid: {display: false},
+					legend: {
+						display: false
+						},
+					datalabels: {
+			            font: {
+			              size: 12,
+			            },
+			            display: function(context) {
+			                return context.dataset.data[context.dataIndex]>1;
+			              },
+			            anchor: 'end',
+			            align: 'right',
+			            offset: 2,
+			            formatter: function(value, context) {
+			              return value;
+			            }
+					}
 				},
-				y: {
-					beginAtZero: true, // y축이 0부터 시작하도록 설정
-					offset: true,
-					grid: {
-					    display: false
-				  	},
-				    ticks: {
-				    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
-				    },
+				indexAxis: 'y',
+				scales: {
+					x:{
+				        ticks: {
+				        	display: false,
+				        	stepSize: 1,
+				        },
+			            grid: {display: false},
+					},
+					y: {
+						beginAtZero: true, // y축이 0부터 시작하도록 설정
+						offset: true,
+						grid: {
+						    display: false
+					  	},
+					    ticks: {
+					        color: '#ffc107',
+					    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
+					    },
+					},
 				},
-		       },
+				layout: {
+					padding: {
+						top: 0,
+						bottom: 0,
+						left: 0,
+						right: 20
+					}
+				},
 		     },
 		   });
 	  },

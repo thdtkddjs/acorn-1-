@@ -616,5 +616,13 @@ public class ShopServiceImpl implements ShopService{
 	}
 
 	
-	
+	@Override
+	public void test(HttpServletRequest request) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		
+		System.out.println(num);
+		List<ShopReviewDto> list = shopReviewDao.test(num);
+
+		request.setAttribute("testList", list);
+	}
 }

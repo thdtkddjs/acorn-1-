@@ -98,4 +98,12 @@
 		WHERE ref_group = #{ref_group} and deleted='no'
 	</select>
 	
+	<!-- 차트 테스트용 쿼리 -->
+	<select id="test" parameterType="int" resultType="shopReviewDto">
+		select count(num) gCount, grade
+		from (select num, ref_group, grade from board_shop_review
+				where ref_group =#{num} and deleted = 'no')
+		group by grade
+		order by grade ASC
+	</select>
 </mapper>

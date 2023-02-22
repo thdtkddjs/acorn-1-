@@ -119,7 +119,7 @@ public class ShopController {
 	//가게정보 상세보기
 	@GetMapping("/shop/detail")
 	public String detail(HttpServletRequest request) {
-
+		service.test(request);  
 		service.getDetail(request);
 		service.menuGetList(request);
 		return "shop/detail";
