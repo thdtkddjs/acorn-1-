@@ -206,7 +206,7 @@
 																			</c:if>
 																			<c:if test="${not empty tmp.profile }">
 																				<img class="profile-image"
-																					src="${pageContext.request.contextPath}${tmp.profile }" />
+																					src="${pageContext.request.contextPath}/shop/images/${tmp.profile }" />
 																			</c:if>
 																		</div>
 																		<span class="col">${tmp.writer }</span>
@@ -281,7 +281,7 @@
 																		</c:when>
 																		<c:otherwise>
 																			<img class="review_img"
-																				src="${pageContext.request.contextPath}${tmp.imagePath}" />
+																				src="${pageContext.request.contextPath}/shop/images/${tmp.imagePath}" />
 																		</c:otherwise>
 																	</c:choose>
 																</div>
@@ -646,7 +646,7 @@ const app = Vue.createApp({
 			})
 			.then(function(data){
 				document.querySelector("input[name=imagePath]").value = data.imagePath;
-				let img = `<img class="comment_img" src="${pageContext.request.contextPath }\${data.imagePath}">`;
+				let img = `<img class="comment_img" src="${pageContext.request.contextPath }/shop/images/\${data.imagePath}">`;
 				document.querySelector("#thumbnailLink").innerHTML=img;
 			});
 		});

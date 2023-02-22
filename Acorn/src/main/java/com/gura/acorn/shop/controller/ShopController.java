@@ -3,14 +3,21 @@ package com.gura.acorn.shop.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.gura.acorn.shop.service.ShopService;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -32,6 +39,23 @@ public class ShopController {
 
 	@Autowired
 	private ShopService service;
+	
+	@Value("${file.location}")
+	private String fileLocation;
+	
+	@GetMapping(
+			value="/shop/images/{imageName}",
+			produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_GIF_VALUE}
+		)
+	@ResponseBody
+	public byte[] profileImage(@PathVariable("imageName") String imageName) throws IOException {
+
+		String absolutePath = fileLocation + File.separator + imageName;
+		// 파일에서 읽어들일 InputStream
+		InputStream is = new FileInputStream(absolutePath);
+		// 이미지 데이터(byte) 를 읽어서 배열에 담아서 클라이언트에게 응답한다.
+		return IOUtils.toByteArray(is);
+	}
 	
 	
 	@RequestMapping("shop/review_list")

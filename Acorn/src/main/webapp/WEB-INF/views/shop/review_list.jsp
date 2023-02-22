@@ -112,7 +112,7 @@
 												</c:if>
 												<c:if test="${not empty tmp.profile }">
 													<img class="profile-image"
-														src="${pageContext.request.contextPath}${tmp.profile }" />
+														src="${pageContext.request.contextPath}/shop/images/${tmp.profile }" />
 												</c:if>
 											</div>
 											<span class="col">${tmp.writer }</span> <span class="bg_bar"></span>
@@ -170,7 +170,7 @@
 											</c:when>
 											<c:otherwise>
 												<img class="review_img" id="${pageContext.request.contextPath}${tmp.imagePath}"
-													src="${pageContext.request.contextPath}${tmp.imagePath}" />
+													src="${pageContext.request.contextPath}/shop/images/${tmp.imagePath}" />
 											</c:otherwise>
 										</c:choose>
 									</div>
