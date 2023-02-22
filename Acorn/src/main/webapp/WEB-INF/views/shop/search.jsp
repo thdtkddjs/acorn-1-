@@ -67,7 +67,7 @@ p{
 	border-top : 3px solid blue;
 }
 ul>li{
-	border-top: none;
+	border: none;
 	padding-top: 0;
 }
 ul, li{
@@ -212,7 +212,15 @@ p{
 				$(document).ready(function () {
 				    var search = '${keyword}';
 				    console.log("search : "+search);
-				    $("span:contains('"+search+"')").each(function () {
+				    $(".review_content_box:contains('"+search+"')").each(function () {
+				        var regex = new RegExp(search,'gi');
+				        $(this).html( $(this).text().replace(regex, "<span class='txt-hlight'>"+search+"</span>") );
+				    });
+				    $(".tit_style:contains('"+search+"')").each(function () {
+				        var regex = new RegExp(search,'gi');
+				        $(this).html( $(this).text().replace(regex, "<span class='txt-hlight'>"+search+"</span>") );
+				    });
+				    $(".keyword_style:contains('"+search+"')").each(function () {
 				        var regex = new RegExp(search,'gi');
 				        $(this).html( $(this).text().replace(regex, "<span class='txt-hlight'>"+search+"</span>") );
 				    });
@@ -248,8 +256,8 @@ p{
 										<li id="reli${tmp.num }">
 									</c:if>
 	
-									<dl>
-										<dt class="row">
+									<dl style="border-bottom:1px solid #cecece; margin-bottom : 0;">
+										<dt class="row" style="padding: 5px;">
 											<div class="comment_box">
 												<!-- 유저 프로필 -->
 												<div class="review_profile col">

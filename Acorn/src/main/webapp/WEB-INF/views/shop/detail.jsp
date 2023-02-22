@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>index.jsp</title>
+<title>detail.jsp</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script> 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -15,9 +15,12 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../resources/css/index.css">
 <link rel="shortcut icon" href="#">
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link rel="stylesheet" type="text/css" href="../resources/css/shop_detail.css">
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </head>
 
 <body>
@@ -60,11 +63,11 @@
 							</tr>
 							<tr>
 								<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/runningtime.png" alt="영업시간" class="shop_info_icon" title="영업 시간"/></td>
-								<td class="table_content">영업 시작 : ${startTime}</td>
+								<td class="table_content">영업 시작 : ${dto.startTime}</td>
 							</tr>
 							<tr>
 								<td class="table_icon"></td>
-								<td class="table_content">영업 종료 : ${endTime}</td>
+								<td class="table_content">영업 종료 : ${dto.endTime}</td>
 							</tr>
 							<tr>
 								<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/callnumber.png" alt="전화번호" class="shop_info_icon" title="전화번호"/></td>
@@ -73,14 +76,16 @@
 							<tr>
 								<td class="table_icon"><img src="${pageContext.request.contextPath}/resources/images/shop_info/hashtag.png" alt="대표 키워드" class="shop_info_icon" title="대표 키워드"/></td>
 								<td class="table_content">
-								<c:if test="${grade gt 4.5}">
-									<p class="best_store btn btn-danger">🌟4.5↑</p>
-								</c:if>
-								<c:if test="${reviewCount gt 50}">
-									<p class="best_store btn btn-success">✏️50↑</p>
-								</c:if>
-								<br />
-								<span style="color:gray;">* 평점이 4.5 이상이면 별 마크가, 리뷰가 50개 이상이면 리뷰 마크가 표시되는 공간입니다</span>
+									<c:if test="${grade ge 4 && reviewCount ge 5}">
+										<p class="best_store btn btn-danger">🌟4.0↑</p>
+									</c:if>
+									<c:if test="${reviewCount ge 30}">
+										<p class="best_store btn btn-success">✏️30↑</p>
+									</c:if>
+									<c:if test="${reviewCount lt 30 && grade lt 4}">
+										<span style="color:gray;">* 평점이 4.0 이상(리뷰 5개 이상)이면 별 마크가, 리뷰가 50개 이상이면 리뷰 마크가 표시됩니다</span>
+									</c:if>
+								
 								</td>
 							</tr>
 							
@@ -141,10 +146,10 @@
 			<div class="shop_board_body3">
 				<div class="shop_board_review">
 					<strong>리뷰</strong>
-					<div class="table_3">
+					<div class="table_3" style="position:relative;">
 						<table class="shop_review_table">
 							<tbody>
-								<tr>
+								<tr style="height : 150px;">
 									<c:choose>
 										<c:when test="${grade eq 0}">
 											<td class="avg_score"><span style="color:gray; font-size:18px;">등록 된 리뷰가 없습니다</span></td>
@@ -153,12 +158,25 @@
 											<td class="avg_score">평점 : <span style="color : red;">${grade}</span>점</td>
 										</c:otherwise> 
 									</c:choose>
+									<div class="" style="width:250px;height:150px;float: right;position: absolute;right: 0%;" >
+								    	<div class="statistics" >
+								   		 		<canvas id="myChart" ref="acquisitions" style="display: block;box-sizing: border-box;height: 150px;width: 250px;padding: 10px;"></canvas>
+								    	</div>
+								    	
+								    	<!-- 리뷰 별점 데이터 받아오기 -->
+								    	<c:forEach var="tmp" items="${testList}">
+								    		<li hidden>
+								    			<input value="${tmp.gCount}" class="score_count_${tmp.grade}"></input>
+								    		
+								    		</li>
+								    	</c:forEach>
+									</div>
 								</tr>
 								<tr>
 									<td>
 										<div class="reviews">
 											<ul>
-												<c:forEach var="tmp" items="${reviewList }">
+												<c:forEach var="tmp" items="${reviewList}">
 													<c:choose>
 														<c:when test="${tmp.deleted eq 'yes' }">
 															<dt class="row" style="border-top: 1px solid #f2f2f2; height : 75px; item-align : center; text-align:center; align-items: center;">
@@ -210,10 +228,11 @@
 																					href="javascript:">DELETE</a>
 																			</c:when>
 																		</c:choose>
-																			<div class="startRadio" style="pointer-events: none;">																			<c:forEach var="i" begin="0" end="9">
-																					<label class="startRadio__box"> <input
-																						type="radio" name="grade_number" value=${i }
-																						${tmp.grade eq (i/2+0.5) ? 'class="point"' : '' }>
+																			<div class="startRadio" style="pointer-events: none;">																			
+																				<c:forEach var="i" begin="0" end="9">
+																					<label class="startRadio__box" > 
+																					<input type="radio" name="grade_number" value=${i }
+																						${tmp.grade eq (i/2+0.5) ? 'class="point"' : ''} >
 																						<span class="startRadio__img"> <span
 																							class="blind">별 ${(i/2+0.5) }개</span>
 																					</span>
@@ -288,7 +307,9 @@
 													<c:forEach var="i" begin="0" end="9">
 														<label class="startRadio__box"> <input type="radio"
 															name="grade_number" value=${i }
-															${i eq 9 ? 'checked' : '' }> <span
+															${i eq 9 ? 'checked' : '' }
+															${i%2 eq 0  ? 'disabled' : ''} > 
+															<span
 															class="startRadio__img"> <span class="blind">별
 																	${(i/2+0.5) }개</span>
 														</span>
@@ -353,63 +374,117 @@
 			</div>
 		</div>
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-		<div style="height : 600px;"></div>
+	
 	
 
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2b45a7e1f67e033582e03cb02a068e52&libraries=services"></script>
+		
+
 	
-	<!-- 지도 생성 script -->
-	<script>
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	    mapOption = {
-	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-	        level: 3 // 지도의 확대 레벨
-	    };  
+<script>
+
+
+const app = Vue.createApp({
+	setup() {
+		const arr = Vue.ref([0, 0, 0, 0, 0]); // arr를 ref로 만들어서 반응성을 추가
+		const chartData = Vue.reactive({
+				labels: ["★", "★★", "★★★", "★★★★", "★★★★★"],
+				datasets: [{
+					label: "리뷰 별점 수",
+					axis: 'y',
+					barThickness: 10,
+					backgroundColor: "rgba(255, 99, 132, 0.2)",
+					borderColor: "rgba(255,99,132,1)",
+					borderWidth: 1,
+					data: arr.value, // arr의 값을 참조합니다.
+				},
+				],
+			});
 	
-	// 지도를 생성합니다    
-	var map = new kakao.maps.Map(mapContainer, mapOption); 
+			// window.onload 대신에 Vue.watchEffect를 사용
+			// arr의 값이 변경될 때마다 chartData.datasets[0].data도 변경
+			Vue.watchEffect(() => {
+				arr.value = [0, 0, 0, 0, 0]; // 초기화
+				console.log(arr.value[0]);
+				for (let i=1; i < 6; i++) {
+					if(document.getElementsByClassName("score_count_"+i+".0")[0]==null){
+						
+					}
+					else{
+						arr.value[i-1] = Number(document.getElementsByClassName("score_count_"+i+".0")[0].value);
+					}
+					
+			  	}
+				chartData.datasets[0].data = arr.value; // 데이터 갱신
+			});
 	
-	// 주소-좌표 변환 객체를 생성합니다
-	var geocoder = new kakao.maps.services.Geocoder();
+			return {
+		    	chartData,
+			};
+	},
+	mounted() {
+		const ctx = document.getElementById("myChart").getContext("2d");
+		const myChart = new Chart(ctx, {
+			type: "bar",
+			data: this.chartData,
+			plugins : [ChartDataLabels],
+			options: {
+				plugins: {
+					legend: {
+						display: false
+						},
+					datalabels: {
+			            font: {
+			              size: 12,
+			            },
+			            display: function(context) {
+			                return context.dataset.data[context.dataIndex]>1;
+			              },
+			            anchor: 'end',
+			            align: 'right',
+			            offset: 2,
+			            formatter: function(value, context) {
+			              return value;
+			            }
+					}
+				},
+				indexAxis: 'y',
+				scales: {
+					x:{
+				        ticks: {
+				        	display: false,
+				        	stepSize: 1,
+				        },
+			            grid: {display: false},
+					},
+					y: {
+						beginAtZero: true, // y축이 0부터 시작하도록 설정
+						offset: true,
+						grid: {
+						    display: false
+					  	},
+					    ticks: {
+					        color: '#ffc107',
+					    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
+					    },
+					},
+				},
+				layout: {
+					padding: {
+						top: 0,
+						bottom: 0,
+						left: 0,
+						right: 20
+					}
+				},
+		     },
+		   });
+	  },
+});
 	
-	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch( '${dto.addr}' , function(result, status) {
-	
-	    // 정상적으로 검색이 완료됐으면 
-	     if (status === kakao.maps.services.Status.OK) {
-	
-	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-	
-	        // 결과값으로 받은 위치를 마커로 표시합니다
-	        var marker = new kakao.maps.Marker({
-	            map: map,
-	            position: coords
-	        });
-	
-	        // 인포윈도우로 장소에 대한 설명을 표시합니다
-	        var infowindow = new kakao.maps.InfoWindow({
-	            content: '<div style="width:150px;text-align:center;padding:6px 0;"> ${dto.title} </div>'
-	        });
-	        infowindow.open(map, marker);
-	
-	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-	        map.setCenter(coords);
-	    } 
-	});    
-	</script>
+		app.mount(".statistics");
+</script>
+
+
 	<script>
 		let selector = document.getElementsByClassName("menu_price");
 		for(let i=0; i<selector.length; i++){
@@ -535,7 +610,7 @@
                   });
                }
             });
-         }  
+         }
       }
       
       function addUpdateFormListener(sel){

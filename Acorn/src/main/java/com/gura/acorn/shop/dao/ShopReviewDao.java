@@ -25,4 +25,6 @@ public interface ShopReviewDao {
 	public int getReviewCount(ShopReviewDto dto);
 	//
 	public List<ShopReviewDto> getReviewList(ShopReviewDto dto);
+	
+	public List<ShopReviewDto> test(int num);
 }
