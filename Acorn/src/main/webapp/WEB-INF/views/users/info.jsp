@@ -127,7 +127,7 @@ a {
 		<br> <br> 
 			<c:choose>
 				<c:when test="${sessionScope.id eq 'admin'}">
-					<a href="${pageContext.request.contextPath}/shop/insertform" class="btn btn-outline-success">REGIST SHOP</a> 
+					<a href="${pageContext.request.contextPath}/shop/insertform" class="btn btn-outline-success">INSERT SHOP</a> 
 					<a href="${pageContext.request.contextPath}/users/list" class="btn btn-outline-secondary">USER LIST</a>
 				</c:when>
 			</c:choose>

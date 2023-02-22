@@ -189,8 +189,9 @@
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link"
-								href="javascript:">Prev</a></li>
+							<li class="page-item disabled">
+								<a class="page-link" href="javascript:">◀</a>
+							</li>
 						</c:otherwise>
 					</c:choose>
 					<c:forEach var="i" begin="${rvstartPageNum }"
@@ -207,8 +208,9 @@
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link"
-								href="javascript:">Next</a></li>
+							<li class="page-item disabled">
+								<a class="page-link" href="javascript:">▶</a>
+							</li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
