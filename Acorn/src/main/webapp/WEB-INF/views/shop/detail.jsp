@@ -395,11 +395,10 @@ const app = Vue.createApp({
 					backgroundColor: "rgba(255, 99, 132, 0.2)",
 					borderColor: "rgba(255,99,132,1)",
 					borderWidth: 1,
-					data: arr.value, // arr의 값을 참조합니다.
+					data: arr.value, // arr의 값을 참조
 				},
 				],
 			});
-	
 			// window.onload 대신에 Vue.watchEffect를 사용
 			// arr의 값이 변경될 때마다 chartData.datasets[0].data도 변경
 			Vue.watchEffect(() => {
