@@ -3,6 +3,7 @@ package com.gura.acorn.shop.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,9 +60,9 @@ public class ShopController {
 		String index = "gaia";
 		
 		Map<String,Object> map2  = new HashMap<>();
-		map2.put("web_adress", request.getRequestURL().toString());
+		map2.put("web_address", request.getRequestURL().toString());
 		map2.put("id", session.getAttribute("id"));
-		map2.put("date", LocalDate.now().toString()+" "+LocalTime.now().toString());
+		map2.put("date", LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toString());
 		
 		try {
 			ElasticUtil.getInstance().create(index, map2);
@@ -76,11 +77,13 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "gaia";
-		String date = "2023-02-20";
+		String index = "error";
+		String field = "errorCode";
+		String value = "부적합한";
 		try {
-			System.out.println(Esservice.getAllDataFromIndex(index, date).size());
-			return Esservice.getAllDataFromIndex(index, date);
+			System.out.println(Esservice.getAllDataFromIndex1(index, field, value).size());
+			System.out.println(value);
+			return Esservice.getAllDataFromIndex1(index, field, value);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

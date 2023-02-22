@@ -2,11 +2,10 @@ package com.gura.acorn.es;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.ClearScrollRequest;
 import org.elasticsearch.action.search.ClearScrollResponse;
 import org.elasticsearch.action.search.SearchRequest;
@@ -16,6 +15,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,26 +35,7 @@ public class ElasticsearchService {
             .withBasicAuth("elastic", "acorn")
             .build();
     
-    public ESTestDto getSourceOfIdFromIndex(String indexName, String id) throws IOException {
-        
-        RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
-
-        GetRequest getRequest = new GetRequest(indexName, id);
-
-        GetResponse getResponse = client.get(getRequest, RequestOptions.DEFAULT);
-
-        String date = getResponse.getSourceAsMap().get("date").toString();
-        String address = getResponse.getSourceAsMap().get("adress").toString();
-        String user = getResponse.getSourceAsMap().get("id").toString();
-        
-        ESTestDto dto = new ESTestDto();
-        dto.setAddress(address);
-        dto.setDate(date);
-        dto.setUser(user);
-        
-        return dto;
-    }
-    
+    //index의 모든 id를 추출
     public List<String> fetchAllIdsFromIndex(String indexName) throws IOException {
 
         RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
@@ -79,6 +60,7 @@ public class ElasticsearchService {
         return idList;
     }
     
+    //index의 모든 id값의 개수를 추출
     public long getCountOfIdsFromIndex(String indexName) throws IOException {
 
         RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
@@ -96,45 +78,7 @@ public class ElasticsearchService {
         return searchResponse.getHits().getTotalHits().value;
     }
     
-    public void getAllSourcesFromIndex(String indexName) throws IOException {
-
-        RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
-
-        SearchRequest searchRequest = new SearchRequest(indexName);
-
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-        searchSourceBuilder.size(10000);
-
-        searchRequest.source(searchSourceBuilder);
-        searchRequest.scroll(TimeValue.timeValueMinutes(1L));
-
-        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-        String scrollId = searchResponse.getScrollId();
-
-        while (true) {
-            searchResponse = client.scroll(new SearchScrollRequest(scrollId)
-                    .scroll(TimeValue.timeValueSeconds(30L)), RequestOptions.DEFAULT);
-            SearchHit[] hits = searchResponse.getHits().getHits();
-
-            if (hits == null || hits.length == 0) {
-                break;
-            }
-
-            for (SearchHit hit : hits) {
-                String sourceAsString = hit.getSourceAsString();
-                System.out.println(sourceAsString);
-            }
-
-            scrollId = searchResponse.getScrollId();
-        }
-
-        ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
-        clearScrollRequest.addScrollId(scrollId);
-        ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
-        boolean succeeded = clearScrollResponse.isSucceeded();
-    }
-    
+    //index의 모든 id별 data 추출
     public List<Map<String, Object>> getAllDataFromIndex(String indexName, String date) throws IOException {
     	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
     	
@@ -175,5 +119,56 @@ public class ElasticsearchService {
 
         return dataList;
     }
+    
+	// match_all 외의 쿼리 사용
+    public List<Map<String, Object>> getAllDataFromIndex1(String indexName, String fieldName, String fieldValue) throws IOException {
+    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+        SearchRequest searchRequest = new SearchRequest(indexName);
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.matchQuery(fieldName, fieldValue));
+        searchSourceBuilder.size(1000);
+
+        searchRequest.source(searchSourceBuilder);
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        for (SearchHit hit : searchHits) {
+            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            resultList.add(sourceAsMap);
+        }
+
+        return resultList;
+    }
+
+    public List<Map<String, Object>> searchByDateRange(String indexName, String field, String start, String end) throws IOException {
+    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+        SearchRequest searchRequest = new SearchRequest(indexName);
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        
+        RangeQueryBuilder rangeQuery = QueryBuilders
+                .rangeQuery(field)
+                .gte(start)
+                .lte(end)
+                .format("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+        searchSourceBuilder.query(rangeQuery);
+        searchSourceBuilder.size(1000);
+        searchRequest.source(searchSourceBuilder);
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        for (SearchHit hit : searchHits) {
+            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            resultList.add(sourceAsMap);
+        }
+
+        return resultList;
+    }
+
 }
 
