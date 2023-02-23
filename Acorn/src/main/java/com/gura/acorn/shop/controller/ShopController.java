@@ -52,23 +52,6 @@ public class ShopController {
 	@RequestMapping("/")
 	public String index(HttpServletRequest request, HttpSession session) {
 		service.getTopList(request);
-		//이 메소드가 실행될때 ES의 /gaia/_doc/1에 Map2의 정보가 전달되어 기록된다.
-		//메소드가 실행될때마다 덮어써진다.
-		//id나 index를 바꾸면서 기록할 필요가 있어보인다.
-		//덮어쓰기 말고 추가되는 방식을 찾아봤지만 아직은 못찾았다.
-		String index = "gaia";
-		
-		Map<String,Object> map2  = new HashMap<>();
-		map2.put("web_address", request.getRequestURL().toString());
-		map2.put("id", session.getAttribute("id"));
-		map2.put("date", LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toString());
-		
-		try {
-			ElasticUtil.getInstance().create(index, map2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return "index";
 	}
