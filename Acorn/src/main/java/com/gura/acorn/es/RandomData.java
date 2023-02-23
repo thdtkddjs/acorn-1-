@@ -28,7 +28,7 @@ public class RandomData {
 	
 	
 	public static void main(String[] args) {
-		
+		//Util을 끌어다 쓰기에는 속도가 걱정되므로 새로 client를 정의하자.
 		//id와 password 입력
 		CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
 		credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("elastic", "acorn"));
@@ -43,15 +43,17 @@ public class RandomData {
 				//7.17버전이라 8.6.1버전인 ES와 맞지 않아서 호환성을 맞춰준다.
 				setApiCompatibilityMode(true).build();
 		
-		
+		//랜덤 데이터가 들어갈 BulkRequest를 작성
 		BulkRequest rq=new BulkRequest();
 		
 		for (int i=0;i<3000;i++) {
+			//시간과 날짜를 랜덤으로 정한다.(오늘로부터 1년 후까지)
 			String time = LocalTime.of((int)(Math.random()*24), 0).toString();
 			String date= LocalDate.ofEpochDay((long) (LocalDate.now().toEpochDay()+Math.random()*365)).toString();
-			
+			//7개의 id 중 하나를 랜덤으로 정하는데 필요한 값
 			int ran1=(int)(Math.random()*7);
 			String id = null;
+			//55개의 URL중에 하나를 랜덤으로 정하는데 필요한 값
 			int ran2=(int)(Math.random()*55);
 			String url=null;
 			String cate=null;
@@ -80,11 +82,11 @@ public class RandomData {
 					break;
 			}
 			
-			if (ran2==0) {
+			if (ran2==0) {//0일 경우 home
 				url="http://localhost:9200/";
-			}else if(ran2<47) {
+			}else if(ran2<47) {//47 미만일 경우 각 번호의 상점 detail페이지에 들어간것으로  
 				url="http://localhost:9200/shop/detail?num="+ran2;
-			}else {
+			}else {//47 이상일 경우 카테고리 페이지로
 				switch (ran2-47) {
 					case 7:
 						cate="기타";
@@ -110,15 +112,18 @@ public class RandomData {
 					case 0:
 						cate="";
 						break;
-				}
+				}//정해진 categorie로 URL을 결정한다.
 				url="http://localhost:9200/shop/list?category="+cate;
 			}
 			
-			
+			//데이터를 mapping한다.
 			Map<String, Object> map2= new HashMap<>();
 			map2.put("id", id);
 			map2.put("url", url);
 			map2.put("date", date+" "+time);
+			//데이터를 {"index":{"_index":"testlog"}
+			//		 {"id": xx, "url" : xx, "date" : xx}
+			//형식으로 만들어 bulkrequest에 입력한다.
 			rq.add(new IndexRequest("testlog").source(map2));
 		}
 		
@@ -127,9 +132,9 @@ public class RandomData {
 		BulkResponse rp=null;
 
 		try {
+			//request를 client에 넣어 작동시킨다.
 			rp=client.bulk(rq, RequestOptions.DEFAULT);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
