@@ -21,6 +21,8 @@ public class ShopReviewDto {
 	
 	public ShopReviewDto() {}
 
+	
+	
 	public ShopReviewDto(int num, String writer, String content, String title, int ref_group, int review_group,
 			String deleted, double grade, String regdate, String profile, int startRowNum, int endRowNum,
 			String imagePath, int gCount) {
@@ -48,7 +50,7 @@ public class ShopReviewDto {
 	public void setgCount(int gCount) {
 		this.gCount = gCount;
 	}
-
+  
 	public int getNum() {
 		return num;
 	}
@@ -152,6 +154,15 @@ public class ShopReviewDto {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
+
+	public int getgCount() {
+		return gCount;
+	}
+
+	public void setgCount(int gCount) {
+		this.gCount = gCount;
+	}
+
 
 	
 	
