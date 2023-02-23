@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +29,9 @@ public class ShopServiceImpl implements ShopService{
 	private ShopReviewDao shopReviewDao;
 	@Autowired
 	private ShopMenuDao shopMenuDao;
+	
+	@Value("${file.location}")
+	private String fileLocation;
 	
 	@Override
 	public void getList(HttpServletRequest request) {
@@ -257,7 +261,7 @@ public class ShopServiceImpl implements ShopService{
 		String saveFileName = System.currentTimeMillis() + orgFileName;
 	
 		// 필요하다면 fileLocation 이용하여 다른곳에 저장
-		String realPath = request.getServletContext().getRealPath("/resources/upload");
+		String realPath = fileLocation;
 		// upload 폴더가 존재하지 않을경우 만들기 위한 File 객체 생성
 		File upload = new File(realPath);
 		if (!upload.exists()) {// 만일 존재 하지 않으면
@@ -275,9 +279,9 @@ public class ShopServiceImpl implements ShopService{
 		// json 문자열을 출력하기 위한 Map 객체 생성하고 정보 담기
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(orgFileName.equals("")) {
-			map.put("imagePath","/resources/images/photo.png");
+			map.put("imagePath","/shop/images/photo.png");
 		}else {
-			map.put("imagePath", "/resources/upload/" + saveFileName);
+			map.put("imagePath", saveFileName);
 		}
 		
 		
