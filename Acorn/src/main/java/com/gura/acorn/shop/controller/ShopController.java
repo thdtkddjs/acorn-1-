@@ -1,5 +1,12 @@
 package com.gura.acorn.shop.controller;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,7 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.gura.acorn.shop.service.ShopService;
 
 import java.io.File;
@@ -29,16 +35,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gura.acorn.es.ElasticUtil;
+import com.gura.acorn.es.ElasticsearchService;
 import com.gura.acorn.exception.loginException;
 import com.gura.acorn.shop.dto.ShopDto;
 import com.gura.acorn.shop.dto.ShopMenuDto;
 import com.gura.acorn.shop.dto.ShopReviewDto;
+import com.gura.acorn.shop.service.ShopService;
 
 @Controller
 public class ShopController {
 
 	@Autowired
 	private ShopService service;
+	@Autowired
+	private ElasticsearchService Esservice;
 	
 	@Value("${file.location}")
 	private String fileLocation;
@@ -64,7 +74,7 @@ public class ShopController {
 		return "shop/review_list";
 	}
    
-	@RequestMapping("shop/search")
+	@RequestMapping("/shop/search")
 	public String search(HttpServletRequest request) {
 		service.getSearchList(request);
 		service.getReviewList(request);
@@ -76,27 +86,25 @@ public class ShopController {
 	@RequestMapping("/")
 	public String index(HttpServletRequest request, HttpSession session) {
 		service.getTopList(request);
-		//이 메소드가 실행될때 ES의 /gaia/_doc/1에 Map2의 정보가 전달되어 기록된다.
-		//메소드가 실행될때마다 덮어써진다.
-		//id나 index를 바꾸면서 기록할 필요가 있어보인다.
-		//덮어쓰기 말고 추가되는 방식을 찾아봤지만 아직은 못찾았다.
-		String index = "gaia";
-		String id = "1";
 		
-		Map<String,Object> map2  = new HashMap<>();
-		map2.put("web_adress", request.getRequestURL().toString());
-		map2.put("id", session.getAttribute("id"));
-		map2.put("date", LocalDate.now().toString()+" "+LocalTime.now().toString());
-		System.out.println(map2);
-		
+		return "index";
+	}
+	
+	@RequestMapping("/es/test")
+	@ResponseBody
+	public List<Map<String, Object>> test(){
+		String index = "error";
+		String field = "errorCode";
+		String value = "부적합한";
 		try {
-			ElasticUtil.getInstance().create(index, id, map2);
+			System.out.println(Esservice.getAllDataFromIndex1(index, field, value).size());
+			System.out.println(value);
+			return Esservice.getAllDataFromIndex1(index, field, value);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return "index";
+		return null;
 	}
 	
 	@RequestMapping("/index")

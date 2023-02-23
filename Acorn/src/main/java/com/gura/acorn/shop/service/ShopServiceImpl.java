@@ -456,7 +456,6 @@ public class ShopServiceImpl implements ShopService{
 		 */
 		String keyword = request.getParameter("keyword");
 		String condition = request.getParameter("condition");
-		String category = request.getParameter("category");
     
 		//만일 키워드가 넘어오지 않는다면 
 		if(keyword == null){
@@ -465,13 +464,9 @@ public class ShopServiceImpl implements ShopService{
 			keyword="";
 			condition=""; 
 		}
-		if(category == null) {
-			category = "";
-		}
     
 		//특수기호를 인코딩한 키워드를 미리 준비한다. 
 		String encodedK = URLEncoder.encode(keyword);
-		String encodedC = URLEncoder.encode(category);
         
 		//CafeDto 객체에 startRowNum 과 endRowNum 을 담는다.
 		ShopReviewDto dto = new ShopReviewDto();
@@ -510,11 +505,8 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("rvtotalPageCount", totalPageCount);
 		request.setAttribute("rvkeyword", keyword);
 		request.setAttribute("rvencodedK", encodedK);
-		request.setAttribute("rvcategory", category);
-		request.setAttribute("rvencodedC", encodedC);
 		request.setAttribute("rvtotalRow", totalRow);
 		request.setAttribute("rvcondition", condition);
-	      
 	}
 
 	@Override
