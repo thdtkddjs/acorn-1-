@@ -33,6 +33,18 @@ public class ShopController {
 	@Autowired
 	private ShopService service;
 	
+	@RequestMapping("/testing")
+	@ResponseBody
+	public String testing() throws IOException {
+		
+		ElasticUtil ES=ElasticUtil.getInstance();
+		
+		String result=ES.multisearch("testlog", "url", "shop/list?category=중식", 500).toString();
+		System.out.println(result.length());
+		return result;
+		
+	}
+	
 	@RequestMapping("shop/review_list")
 	public String reviewList(HttpServletRequest request) {
 		service.getReviewList(request);
@@ -51,25 +63,6 @@ public class ShopController {
 	@RequestMapping("/")
 	public String index(HttpServletRequest request) {
 		service.getList(request);
-		//이 메소드가 실행될때 ES의 /gaia/_doc/1에 Map2의 정보가 전달되어 기록된다.
-		//메소드가 실행될때마다 덮어써진다.
-		//id나 index를 바꾸면서 기록할 필요가 있어보인다.
-		//덮어쓰기 말고 추가되는 방식을 찾아봤지만 아직은 못찾았다.
-		String index = "gaia";
-		String id = "1";
-		
-		Map<String,Object> map2  = new HashMap<>();
-		map2.put("web_adress", request.getRequestURL().toString());
-		map2.put("id", request.getParameter("id"));
-		map2.put("date", LocalDate.now().toString()+" "+LocalTime.now().toString());
-		System.out.println(map2);
-		
-		try {
-			ElasticUtil.getInstance().create(index, id, map2);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		return "index";
 	}
