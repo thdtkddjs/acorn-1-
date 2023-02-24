@@ -418,7 +418,14 @@ const app = Vue.createApp({
 		    	chartData,
 			};
 	},
-	mounted() {
+	async mounted() {
+		const response = await fetch('http://localhost:9000/es/test', {
+			method : 'GET',
+			headers : {
+				'Content-Type' : 'application/json',
+			}
+		});
+		
 		const ctx = document.getElementById("myChart").getContext("2d");
 		const myChart = new Chart(ctx, {
 			type: "bar",

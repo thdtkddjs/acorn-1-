@@ -35,14 +35,14 @@
     height: 150px;
     align-items: center;
     font-size: 15px;
+   	border : 1px solid #cecece;
+   	border-top : none;
 }
 .uv_count{
 	display : flex;
 	width : 30%;
 	height : 100px;
 	margin-right : 50px;
-	border : 1px solid #cecece;
-	border-radius : 5px;
 	padding : 0 20px;
 }
 .pv_count{
@@ -50,8 +50,6 @@
 	width : 30%;
 	height : 100px;
 	margin-left : 50px;
-	border : 1px solid #cecece;
-	border-radius : 5px;
 	padding : 0 20px;
 }
 .pv_count>span>a{
@@ -125,11 +123,11 @@
   		    	<table class="pv_table">
 		    			<tr>
 		    				<td class="pvt_cont">서비스 누적 페이지뷰</td>
-		    				<td class="pvt_val">NNNN명</td>
+		    				<td class="pvt_val" id="app1"></td>
 		    			</tr>
 		    			<tr>
 		    				<td class="pvt_cont">1일 누적 페이지 뷰</td>
-		    				<td class="pvt_val">mmmm명</td>
+		    				<td class="pvt_val" id="app2"></td>
 		    			</tr>		
 		    			<tr>
 		    				<td class="pvt_cont">1일 페이지뷰 1위 </td>
@@ -151,48 +149,126 @@
     	</div>
     	</div>
     	
-    	<div class="statistics_bot">
+    	<div class="statistics">
     		<canvas ref="acquisitions"></canvas>
     	</div>
 	</div>
 </body>
+
 <script>
-  const { createApp } = Vue
-
-  createApp({
-    data() {
-      return {
-        message: 'Hello Vue!'
-      }
-    },
-    mounted() {
-      const data = [
-        { year: 2010, count: 10 },
-        { year: 2011, count: 20 },
-        { year: 2012, count: 15 },
-        { year: 2013, count: 25 },
-        { year: 2014, count: 22 },
-        { year: 2015, count: 30 },
-        { year: 2016, count: 28 },
-      ];
-
-      new Chart(
-        this.$refs.acquisitions,
-        {
-          type: 'bar',
-          data: {
-            labels: data.map(row => row.year),
-            datasets: [
-              {
-                label: 'Acquisitions by year',
-                data: data.map(row => row.count)
-              }
-            ]
-          }
-        }
-      );
-    }
-    
-  }).mount('.statistics_bot')
+const app = Vue.createApp({
+	setup() {
+		const arr = Vue.ref([0, 0, 0, 0, 0]); // arr를 ref로 만들어서 반응성을 추가
+		const chartData = Vue.reactive({
+				labels: ["★", "★★", "★★★", "★★★★", "★★★★★"],
+				datasets: [{
+					label: "리뷰 별점 수",
+					axis: 'y',
+					barThickness: 10,
+					backgroundColor: "rgba(255, 99, 132, 0.2)",
+					borderColor: "rgba(255,99,132,1)",
+					borderWidth: 1,
+					data: arr.value, // arr의 값을 참조
+				},
+				],
+			});
+			// window.onload 대신에 Vue.watchEffect를 사용
+			// arr의 값이 변경될 때마다 chartData.datasets[0].data도 변경
+			Vue.watchEffect(() => {
+				arr.value = [0, 0, 0, 0, 0]; // 초기화
+				console.log(arr.value[0]);
+				for (let i=1; i < 6; i++) {
+					if(document.getElementsByClassName("score_count_"+i+".0")[0]==null){
+						
+					}
+					else{
+						arr.value[i-1] = Number(document.getElementsByClassName("score_count_"+i+".0")[0].value);
+					}
+					
+			  	}
+				chartData.datasets[0].data = arr.value; // 데이터 갱신
+			});
+	
+			return {
+		    	chartData,
+			};
+	},
+	async mounted() {
+		const response = await fetch('http://localhost:9000/es/test', {
+			method : 'GET',
+			headers : {
+				'Content-Type' : 'application/json',
+			}
+		});
+		
+		//받아온 데이터 중 어떤 데이터를 사용할지  부분
+		const viewObject = await response.json();
+		const filteredData = viewObject.filter(item => {
+		    return item.url.startsWith("http://localhost:9200/shop/");
+		});
+		document.getElementsByClassName("pvt_val").innerText = filteredData.length;
+		
+		console.log(filteredData);
+		console.log(filteredData.length);
+		
+		const ctx = document.getElementById("myChart").getContext("2d");
+		const myChart = new Chart(ctx, {
+			type: "bar",
+			data: this.chartData,
+			plugins : [ChartDataLabels],
+			options: {
+				plugins: {
+					legend: {
+						display: false
+						},
+					datalabels: {
+			            font: {
+			              size: 12,
+			            },
+			            display: function(context) {
+			                return context.dataset.data[context.dataIndex]>1;
+			              },
+			            anchor: 'end',
+			            align: 'right',
+			            offset: 2,
+			            formatter: function(value, context) {
+			              return value;
+			            }
+					}
+				},
+				indexAxis: 'y',
+				scales: {
+					x:{
+				        ticks: {
+				        	display: false,
+				        	stepSize: 1,
+				        },
+			            grid: {display: false},
+					},
+					y: {
+						beginAtZero: true, // y축이 0부터 시작하도록 설정
+						offset: true,
+						grid: {
+						    display: false
+					  	},
+					    ticks: {
+					        color: '#ffc107',
+					    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
+					    },
+					},
+				},
+				layout: {
+					padding: {
+						top: 0,
+						bottom: 0,
+						left: 0,
+						right: 20
+					}
+				},
+		     },
+		   });
+	  },
+});
+app.mount(".statistics");
 </script>
 </html>

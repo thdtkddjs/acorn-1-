@@ -79,7 +79,7 @@ public class ElasticsearchService {
     }
     
     //index의 모든 id별 data 추출
-    public List<Map<String, Object>> getAllDataFromIndex(String indexName, String date) throws IOException {
+    public List<Map<String, Object>> getAllDataFromIndex(String indexName) throws IOException {
     	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
     	
         List<Map<String, Object>> dataList = new ArrayList<>();
@@ -100,10 +100,7 @@ public class ElasticsearchService {
         while (searchHits != null && searchHits.length > 0) {
             for (SearchHit hit : searchHits) {
                 Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-//                dataList.add(sourceAsMap);
-                if(sourceAsMap.get("date").toString().indexOf(date) >= 0) {
-                	dataList.add(sourceAsMap);
-                }
+                dataList.add(sourceAsMap);
             }
 
             SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
@@ -116,7 +113,8 @@ public class ElasticsearchService {
         ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
         clearScrollRequest.addScrollId(scrollId);
         ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
-
+        
+        
         return dataList;
     }
     

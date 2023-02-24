@@ -93,13 +93,11 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "error";
-		String field = "errorCode";
-		String value = "부적합한";
+		String index = "testlog";
+		String field = "userId";
+		String value = "yg";
 		try {
-			System.out.println(Esservice.getAllDataFromIndex1(index, field, value).size());
-			System.out.println(value);
-			return Esservice.getAllDataFromIndex1(index, field, value);
+			return Esservice.getAllDataFromIndex(index);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
