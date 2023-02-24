@@ -132,10 +132,10 @@ public class ElasticUtil {
 			SearchRequest searchRequest = new SearchRequest(index); 
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder(); 
 			if(field.equals("date")) {
-				condition = "20"+ text;
+				condition = text;
 				searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(field, condition)).size(size); 
 			}else if(field.equals("url")){
-				condition = "http://localhost:9200/"+text;
+				condition = text;
 				searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(field, condition)).size(size); 
 			}else {
 				condition = text;
