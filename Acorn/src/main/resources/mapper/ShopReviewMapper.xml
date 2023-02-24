@@ -15,12 +15,17 @@
    <select id="getReviewList" parameterType="shopReviewDto" resultType="shopReviewDto">
       SELECT *
       FROM
-         (SELECT result1.*, ROWNUM AS rnum
+         (SELECT result1.*, ROWNUM as rnum
          FROM
             (SELECT *
-            FROM (SELECT r.num, r.writer, r.ref_group, r.content, r.deleted, r.imagePath, r.grade, TO_CHAR(r.regdate, 'YY.MM.DD HH24:MI') AS regdate, s.title
-    				from board_shop_review r, (SELECT num, title FROM board_shop) s
-					where r.ref_group = s.num)
+            FROM 
+            	(SELECT result.*, profile
+           		FROM 
+           			(SELECT r.num, r.writer, r.ref_group, r.content, r.deleted, r.imagePath, r.grade, TO_CHAR(r.regdate, 'YY.MM.DD HH24:MI') AS regdate, s.title
+						FROM board_shop_review r, (SELECT num, title FROM board_shop) s
+						WHERE r.ref_group = s.num) result
+				INNER JOIN users
+				ON result.writer = users.id)
             <choose>
                <when test="content != null">
                   WHERE content LIKE '%'||#{content}||'%' AND deleted = 'no'

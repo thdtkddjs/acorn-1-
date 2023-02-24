@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../resources/css/index.css">
-<link rel="shortcut icon" href="#">
+<link rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;,">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 <link rel="stylesheet" type="text/css" href="../resources/css/shop_detail.css">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -206,7 +206,7 @@
 																			</c:if>
 																			<c:if test="${not empty tmp.profile }">
 																				<img class="profile-image"
-																					src="${pageContext.request.contextPath}${tmp.profile }" />
+																					src="${pageContext.request.contextPath}/shop/images/${tmp.profile }" />
 																			</c:if>
 																		</div>
 																		<span class="col">${tmp.writer }</span>
@@ -281,7 +281,7 @@
 																		</c:when>
 																		<c:otherwise>
 																			<img class="review_img"
-																				src="${pageContext.request.contextPath}${tmp.imagePath}" />
+																				src="${pageContext.request.contextPath}/shop/images/${tmp.imagePath}" />
 																		</c:otherwise>
 																	</c:choose>
 																</div>
@@ -642,7 +642,7 @@ app.mount(".statistics");
 			})
 			.then(function(data){
 				document.querySelector("input[name=imagePath]").value = data.imagePath;
-				let img = `<img class="comment_img" src="${pageContext.request.contextPath }\${data.imagePath}">`;
+				let img = `<img class="comment_img" src="${pageContext.request.contextPath }/shop/images/\${data.imagePath}">`;
 				document.querySelector("#thumbnailLink").innerHTML=img;
 			});
 		});

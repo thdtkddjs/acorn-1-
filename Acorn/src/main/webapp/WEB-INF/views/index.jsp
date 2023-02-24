@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/shop_list.css">
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<link rel="shortcut icon" href="#">
+<link rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;,">
 </head>
 
 <body>
@@ -115,7 +115,7 @@
 				<c:forEach var="tmp" items="${list }">
 						<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" style="margin-right : 20px; background-color:white; height:367px; border-radius:10px; overflow:hidden;">
 		   					<span class="shop_item_img">
-		   						<img src="${pageContext.request.contextPath}${tmp.imagePath}" alt="...">
+		   						<img src="${pageContext.request.contextPath}/shop/images/${tmp.imagePath}" alt="...">
 		   					</span>
 			   				<div class="shop_item_content">
 			   					<span style="font-weight: bold; color: red; font-size: 20px;">${tmp.grade }</span>

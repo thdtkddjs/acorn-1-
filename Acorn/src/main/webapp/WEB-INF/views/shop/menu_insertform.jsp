@@ -146,7 +146,7 @@ textarea {
 			})
 			.then(function(data) {
 				document.querySelector("input[name=imagePath]").value = data.imagePath;
-				let img = `<img class="upload_img" src="${pageContext.request.contextPath }\${data.imagePath}">`;
+				let img = `<img class="upload_img" src="${pageContext.request.contextPath }/shop/images/\${data.imagePath}">`;
 				document.querySelector("#thumbnailLink").innerHTML = img;
 			});
 		});
