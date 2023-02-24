@@ -49,6 +49,8 @@ public class ShopController {
 	private ShopService service;
 	@Autowired
 	private ElasticsearchService Esservice;
+	@Autowired
+	private ElasticUtil elautil;
 	
 	@Value("${file.location}")
 	private String fileLocation;
