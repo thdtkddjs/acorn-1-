@@ -2,7 +2,7 @@ package com.gura.acorn.es;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +16,8 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.script.Script;
+import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,7 +81,7 @@ public class ElasticsearchService {
     }
     
     //index의 모든 id별 data 추출
-    public List<Map<String, Object>> getAllDataFromIndex(String indexName, String date) throws IOException {
+    public List<Map<String, Object>> getAllDataFromIndex(String indexName) throws IOException {
     	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
     	
         List<Map<String, Object>> dataList = new ArrayList<>();
@@ -100,10 +102,8 @@ public class ElasticsearchService {
         while (searchHits != null && searchHits.length > 0) {
             for (SearchHit hit : searchHits) {
                 Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-//                dataList.add(sourceAsMap);
-                if(sourceAsMap.get("date").toString().indexOf(date) >= 0) {
-                	dataList.add(sourceAsMap);
-                }
+                dataList.add(sourceAsMap);
+
             }
 
             SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
@@ -126,8 +126,19 @@ public class ElasticsearchService {
         SearchRequest searchRequest = new SearchRequest(indexName);
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.matchQuery(fieldName, fieldValue));
-        searchSourceBuilder.size(1000);
+        searchSourceBuilder.query(QueryBuilders.boolQuery()
+                .must(QueryBuilders.termQuery(fieldName, fieldValue))
+                .must(QueryBuilders.scriptQuery(
+                    new Script(
+                        ScriptType.INLINE, 
+                        "painless",
+                        "def sdf = new SimpleDateFormat(\"MM-dd\"); return sdf.format(Date.parse(\"yyyy-MM-dd HH:mm\", doc['date.keyword'].value)) == params.value;",
+                        Collections.singletonMap("value", fieldValue)
+                    )
+                ))
+        );
+
+        searchSourceBuilder.size(10000);
 
         searchRequest.source(searchSourceBuilder);
 

@@ -49,6 +49,8 @@ public class ShopController {
 	private ShopService service;
 	@Autowired
 	private ElasticsearchService Esservice;
+	@Autowired
+	private ElasticUtil elautil;
 	
 	@Value("${file.location}")
 	private String fileLocation;
@@ -93,12 +95,13 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "test3";
-		String field = "userId";
-		String value = "yg";
+		String index = "testlog";
+		String field = "date";
+		String value = "10-10";
+		int size = 1000;
+		
 		try {
-			System.out.println(Esservice.getAllDataFromIndex1(index, field, value).size());
-			System.out.println(value);
+//			return elautil.getInstance().detailsearch(index, field, value, size);
 			return Esservice.getAllDataFromIndex1(index, field, value);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

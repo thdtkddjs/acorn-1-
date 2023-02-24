@@ -92,10 +92,6 @@ public class LoggingInterceptor implements HandlerInterceptor {
     			break;
     		}
     	}
-
-		System.out.println(pageId);
-		System.out.println(pageType);
-		System.out.println(storeName);
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("userId", id);
