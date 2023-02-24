@@ -61,7 +61,7 @@ ul{
 		
 		<br />
 		<br />
-		<h3>USER ADMIN</h3>
+		<h3>USER LIST</h3>
       	<br />
       	<div style="    border-radius: 10px;
 					    border: solid 1px white;
@@ -137,7 +137,7 @@ ul{
             <option value="id" ${condition eq 'id' ? 'selected' : '' }>아이디</option>
          </select>
          
-         <input type="text" name="keyword" placeholder="검색어..." value="${keyword }"/>
+         <input type="text" name="keyword" placeholder="검색어 입력..." value="${keyword }"/>
          <button type="submit" style="border-radius : 5px;">검색</button>
       </form>
       <c:if test="${not empty condition }">

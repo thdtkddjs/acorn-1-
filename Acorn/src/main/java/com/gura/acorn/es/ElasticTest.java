@@ -40,14 +40,11 @@ import co.elastic.clients.elasticsearch.indices.PutAliasRequest;
 public class ElasticTest {
 	
 	public static void main(String[] args) throws IOException {
-				
+			
 		Map<String,Object> map2  = new HashMap<>();
 		map2.put("작동", "155");
 		map2.put("확인", "153");
 		System.out.println(map2);
 		ElasticUtil ES=ElasticUtil.getInstance();
-				
-		
-	}
+	}	
 }
-	

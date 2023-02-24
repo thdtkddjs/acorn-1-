@@ -112,7 +112,7 @@
 												</c:if>
 												<c:if test="${not empty tmp.profile }">
 													<img class="profile-image"
-														src="${pageContext.request.contextPath}${tmp.profile }" />
+														src="${pageContext.request.contextPath}/shop/images/${tmp.profile }" />
 												</c:if>
 											</div>
 											<span class="col">${tmp.writer }</span> <span class="bg_bar"></span>
@@ -170,7 +170,7 @@
 											</c:when>
 											<c:otherwise>
 												<img class="review_img" id="${pageContext.request.contextPath}${tmp.imagePath}"
-													src="${pageContext.request.contextPath}${tmp.imagePath}" />
+													src="${pageContext.request.contextPath}/shop/images/${tmp.imagePath}" />
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -189,8 +189,9 @@
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link"
-								href="javascript:">Prev</a></li>
+							<li class="page-item disabled">
+								<a class="page-link" href="javascript:">◀</a>
+							</li>
 						</c:otherwise>
 					</c:choose>
 					<c:forEach var="i" begin="${rvstartPageNum }"
@@ -207,8 +208,9 @@
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li class="page-item disabled"><a class="page-link"
-								href="javascript:">Next</a></li>
+							<li class="page-item disabled">
+								<a class="page-link" href="javascript:">▶</a>
+							</li>
 						</c:otherwise>
 					</c:choose>
 				</ul>

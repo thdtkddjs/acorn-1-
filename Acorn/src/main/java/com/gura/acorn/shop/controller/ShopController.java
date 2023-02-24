@@ -1,16 +1,29 @@
 package com.gura.acorn.shop.controller;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.gura.acorn.shop.service.ShopService;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -22,16 +35,38 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gura.acorn.es.ElasticUtil;
+import com.gura.acorn.es.ElasticsearchService;
 import com.gura.acorn.exception.loginException;
 import com.gura.acorn.shop.dto.ShopDto;
 import com.gura.acorn.shop.dto.ShopMenuDto;
 import com.gura.acorn.shop.dto.ShopReviewDto;
+import com.gura.acorn.shop.service.ShopService;
 
 @Controller
 public class ShopController {
 
 	@Autowired
 	private ShopService service;
+	@Autowired
+	private ElasticsearchService Esservice;
+	
+	@Value("${file.location}")
+	private String fileLocation;
+	
+	@GetMapping(
+			value="/shop/images/{imageName}",
+			produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_GIF_VALUE}
+		)
+	@ResponseBody
+	public byte[] profileImage(@PathVariable("imageName") String imageName) throws IOException {
+
+		String absolutePath = fileLocation + File.separator + imageName;
+		// 파일에서 읽어들일 InputStream
+		InputStream is = new FileInputStream(absolutePath);
+		// 이미지 데이터(byte) 를 읽어서 배열에 담아서 클라이언트에게 응답한다.
+		return IOUtils.toByteArray(is);
+	}
+	
 	
 	@RequestMapping("/testing")
 	@ResponseBody
@@ -51,7 +86,7 @@ public class ShopController {
 		return "shop/review_list";
 	}
    
-	@RequestMapping("shop/search")
+	@RequestMapping("/shop/search")
 	public String search(HttpServletRequest request) {
 		service.getSearchList(request);
 		service.getReviewList(request);
@@ -61,15 +96,32 @@ public class ShopController {
 	
 	//index 페이지에서 가게리스트 출력
 	@RequestMapping("/")
-	public String index(HttpServletRequest request) {
-		service.getList(request);
+	public String index(HttpServletRequest request, HttpSession session) {
+		service.getTopList(request);
 		
 		return "index";
 	}
 	
+	@RequestMapping("/es/test")
+	@ResponseBody
+	public List<Map<String, Object>> test(){
+		String index = "test3";
+		String field = "userId";
+		String value = "yg";
+		try {
+			System.out.println(Esservice.getAllDataFromIndex1(index, field, value).size());
+			System.out.println(value);
+			return Esservice.getAllDataFromIndex1(index, field, value);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	@RequestMapping("/index")
 	public String index2(HttpServletRequest request) {
-		service.getList(request);
+		service.getTopList(request);
 		return "index";
 		
 	}
@@ -111,7 +163,7 @@ public class ShopController {
 	//가게정보 상세보기
 	@GetMapping("/shop/detail")
 	public String detail(HttpServletRequest request) {
-		service.getList(request);
+		service.test(request);  
 		service.getDetail(request);
 		service.menuGetList(request);
 		return "shop/detail";
@@ -206,4 +258,12 @@ public class ShopController {
 		return "shop/menu_insert";
 	}
 
+	
+	//테스트용 statistic 
+	@RequestMapping("/statistics/example_1")
+	public String ex1(HttpServletRequest request) {
+		service.getDetail(request);
+		service.menuGetList(request);
+		return "statistics/example_1";
+	}
 }

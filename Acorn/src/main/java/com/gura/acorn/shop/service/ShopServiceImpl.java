@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +29,9 @@ public class ShopServiceImpl implements ShopService{
 	private ShopReviewDao shopReviewDao;
 	@Autowired
 	private ShopMenuDao shopMenuDao;
+	
+	@Value("${file.location}")
+	private String fileLocation;
 	
 	@Override
 	public void getList(HttpServletRequest request) {
@@ -257,7 +261,7 @@ public class ShopServiceImpl implements ShopService{
 		String saveFileName = System.currentTimeMillis() + orgFileName;
 	
 		// 필요하다면 fileLocation 이용하여 다른곳에 저장
-		String realPath = request.getServletContext().getRealPath("/resources/upload");
+		String realPath = fileLocation;
 		// upload 폴더가 존재하지 않을경우 만들기 위한 File 객체 생성
 		File upload = new File(realPath);
 		if (!upload.exists()) {// 만일 존재 하지 않으면
@@ -275,9 +279,9 @@ public class ShopServiceImpl implements ShopService{
 		// json 문자열을 출력하기 위한 Map 객체 생성하고 정보 담기
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(orgFileName.equals("")) {
-			map.put("imagePath","/resources/images/photo.png");
+			map.put("imagePath","/shop/images/photo.png");
 		}else {
-			map.put("imagePath", "/resources/upload/" + saveFileName);
+			map.put("imagePath", saveFileName);
 		}
 		
 		
@@ -452,7 +456,6 @@ public class ShopServiceImpl implements ShopService{
 		 */
 		String keyword = request.getParameter("keyword");
 		String condition = request.getParameter("condition");
-		String category = request.getParameter("category");
     
 		//만일 키워드가 넘어오지 않는다면 
 		if(keyword == null){
@@ -461,13 +464,9 @@ public class ShopServiceImpl implements ShopService{
 			keyword="";
 			condition=""; 
 		}
-		if(category == null) {
-			category = "";
-		}
     
 		//특수기호를 인코딩한 키워드를 미리 준비한다. 
 		String encodedK = URLEncoder.encode(keyword);
-		String encodedC = URLEncoder.encode(category);
         
 		//CafeDto 객체에 startRowNum 과 endRowNum 을 담는다.
 		ShopReviewDto dto = new ShopReviewDto();
@@ -497,7 +496,7 @@ public class ShopServiceImpl implements ShopService{
 		if (endPageNum > totalPageCount) {
 			endPageNum = totalPageCount; // 보정해 준다.
 		}
-    
+		
 		// view page에 전달하기 위해 request scope에 담기
 		request.setAttribute("rvlist", list);
 		request.setAttribute("rvpageNum", pageNum);
@@ -506,11 +505,8 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("rvtotalPageCount", totalPageCount);
 		request.setAttribute("rvkeyword", keyword);
 		request.setAttribute("rvencodedK", encodedK);
-		request.setAttribute("rvcategory", category);
-		request.setAttribute("rvencodedC", encodedC);
 		request.setAttribute("rvtotalRow", totalRow);
 		request.setAttribute("rvcondition", condition);
-	      
 	}
 
 	@Override
@@ -604,8 +600,25 @@ public class ShopServiceImpl implements ShopService{
 		request.setAttribute("encodedC", encodedC);
 		request.setAttribute("totalRow", totalRow);
 		request.setAttribute("condition", condition);
-		
 	}
 
+	@Override
+	public void getTopList(HttpServletRequest request) {
 
+		ShopDto dto = new ShopDto();
+		List<ShopDto> list = shopDao.getTopList(dto);
+
+		request.setAttribute("list", list);
+	}
+
+	
+	@Override
+	public void test(HttpServletRequest request) {
+		int num = Integer.parseInt(request.getParameter("num"));
+		
+		System.out.println(num);
+		List<ShopReviewDto> list = shopReviewDao.test(num);
+
+		request.setAttribute("testList", list);
+	}
 }

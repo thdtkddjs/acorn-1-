@@ -100,7 +100,7 @@ a {
 							</c:when>
 							<c:otherwise>
 								<img id="profileImage"
-									src="${pageContext.request.contextPath}${dto.profile}" />
+									src="${pageContext.request.contextPath}/users/images/${dto.profile}" />
 							</c:otherwise>
 						</c:choose>
 				</a></td>
@@ -127,7 +127,7 @@ a {
 		<br> <br> 
 			<c:choose>
 				<c:when test="${sessionScope.id eq 'admin'}">
-					<a href="${pageContext.request.contextPath}/shop/insertform" class="btn btn-outline-success">REGIST SHOP</a> 
+					<a href="${pageContext.request.contextPath}/shop/insertform" class="btn btn-outline-success">INSERT SHOP</a> 
 					<a href="${pageContext.request.contextPath}/users/list" class="btn btn-outline-secondary">USER LIST</a>
 				</c:when>
 			</c:choose>
@@ -208,7 +208,7 @@ a {
 
 												// img 요소를 문자열로 작성한 다음 
 												let img = `<img id="profileImage" 
-               src="${pageContext.request.contextPath }\${data.imagePath}">`;
+               src="${pageContext.request.contextPath }/users/images/\${data.imagePath}">`;
 												//id 가 profileLink 인 요소의 내부(자식요소)에 덮어쓰기 하면서 html 형식으로 해석해 주세요 라는 의미 
 												document
 														.querySelector("#profileLink").innerHTML = img;
