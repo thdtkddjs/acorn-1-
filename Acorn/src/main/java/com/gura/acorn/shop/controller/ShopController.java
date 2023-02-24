@@ -93,9 +93,9 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "error";
-		String field = "errorCode";
-		String value = "부적합한";
+		String index = "test3";
+		String field = "userId";
+		String value = "yg";
 		try {
 			System.out.println(Esservice.getAllDataFromIndex1(index, field, value).size());
 			System.out.println(value);

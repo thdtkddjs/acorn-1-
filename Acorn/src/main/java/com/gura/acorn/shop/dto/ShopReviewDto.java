@@ -42,15 +42,7 @@ public class ShopReviewDto {
 		this.imagePath = imagePath;
 		this.gCount = gCount;
 	}
-
-	public int getgCount() {
-		return gCount;
-	}
-
-	public void setgCount(int gCount) {
-		this.gCount = gCount;
-	}
-  
+	
 	public int getNum() {
 		return num;
 	}
