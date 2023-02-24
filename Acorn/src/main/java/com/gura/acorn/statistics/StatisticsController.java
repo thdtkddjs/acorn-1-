@@ -13,4 +13,8 @@ public class StatisticsController {
 	public String statistics(HttpServletRequest request) {
 		return "statistics/statistics";
 	}
+	@RequestMapping("statistics/sample")
+	public String sample(HttpServletRequest request) {
+		return "statistics/sample";
+	}
 }

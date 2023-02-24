@@ -30,12 +30,43 @@
 	width : 75%;
 }
 .statistics_top{
-	background : #F2FFED;
 	display: flex;
     justify-content: center;
     height: 150px;
     align-items: center;
+    font-size: 15px;
 }
+.uv_count{
+	display : flex;
+	width : 30%;
+	height : 100px;
+	margin-right : 50px;
+	border : 1px solid #cecece;
+	border-radius : 5px;
+	padding : 0 20px;
+}
+.pv_count{
+	display : flex;
+	width : 30%;
+	height : 100px;
+	margin-left : 50px;
+	border : 1px solid #cecece;
+	border-radius : 5px;
+	padding : 0 20px;
+}
+.pv_count>span>a{
+	text-decoration : none;
+}
+.uv_table, .pv_table{
+	width : 100%;
+}
+.uvt_cont, .pvt_cont{
+	text-align:left;
+}
+.uvt_val, .pvt_val{
+	text-align:right;
+}
+
 .statistics_mid>.row{
     place-content: center;
 }
@@ -56,6 +87,7 @@
 	display:flex;
 	margin : auto;
 }
+
 </style>
 </head>
 <body>
@@ -77,34 +109,46 @@
     
 	<div class="container">
     	<div class="statistics_top">
-    		이곳은 통계 페이지 임을 보여주는 것
+    		<div class="uv_count">
+	    		<table class="uv_table">
+	    			<tr>
+	    				<td class="uvt_cont">서비스 누적 이용자</td>
+	    				<td class="uvt_val">NNNN명</td>
+	    			</tr>
+	    			<tr>
+	    				<td class="uvt_cont">이번달 누적 이용자</td>
+	    				<td class="uvt_val">mmmm명</td>
+	    			</tr>
+	    		</table>
+    		</div>
+    		<div class="pv_count">
+  		    	<table class="pv_table">
+		    			<tr>
+		    				<td class="pvt_cont">서비스 누적 페이지뷰</td>
+		    				<td class="pvt_val">NNNN명</td>
+		    			</tr>
+		    			<tr>
+		    				<td class="pvt_cont">1일 누적 페이지 뷰</td>
+		    				<td class="pvt_val">mmmm명</td>
+		    			</tr>		
+		    			<tr>
+		    				<td class="pvt_cont">1일 페이지뷰 1위 </td>
+		    				<td class="pvt_val"><a href=""> 음식점명</a></td>
+		    			</tr>
+    			</table>
+
+    		</div>
     	</div>
     	<div class="statistics_mid">
     	<div class="row">
 		    <div class="statistics_topic">
-		    	<a href="${pageContext.request.contextPath}/statistics/example_1">
-	    			<img src="https://youthpress.net/xe/files/attach/images/9794/484/657/24886b2473d0171dfa8b7e82c10486e4.jpg" alt="" />
-	    		</a>
-	    	</div>
-	    	<div class="statistics_topic">
-	    		<a href="">
-	    			<img src="https://blog.kakaocdn.net/dn/b6bbD5/btqDc3E1G6F/2dQiURlRhkefcuI3CfF6X1/img.jpg" alt="" />
+		    	<a href="${pageContext.request.contextPath}/statistics/sample">
+	    			<img src="${pageContext.request.contextPath}/resources/images/month.jpg" alt="" />
+	    			<br />
+	    			<b style="display: flex; place-content: center;">월간 카테고리 통계</b>
 	    		</a>
 	    	</div>
     	</div>
-		<div class="row">
-		   	<div class="statistics_topic">
-		   		<a href="">
-		   			<img src="https://img.freepik.com/free-vector/world-food-set_1284-12898.jpg" alt="" />
-		   		</a>
-		   	</div>
-		   	<div class="statistics_topic">
-		   		<a href="">
-		   			<img src="https://en.pimg.jp/062/773/146/1/62773146.jpg" alt="" />
-	   			</a>
-		   	</div>
-		</div>
-
     	</div>
     	
     	<div class="statistics_bot">

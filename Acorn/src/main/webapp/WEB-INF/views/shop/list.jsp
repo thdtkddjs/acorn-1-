@@ -83,7 +83,7 @@
 									<div class="shop_title">${tmp.title}</div>
 								</div>
 							</a>
-							<ul>
+							<ul style="	padding-left : 10px;">
 								<li class="shop_item_content_detail">
 									<img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png"
 										alt="주소" class="shop_info_icon" title="주소" />${tmp.addr }

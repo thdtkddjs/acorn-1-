@@ -381,8 +381,6 @@
 
 	
 <script>
-
-
 const app = Vue.createApp({
 	setup() {
 		const arr = Vue.ref([0, 0, 0, 0, 0]); // arr를 ref로 만들어서 반응성을 추가
@@ -479,8 +477,7 @@ const app = Vue.createApp({
 		   });
 	  },
 });
-	
-		app.mount(".statistics");
+app.mount(".statistics");
 </script>
 
 
