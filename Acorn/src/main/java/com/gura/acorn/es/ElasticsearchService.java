@@ -2,7 +2,7 @@ package com.gura.acorn.es;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +16,8 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.script.Script;
+import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,8 +126,19 @@ public class ElasticsearchService {
         SearchRequest searchRequest = new SearchRequest(indexName);
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.matchQuery(fieldName, fieldValue));
-        searchSourceBuilder.size(1000);
+        searchSourceBuilder.query(QueryBuilders.boolQuery()
+                .must(QueryBuilders.termQuery(fieldName, fieldValue))
+                .must(QueryBuilders.scriptQuery(
+                    new Script(
+                        ScriptType.INLINE, 
+                        "painless",
+                        "def sdf = new SimpleDateFormat(\"MM-dd\"); return sdf.format(Date.parse(\"yyyy-MM-dd HH:mm\", doc['date.keyword'].value)) == params.value;",
+                        Collections.singletonMap("value", fieldValue)
+                    )
+                ))
+        );
+
+        searchSourceBuilder.size(10000);
 
         searchRequest.source(searchSourceBuilder);
 

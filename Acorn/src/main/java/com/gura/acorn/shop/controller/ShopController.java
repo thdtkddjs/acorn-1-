@@ -49,6 +49,8 @@ public class ShopController {
 	private ShopService service;
 	@Autowired
 	private ElasticsearchService Esservice;
+	@Autowired
+	private ElasticUtil elautil;
 	
 	@Value("${file.location}")
 	private String fileLocation;
@@ -68,17 +70,17 @@ public class ShopController {
 	}
 	
 	
-	@RequestMapping("shop/review_list")
+	@RequestMapping("search/review_list")
 	public String reviewList(HttpServletRequest request) {
 		service.getReviewList(request);
-		return "shop/review_list";
+		return "search/review_list";
 	}
    
-	@RequestMapping("/shop/search")
+	@RequestMapping("/search/search")
 	public String search(HttpServletRequest request) {
 		service.getSearchList(request);
 		service.getReviewList(request);
-		return "shop/search";
+		return "search/search";
 	}
 
 	
