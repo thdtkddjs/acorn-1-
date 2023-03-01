@@ -96,13 +96,10 @@ public class ShopController {
 	@ResponseBody
 	public List<Map<String, Object>> test(){
 		String index = "testlog";
-		String field = "date";
-		String value = "10-10";
-		int size = 1000;
-		
+		String field = "userId";
+		String value = "yg";
 		try {
-//			return elautil.getInstance().detailsearch(index, field, value, size);
-			return Esservice.getAllDataFromIndex1(index, field, value);
+			return Esservice.getAllDataFromIndex(index);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -103,7 +103,6 @@ public class ElasticsearchService {
             for (SearchHit hit : searchHits) {
                 Map<String, Object> sourceAsMap = hit.getSourceAsMap();
                 dataList.add(sourceAsMap);
-
             }
 
             SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
@@ -116,7 +115,8 @@ public class ElasticsearchService {
         ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
         clearScrollRequest.addScrollId(scrollId);
         ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
-
+        
+        
         return dataList;
     }
     

@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/index.css">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
-<title>statistics.jsp</title>
+<title>sample page.jsp</title>
 <style>
 .category_bar>.row{
 	padding :0 20%;
@@ -102,24 +102,24 @@ createApp({
   },
   mounted() {
     const data = [
-      { year: 2010, count: 10 },
-      { year: 2011, count: 20 },
-      { year: 2012, count: 15 },
-      { year: 2013, count: 25 },
-      { year: 2014, count: 22 },
-      { year: 2015, count: 30 },
-      { year: 2016, count: 28 },
+      { category: '한식', count: 10 },
+      { category: '중식', count: 20 },
+      { category: '일식', count: 15 },
+      { category: '양식', count: 25 },
+      { category: '분식', count: 22 },
+      { category: '패스트푸드', count: 30 },
+      { category: '기타', count: 28 },
     ];
 
     new Chart(
       this.$refs.acquisitions,
       {
-        type: 'bar',
+        type: 'doughnut',
         data: {
-          labels: data.map(row => row.year),
+          labels: data.map(row => row.category),
           datasets: [
             {
-              label: 'Acquisitions by year',
+              label: '월간 카테고리 별 PV',
               data: data.map(row => row.count)
             }
           ]
