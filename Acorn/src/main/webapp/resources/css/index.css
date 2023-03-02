@@ -1,5 +1,16 @@
 @charset "UTF-8";
 
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 400;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+}
+
+body {
+ font-family: 'NanumBarunGothic', sans-serif;
+}
 
 /* 기본 UI */
 .header_inner {
@@ -329,12 +340,16 @@ a{
 }
 
 .statistics{
+	margin-bottom : 200px;
+	position : relative;
 }
 .statistics>p{
 	padding-top : 250px;
 	font-size : 50px;
 	color : red;
 	text-align : center;
+    z-index: 1 !important;
+    position: relative;
 }
 .statistics>p>strong{
 	font-size : 80px;
@@ -344,8 +359,26 @@ a{
 	color : black;
 	font-weight : bold;
 }
-
-
+.statistics_bg1{
+    top: 15%;
+    left : 0;
+	display : inline;
+	position : absolute;
+} 
+.statistics_bg2{
+	z-index : 0;
+	top: 65%;
+    right: 0%;
+    display: inline;
+    position: absolute;
+	
+}
+.statistics_bg1>img{
+	width : 400px;
+}
+.statistics_bg2>img{
+	width : 500px;
+}
 /* effect */
 .rainbow_effect{
 	animation-duration: 1s; 

@@ -1,5 +1,15 @@
 @charset "UTF-8";
+@font-face {
+ font-family: 'NanumBarunGothic';
+ font-style: normal;
+ font-weight: 400;
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot');
+ src: url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.eot?#iefix') format('embedded-opentype'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.woff') format('woff'), url('//cdn.jsdelivr.net/font-nanumlight/1.0/NanumBarunGothicWeb.ttf') format('truetype');
+}
 
+body{
+ font-family: 'NanumBarunGothic', sans-serif;
+}
 
 /* 기본 UI */
 .header_inner {
@@ -491,7 +501,7 @@ button:hover {
 	display: none;
 	text-align: left;
 	height: 152px;
-	width: 590px;
+	width: 100%;
 	padding: 0px;
 	margin: 0px;
 	margin-left: 3px;
@@ -711,21 +721,23 @@ button:hover {
 }
 
 .update-form>textarea {
-	font-size: 13px;
-	background-color: #eeffee;
-	border: 1px solid #c9c9c9;
-	border-radius: 5px;
-	width: 555px;
-	height: 62px;
-	margin-bottom: 3px;
+	resize: none;
+    font-size: 13px;
+    background-color: #eeffee;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+    width: 80%;
+    height: 100%;
+    margin-bottom: 3px;
 }
 
 .comment_edit_btn {
-	padding: 0px !important;
-	font-size: 10px;
-	border-radius: 5px;
-	width: 70px;l
-	height: 25px;
+	float: right;
+    padding: 0px !important;
+    font-size: 10px;
+    border-radius: 5px;
+    width: 20%;
+    height: 100%;
 }
 .update-form>.startRadio {
 	float: right;

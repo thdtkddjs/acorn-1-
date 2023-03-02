@@ -49,6 +49,8 @@ public class ShopController {
 	private ShopService service;
 	@Autowired
 	private ElasticsearchService Esservice;
+	@Autowired
+	private ElasticUtil elautil;
 	
 	@Value("${file.location}")
 	private String fileLocation;
@@ -68,29 +70,17 @@ public class ShopController {
 	}
 	
 	
-	@RequestMapping("/testing")
-	@ResponseBody
-	public String testing() throws IOException {
-		
-		ElasticUtil ES=ElasticUtil.getInstance();
-		
-		String result=ES.multisearch("testlog", "url", "shop/list?category=중식", 500).toString();
-		System.out.println(result.length());
-		return result;
-		
-	}
-	
-	@RequestMapping("shop/review_list")
+	@RequestMapping("search/review_list")
 	public String reviewList(HttpServletRequest request) {
 		service.getReviewList(request);
-		return "shop/review_list";
+		return "search/review_list";
 	}
    
-	@RequestMapping("/shop/search")
+	@RequestMapping("/search/search")
 	public String search(HttpServletRequest request) {
 		service.getSearchList(request);
 		service.getReviewList(request);
-		return "shop/search";
+		return "search/search";
 	}
 
 	
@@ -105,13 +95,11 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "test3";
+		String index = "testlog";
 		String field = "userId";
 		String value = "yg";
 		try {
-			System.out.println(Esservice.getAllDataFromIndex1(index, field, value).size());
-			System.out.println(value);
-			return Esservice.getAllDataFromIndex1(index, field, value);
+			return Esservice.getAllDataFromIndex(index);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
