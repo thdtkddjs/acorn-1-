@@ -229,7 +229,7 @@ public class ElasticsearchService {
 		return (int) response.getCount();
 	}
     
-    //지정일로부터 1년 전까지의 PV를 가져오는 메소드
+    //지정일로부터 1년 전까지의 PV를 배열 형태로 가져오는 메소드
     //CountRequest를 쓰고있지만, 둘 다 써본 결과
     //SearchRequest를 쓰고 Hit로 추출한 값을 size()로 하는것과 속도차이는 크지 않다.
     //date를 오늘로 하면 오늘부터 1년 전까지의 PV를 가져온다.
@@ -283,6 +283,8 @@ public class ElasticsearchService {
     //Aggregation
     //집계라고 번역되며, Metrics/Bucket 두 종류로 데이터를 조작한다.
     //이 메소드에서는 Bucket 방식의 조작만 진행한다.
+    //return은 배열 형태가 아닌 마지막으로 Term에서 나온 ID 값이 기록된다.
+    //필요에 따라 배열의 형태, 혹은 int 형태의 갯수를 리턴하자.
     public String testAggregation() {
     	
     	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
@@ -318,7 +320,6 @@ public class ElasticsearchService {
 		}
     	//아마 ID 종류를 담은 배열로 보인다.
 		Terms idVarietyAgg = sResponse.getAggregations().get("id_variety");
-    	
     	for(Terms.Bucket bucket : idVarietyAgg.getBuckets()) {
     	    String idVariety = bucket.getKeyAsString();
     	    System.out.println(idVariety);
