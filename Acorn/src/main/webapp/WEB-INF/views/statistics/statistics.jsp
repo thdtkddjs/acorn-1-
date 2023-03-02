@@ -150,7 +150,7 @@
     	</div>
     	
     	<div class="statistics">
-    		<canvas ref="acquisitions"></canvas>
+    		<canvas id="myChart" ref="acquisitions"></canvas>
     	</div>
 	</div>
 </body>
@@ -203,19 +203,12 @@ const app = Vue.createApp({
 		
 		//받아온 데이터 중 어떤 데이터를 사용할지  부분
 		const viewObject = await response.json();
-		const filteredData = viewObject.filter(item => {
-		    return item.url.startsWith("http://localhost:9200/shop/");
-		});
-		document.getElementsByClassName("pvt_val").innerText = filteredData.length;
-		
-		console.log(filteredData);
-		console.log(filteredData.length);
+		console.log(viewObject.length);
 		
 		const ctx = document.getElementById("myChart").getContext("2d");
 		const myChart = new Chart(ctx, {
 			type: "bar",
 			data: this.chartData,
-			plugins : [ChartDataLabels],
 			options: {
 				plugins: {
 					legend: {
