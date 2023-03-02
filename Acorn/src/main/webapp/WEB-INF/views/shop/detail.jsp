@@ -381,8 +381,6 @@
 
 	
 <script>
-
-
 const app = Vue.createApp({
 	setup() {
 		const arr = Vue.ref([0, 0, 0, 0, 0]); // arr를 ref로 만들어서 반응성을 추가
@@ -395,11 +393,10 @@ const app = Vue.createApp({
 					backgroundColor: "rgba(255, 99, 132, 0.2)",
 					borderColor: "rgba(255,99,132,1)",
 					borderWidth: 1,
-					data: arr.value, // arr의 값을 참조합니다.
+					data: arr.value, // arr의 값을 참조
 				},
 				],
 			});
-	
 			// window.onload 대신에 Vue.watchEffect를 사용
 			// arr의 값이 변경될 때마다 chartData.datasets[0].data도 변경
 			Vue.watchEffect(() => {
@@ -421,7 +418,14 @@ const app = Vue.createApp({
 		    	chartData,
 			};
 	},
-	mounted() {
+	async mounted() {
+		const response = await fetch('http://localhost:9000/es/test', {
+			method : 'GET',
+			headers : {
+				'Content-Type' : 'application/json',
+			}
+		});
+		
 		const ctx = document.getElementById("myChart").getContext("2d");
 		const myChart = new Chart(ctx, {
 			type: "bar",
@@ -480,8 +484,7 @@ const app = Vue.createApp({
 		   });
 	  },
 });
-	
-		app.mount(".statistics");
+app.mount(".statistics");
 </script>
 
 
@@ -612,7 +615,7 @@ const app = Vue.createApp({
             });
          }
       }
-      
+       
       function addUpdateFormListener(sel){
          let updateForms=document.querySelectorAll(sel);
          for(let i=0; i<updateForms.length; i++){

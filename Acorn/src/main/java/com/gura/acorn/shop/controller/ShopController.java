@@ -95,13 +95,11 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "test3";
-		String field = "date";
-		String value = "2023-02-23";
-		int size = 1000;
-		
+		String index = "testlog";
+		String field = "userId";
+		String value = "yg";
 		try {
-			return elautil.getInstance().detailsearch(index, field, value, size);
+			return Esservice.getAllDataFromIndex(index);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

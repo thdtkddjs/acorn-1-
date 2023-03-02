@@ -160,6 +160,7 @@ public class UsersServiceImpl implements UsersService{
 		if(!upload.exists()) {//만일 존재 하지 않으면
 			upload.mkdir(); //만들어준다.
 		}
+		String errMsg=null;
 		try {
 			//파일을 저장할 전체 경로를 구성한다.  
 			String savePath=realPath+File.separator+saveFileName;
@@ -167,12 +168,13 @@ public class UsersServiceImpl implements UsersService{
 			mFile.transferTo(new File(savePath));
 		}catch(Exception e) {
 			e.printStackTrace();
+			errMsg=e.getMessage();
 		}
 		
 		// json 문자열을 출력하기 위한 Map 객체 생성하고 정보 담기 
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("imagePath", saveFileName);
-		
+		map.put("errMsg", errMsg);
 		return map;
 	}
 
