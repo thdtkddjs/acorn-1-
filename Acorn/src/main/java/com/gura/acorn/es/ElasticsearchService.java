@@ -103,7 +103,6 @@ public class ElasticsearchService {
             for (SearchHit hit : searchHits) {
                 Map<String, Object> sourceAsMap = hit.getSourceAsMap();
                 dataList.add(sourceAsMap);
-
             }
 
             SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);

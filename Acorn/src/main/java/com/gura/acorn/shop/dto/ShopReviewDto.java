@@ -42,6 +42,7 @@ public class ShopReviewDto {
 		this.imagePath = imagePath;
 		this.gCount = gCount;
 	}
+	
 	public int getNum() {
 		return num;
 	}
@@ -152,9 +153,5 @@ public class ShopReviewDto {
 
 	public void setgCount(int gCount) {
 		this.gCount = gCount;
-	}
-
-
-	
-	
+	}	
 }
