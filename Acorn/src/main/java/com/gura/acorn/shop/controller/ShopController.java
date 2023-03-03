@@ -87,7 +87,7 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "test3";
+		String index = "ygtest";
 		String field = "date";
 		int Month = 3;
 		LocalDate dateStart = LocalDate.of(2023, Month ,1);
@@ -95,14 +95,17 @@ public class ShopController {
         
 		
 		try {
-			Map<String, Object> PVMonthCount = Esservice.searchPV(index, field, dateStart, dateEnd);
-			Map<String, Object> PVDayCount = Esservice.searchPV(index, field, LocalDate.of(2023, 2, 23), LocalDate.of(2023, 2, 23));
+			Map<String, Object> PVMonthCount = Esservice.searchMonthPV(index, field, dateStart, dateEnd);
+			Map<String, Object> PVDayCount = Esservice.searchDayPV(index, field, LocalDate.now());
 			Map<String, Object> PVTotalCount = Esservice.getCountOfIdsFromIndex(index);
+			Map<String, Object> PVMaxCount = Esservice.searchByDateRange3(index, field, dateStart, dateEnd);
 			
 			List<Map<String, Object>> resultList = new ArrayList<>();
 			resultList.add(PVMonthCount);
 			resultList.add(PVDayCount);
 			resultList.add(PVTotalCount);
+			resultList.add(PVMaxCount);
+			
 			return resultList;
 //			return Esservice.searchPV(index);
 		} catch (IOException e) {
@@ -112,41 +115,41 @@ public class ShopController {
 		return null;
 	}
 	
-	@RequestMapping("/es/test2")
-	@ResponseBody
-	public List<Map<String, Object>> test2(){
-		String index = "test3";
-		
-		try {
-			return Esservice.searchPV2(index);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-		return null;
-	}
-	
-	@RequestMapping("/es/test3")
-	@ResponseBody
-	public List<Map<String, Long>> test3(){
-		String index = "ygtest";
-		String field = "date";
-		int Month = 8;
-		LocalDate dateStart = LocalDate.of(2023, Month ,1);
-        LocalDate dateEnd = LocalDate.of(2023, Month ,dateStart.lengthOfMonth());
-		
-		try {
-			Map<String, Long> PVMonthCount = Esservice.searchByDateRange3(index, field, dateStart, dateEnd);
-			
-			List<Map<String, Long>> resultList = new ArrayList<>();
-			resultList.add(PVMonthCount);
-			return resultList;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-		return null;
-	}
+//	@RequestMapping("/es/test2")
+//	@ResponseBody
+//	public List<Map<String, Object>> test2(){
+//		String index = "test3";
+//		
+//		try {
+//			return Esservice.searchPV2(index);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}	
+//		return null;
+//	}
+//	
+//	@RequestMapping("/es/test3")
+//	@ResponseBody
+//	public List<Map<String, Object>> test3(){
+//		String index = "ygtest";
+//		String field = "date";
+//		int Month = 2;
+//		LocalDate dateStart = LocalDate.of(2023, Month ,1);
+//        LocalDate dateEnd = LocalDate.of(2023, Month ,dateStart.lengthOfMonth());
+//		
+//		try {
+//			Map<String, Object> PVMonthCount = Esservice.searchByDateRange3(index, field, dateStart, dateEnd);
+//			
+//			List<Map<String, Object>> resultList = new ArrayList<>();
+//			resultList.add(PVMonthCount);
+//			return resultList;
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}	
+//		return null;
+//	}
 	
 	@RequestMapping("/index")
 	public String index2(HttpServletRequest request) {
