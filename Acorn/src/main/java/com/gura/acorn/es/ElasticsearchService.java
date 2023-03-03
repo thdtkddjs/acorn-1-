@@ -1,8 +1,12 @@
 package com.gura.acorn.es;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +17,20 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchScrollRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.core.CountRequest;
+import org.elasticsearch.client.core.CountResponse;
 import org.elasticsearch.core.TimeValue;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
+import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
@@ -154,20 +166,30 @@ public class ElasticsearchService {
         return resultList;
     }
 
-    public List<Map<String, Object>> searchByDateRange(String indexName, String field, String start, String end) throws IOException {
+    public List<Map<String, Object>> searchByDateRange(String indexName, String field, Object start, Object end) throws IOException {
     	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
         SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        
+        
         
         RangeQueryBuilder rangeQuery = QueryBuilders
                 .rangeQuery(field)
                 .gte(start)
                 .lte(end)
-                .format("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                .format("yyyy-MM-dd");
+        
+        TermQueryBuilder termQuery = QueryBuilders.termQuery("id", "admin");
+        
+        QueryBuilder query=QueryBuilders.boolQuery()
+        		.must(termQuery)
+        		.must(rangeQuery);
 
-        searchSourceBuilder.query(rangeQuery);
-        searchSourceBuilder.size(1000);
+        searchSourceBuilder.query(query);
+        searchSourceBuilder.size(10000);
         searchRequest.source(searchSourceBuilder);
+
+        System.out.println(searchSourceBuilder);
 
         SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
         SearchHit[] searchHits = searchResponse.getHits().getHits();
@@ -179,6 +201,133 @@ public class ElasticsearchService {
         }
 
         return resultList;
+    }
+    
+    public int count() {
+    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+    	
+		List<Map<String, Object>> result=new ArrayList<>();
+		CountResponse response=null;
+		
+		
+		CountRequest countRequest = new CountRequest("testlog"); 
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder(); 
+		searchSourceBuilder.query(QueryBuilders.boolQuery()
+				.must(QueryBuilders.termQuery("id", "admin"))
+				.must(QueryBuilders.matchPhraseQuery("date", "2023-04-01"))); 
+		countRequest.source(searchSourceBuilder); 
+		
+		try {
+			response = client.count(countRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(response.getCount());
+		
+		return (int) response.getCount();
+	}
+    
+    //지정일로부터 1년 전까지의 PV를 배열 형태로 가져오는 메소드
+    //CountRequest를 쓰고있지만, 둘 다 써본 결과
+    //SearchRequest를 쓰고 Hit로 추출한 값을 size()로 하는것과 속도차이는 크지 않다.
+    //date를 오늘로 하면 오늘부터 1년 전까지의 PV를 가져온다.
+    public List<Map<String, Object>> dailyChart(String index, LocalDate date){
+		List<Map<String, Object>> resultList=new ArrayList<>();
+    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        CountRequest CR = new CountRequest(index); 
+        //오늘로부터 365일 전까지의 Data를 가져온다.
+        //여기서는 내림차순이지만, 원한다면 i의 값을 바꿔서 오름차순으로 쓸 수 도 있다.
+        for(int i=0; i <366; i++) {
+        	//
+	        LocalDate dateStart=LocalDate.ofEpochDay(LocalDate.now().toEpochDay()-i);
+//	        LocalDate dateEnd=date;
+	        RangeQueryBuilder rangeQuery = QueryBuilders
+	                .rangeQuery("date")
+	                .gte(dateStart)
+	                .lte(dateStart)
+	                .format("yyyy-MM-dd");
+	        //ID를 추가로 search할 필요는 없으므로 뺐다.
+//     		TermQueryBuilder termQuery = QueryBuilders.termQuery("id", "admin");
+	        
+	        QueryBuilder query=QueryBuilders.boolQuery()
+//	        		.must(termQuery)
+	        		.must(rangeQuery);
+	
+	        searchSourceBuilder.query(query);
+	        searchSourceBuilder.size(10000);
+	        CR.source(searchSourceBuilder);
+	
+	        System.out.println(searchSourceBuilder);
+	
+	        CountResponse SR=null;
+			try {
+				//Count의 결과로 나온 값을 적절한 date key값으로 매핑해준다.
+				Map<String, Object> tmp = new HashMap<>();
+				SR = client.count(CR, RequestOptions.DEFAULT);
+				tmp.put(dateStart.toString(), SR.getCount());
+				//Map을 List에 차곡차곡 담는다.
+				resultList.add(tmp);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        }
+        
+    	
+    	return resultList;
+    }
+    //Aggregation
+    //집계라고 번역되며, Metrics/Bucket 두 종류로 데이터를 조작한다.
+    //이 메소드에서는 Bucket 방식의 조작만 진행한다.
+    //return은 배열 형태가 아닌 마지막으로 Term에서 나온 ID 값이 기록된다.
+    //필요에 따라 배열의 형태, 혹은 int 형태의 갯수를 리턴하자.
+    public String testAggregation() {
+    	
+    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+    	SearchSourceBuilder sSB = new SearchSourceBuilder();
+    	SearchRequest sRequest = new SearchRequest("testlog2");
+    	String example=null;
+    	//7개의 아이디가 모두 들어있지 않은 날을 골랐다.
+    	LocalDate date=LocalDate.ofEpochDay(LocalDate.now().toEpochDay()-350);
+    	LocalDate date2=LocalDate.ofEpochDay(LocalDate.now().toEpochDay()-351);
+    	
+    	//늘 쓰던 RangeQuery
+    	RangeQueryBuilder rangeQuery = QueryBuilders
+                .rangeQuery("date")
+                .gte(date2)
+                .lte(date)
+                .format("yyyy-MM-dd");
+    	//id의 키워드로 id variety를 구하는 식으로 보인다.
+    	AggregationBuilder AB=AggregationBuilders.terms("id_variety").field("id.keyword").size(1000);
+    	
+    	sSB.query(rangeQuery);
+    	//SearchSourceBuilder에 넣는다.
+    	sSB.aggregation(AB);
+    	sSB.size(100);
+    	
+    	sRequest.source(sSB);
+    	
+    	SearchResponse sResponse=null;
+		try {
+			sResponse = client.search(sRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	//아마 ID 종류를 담은 배열로 보인다.
+		Terms idVarietyAgg = sResponse.getAggregations().get("id_variety");
+    	for(Terms.Bucket bucket : idVarietyAgg.getBuckets()) {
+    	    String idVariety = bucket.getKeyAsString();
+    	    System.out.println(idVariety);
+    	    example=idVariety;
+    	}
+    	
+    	
+    	return example;
     }
 
 }
