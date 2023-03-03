@@ -1,8 +1,12 @@
 package com.gura.acorn.shop.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,18 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.gura.acorn.shop.service.ShopService;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -95,17 +87,69 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "testlog";
-		String field = "userId";
-		String value = "yg";
+		String index = "ygtest";
+		String field = "date";
+		int Month = 3;
+		LocalDate dateStart = LocalDate.of(2023, Month ,1);
+        LocalDate dateEnd = LocalDate.of(2023, Month ,dateStart.lengthOfMonth());
+        
+		
 		try {
-			return Esservice.getAllDataFromIndex(index);
+			Map<String, Object> PVMonthCount = Esservice.searchMonthPV(index, field, dateStart, dateEnd);
+			Map<String, Object> PVDayCount = Esservice.searchDayPV(index, field, LocalDate.now());
+			Map<String, Object> PVTotalCount = Esservice.getCountOfIdsFromIndex(index);
+			Map<String, Object> PVMaxCount = Esservice.searchByDateRange3(index, field, dateStart, dateEnd);
+			
+			List<Map<String, Object>> resultList = new ArrayList<>();
+			resultList.add(PVMonthCount);
+			resultList.add(PVDayCount);
+			resultList.add(PVTotalCount);
+			resultList.add(PVMaxCount);
+			
+			return resultList;
+//			return Esservice.searchPV(index);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}	
 		return null;
 	}
+	
+//	@RequestMapping("/es/test2")
+//	@ResponseBody
+//	public List<Map<String, Object>> test2(){
+//		String index = "test3";
+//		
+//		try {
+//			return Esservice.searchPV2(index);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}	
+//		return null;
+//	}
+//	
+//	@RequestMapping("/es/test3")
+//	@ResponseBody
+//	public List<Map<String, Object>> test3(){
+//		String index = "ygtest";
+//		String field = "date";
+//		int Month = 2;
+//		LocalDate dateStart = LocalDate.of(2023, Month ,1);
+//        LocalDate dateEnd = LocalDate.of(2023, Month ,dateStart.lengthOfMonth());
+//		
+//		try {
+//			Map<String, Object> PVMonthCount = Esservice.searchByDateRange3(index, field, dateStart, dateEnd);
+//			
+//			List<Map<String, Object>> resultList = new ArrayList<>();
+//			resultList.add(PVMonthCount);
+//			return resultList;
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}	
+//		return null;
+//	}
 	
 	@RequestMapping("/index")
 	public String index2(HttpServletRequest request) {
