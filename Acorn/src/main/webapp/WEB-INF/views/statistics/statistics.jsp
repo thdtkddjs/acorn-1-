@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/index.css">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <title>statistics.jsp</title>
 <style>
 .category_bar>.row{
@@ -64,7 +65,10 @@
 .uvt_val, .pvt_val{
 	text-align:right;
 }
-
+.statistics{
+	width : 100%;
+	height : 600px;
+}
 .statistics_mid>.row{
     place-content: center;
 }
@@ -83,6 +87,12 @@
 .statistics_bot{
 	width : 600px;
 	display:flex;
+	margin : auto;
+}
+canvas {
+	border : 1px solid #cecece;
+	border-radius : 10px;
+	padding : 50px;
 	margin : auto;
 }
 
@@ -123,14 +133,14 @@
   		    	<table class="pv_table">
 		    			<tr>
 		    				<td class="pvt_cont">서비스 누적 페이지뷰</td>
-		    				<td class="pvt_val" id="app1"></td>
+		    				<td class="pvt_val" id="tpv"></td>
 		    			</tr>
 		    			<tr>
-		    				<td class="pvt_cont">1일 누적 페이지 뷰</td>
-		    				<td class="pvt_val" id="app2"></td>
+		    				<td class="pvt_cont">일일 누적 페이지 뷰</td>
+		    				<td class="pvt_val" id="dpv"></td>
 		    			</tr>		
 		    			<tr>
-		    				<td class="pvt_cont">1일 페이지뷰 1위 </td>
+		    				<td class="pvt_cont">일일 페이지뷰 1위 </td>
 		    				<td class="pvt_val"><a href=""> 음식점명</a></td>
 		    			</tr>
     			</table>
@@ -150,49 +160,18 @@
     	</div>
     	
     	<div class="statistics">
-    		<canvas ref="acquisitions"></canvas>
+   		 	<canvas id="myChart" ref="acquisitions" width="600" height="600"></canvas>
+   		 	<br />
+   		 	<canvas id="myChart2" ref="acquisitions2" width="600" height="600"></canvas>
+   		 	<br />
+   		 	<canvas id="myChart3" ref="acquisitions3" width="600" height="600"></canvas>
     	</div>
 	</div>
 </body>
 
 <script>
 const app = Vue.createApp({
-	setup() {
-		const arr = Vue.ref([0, 0, 0, 0, 0]); // arr를 ref로 만들어서 반응성을 추가
-		const chartData = Vue.reactive({
-				labels: ["★", "★★", "★★★", "★★★★", "★★★★★"],
-				datasets: [{
-					label: "리뷰 별점 수",
-					axis: 'y',
-					barThickness: 10,
-					backgroundColor: "rgba(255, 99, 132, 0.2)",
-					borderColor: "rgba(255,99,132,1)",
-					borderWidth: 1,
-					data: arr.value, // arr의 값을 참조
-				},
-				],
-			});
-			// window.onload 대신에 Vue.watchEffect를 사용
-			// arr의 값이 변경될 때마다 chartData.datasets[0].data도 변경
-			Vue.watchEffect(() => {
-				arr.value = [0, 0, 0, 0, 0]; // 초기화
-				console.log(arr.value[0]);
-				for (let i=1; i < 6; i++) {
-					if(document.getElementsByClassName("score_count_"+i+".0")[0]==null){
-						
-					}
-					else{
-						arr.value[i-1] = Number(document.getElementsByClassName("score_count_"+i+".0")[0].value);
-					}
-					
-			  	}
-				chartData.datasets[0].data = arr.value; // 데이터 갱신
-			});
-	
-			return {
-		    	chartData,
-			};
-	},
+
 	async mounted() {
 		const response = await fetch('http://localhost:9000/es/test', {
 			method : 'GET',
@@ -200,21 +179,86 @@ const app = Vue.createApp({
 				'Content-Type' : 'application/json',
 			}
 		});
+		const viewObject = await response.json();
+
 		
 		//받아온 데이터 중 어떤 데이터를 사용할지  부분
-		const viewObject = await response.json();
-		const filteredData = viewObject.filter(item => {
-		    return item.url.startsWith("http://localhost:9200/shop/");
+		const tpvm_jan = viewObject.filter(item => {
+		    return item.date.startsWith("2024-01");
 		});
-		document.getElementsByClassName("pvt_val").innerText = filteredData.length;
+		const tpvm_feb = viewObject.filter(item => {
+		    return item.date.startsWith("2024-02");
+		});
+		const tpvm_mar = viewObject.filter(item => {
+		    return item.date.startsWith("2024-03");
+		});
+		const tpvm_apr = viewObject.filter(item => {
+		    return item.date.startsWith("2023-04");
+		});
+		const tpvm_may = viewObject.filter(item => {
+		    return item.date.startsWith("2023-05");
+		});
+		const tpvm_jun = viewObject.filter(item => {
+		    return item.date.startsWith("2023-06");
+		});
+		const tpvm_jul = viewObject.filter(item => {
+		    return item.date.startsWith("2023-07");
+		});
+		const tpvm_aug = viewObject.filter(item => {
+		    return item.date.startsWith("2023-08");
+		});
+		const tpvm_sep = viewObject.filter(item => {
+		    return item.date.startsWith("2023-09");
+		});
+		const tpvm_oct = viewObject.filter(item => {
+		    return item.date.startsWith("2023-10");
+		});
+		const tpvm_nov = viewObject.filter(item => {
+		    return item.date.startsWith("2023-11");
+		});
+		const tpvm_dec = viewObject.filter(item => {
+		    return item.date.startsWith("2023-12");
+		});
+		
+		const filteredData = viewObject.filter(item => {
+		    return item.date.startsWith("2023-12");
+		});
+		const dailyPv = viewObject.filter(item => {
+		    return item.date.startsWith("2023-12-25");
+		});
+		document.getElementById("tpv").innerText = viewObject.length;
+		document.getElementById("dpv").innerText = dailyPv.length;
 		
 		console.log(filteredData);
 		console.log(filteredData.length);
 		
+	    const data = [
+	        { month: '24년 1월', pvMonth : tpvm_jan.length },
+	        { month: '24년 2월', pvMonth: tpvm_feb.length },
+	        { month: '24년 3월', pvMonth: tpvm_mar.length },
+	        { month: '23년 4월', pvMonth: tpvm_apr.length },
+	        { month: '23년 5월', pvMonth: tpvm_may.length },
+	        { month: '23년 6월', pvMonth: tpvm_jun.length },
+	        { month: '23년 7월', pvMonth: tpvm_jul.length },
+	        { month: '23년 8월', pvMonth: tpvm_aug.length },
+	        { month: '23년 9월', pvMonth: tpvm_sep.length },
+	        { month: '23년 10월', pvMonth: tpvm_oct.length },
+	        { month: '23년 11월', pvMonth: tpvm_nov.length },
+	        { month: '23년 12월', pvMonth: tpvm_dec.length },	        
+	    ];		
+		console.log(data);
 		const ctx = document.getElementById("myChart").getContext("2d");
 		const myChart = new Chart(ctx, {
 			type: "bar",
-			data: this.chartData,
+	        data: {
+	            labels: data.map(row => row.month),
+	            datasets: [
+	              {
+	                label: '월별 PV',
+	                data: data.map(row => row.pvMonth)
+	              }
+	            ]
+	          },
 			plugins : [ChartDataLabels],
 			options: {
 				plugins: {
@@ -228,24 +272,23 @@ const app = Vue.createApp({
 			            display: function(context) {
 			                return context.dataset.data[context.dataIndex]>1;
 			              },
-			            anchor: 'end',
-			            align: 'right',
+			            anchor: 'top',
+			            align: 'center',
 			            offset: 2,
 			            formatter: function(value, context) {
 			              return value;
 			            }
 					}
 				},
-				indexAxis: 'y',
 				scales: {
 					x:{
-				        ticks: {
-				        	display: false,
-				        	stepSize: 1,
+				    	ticks: {
+							display: true,
+							stepSize: 1,
 				        },
 			            grid: {display: false},
 					},
-					y: {
+					y:{
 						beginAtZero: true, // y축이 0부터 시작하도록 설정
 						offset: true,
 						grid: {
@@ -257,18 +300,160 @@ const app = Vue.createApp({
 					    },
 					},
 				},
-				layout: {
-					padding: {
-						top: 0,
-						bottom: 0,
-						left: 0,
-						right: 20
+				responsive: true,
+				},
+		});
+		window.addEventListener('resize', function() {
+			myChart.resize();
+		});
+		
+		
+		
+		//chart2 값
+	    const data2 = [
+	        { month: '24년 1월', pvMonth : tpvm_jan.length },
+	        { month: '24년 2월', pvMonth: tpvm_feb.length },
+	        { month: '24년 3월', pvMonth: tpvm_mar.length },
+	        { month: '23년 4월', pvMonth: tpvm_apr.length },
+	        { month: '23년 5월', pvMonth: tpvm_may.length },
+	        { month: '23년 6월', pvMonth: tpvm_jun.length },
+	        { month: '23년 7월', pvMonth: tpvm_jul.length },
+	        { month: '23년 8월', pvMonth: tpvm_aug.length },
+	        { month: '23년 9월', pvMonth: tpvm_sep.length },
+	        { month: '23년 10월', pvMonth: tpvm_oct.length },
+	        { month: '23년 11월', pvMonth: tpvm_nov.length },
+	        { month: '23년 12월', pvMonth: tpvm_dec.length },	        
+	    ];		
+		console.log(data2);
+		const ctx2 = document.getElementById("myChart2").getContext("2d");
+		const myChart2 = new Chart(ctx2, {
+			type: "bar",
+	        data: {
+	            labels: data2.map(row => row.month),
+	            datasets: [
+	              {
+	                label: '월별 PV2',
+	                data: data2.map(row => row.pvMonth)
+	              }
+	            ]
+	          },
+			plugins : [ChartDataLabels],
+			options: {
+				plugins: {
+					legend: {
+						display: false
+						},
+					datalabels: {
+			            font: {
+			              size: 12,
+			            },
+			            display: function(context) {
+			                return context.dataset.data[context.dataIndex]>1;
+			              },
+			            anchor: 'top',
+			            align: 'center',
+			            offset: 2,
+			            formatter: function(value, context) {
+			              return value;
+			            }
 					}
 				},
-		     },
-		   });
-	  },
+				scales: {
+					x:{
+				    	ticks: {
+							display: true,
+							stepSize: 1,
+				        },
+			            grid: {display: false},
+					},
+					y:{
+						beginAtZero: true, // y축이 0부터 시작하도록 설정
+						offset: true,
+						grid: {
+						    display: false
+					  	},
+					    ticks: {
+					        color: '#ffc107',
+					    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
+					    },
+					},
+				},
+				responsive: true,
+				},
+		});
+		window.addEventListener('resize', function() {
+			myChart2.resize();
+		});
+		
+		
+		
+		//chart3
+		
+	    const data3 = [
+	        { category: '한식', count: 10 },
+	        { category: '중식', count: 20 },
+	        { category: '일식', count: 15 },
+	        { category: '양식', count: 25 },
+	        { category: '분식', count: 22 },
+	        { category: '패스트푸드', count: 30 },
+	        { category: '기타', count: 28 },
+	      ];
+	  	const ctx3 = document.getElementById("myChart3").getContext("2d");
+	  	
+	  	const myChart3 = new Chart(ctx3, {
+	  		type: "doughnut",
+	          data: {
+	              labels: data3.map(row => row.category),
+	              datasets: [
+	                {
+	                  label: '월간 카테고리 별 PV',
+	                  data: data3.map(row => row.count)
+	                }
+	              ]
+	            },
+	  		plugins : [ChartDataLabels],
+	  		options: {
+	  			plugins: {
+	  				legend:{
+	  					display: true,
+	  					labels: {
+	  						font: {
+	  						  size: 12,
+	  						},
+	  						boxWidth: 30
+	  					}
+	  				},
+	  				datalabels: {
+	  		            font: {
+	  		              size: 15,
+	  		              color: 'gray',
+	  		            },
+	  		            display: function(context) {
+	  		                return context.dataset.data[context.dataIndex]>1;
+	  		              },
+	  		            anchor: 'top',
+	  		            align: 'center',
+	  		            offset: 2,
+	  		            formatter: function(value, context) {
+	  		                let sum = 0;
+	  		                let dataArr = context.chart.data.datasets[0].data;
+	  		                dataArr.map(data => {
+	  		                  sum += data;
+	  		                });
+	  		                let percentage = (value * 100 / sum).toFixed(2) + "%";
+	  		                return percentage;
+	  		            }
+	  				}
+	  			},
+
+	  	     },
+		});
+		window.addEventListener('resize', function() {
+			myChart3.resize();
+		});
+	},
 });
 app.mount(".statistics");
+
 </script>
 </html>

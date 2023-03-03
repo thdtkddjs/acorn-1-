@@ -478,10 +478,13 @@ const app = Vue.createApp({
 						bottom: 0,
 						left: 0,
 						right: 20
-					}
+					},
 				},
-		     },
-		   });
+			},
+		});
+		window.addEventListener('resize', function() {
+			myChart.resize();
+		});
 	  },
 });
 app.mount(".statistics");
