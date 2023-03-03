@@ -7,10 +7,12 @@ import org.springframework.stereotype.Component;
 import com.gura.acorn.es.ElasticUtil;
 
 //HttpServletRequest request인자가 반드시 있는 상태로 생성해야한다. 없다면 추가하자!
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class ShopAspect {
-	   
+	   public static void main(String[] args) {
+		
+	}
 	   
 }
 
