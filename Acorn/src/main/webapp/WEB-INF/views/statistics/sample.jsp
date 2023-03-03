@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/index.css">
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 <title>sample page.jsp</title>
 <style>
 .category_bar>.row{
@@ -100,34 +101,143 @@ createApp({
       message: 'Hello Vue!'
     }
   },
-  mounted() {
-    const data = [
-      { category: '한식', count: 10 },
-      { category: '중식', count: 20 },
-      { category: '일식', count: 15 },
-      { category: '양식', count: 25 },
-      { category: '분식', count: 22 },
-      { category: '패스트푸드', count: 30 },
-      { category: '기타', count: 28 },
-    ];
+  async mounted() {
+		const response = await fetch('http://localhost:9000/es/test', {
+			method : 'GET',
+			headers : {
+				'Content-Type' : 'application/json',
+			}
+		});
+		const viewObject = await response.json();
 
-    new Chart(
-      this.$refs.acquisitions,
-      {
-        type: 'doughnut',
-        data: {
-          labels: data.map(row => row.category),
-          datasets: [
-            {
-              label: '월간 카테고리 별 PV',
-              data: data.map(row => row.count)
-            }
-          ]
-        }
-      }
-    );
-  }
-  
+		
+		//받아온 데이터 중 어떤 데이터를 사용할지  부분
+		const tpvm_jan = viewObject.filter(item => {
+		    return item.date.startsWith("2024-01");
+		});
+		const tpvm_feb = viewObject.filter(item => {
+		    return item.date.startsWith("2024-02");
+		});
+		const tpvm_mar = viewObject.filter(item => {
+		    return item.date.startsWith("2024-03");
+		});
+		const tpvm_apr = viewObject.filter(item => {
+		    return item.date.startsWith("2023-04");
+		});
+		const tpvm_may = viewObject.filter(item => {
+		    return item.date.startsWith("2023-05");
+		});
+		const tpvm_jun = viewObject.filter(item => {
+		    return item.date.startsWith("2023-06");
+		});
+		const tpvm_jul = viewObject.filter(item => {
+		    return item.date.startsWith("2023-07");
+		});
+		const tpvm_aug = viewObject.filter(item => {
+		    return item.date.startsWith("2023-08");
+		});
+		const tpvm_sep = viewObject.filter(item => {
+		    return item.date.startsWith("2023-09");
+		});
+		const tpvm_oct = viewObject.filter(item => {
+		    return item.date.startsWith("2023-10");
+		});
+		const tpvm_nov = viewObject.filter(item => {
+		    return item.date.startsWith("2023-11");
+		});
+		const tpvm_dec = viewObject.filter(item => {
+		    return item.date.startsWith("2023-12");
+		});
+		
+		const filteredData = viewObject.filter(item => {
+		    return item.date.startsWith("2023-12");
+		});
+		const dailyPv = viewObject.filter(item => {
+		    return item.date.startsWith("2023-12-25");
+		});
+		
+		console.log(tpvm_jan);
+		console.log("dd" +filteredData.length);
+		
+	    const data = [];
+	    for(var i=0; i<tpvm_jan.length; i++){
+	    	tpvm_jan[i].date = tpvm_jan[i].date.slice(11,13);
+	    	tpvm_jan[i].id = i+1;
+	    	console.log(tpvm_jan[i].date);
+	    	data[i] = tpvm_jan[i];
+	    }
+	    const data2 = [];
+	    for(var i=0; i<tpvm_feb.length; i++){
+	    	tpvm_feb[i].date = tpvm_feb[i].date.slice(9,11);
+	    	tpvm_feb[i].id = i;
+	    	data2[i] = tpvm_feb[i];
+	    }	    
+		console.log(data);
+		const ctx = document.getElementById("myChart").getContext("2d");
+		const myChart = new Chart(ctx, {
+			type: "scatter",
+	        data: {
+	            labels: data.map(row => row.id),
+	            datasets: [
+	              {
+	                label: '정상',
+	                data: data.map(row => row.date)
+	              },
+	              {
+	                label: '실패',
+	                data: data2.map(row => row.date)
+	              },	              
+	              
+	            ]
+	          },
+			plugins : [ChartDataLabels],
+			options: {
+				plugins: {
+					legend: {
+						display: false
+						},
+					datalabels: {
+			            font: {
+			              size: 0,
+			            },
+			            display: function(context) {
+			                return context.dataset.data[context.dataIndex]>1;
+			              },
+			            anchor: 'top',
+			            align: 'center',
+			            offset: 2,
+			            formatter: function(value, context) {
+			              return value;
+			            }
+					}
+				},
+				scales: {
+					x:{
+				    	ticks: {
+							display: true,
+							stepSize: 1,
+				        },
+			            grid: {display: false},
+					},
+					y:{
+						beginAtZero: true, // y축이 0부터 시작하도록 설정
+						offset: true,
+						grid: {
+						    display: false
+					  	},
+					    ticks: {
+					        color: '#ffc107',
+					    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
+					    },
+					},
+				},
+				responsive: true,
+				},
+		});
+		window.addEventListener('resize', function() {
+			myChart.resize();
+		});
+  },
 }).mount('.statistics_mid')
 </script>
 
