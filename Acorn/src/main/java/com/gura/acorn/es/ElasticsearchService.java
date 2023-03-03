@@ -2,42 +2,26 @@ package com.gura.acorn.es;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.elasticsearch.action.search.ClearScrollRequest;
-import org.elasticsearch.action.search.ClearScrollResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.search.SearchScrollRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.CountRequest;
 import org.elasticsearch.client.core.CountResponse;
 import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.elasticsearch.index.query.TermQueryBuilder;
-import org.elasticsearch.script.Script;
-import org.elasticsearch.script.ScriptType;
-import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
@@ -76,109 +60,6 @@ public class ElasticsearchService {
         
         return resultMap;
     }
-    
-    //index의 모든 id별 data 추출
-//    public List<Map<String, Object>> getAllDataFromIndex(String indexName) throws IOException {
-//    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
-//    	
-//        List<Map<String, Object>> dataList = new ArrayList<>();
-//
-//        SearchRequest searchRequest = new SearchRequest(indexName);
-//        searchRequest.scroll(TimeValue.timeValueMinutes(1L));
-//
-//        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-//        searchSourceBuilder.size(1000); // 한 번에 가져올 문서 개수
-//
-//        searchRequest.source(searchSourceBuilder);
-//
-//        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-//        String scrollId = searchResponse.getScrollId();
-//        SearchHit[] searchHits = searchResponse.getHits().getHits();
-//
-//        while (searchHits != null && searchHits.length > 0) {
-//            for (SearchHit hit : searchHits) {
-//                Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-//                dataList.add(sourceAsMap);
-//            }
-//
-//            SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
-//            scrollRequest.scroll(TimeValue.timeValueMinutes(1L));
-//            SearchResponse scrollResponse = client.scroll(scrollRequest, RequestOptions.DEFAULT);
-//            scrollId = scrollResponse.getScrollId();
-//            searchHits = scrollResponse.getHits().getHits();
-//        }
-//
-//        ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
-//        clearScrollRequest.addScrollId(scrollId);
-//        ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
-//        
-//        
-//        return dataList;
-//    }
-    
-    //기간내의 모든 데이터 검색
-//    public List<Map<String, Object>> searchByDateRange(String indexName, String field, Object start, Object end) throws IOException {
-//    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
-//        SearchRequest searchRequest = new SearchRequest(indexName);
-//        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//        
-//        RangeQueryBuilder rangeQuery = QueryBuilders
-//                .rangeQuery(field)
-//                .gte(start)
-//                .lte(end)
-//                .format("yyyy-MM-dd");
-//
-//        searchSourceBuilder.query(rangeQuery);
-//        searchSourceBuilder.size(1000);
-//        searchRequest.source(searchSourceBuilder);
-//
-//        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-//        SearchHit[] searchHits = searchResponse.getHits().getHits();
-//
-//        List<Map<String, Object>> resultList = new ArrayList<>();
-//        for (SearchHit hit : searchHits) {
-//            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-//            resultList.add(sourceAsMap);
-//        }
-//
-//        return resultList;
-//    }
-    
-    
-    //기간내의 데이터 검색 + 그 안의 storeId 로 검색
-//    public List<Map<String, Object>> searchByDateRange2(String indexName, String field, Object start, Object end) throws IOException {
-//    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
-//        SearchRequest searchRequest = new SearchRequest(indexName);
-//        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//        
-//        RangeQueryBuilder rangeQuery = QueryBuilders
-//                .rangeQuery(field)
-//                .gte(start)
-//                .lte(end)
-//                .format("yyyy-MM-dd");
-//        
-//        TermQueryBuilder termQuery = QueryBuilders.termQuery("storeId", 29);
-//        
-//        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
-//        boolQuery.must(rangeQuery);
-//        boolQuery.must(termQuery);
-//
-//        searchSourceBuilder.query(boolQuery);
-//        searchSourceBuilder.size(1000);
-//        searchRequest.source(searchSourceBuilder);
-//
-//        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-//        SearchHit[] searchHits = searchResponse.getHits().getHits();
-//
-//        List<Map<String, Object>> resultList = new ArrayList<>();
-//        for (SearchHit hit : searchHits) {
-//            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-//            resultList.add(sourceAsMap);
-//        }
-//
-//        return resultList;
-//    }
     
   //기간내의 데이터 검색 + 
     public Map<String, Object> searchByDateRange3(String indexName, String field, Object start, Object end) throws IOException {
@@ -299,34 +180,7 @@ public class ElasticsearchService {
 //        return resultList;
 //    }
     
-    //total 통계에서 가장 높은 pv
-//    public Map<String, Object> groupMax(String indexName) throws IOException {
-//    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
-//
-//    	SearchRequest searchRequest = new SearchRequest(indexName);
-//
-//    	SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//    	TermsAggregationBuilder aggregation = AggregationBuilders.terms("pv_count").field("storeName.keyword")
-//    	    .size(1) // 결과 중 가장 많은 항목 하나만 리턴하도록 설정합니다.
-//    	    .order(BucketOrder.count(false)); // doc_count 내림차순으로 정렬합니다.
-//
-//    	searchSourceBuilder.aggregation(aggregation);
-//    	searchRequest.source(searchSourceBuilder);
-//
-//    	SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-//    	Terms pvCount = searchResponse.getAggregations().get("pv_count");
-//
-//    	if (pvCount.getBuckets().size() > 0) {
-//    	    String maxStore = pvCount.getBuckets().get(0).getKeyAsString();
-//    	    long maxCount = pvCount.getBuckets().get(0).getDocCount();
-//    	    Map<String, Object> resultMap = new HashMap<>();
-//    	    resultMap.put("maxStore", maxStore);
-//    	    resultMap.put("maxCount", maxCount);
-//    	    return resultMap;
-//    	} else {
-//    	    return null;
-//    	}
-//    }
+
 
 public int count() {
     	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
@@ -454,4 +308,136 @@ public int count() {
     	
     	return example;
     }
+    
+    //index의 모든 id별 data 추출
+//  public List<Map<String, Object>> getAllDataFromIndex(String indexName) throws IOException {
+//  	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+//  	
+//      List<Map<String, Object>> dataList = new ArrayList<>();
+//
+//      SearchRequest searchRequest = new SearchRequest(indexName);
+//      searchRequest.scroll(TimeValue.timeValueMinutes(1L));
+//
+//      SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//      searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+//      searchSourceBuilder.size(1000); // 한 번에 가져올 문서 개수
+//
+//      searchRequest.source(searchSourceBuilder);
+//
+//      SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+//      String scrollId = searchResponse.getScrollId();
+//      SearchHit[] searchHits = searchResponse.getHits().getHits();
+//
+//      while (searchHits != null && searchHits.length > 0) {
+//          for (SearchHit hit : searchHits) {
+//              Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+//              dataList.add(sourceAsMap);
+//          }
+//
+//          SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
+//          scrollRequest.scroll(TimeValue.timeValueMinutes(1L));
+//          SearchResponse scrollResponse = client.scroll(scrollRequest, RequestOptions.DEFAULT);
+//          scrollId = scrollResponse.getScrollId();
+//          searchHits = scrollResponse.getHits().getHits();
+//      }
+//
+//      ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
+//      clearScrollRequest.addScrollId(scrollId);
+//      ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
+//      
+//      
+//      return dataList;
+//  }
+  
+  //기간내의 모든 데이터 검색
+//  public List<Map<String, Object>> searchByDateRange(String indexName, String field, Object start, Object end) throws IOException {
+//  	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+//      SearchRequest searchRequest = new SearchRequest(indexName);
+//      SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//      
+//      RangeQueryBuilder rangeQuery = QueryBuilders
+//              .rangeQuery(field)
+//              .gte(start)
+//              .lte(end)
+//              .format("yyyy-MM-dd");
+//
+//      searchSourceBuilder.query(rangeQuery);
+//      searchSourceBuilder.size(1000);
+//      searchRequest.source(searchSourceBuilder);
+//
+//      SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+//      SearchHit[] searchHits = searchResponse.getHits().getHits();
+//
+//      List<Map<String, Object>> resultList = new ArrayList<>();
+//      for (SearchHit hit : searchHits) {
+//          Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+//          resultList.add(sourceAsMap);
+//      }
+//
+//      return resultList;
+//  }
+  
+  
+  //기간내의 데이터 검색 + 그 안의 storeId 로 검색
+//  public List<Map<String, Object>> searchByDateRange2(String indexName, String field, Object start, Object end) throws IOException {
+//  	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+//      SearchRequest searchRequest = new SearchRequest(indexName);
+//      SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//      
+//      RangeQueryBuilder rangeQuery = QueryBuilders
+//              .rangeQuery(field)
+//              .gte(start)
+//              .lte(end)
+//              .format("yyyy-MM-dd");
+//      
+//      TermQueryBuilder termQuery = QueryBuilders.termQuery("storeId", 29);
+//      
+//      BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
+//      boolQuery.must(rangeQuery);
+//      boolQuery.must(termQuery);
+//
+//      searchSourceBuilder.query(boolQuery);
+//      searchSourceBuilder.size(1000);
+//      searchRequest.source(searchSourceBuilder);
+//
+//      SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+//      SearchHit[] searchHits = searchResponse.getHits().getHits();
+//
+//      List<Map<String, Object>> resultList = new ArrayList<>();
+//      for (SearchHit hit : searchHits) {
+//          Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+//          resultList.add(sourceAsMap);
+//      }
+//
+//      return resultList;
+//  }
+    
+    //total 통계에서 가장 높은 pv
+//  public Map<String, Object> groupMax(String indexName) throws IOException {
+//  	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+//
+//  	SearchRequest searchRequest = new SearchRequest(indexName);
+//
+//  	SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//  	TermsAggregationBuilder aggregation = AggregationBuilders.terms("pv_count").field("storeName.keyword")
+//  	    .size(1) // 결과 중 가장 많은 항목 하나만 리턴하도록 설정합니다.
+//  	    .order(BucketOrder.count(false)); // doc_count 내림차순으로 정렬합니다.
+//
+//  	searchSourceBuilder.aggregation(aggregation);
+//  	searchRequest.source(searchSourceBuilder);
+//
+//  	SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+//  	Terms pvCount = searchResponse.getAggregations().get("pv_count");
+//
+//  	if (pvCount.getBuckets().size() > 0) {
+//  	    String maxStore = pvCount.getBuckets().get(0).getKeyAsString();
+//  	    long maxCount = pvCount.getBuckets().get(0).getDocCount();
+//  	    Map<String, Object> resultMap = new HashMap<>();
+//  	    resultMap.put("maxStore", maxStore);
+//  	    resultMap.put("maxCount", maxCount);
+//  	    return resultMap;
+//  	} else {
+//  	    return null;
+//  	}
+//  }
 }
