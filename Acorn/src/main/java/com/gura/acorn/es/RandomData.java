@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,11 +22,13 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.RestHighLevelClientBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.gura.acorn.shop.dao.ShopDao;
 
 public class RandomData {
 	
 	private static RestHighLevelClient client;
-	
 	
 	public static void main(String[] args) {
 		//Util을 끌어다 쓰기에는 속도가 걱정되므로 새로 client를 정의하자.
@@ -52,79 +55,91 @@ public class RandomData {
 			String date= LocalDate.ofEpochDay((long) (LocalDate.now().toEpochDay()+Math.random()*365)).toString();
 			//7개의 id 중 하나를 랜덤으로 정하는데 필요한 값
 			int ran1=(int)(Math.random()*7);
-			String id = null;
-			//55개의 URL중에 하나를 랜덤으로 정하는데 필요한 값
-			int ran2=(int)(Math.random()*55);
-			String url=null;
-			String cate=null;
+			//pageId 및 Type을 정하는 값
+			int ran2=(int)(Math.random()*6);
+			//pageType이 Shop일 경우 list 인지 detail인지를 구분
+			int ran3=(int)(Math.random()*2);
+			//storeId 및 storeName을 정하는 값
+			int ran4=(int)(Math.random()*55);
+			
+			String userId = null;
+			String pageType = null;
+			int pageId = 0;
+			int storeId = 0;
+			String storeName = null;
+			
 			
 			switch (ran1) {
 				case 6:
-					id = "acorn";
+					userId = "acorn";
 					break;
 				case 5:
-					id = "tTest";
+					userId = "tTest";
 					break;
 				case 4:
-					id = "song1";
+					userId = "song1";
 					break;
 				case 3:
-					id = "yg1234";
+					userId = "yg1234";
 					break;
 				case 2:
-					id = "seodae";
+					userId = "seodae";
 					break;
 				case 1:
-					id = "maple";
+					userId = "maple";
 					break;
 				case 0:
-					id = "admin";
+					userId = "admin";
 					break;
 			}
 			
-			if (ran2==0) {//0일 경우 home
-				url="http://localhost:9200/";
-			}else if(ran2<47) {//47 미만일 경우 각 번호의 상점 detail페이지에 들어간것으로  
-				url="http://localhost:9200/shop/detail?num="+ran2;
-			}else {//47 이상일 경우 카테고리 페이지로
-				switch (ran2-47) {
-					case 7:
-						cate="기타";
-						break;
-					case 6:
-						cate="패스트푸드";
-						break;
-					case 5:
-						cate="양식";
-						break;
-					case 4:
-						cate="분식";
-						break;
-					case 3:
-						cate="일식";
-						break;
-					case 2:
-						cate="중식";
-						break;
-					case 1:
-						cate="한식";
-						break;
-					case 0:
-						cate="";
-						break;
-				}//정해진 categorie로 URL을 결정한다.
-				url="http://localhost:9200/shop/list?category="+cate;
-			}
+			switch (ran2) {
+			case 5:
+				pageId = 6;
+    			pageType = "ERROR";
+				break;
+			case 4:
+				pageId = 5;
+    			pageType = "STATISTICS";
+				break;
+			case 3:
+				pageId = 4;
+    			pageType = "SEARCH";
+				break;
+			case 2:
+				pageId = 3;
+    			pageType = "USERS";
+				break;
+			case 1:
+				pageId = 2;
+    			if(ran3 == 0) {
+    				pageType = "DETAIL";
+    				storeId = ran4;
+    				storeName = "store"+ran4;
+    			}else {
+    				pageType = "SHOPLIST";
+    			}
+				break;
+			case 0:
+				pageId = 1;
+	    		pageType = "INDEX";
+				break;
+		}
+			
+			
 			
 			//데이터를 mapping한다.
 			Map<String, Object> map2= new HashMap<>();
-			map2.put("id", id);
-			map2.put("url", url);
-			map2.put("date", date+" "+time);
+			map2.put("userId", userId);
+			map2.put("date", date);
+			map2.put("pageId", pageId);
+			map2.put("pageType", pageType);
+			map2.put("storeName", storeName);
+			map2.put("storeId", storeId);
 			//데이터를 {"index":{"_index":"testlog"}
 			//		 {"id": xx, "url" : xx, "date" : xx}
 			//형식으로 만들어 bulkrequest에 입력한다.
-			rq.add(new IndexRequest("testlog").source(map2));
+			rq.add(new IndexRequest("ygtest").source(map2));
 		}
 		
 		
