@@ -2,10 +2,13 @@ package com.gura.acorn.es;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
@@ -20,14 +23,20 @@ import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.BucketOrder;
+import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.elasticsearch.search.aggregations.bucket.histogram.Histogram;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.stereotype.Service;
+
+
 
 @Service
 public class ElasticsearchService {
@@ -40,11 +49,72 @@ public class ElasticsearchService {
             .withBasicAuth("elastic", "acorn")
             .build();
     
+    RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+    
+    public Map<String, Object> aggregateByMonth1(String indexName) throws IOException {
+    	// date_histogram 집계 쿼리를 작성합니다.
+    	SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+    	SearchRequest searchRequest = new SearchRequest(indexName);
+    	
+    	AggregationBuilder dateAggregation = AggregationBuilders.dateHistogram("date_count")
+                .field("date")
+                .calendarInterval(DateHistogramInterval.MONTH)
+                .order(BucketOrder.key(true));
+
+        sourceBuilder.aggregation(dateAggregation);
+        
+        searchRequest.source(sourceBuilder);
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+
+        // 그룹별 개수를 저장할 Map 객체 생성
+        TreeMap<String, Object> groupCounts = new TreeMap<>();
+
+        // aggregation 결과 파싱
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        Histogram agg = searchResponse.getAggregations().get("date_count");
+        for (Histogram.Bucket bucket : agg.getBuckets()) {
+            String groupKey = bucket.getKeyAsString();
+            LocalDateTime date = LocalDateTime.parse(groupKey, DateTimeFormatter.ISO_DATE_TIME);
+            String formattedDate = date.format(formatter);
+            long docCount = bucket.getDocCount();
+            groupCounts.put(formattedDate, docCount);
+        }
+
+        return groupCounts;
+    }
+    
+    public Map<String, Object> aggregateByMonth(String indexName) throws IOException {
+    	// date_histogram 집계 쿼리를 작성합니다.
+    	SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+    	SearchRequest searchRequest = new SearchRequest(indexName);
+    	sourceBuilder.aggregation(
+    	        AggregationBuilders.dateHistogram("monthly")
+    	                .field("date")
+    	                .calendarInterval(DateHistogramInterval.MONTH)
+    	                .format("yyyy-MM")
+    	);
+
+    	// Elasticsearch에 쿼리를 보내서 결과를 받아옵니다.
+    	searchRequest.source(sourceBuilder);
+    	SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+    	
+    	// Elasticsearch에서 반환된 결과를 Map<String, Object> 형식으로 변환합니다.
+    	Map<String, Object> resultMap = new HashMap<>();
+    	Histogram monthlyHistogram = searchResponse.getAggregations().get("monthly");
+    	for (Histogram.Bucket monthlyBucket : monthlyHistogram.getBuckets()) {
+    	    Map<String, Object> monthlyAggMap = new HashMap<>();
+    	    monthlyAggMap.put("month", monthlyBucket.getKeyAsString());
+    	    monthlyAggMap.put("count", monthlyBucket.getDocCount());
+    	    resultMap.put("monthlyAggMap", monthlyAggMap);
+    	}
+
+    	// 결과를 반환합니다.
+    	return resultMap;
+    }
+    
     //index의 모든 id값의 개수를 추출
     public Map<String, Object> getCountOfIdsFromIndex(String indexName) throws IOException {
-
-        RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
-
         SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
@@ -63,7 +133,6 @@ public class ElasticsearchService {
     
   //기간내의 데이터 검색 + 
     public Map<String, Object> searchByDateRange3(String indexName, String field, Object start, Object end) throws IOException {
-        RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
         SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
@@ -100,7 +169,6 @@ public class ElasticsearchService {
     
     //기간 내 데이터의 개수를 리턴
     public Map<String, Object> searchMonthPV(String indexName, String field, Object start, Object end) throws IOException {
-    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
         SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
@@ -122,7 +190,6 @@ public class ElasticsearchService {
     }
     
     public Map<String, Object> searchDayPV(String indexName, String field, Object start) throws IOException {
-    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
         SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
