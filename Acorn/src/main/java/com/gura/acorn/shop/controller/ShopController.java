@@ -87,7 +87,7 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "ygtest";
+		String index = "test3";
 		String field = "date";
 		int Month = 3;
 		LocalDate dateStart = LocalDate.of(2023, Month ,1);
@@ -95,7 +95,7 @@ public class ShopController {
         
 		
 		try {
-			Map<String, Object> PVMonthCount = Esservice.searchMonthPV(index, field, dateStart, dateEnd);
+			Map<String, Object> PVMonthCount = Esservice.aggregateByMonth1(index);
 			Map<String, Object> PVDayCount = Esservice.searchDayPV(index, field, LocalDate.now());
 			Map<String, Object> PVTotalCount = Esservice.getCountOfIdsFromIndex(index);
 			Map<String, Object> PVMaxCount = Esservice.searchByDateRange3(index, field, dateStart, dateEnd);
