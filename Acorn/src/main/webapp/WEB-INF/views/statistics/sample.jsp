@@ -161,14 +161,14 @@ createApp({
 		
 	    const data = [];
 	    for(var i=0; i<tpvm_jan.length; i++){
-	    	tpvm_jan[i].date = tpvm_jan[i].date.slice(11,13);
+	    	tpvm_jan[i].date = tpvm_jan[i].date.slice(11,13)*i;
 	    	tpvm_jan[i].id = i+1;
 	    	console.log(tpvm_jan[i].date);
 	    	data[i] = tpvm_jan[i];
 	    }
 	    const data2 = [];
 	    for(var i=0; i<tpvm_feb.length; i++){
-	    	tpvm_feb[i].date = tpvm_feb[i].date.slice(9,11);
+	    	tpvm_feb[i].date = tpvm_feb[i].date.slice(9,11)*i;
 	    	tpvm_feb[i].id = i;
 	    	data2[i] = tpvm_feb[i];
 	    }	    

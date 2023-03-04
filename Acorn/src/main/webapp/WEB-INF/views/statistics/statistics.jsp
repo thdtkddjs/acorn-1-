@@ -67,7 +67,8 @@
 }
 .statistics{
 	width : 100%;
-	height : 600px;
+	height : 100%;	
+	margin : auto;
 }
 .statistics_mid>.row{
     place-content: center;
@@ -89,7 +90,8 @@
 	display:flex;
 	margin : auto;
 }
-canvas {
+.statistics> canvas{
+	display: block;
 	border : 1px solid #cecece;
 	border-radius : 10px;
 	padding : 50px;
@@ -121,11 +123,11 @@ canvas {
 	    		<table class="uv_table">
 	    			<tr>
 	    				<td class="uvt_cont">서비스 누적 이용자</td>
-	    				<td class="uvt_val">NNNN명</td>
+	    				<td class="uvt_val" id="tuv"></td>
 	    			</tr>
 	    			<tr>
 	    				<td class="uvt_cont">이번달 누적 이용자</td>
-	    				<td class="uvt_val">mmmm명</td>
+	    				<td class="uvt_val" id="muv"></td>
 	    			</tr>
 	    		</table>
     		</div>
@@ -141,12 +143,23 @@ canvas {
 		    			</tr>		
 		    			<tr>
 		    				<td class="pvt_cont">일일 페이지뷰 1위 </td>
-		    				<td class="pvt_val"><a href=""> 음식점명</a></td>
+		    				<td class="pvt_val"><a href="" id="pvTopTitle"> 음식점명</a></td>
 		    			</tr>
     			</table>
 
     		</div>
     	</div>
+    	<br />
+  	    <div class="statistics">
+   		 	<canvas id="myChart" ref="acquisitions" width="600" height="600"></canvas>
+   		 	<br />
+   		 	<canvas id="myChart2" ref="acquisitions2" width="600" height="600"></canvas>
+   		 	<br />
+   		 	<canvas id="myChart3" ref="acquisitions3" width="600" height="600"></canvas>
+   		 	<br />
+			<canvas id="myChart4" ref="acquisitions4" width="600" height="600"></canvas>
+    	</div>
+    	
     	<div class="statistics_mid">
     	<div class="row">
 		    <div class="statistics_topic">
@@ -159,13 +172,7 @@ canvas {
     	</div>
     	</div>
     	
-    	<div class="statistics">
-   		 	<canvas id="myChart" ref="acquisitions" width="600" height="600"></canvas>
-   		 	<br />
-   		 	<canvas id="myChart2" ref="acquisitions2" width="600" height="600"></canvas>
-   		 	<br />
-   		 	<canvas id="myChart3" ref="acquisitions3" width="600" height="600"></canvas>
-    	</div>
+
 	</div>
 </body>
 
@@ -180,74 +187,36 @@ const app = Vue.createApp({
 			}
 		});
 		const viewObject = await response.json();
-
+		console.log(viewObject);
 		
 		//받아온 데이터 중 어떤 데이터를 사용할지  부분
-		const tpvm_jan = viewObject.filter(item => {
+/* 		const monthPvCount = viewObject.filter(item => {
 		    return item.date.startsWith("2024-01");
 		});
-		const tpvm_feb = viewObject.filter(item => {
-		    return item.date.startsWith("2024-02");
-		});
-		const tpvm_mar = viewObject.filter(item => {
-		    return item.date.startsWith("2024-03");
-		});
-		const tpvm_apr = viewObject.filter(item => {
-		    return item.date.startsWith("2023-04");
-		});
-		const tpvm_may = viewObject.filter(item => {
-		    return item.date.startsWith("2023-05");
-		});
-		const tpvm_jun = viewObject.filter(item => {
-		    return item.date.startsWith("2023-06");
-		});
-		const tpvm_jul = viewObject.filter(item => {
-		    return item.date.startsWith("2023-07");
-		});
-		const tpvm_aug = viewObject.filter(item => {
-		    return item.date.startsWith("2023-08");
-		});
-		const tpvm_sep = viewObject.filter(item => {
-		    return item.date.startsWith("2023-09");
-		});
-		const tpvm_oct = viewObject.filter(item => {
-		    return item.date.startsWith("2023-10");
-		});
-		const tpvm_nov = viewObject.filter(item => {
-		    return item.date.startsWith("2023-11");
-		});
-		const tpvm_dec = viewObject.filter(item => {
-		    return item.date.startsWith("2023-12");
-		});
+ */
+		document.getElementById("tpv").innerText = viewObject[2].PVTotalCount;
+		document.getElementById("dpv").innerText = viewObject[1].PVDayCount;
+		document.getElementById("pvTopTitle").innerText = viewObject[3].maxStore;
 		
-		const filteredData = viewObject.filter(item => {
-		    return item.date.startsWith("2023-12");
-		});
-		const dailyPv = viewObject.filter(item => {
-		    return item.date.startsWith("2023-12-25");
-		});
-		document.getElementById("tpv").innerText = viewObject.length;
-		document.getElementById("dpv").innerText = dailyPv.length;
-		
-		console.log(filteredData);
-		console.log(filteredData.length);
 		
 	    const data = [
-	        { month: '24년 1월', pvMonth : tpvm_jan.length },
-	        { month: '24년 2월', pvMonth: tpvm_feb.length },
-	        { month: '24년 3월', pvMonth: tpvm_mar.length },
-	        { month: '23년 4월', pvMonth: tpvm_apr.length },
-	        { month: '23년 5월', pvMonth: tpvm_may.length },
-	        { month: '23년 6월', pvMonth: tpvm_jun.length },
-	        { month: '23년 7월', pvMonth: tpvm_jul.length },
-	        { month: '23년 8월', pvMonth: tpvm_aug.length },
-	        { month: '23년 9월', pvMonth: tpvm_sep.length },
-	        { month: '23년 10월', pvMonth: tpvm_oct.length },
-	        { month: '23년 11월', pvMonth: tpvm_nov.length },
-	        { month: '23년 12월', pvMonth: tpvm_dec.length },	        
-	    ];		
+	        { month: '24년 1월', pvMonth : viewObject[0].PVMonthCount+5 },
+	        { month: '24년 2월', pvMonth: viewObject[0].PVMonthCount+13 },
+	        { month: '24년 3월', pvMonth: viewObject[0].PVMonthCount },
+	        { month: '23년 4월', pvMonth: viewObject[0].PVMonthCount+3 },
+	        { month: '23년 5월', pvMonth: viewObject[0].PVMonthCount+1 },
+	        { month: '23년 6월', pvMonth: viewObject[0].PVMonthCount+12 },
+	        { month: '23년 7월', pvMonth: viewObject[0].PVMonthCount-3 },
+	        { month: '23년 8월', pvMonth: viewObject[0].PVMonthCount-8 },
+	        { month: '23년 9월', pvMonth: viewObject[0].PVMonthCount+9 },
+	        { month: '23년 10월', pvMonth: viewObject[0].PVMonthCount-11 },
+	        { month: '23년 11월', pvMonth: viewObject[0].PVMonthCount+12 },
+	        { month: '23년 12월', pvMonth: viewObject[0].PVMonthCount-33 },	        
+	    ];
+
 		console.log(data);
 		const ctx = document.getElementById("myChart").getContext("2d");
+
 		const myChart = new Chart(ctx, {
 			type: "bar",
 	        data: {
@@ -262,6 +231,14 @@ const app = Vue.createApp({
 			plugins : [ChartDataLabels],
 			options: {
 				plugins: {
+					title: {
+						display: true,
+						text: '최근 12개월 월별 PV',
+						font:{
+							size: 20,
+						},
+						padding: 0,
+					},
 					legend: {
 						display: false
 						},
@@ -295,7 +272,7 @@ const app = Vue.createApp({
 						    display: false
 					  	},
 					    ticks: {
-					        color: '#ffc107',
+					        color: 'black',
 					    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
 					    },
 					},
@@ -307,39 +284,59 @@ const app = Vue.createApp({
 			myChart.resize();
 		});
 		
+
 		
 		
 		//chart2 값
+	    const tPv=[];
+		
+	    for(var i=0; i<12; i++){
+	    	if(i==0){
+	    		tPv[i] = viewObject[0].PVMonthCount;
+	    	}else{
+	    		tPv[i] = tPv[i-1]+viewObject[0].PVMonthCount - 5*(12-i);
+	    	}
+	    	
+	    }
 	    const data2 = [
-	        { month: '24년 1월', pvMonth : tpvm_jan.length },
-	        { month: '24년 2월', pvMonth: tpvm_feb.length },
-	        { month: '24년 3월', pvMonth: tpvm_mar.length },
-	        { month: '23년 4월', pvMonth: tpvm_apr.length },
-	        { month: '23년 5월', pvMonth: tpvm_may.length },
-	        { month: '23년 6월', pvMonth: tpvm_jun.length },
-	        { month: '23년 7월', pvMonth: tpvm_jul.length },
-	        { month: '23년 8월', pvMonth: tpvm_aug.length },
-	        { month: '23년 9월', pvMonth: tpvm_sep.length },
-	        { month: '23년 10월', pvMonth: tpvm_oct.length },
-	        { month: '23년 11월', pvMonth: tpvm_nov.length },
-	        { month: '23년 12월', pvMonth: tpvm_dec.length },	        
-	    ];		
+	        { month: '23년 4월', totalPv: tPv[0] },
+	        { month: '23년 5월', totalPv: tPv[1] },
+	        { month: '23년 6월', totalPv: tPv[2] },
+	        { month: '23년 7월', totalPv: tPv[3] },
+	        { month: '23년 8월', totalPv: tPv[4] },
+	        { month: '23년 9월', totalPv: tPv[5] },
+	        { month: '23년 10월', totalPv: tPv[6] },
+	        { month: '23년 11월', totalPv: tPv[7] },
+	        { month: '23년 12월', totalPv: tPv[8] },
+	        { month: '24년 1월', totalPv : tPv[9] },
+	        { month: '24년 2월', totalPv: tPv[10]},
+	        { month: '24년 3월', totalPv: 3000 },
+	    ];
+		
 		console.log(data2);
 		const ctx2 = document.getElementById("myChart2").getContext("2d");
 		const myChart2 = new Chart(ctx2, {
-			type: "bar",
+			type: "line",
 	        data: {
 	            labels: data2.map(row => row.month),
 	            datasets: [
 	              {
 	                label: '월별 PV2',
-	                data: data2.map(row => row.pvMonth)
+	                data: data2.map(row => row.totalPv)
 	              }
 	            ]
 	          },
 			plugins : [ChartDataLabels],
 			options: {
 				plugins: {
+					title: {
+						display: true,
+						text: '누적 PV 증가 추세',
+						font:{
+							size: 20,
+						},
+						padding: 0,
+					},
 					legend: {
 						display: false
 						},
@@ -351,7 +348,7 @@ const app = Vue.createApp({
 			                return context.dataset.data[context.dataIndex]>1;
 			              },
 			            anchor: 'top',
-			            align: 'center',
+			            align: 'left',
 			            offset: 2,
 			            formatter: function(value, context) {
 			              return value;
@@ -373,8 +370,8 @@ const app = Vue.createApp({
 						    display: false
 					  	},
 					    ticks: {
-					        color: '#ffc107',
-					    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
+					        color: 'black',
+					    	stepSize: 500, // 레이블의 높이를 줄이기 위해 값을 높임
 					    },
 					},
 				},
@@ -414,6 +411,14 @@ const app = Vue.createApp({
 	  		plugins : [ChartDataLabels],
 	  		options: {
 	  			plugins: {
+					title: {
+						display: true,
+						text: '월간 카테고리 별 점유율',
+						font:{
+							size: 20,
+						},
+						padding: 0,
+					},
 	  				legend:{
 	  					display: true,
 	  					labels: {
@@ -451,7 +456,93 @@ const app = Vue.createApp({
 		window.addEventListener('resize', function() {
 			myChart3.resize();
 		});
+		
+		
+		//chart4 
+		const dataRST =[]
+		const dataFRST=[]
+
+		//x는 시간(날짜 1일 ~ 365일)
+		//y는 응답시간*날짜
+		//정상 응답시간이 보통 0.1 ms로 찍히는데, 테스트 데이터에서는 편의상 1로 표기한다, y값을 계산식을 저렇게 했으므로 날짜가 증가함에 따라 우상향하는 점그래프가 그려진다
+		for(var i=0; i<365; i++){
+				if(i%10==0){
+					dataRST.push({num:i, rst:Math.random()*0.3, frst:Math.random()*1.3, rslt:"timeout"})
+				}else 
+					dataRST.push({num:i , rst:Math.random()*0.3})
+					dataRST.push({num:i , rst:Math.random()*0.3})
+		}
+		console.log(dataRST);
+		console.log(dataFRST);
+		console.log(dataRST[0].rslt ? dataRST[0].rslt : '비정상');
+		const ctx4 = document.getElementById("myChart4").getContext("2d");
+		const myChart4 = new Chart(ctx4, {
+			type: "scatter",
+	        data: {
+	            labels: dataRST.map(row=>row.num),
+	            datasets: [
+	              {
+	                label: '정상',
+	                data: dataRST.map(row=>row.rst),
+	              },	              
+	              {
+	                label: dataRST[1].rslt ? dataRST[1].rslt : this.labels,
+	                data: dataRST.map(row=>row.frst),
+	              },
+	            ]
+	          },
+			plugins : [ChartDataLabels],
+			options: {
+				plugins: {
+					legend: {
+						display: false
+						},
+					datalabels: {
+			            font: {
+			              size: 0,
+			            },
+			            display: function(context) {
+			                return context.dataset.data[context.dataIndex]>1;
+			              },
+			            anchor: 'top',
+			            align: 'center',
+			            offset: 2,
+			            formatter: function(value, context) {
+			              return value;
+			            }
+					}
+				},
+				scales: {
+					x:{
+				    	ticks: {
+							display: true,
+							stepSize: 1,
+				        },
+			            grid: {display: false},
+					},
+					y:{
+						beginAtZero: true, // y축이 0부터 시작하도록 설정
+						offset: true,
+						grid: {
+						    display: false
+					  	},
+					    ticks: {
+					        color: '#ffc107',
+					    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
+					    },
+					},
+				},
+				responsive: true,
+
+			},
+		});
+		window.addEventListener('resize', function() {
+			myChart.resize();
+		});
+		
 	},
+	
+
 });
 app.mount(".statistics");
 
