@@ -7,7 +7,7 @@
 		VALUES( #{id}, #{pwd}, #{email}, SYSDATE)
 	</insert>
 	<select id="getData" parameterType="string" resultType="usersDto">
-		SELECT id, pwd, profile, email, regdate, ban
+		SELECT id, pwd, profile, email, regdate, ban, loggedIn
 		FROM users
 		WHERE id=#{id}
 	</select>
@@ -25,7 +25,7 @@
 	 -->
 	<update id="update" parameterType="usersDto">
 		UPDATE users
-		SET email=#{email }, profile=#{profile, jdbcType=VARCHAR}
+		SET email=#{email }, profile=#{profile, jdbcType=VARCHAR}, loggedIn=#{loggedIn}
 		WHERE id=#{id }
 	</update>
 	<update id="ban" parameterType="string">
