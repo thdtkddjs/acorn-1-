@@ -2,6 +2,7 @@ package com.gura.acorn.Interceptor;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
@@ -101,8 +102,15 @@ public class LoggingInterceptor implements HandlerInterceptor {
 		map.put("storeName", storeName);
 		map.put("storeId", storeId);
 		
+		Map<String, Object> map2 = new HashMap<>();
+		map2.put("errorCode", "OK");
+		map2.put("time", LocalDateTime.now().toString());
+		map2.put("elapsedTime", 0);
+		map2.put("errorMsg", null);
+		
 		try {
 			ElasticUtil.getInstance().create(index, map);
+			ElasticUtil.getInstance().create("error2", map2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
