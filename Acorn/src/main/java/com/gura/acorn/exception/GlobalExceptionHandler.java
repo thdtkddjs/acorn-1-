@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
 		map.put("elapsedTime", System.currentTimeMillis() - (Long) request.getAttribute("startTime"));
 		logger.info(map.toString());
 		try {
-			ElasticUtil.getInstance().create("error", map);
+			ElasticUtil.getInstance().create("error2", map);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

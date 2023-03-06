@@ -87,7 +87,7 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "test3";
+		String index = "testlog3";
 		String field = "date";
 		int Month = 3;
 		LocalDate dateStart = LocalDate.of(2023, Month ,1);
@@ -115,19 +115,19 @@ public class ShopController {
 		return null;
 	}
 	
-//	@RequestMapping("/es/test2")
-//	@ResponseBody
-//	public List<Map<String, Object>> test2(){
-//		String index = "test3";
-//		
-//		try {
-//			return Esservice.searchPV2(index);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}	
-//		return null;
-//	}
+	@RequestMapping("/es/test2")
+	@ResponseBody
+	public List<Map<String, Object>> test2(){
+		String index = "test3";
+		
+		try {
+			return Esservice.searchError();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return null;
+	}
 //	
 //	@RequestMapping("/es/test3")
 //	@ResponseBody
