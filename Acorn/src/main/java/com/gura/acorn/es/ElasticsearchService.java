@@ -3,6 +3,7 @@ package com.gura.acorn.es;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -60,7 +61,13 @@ public class ElasticsearchService {
                 .field("date")
                 .calendarInterval(DateHistogramInterval.MONTH)
                 .order(BucketOrder.key(true));
-
+    	
+    	AggregationBuilder storeAggregation = AggregationBuilders.terms("store_count")
+                .field("storeName.keyword")
+                .size(1)
+                .order(BucketOrder.count(false));
+        	    
+    	dateAggregation.subAggregation(storeAggregation);
         sourceBuilder.aggregation(dateAggregation);
         
         searchRequest.source(sourceBuilder);
@@ -78,7 +85,17 @@ public class ElasticsearchService {
             LocalDateTime date = LocalDateTime.parse(groupKey, DateTimeFormatter.ISO_DATE_TIME);
             String formattedDate = date.format(formatter);
             long docCount = bucket.getDocCount();
-            groupCounts.put(formattedDate, docCount);
+            
+            Map<String, Object> pvCounts = new HashMap<>();
+            pvCounts.put("total", docCount);
+            Terms storeAgg = bucket.getAggregations().get("store_count");
+            if (storeAgg.getBuckets().size() > 0) {
+            	String storeName = storeAgg.getBuckets().get(0).getKeyAsString();
+                long maxCount = storeAgg.getBuckets().get(0).getDocCount();
+                pvCounts.put(storeName, maxCount);
+        	}
+            
+            groupCounts.put(formattedDate, pvCounts);        
         }
 
         return groupCounts;
@@ -203,13 +220,41 @@ public class ElasticsearchService {
 
         searchRequest.source(searchSourceBuilder);
 
-        System.out.println(searchSourceBuilder);
-
         SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("PVDayCount", searchResponse.getHits().getTotalHits().value);
         
+        return resultMap;
+    }
+    
+    public Map<String, Object> searchErrorLog() throws IOException {
+        SearchRequest searchRequest = new SearchRequest("error2");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        RangeQueryBuilder rangeQuery = QueryBuilders
+                .rangeQuery("time")
+                .gte(LocalDate.now())
+                .lte(LocalDate.now())
+                .format("yyyy-MM-dd");
+
+        searchSourceBuilder.query(rangeQuery);
+
+        AggregationBuilder aggr = AggregationBuilders.terms("code_count").field("errorCode.keyword");
+        searchSourceBuilder.aggregation(aggr);
+
+        searchRequest.source(searchSourceBuilder);
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+
+        Terms codeCount = searchResponse.getAggregations().get("code_count");
+        Map<String, Object> resultMap = new HashMap<>();
+        for (Terms.Bucket bucket : codeCount.getBuckets()) {
+            String groupKey = bucket.getKeyAsString();
+            long docCount = bucket.getDocCount();
+            resultMap.put(groupKey, docCount);
+        }
+
         return resultMap;
     }
     
@@ -448,32 +493,34 @@ public int count() {
 //  }
   
   //기간내의 모든 데이터 검색
-//  public List<Map<String, Object>> searchByDateRange(String indexName, String field, Object start, Object end) throws IOException {
-//  	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
-//      SearchRequest searchRequest = new SearchRequest(indexName);
-//      SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//      
-//      RangeQueryBuilder rangeQuery = QueryBuilders
-//              .rangeQuery(field)
-//              .gte(start)
-//              .lte(end)
-//              .format("yyyy-MM-dd");
-//
-//      searchSourceBuilder.query(rangeQuery);
-//      searchSourceBuilder.size(1000);
-//      searchRequest.source(searchSourceBuilder);
-//
-//      SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-//      SearchHit[] searchHits = searchResponse.getHits().getHits();
-//
-//      List<Map<String, Object>> resultList = new ArrayList<>();
-//      for (SearchHit hit : searchHits) {
-//          Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-//          resultList.add(sourceAsMap);
-//      }
-//
-//      return resultList;
-//  }
+  public List<Map<String, Object>> searchError() throws IOException {
+      SearchRequest searchRequest = new SearchRequest("error2");
+      SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+      
+      LocalDateTime now = LocalDateTime.now();
+      LocalDateTime fiveMinutesAgo = now.minus(5, ChronoUnit.MINUTES);
+      
+      RangeQueryBuilder rangeQuery = QueryBuilders
+    		  .rangeQuery("time")
+    		  .gte(fiveMinutesAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+    		  .lte(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+    		  .format("strict_date_optional_time||epoch_millis");
+
+      searchSourceBuilder.query(rangeQuery);
+      searchSourceBuilder.size(1000);
+      searchRequest.source(searchSourceBuilder);
+
+      SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+      SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+      List<Map<String, Object>> resultList = new ArrayList<>();
+      for (SearchHit hit : searchHits) {
+          Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+          resultList.add(sourceAsMap);
+      }
+
+      return resultList;
+  }
   
   
   //기간내의 데이터 검색 + 그 안의 storeId 로 검색
