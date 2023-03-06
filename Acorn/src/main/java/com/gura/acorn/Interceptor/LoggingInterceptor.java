@@ -107,7 +107,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
 		map2.put("time", LocalDateTime.now().toString());
 		map2.put("elapsedTime", 0);
 		map2.put("errorMsg", null);
-		
+
 		try {
 			ElasticUtil.getInstance().create(index, map);
 			ElasticUtil.getInstance().create("error2", map2);
@@ -115,6 +115,6 @@ public class LoggingInterceptor implements HandlerInterceptor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        return true;
+		return true;
     }
 }

@@ -31,8 +31,6 @@ import org.elasticsearch.search.aggregations.bucket.histogram.Histogram;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
@@ -422,6 +420,37 @@ public int count() {
     	
     	return example;
     }
+    
+    
+    public List<Map<String, Object>> searchError() throws IOException {
+        SearchRequest searchRequest = new SearchRequest("error2");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime fiveMinutesAgo = now.minus(5, ChronoUnit.MINUTES);
+        
+        RangeQueryBuilder rangeQuery = QueryBuilders
+              .rangeQuery("time")
+              .gte(fiveMinutesAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+              .lte(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+              .format("strict_date_optional_time||epoch_millis");
+
+        searchSourceBuilder.query(rangeQuery);
+        searchSourceBuilder.size(1000);
+        searchRequest.source(searchSourceBuilder);
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+        SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        for (SearchHit hit : searchHits) {
+            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            resultList.add(sourceAsMap);
+        }
+
+        return resultList;
+    }
+    
     
     //index의 모든 id별 data 추출
 //  public List<Map<String, Object>> getAllDataFromIndex(String indexName) throws IOException {
