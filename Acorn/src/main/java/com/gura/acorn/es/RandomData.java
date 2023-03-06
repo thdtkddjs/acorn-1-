@@ -56,17 +56,20 @@ public class RandomData {
 			//7개의 id 중 하나를 랜덤으로 정하는데 필요한 값
 			int ran1=(int)(Math.random()*7);
 			//pageId 및 Type을 정하는 값
-			int ran2=(int)(Math.random()*6);
+			int ran2=(int)(Math.random()*30);
 			//pageType이 Shop일 경우 list 인지 detail인지를 구분
 			int ran3=(int)(Math.random()*2);
 			//storeId 및 storeName을 정하는 값
 			int ran4=(int)(Math.random()*55);
+			//7개의 카테고리를 정하는 값
+			int ran5=(int)(Math.random()*7);
 			
 			String userId = null;
 			String pageType = null;
 			int pageId = 0;
 			int storeId = 0;
 			String storeName = null;
+			String category = null;
 			
 			
 			switch (ran1) {
@@ -116,6 +119,29 @@ public class RandomData {
     				pageType = "DETAIL";
     				storeId = ran4;
     				storeName = "store"+ran4;
+    				switch(ran5) {
+    				case 0:
+    					category = "한식";
+    					break;
+    				case 1:
+    					category = "일식";
+    					break;
+    				case 2: 
+    					category = "양식";
+    					break;
+    				case 3:
+    					category = "중식";
+    					break;
+    				case 4:
+    					category = "분식";
+    					break;
+    				case 5:
+    					category = "패스트푸드";
+    					break;
+    				case 6: 
+    					category = "기타";
+    					break;
+    				}
     			}else {
     				pageType = "SHOPLIST";
     			}
@@ -136,10 +162,11 @@ public class RandomData {
 			map2.put("pageType", pageType);
 			map2.put("storeName", storeName);
 			map2.put("storeId", storeId);
+			map2.put("category", category);
 			//데이터를 {"index":{"_index":"testlog"}
 			//		 {"id": xx, "url" : xx, "date" : xx}
 			//형식으로 만들어 bulkrequest에 입력한다.
-			rq.add(new IndexRequest("ygtest").source(map2));
+			rq.add(new IndexRequest("ygtest2").source(map2));
 		}
 		
 		

@@ -42,12 +42,13 @@ public class GlobalExceptionHandler {
 	public String handleException(Exception ex, HttpServletRequest request) {
 		String msg = "이럴수가! ";
 		Map<String, Object> map = new HashMap<>();
-		map.put("errorCode", ex.toString());
+		map.put("errorCode", "NG");
 		map.put("time", LocalDateTime.now().toString());
 		map.put("elapsedTime", System.currentTimeMillis() - (Long) request.getAttribute("startTime"));
+		map.put("errorMsg", ex.toString());
 		logger.info(map.toString());
 		try {
-			ElasticUtil.getInstance().create("error", map);
+			ElasticUtil.getInstance().create("error2", map);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
