@@ -15,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="resources/css/shop_list.css">
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-<link rel="shortcut icon" href="#">
+<link rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;,">
 </head>
 
 <body>
@@ -101,7 +101,10 @@
 		</div>
 		<div class="block_content"></div>
 		<div id="simple-list-item-3" class="hot_place">
-			<p>HOT PLACE
+			<p style="  -webkit-user-select:none;
+						  -moz-user-select:none;
+						  -ms-user-select:none;
+						  user-select:none">HOT PLACE
 			<br />
 			<span>2월 방문자, 평점 </span><strong>TOP 10 !</strong>
 			</p>
@@ -112,16 +115,16 @@
 				<c:forEach var="tmp" items="${list }">
 						<a href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}&keyword=${keyword}" style="margin-right : 20px; background-color:white; height:367px; border-radius:10px; overflow:hidden;">
 		   					<span class="shop_item_img">
-		   						<img src="${pageContext.request.contextPath}${tmp.imagePath}" alt="...">
+		   						<img src="${pageContext.request.contextPath}/shop/images/${tmp.imagePath}" alt="...">
 		   					</span>
 			   				<div class="shop_item_content">
-			   					<span>${tmp.grade }</span>
+			   					<span style="font-weight: bold; color: red; font-size: 20px;">${tmp.grade }</span>
 			   					<div class="shop_title">${tmp.title}</div>
 			   					<ul>
 			   						<li class="shop_item_content_detail"><img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png" alt="주소" class="shop_info_icon" title="주소"/>${tmp.addr }</li>
 			   						<li class="shop_item_content_detail">${tmp.content }</li>
 			   						<li class="shop_item_content_detail">${tmp.categorie}, ${tmp.startTime}~ ${tmp.endTime}, ${tmp.telNum}</li>
-			   						<li class="shop_item_content_detail">👀 999+, review 999+, etc..</li>
+			   						<li class="shop_item_content_detail">👀 페이지 뷰 : <b style="color:black;">999+</b>, ✏️ 리뷰 : <b style="color:black;">${tmp.rCount}</b></li>
 			   					</ul>
 			   				</div>	 
 						</a>
@@ -144,15 +147,34 @@
 				});
 		</script>
 		<div id="simple-list-item-4" class="statistics">
-			<p>MZ 세대가 가장 많이 방문한 맛집은?!
-			<br />
-			<span>MZ가 선호하는 트렌드!</span>
-			<br /><br />
-			<strong class="cloud_effect" style="place-content: center;">
-				FOOD STATISTICS 보기
-			</strong>
+			<p style="z-index : 3;
+			  -webkit-user-select:none;
+			  -moz-user-select:none;
+			  -ms-user-select:none;
+			  user-select:none
+			  ">이번 달 가장 인기 있는 카테고리는?!
+				<br />
+				<span>월간 인기 카테고리 차트</span>
+				<br /><br />
+				<strong class="cloud_effect" style="place-content: center;">
+					FOOD STATISTICS
+				</strong>
+				<br />
+				<a class="btn btn-success" href="${pageContext.request.contextPath}/statistics/statistics" style="    height: 50px;
+			    width: 200px;
+			    text-decoration: none;
+			    font-weight: bold;
+			    display: flex;
+			    align-items: center;
+			    justify-content: center;
+			    margin: auto;">지금 보러가기</a>
 			</p>
-			
+			<div class="statistics_bg1" id="st_img">
+				<img src="${pageContext.request.contextPath}/resources/images/pie_chart.svg" alt="" />
+			</div>
+			<div class="statistics_bg2" id="st_img">
+				<img src="${pageContext.request.contextPath}/resources/images/chart_img.jpg" alt="" />
+			</div>
 		</div>
 	</div>     
 

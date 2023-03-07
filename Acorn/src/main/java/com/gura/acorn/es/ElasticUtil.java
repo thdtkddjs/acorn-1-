@@ -1,48 +1,32 @@
 package com.gura.acorn.es;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.ibatis.io.Resources;
 import org.elasticsearch.action.ActionListener;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.search.MultiSearchRequest;
-import org.elasticsearch.action.search.MultiSearchRequestBuilder;
-import org.elasticsearch.action.search.MultiSearchResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Cancellable;
 import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.Response;
 import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.RestHighLevelClientBuilder;
-import org.elasticsearch.common.Strings;
-import org.elasticsearch.common.document.DocumentField;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.xcontent.XContentBuilder;
-import org.elasticsearch.xcontent.XContentFactory;
-import org.elasticsearch.xcontent.XContentType;
 import org.springframework.stereotype.Service;
-
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 
 @Service
 public class ElasticUtil {
@@ -75,10 +59,10 @@ public class ElasticUtil {
 		return self;
 	}
 	//특정 index/id에 있는 정보를 Map<String,Obect>형태로 받아온다.
-	public Map<String,Object> getReponse(String index, String id) {
+	public Map<String,Object> getReponse(String index) {
 		GetResponse response = null; 
 		
-		GetRequest getRequest = new GetRequest(index, id);
+		GetRequest getRequest = new GetRequest(index);
 		RequestOptions options = RequestOptions.DEFAULT;
 		try {
 		response = client.get(getRequest, options);
@@ -92,17 +76,15 @@ public class ElasticUtil {
 	//특정 index/id에 Map<String, Object>방식으로 저장된 data를 전달하여 저장한다.
 	//본래는 json방식으로 전달해야하지만 request 과정에서 자동으로 변환해준다.
 	//다만 type이 상당히 엄격하다.
-	public Cancellable create(String index, String id, Map<String, Object> data ) throws IOException {
+	public Cancellable create(String index, Map<String, Object> data ) throws IOException {
 		ActionListener<IndexResponse> listener= null;
 		
-		IndexRequest indexRequest = new IndexRequest(index).id(id).source(data);
+		IndexRequest indexRequest = new IndexRequest(index).source(data);
 		System.out.println(indexRequest);
 		//비동기 방식으로 index 작업을 진행한다.
 		Cancellable response = client.indexAsync(indexRequest, RequestOptions.DEFAULT, listener = new ActionListener<IndexResponse>() {
 		    @Override
 		    public void onResponse(IndexResponse indexResponse) {
-		        System.out.println("성공!");
-		        System.out.println(indexResponse);
 		    }
 
 		    @Override
@@ -115,94 +97,92 @@ public class ElasticUtil {
 		return response;
 	}
 	
-	//search(인덱스 전체를 search한다.)
-	public List<Map<String, Object>> simplesearch(String index, int size){
-		List<Map<String, Object>> result=new ArrayList<>();
-		SearchRequest searchRequest = new SearchRequest(index); 
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder(); 
-		searchSourceBuilder.query(QueryBuilders.matchAllQuery()).size(size); 
-		searchRequest.source(searchSourceBuilder);
-		
-		try {
-			SearchResponse response=client.search(searchRequest, RequestOptions.DEFAULT);
-			SearchHits hits=response.getHits();
-			for (SearchHit hit:hits) {
-				result.add(hit.getSourceAsMap());
+		//search(인덱스 전체를 search한다.)
+		public List<Map<String, Object>> simplesearch(String index, int size){
+			List<Map<String, Object>> result=new ArrayList<>(); 
+			SearchRequest searchRequest = new SearchRequest(index); 
+			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+			searchSourceBuilder.query(QueryBuilders.matchAllQuery()).size(size); 
+			searchRequest.source(searchSourceBuilder);
+
+			try {
+				SearchResponse response=client.search(searchRequest, RequestOptions.DEFAULT);
+				SearchHits hits=response.getHits();
+				for (SearchHit hit:hits) {
+					result.add(hit.getSourceAsMap());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			return result;
 		}
-		
-		return result;
-	}
-	
-	//search(조건을 걸어 검색한다.)
-	//matchQuery : analyzer로 분석하여 형태소에 걸맞는 정보를 순서에 상관없이 출력한다.
-	//ex)2023-10-10으로 검색했을때 10이란 숫자가 date의 시간 10:00의 10도 정답인것으로 인지한다.
-	//matchphraseQuery : 위와 같은 형태지만 문자열의 순서를 지킨다.(어지간해선 이걸 쓰는게 좋다.)
-	//termQuery : 정확히 내용이 일치하는 것만 출력한다.(id로만 쓰자. 나머지는 제대로 작동안함)
-	public List<Map<String, Object>> detailsearch(String index, String field, String text, int size){
-		List<Map<String, Object>> result=new ArrayList<>();
-		String condition = "";
-		SearchResponse response= null;
-		SearchRequest searchRequest = new SearchRequest(index); 
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder(); 
-		if(field.equals("date")) {
-			condition = "20"+ text;
-			searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(field, condition)).size(size); 
-		}else if(field.equals("url")){
-			condition = "http://localhost:9200/"+text;
-			searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(field, condition)).size(size); 
-		}else {
-			condition = text;
-			searchSourceBuilder.query(QueryBuilders.termQuery(field, condition)).size(size); 
-		}
-		searchRequest.source(searchSourceBuilder);
-		
-		try {
-			response=client.search(searchRequest, RequestOptions.DEFAULT);
-			SearchHits hits=response.getHits();
-			for (SearchHit hit:hits) {
-				result.add(hit.getSourceAsMap());
-				
+
+		//search(조건을 걸어 검색한다.)
+		//matchQuery : analyzer로 분석하여 형태소에 걸맞는 정보를 순서에 상관없이 출력한다.
+		//ex)2023-10-10으로 검색했을때 10이란 숫자가 date의 시간 10:00의 10도 정답인것으로 인지한다.
+		//matchphraseQuery : 위와 같은 형태지만 문자열의 순서를 지킨다.(어지간해선 이걸 쓰는게 좋다.)
+		//termQuery : 정확히 내용이 일치하는 것만 출력한다.(id로만 쓰자. 나머지는 제대로 작동안함)
+		public List<Map<String, Object>> detailsearch(String index, String field, String text, int size){
+			List<Map<String, Object>> result=new ArrayList<>();
+			String condition = "";
+			SearchResponse response= null;
+			SearchRequest searchRequest = new SearchRequest(index); 
+			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder(); 
+			if(field.equals("date")) {
+				condition = text;
+				searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(field, condition)).size(size); 
+			}else if(field.equals("url")){
+				condition = text;
+				searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(field, condition)).size(size); 
+			}else {
+				condition = text;
+				searchSourceBuilder.query(QueryBuilders.termQuery(field, condition)).size(size); 
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return result;
-	}
-	//조건을 여러개 걸어서 검색
-	//parameter는 어떻게 조건이 걸릴지 몰라서 일단은 detailsearch와 동일하게 정해뒀음. 
-	//size 말곤 실제로 쓰지는 않음.
-	public List<Map<String, Object>> multisearch(String index, String field, String text, int size){
-		List<Map<String, Object>> result=new ArrayList<>();
-		String condition = "";
-		SearchResponse response= null;
-		SearchRequest searchRequest = new SearchRequest(index); 
-		SearchSourceBuilder sSBuilder = new SearchSourceBuilder();
-		//BoolQuery로 id조건과 date 조건을 등록
-		//must -> 포함되어야 함
-		//must not -> 포함되면 안됨		
-		//filter, should 등의 다른 메소드들은 따로 공부해서 추가해볼 예정, 일단은 이정도만으로도 충분하다.
-		sSBuilder.query(QueryBuilders.boolQuery()
-				.must(QueryBuilders.termQuery("id", "admin"))
-				.must(QueryBuilders.matchPhraseQuery("date", "2023-04-01")));
-		//너무 길어졌으므로 사이즈를 따로 분리
-		sSBuilder.size(size);
-		searchRequest.source(sSBuilder);
-		
-		try {
-			response=client.search(searchRequest, RequestOptions.DEFAULT);
-			SearchHits hits=response.getHits();
-			for (SearchHit hit:hits) {
-				result.add(hit.getSourceAsMap());
-				
+			searchRequest.source(searchSourceBuilder);
+
+			try {
+				response=client.search(searchRequest, RequestOptions.DEFAULT);
+				SearchHits hits=response.getHits();
+				for (SearchHit hit:hits) {
+					result.add(hit.getSourceAsMap());
+
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+			return result;
 		}
-		return result;
-	}
-	
+		//조건을 여러개 걸어서 검색
+		//parameter는 어떻게 조건이 걸릴지 몰라서 일단은 detailsearch와 동일하게 정해뒀음. 
+		//size 말곤 실제로 쓰지는 않음.
+		public List<Map<String, Object>> multisearch(String index, String field, String text, int size){
+			List<Map<String, Object>> result=new ArrayList<>();
+			String condition = "";
+			SearchResponse response= null;
+			SearchRequest searchRequest = new SearchRequest(index); 
+			SearchSourceBuilder sSBuilder = new SearchSourceBuilder();
+			//BoolQuery로 id조건과 date 조건을 등록
+			//must -> 포함되어야 함
+			//must not -> 포함되면 안됨		
+			//filter, should 등의 다른 메소드들은 따로 공부해서 추가해볼 예정, 일단은 이정도만으로도 충분하다.
+			sSBuilder.query(QueryBuilders.boolQuery()
+					.must(QueryBuilders.termQuery("id", "admin"))
+					.must(QueryBuilders.matchPhraseQuery("date", "2023-04-01")));
+			//너무 길어졌으므로 사이즈를 따로 분리
+			sSBuilder.size(size);
+			searchRequest.source(sSBuilder);
+
+			try {
+				response=client.search(searchRequest, RequestOptions.DEFAULT);
+				SearchHits hits=response.getHits();
+				for (SearchHit hit:hits) {
+					result.add(hit.getSourceAsMap());
+
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return result;
+		}
 }

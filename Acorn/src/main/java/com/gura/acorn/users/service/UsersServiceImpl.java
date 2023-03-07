@@ -1,7 +1,10 @@
 package com.gura.acorn.users.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gura.acorn.es.ElasticUtil;
 import com.gura.acorn.exception.loginException;
 import com.gura.acorn.users.dao.UsersDao;
 import com.gura.acorn.users.dto.UsersDto;
@@ -27,6 +32,9 @@ public class UsersServiceImpl implements UsersService{
 	
 	@Autowired
 	private UsersDao dao;
+	
+	@Value("${file.location}")
+	private String fileLocation;
 	
 	@Override
 	public Map<String, Object> isExistId(String inputId) {
@@ -73,6 +81,21 @@ public class UsersServiceImpl implements UsersService{
 		if(isValid) {
 			//로그인 처리를 한다.
 			session.setAttribute("id", resultDto.getId());
+			if(!resultDto.getLoggedIn().equals("yes")) {
+				resultDto.setLoggedIn("yes");
+				dao.update(resultDto);
+				
+				Map<String, Object> map = new HashMap<>();
+				map.put("userId", resultDto.getId());
+				map.put("date", LocalDate.now().toString());
+				
+				try {
+					ElasticUtil.getInstance().create("uvtest", map);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		// 로그인 정보를 저장하기로 했는지 확인해서 저장하기로 했다면 쿠키로 응답한다.
 		String isSave = dto.getIsSave();
@@ -150,12 +173,13 @@ public class UsersServiceImpl implements UsersService{
 		String saveFileName=System.currentTimeMillis()+orgFileName;
 		
 		// webapp/upload 폴더까지의 실제 경로 얻어내기 
-		String realPath=request.getServletContext().getRealPath("/resources/upload");
+		String realPath = fileLocation;
 		// upload 폴더가 존재하지 않을경우 만들기 위한 File 객체 생성
 		File upload=new File(realPath);
 		if(!upload.exists()) {//만일 존재 하지 않으면
 			upload.mkdir(); //만들어준다.
 		}
+		String errMsg=null;
 		try {
 			//파일을 저장할 전체 경로를 구성한다.  
 			String savePath=realPath+File.separator+saveFileName;
@@ -163,12 +187,13 @@ public class UsersServiceImpl implements UsersService{
 			mFile.transferTo(new File(savePath));
 		}catch(Exception e) {
 			e.printStackTrace();
+			errMsg=e.getMessage();
 		}
 		
 		// json 문자열을 출력하기 위한 Map 객체 생성하고 정보 담기 
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("imagePath", "/resources/upload/"+saveFileName);
-		
+		map.put("imagePath", saveFileName);
+		map.put("errMsg", errMsg);
 		return map;
 	}
 
@@ -280,13 +305,8 @@ public class UsersServiceImpl implements UsersService{
 		   request.setAttribute("encodedK", encodedK);
 		   request.setAttribute("totalRow", totalRow);
 		   request.setAttribute("condition", condition);
-		
 	}
-	@Override
-	public void getData(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	@Override
 	public void banUser(HttpServletRequest request) {
 		//수정할 회원의 아이디
@@ -295,4 +315,14 @@ public class UsersServiceImpl implements UsersService{
 		dao.ban(id);
 	}
 	
+	@Override
+	public void loggedInReset() {
+		UsersDto dto = new UsersDto();
+		List<UsersDto> list = dao.getList2(dto);
+		
+		for(UsersDto tmp: list) {
+			tmp.setLoggedIn("no");
+			dao.update(tmp);
+		}
+	}
 }

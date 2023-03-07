@@ -67,7 +67,7 @@ p{
 	border-top : 3px solid blue;
 }
 ul>li{
-	border-top: none;
+	border: none;
 	padding-top: 0;
 }
 ul, li{
@@ -188,7 +188,7 @@ p{
 										<a href="detail?num=${tmp.num }&condition=${condition}&keyword=${encodedK}">${tmp.title }</a>
 									</span>
 									<div class="shop_link">
-										<a class="review_list_store_name" href="detail?num=${tmp.num}" style="position:absolute; top: 3px;">
+										<a class="review_list_store_name" href="${pageContext.request.contextPath}/shop/detail?num=${tmp.num}" style="position:absolute; top: 3px;">
 											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shop-window" viewBox="0 0 16 16">
 												<path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zm2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5z"/>
 											</svg>
@@ -200,7 +200,7 @@ p{
 								</li>
 								<li class="content_info">
 									<span class="info_style">평점 </span>${tmp.grade }점
-									<span class="info_style">리뷰 </span>${tmp.reviewCount }개
+									<span class="info_style">리뷰 </span>${tmp.rCount }개
 									<span class="info_style">페이지뷰 </span>PV 회
 								</li>
 							
@@ -212,7 +212,15 @@ p{
 				$(document).ready(function () {
 				    var search = '${keyword}';
 				    console.log("search : "+search);
-				    $("span:contains('"+search+"')").each(function () {
+				    $(".review_content_box:contains('"+search+"')").each(function () {
+				        var regex = new RegExp(search,'gi');
+				        $(this).html( $(this).text().replace(regex, "<span class='txt-hlight'>"+search+"</span>") );
+				    });
+				    $(".tit_style:contains('"+search+"')").each(function () {
+				        var regex = new RegExp(search,'gi');
+				        $(this).html( $(this).text().replace(regex, "<span class='txt-hlight'>"+search+"</span>") );
+				    });
+				    $(".keyword_style:contains('"+search+"')").each(function () {
 				        var regex = new RegExp(search,'gi');
 				        $(this).html( $(this).text().replace(regex, "<span class='txt-hlight'>"+search+"</span>") );
 				    });
@@ -228,7 +236,7 @@ p{
 				<div class="result_header" style="border-bottom: 3px solid blue;">
 					<c:choose>
 						<c:when test="${rvtotalRow gt 5}">
-							<a class="more_info" href="${pageContext.request.contextPath}/shop/review_list?keyword=${rvkeyword}">더보기 > </a>
+							<a class="more_info" href="${pageContext.request.contextPath}/search/review_list?keyword=${rvkeyword}">더보기 > </a>
 						</c:when>
 					</c:choose>
 					<p class="result_title">리뷰 목록(${rvtotalRow}건)</p>
@@ -248,8 +256,8 @@ p{
 										<li id="reli${tmp.num }">
 									</c:if>
 	
-									<dl>
-										<dt class="row">
+									<dl style="border-bottom:1px solid #cecece; margin-bottom : 0;">
+										<dt class="row" style="padding: 5px;">
 											<div class="comment_box">
 												<!-- 유저 프로필 -->
 												<div class="review_profile col">
@@ -266,13 +274,13 @@ p{
 													</c:if>
 													<c:if test="${not empty tmp.profile }">
 														<img class="profile-image"
-															src="${pageContext.request.contextPath}${tmp.profile }" />
+															src="${pageContext.request.contextPath}/shop/images/${tmp.profile }" />
 													</c:if>
 												</div>
 												<span class="col">${tmp.writer }</span> <span class="bg_bar"></span>
 												<span style="font-weight: 100; font-size: 13px; color: gray;">${tmp.regdate }</span>
 												<div class="shop_link">
-													<a class="review_list_store_name" href="detail?num=${tmp.ref_group}">
+													<a class="review_list_store_name" href="${pageContext.request.contextPath}/shop/detail?num=${tmp.ref_group}">
 														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shop-window" viewBox="0 0 16 16">
 															<path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h12V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zm2 .5a.5.5 0 0 1 .5.5V13h8V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5z"/>
 														</svg>
@@ -312,7 +320,7 @@ p{
 												</c:when>
 												<c:otherwise>
 													<img class="review_img"
-														src="${pageContext.request.contextPath}${tmp.imagePath}" />
+														src="${pageContext.request.contextPath}/shop/images/${tmp.imagePath}" />
 												</c:otherwise>
 											</c:choose>
 										</div>

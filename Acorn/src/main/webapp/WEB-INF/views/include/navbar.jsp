@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
 	<div class="header_inner" style="border : 1px solid #ededed">
 		<div class="sm_menu">
 			<img src="${pageContext.request.contextPath}/resources/images/hidden_menu.png" alt="" />
@@ -18,11 +17,11 @@
 						<c:if test="${param.thisPage eq 'index' }">
 							<a href="#simple-list-item-3" id="hot_place">HOT PLACE</a>
 						</c:if>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "#" } id="research">RESEARCH</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "../statistics/statistics"  } id="research">RESEARCH</a>
     		    </div>
 					<div class="search_menu">
 						<div class="search_bar">
-							<form action="${pageContext.request.contextPath}/shop/search"
+							<form action="${pageContext.request.contextPath}/search/search"
 								method="post">
 								<div class="search_box">
 									<button type="submit" style="display: contents">
@@ -50,12 +49,11 @@
 						<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
 						<a href="#simple-list-item-1">TOP</a>
 						<a href=${param.thisPage eq "index" ? "#simple-list-item-2" : "../shop/list" } id="category">CATEGORY</a>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-3" : "#" } id="hot_place">HOT PLACE</a>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "#" } id="research">RESEARCH</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "../statistics/statistics" } id="research">RESEARCH</a>
             </div>
             <div class="search_menu">
               <div class="search_bar">
-                <form action="${pageContext.request.contextPath}/shop/search"
+                <form action="${pageContext.request.contextPath}/search/search"
                   method="post">
                   <div class="search_box">
                     <button type="submit" style="display: contents">
@@ -83,12 +81,11 @@
 					<div id="simple-list-example" class="top_nav simple-list-example-scrollspy">
 						<a href="#simple-list-item-1">TOP</a>
 						<a href=${param.thisPage eq "index" ? "#simple-list-item-2" : "../shop/list" } id="category">CATEGORY</a>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-3" : "#" } id="hot_place">HOT PLACE</a>
-						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "#" } id="research">RESEARCH</a>
+						<a href=${param.thisPage eq "index" ? "#simple-list-item-4" : "../statistics/statistics" } id="research">RESEARCH</a>
          			</div>
 					<div class="search_menu">
 						<div class="search_bar">
-     						<form action="${pageContext.request.contextPath}/shop/search"
+     						<form action="${pageContext.request.contextPath}/search/search"
 								method="post">
 								<div class="search_box">
 									<button type="submit" style="display: contents">

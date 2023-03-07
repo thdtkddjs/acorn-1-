@@ -35,5 +35,6 @@ public interface ShopService {
 	public void menuGetList(HttpServletRequest request);
 	public void getReviewList(HttpServletRequest request);
 	public void getSearchList(HttpServletRequest request);
-
+	public void getTopList(HttpServletRequest request);
+	public void test(HttpServletRequest request);
 }

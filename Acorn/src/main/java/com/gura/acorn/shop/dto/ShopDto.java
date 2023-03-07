@@ -9,7 +9,7 @@ public class ShopDto {
 	private String content;
 	private String imagePath;
 	private String categorie;
-	private int reviewCount;
+	private int rCount;
 	private double grade;
 	private String startTime;
 	private String endTime;
@@ -21,7 +21,7 @@ public class ShopDto {
 	public ShopDto() {
 	}
 
-	public ShopDto(int num, String title, String content, String imagePath, String categorie, int reviewCount,
+	public ShopDto(int num, String title, String content, String imagePath, String categorie, int rCount,
 			double grade, String startTime, String endTime, String telNum, String addr, int startRowNum,
 			int endRowNum) {
 		super();
@@ -30,7 +30,7 @@ public class ShopDto {
 		this.content = content;
 		this.imagePath = imagePath;
 		this.categorie = categorie;
-		this.reviewCount = reviewCount;
+		this.rCount = rCount;
 		this.grade = grade;
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -88,12 +88,12 @@ public class ShopDto {
 		this.categorie = categorie;
 	}
 
-	public int getReviewCount() {
-		return reviewCount;
+	public int getrCount() {
+		return rCount;
 	}
 
-	public void setReviewCount(int reviewCount) {
-		this.reviewCount = reviewCount;
+	public void setrCount(int rCount) {
+		this.rCount = rCount;
 	}
 
 	public String getStartTime() {
