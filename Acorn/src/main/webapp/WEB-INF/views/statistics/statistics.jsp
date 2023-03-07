@@ -205,8 +205,8 @@ const app = Vue.createApp({
 		for(var i=0; i<12; i++){
 			var monthKey = Object.keys(viewObject[0])[i];
 			if(monthKey != null){
-				pvMonthVal = viewObject[0][monthKey];
-				pvTotalVal = pvTotalVal+viewObject[0][monthKey];
+				pvMonthVal = viewObject[0][monthKey].total;
+				pvTotalVal = pvTotalVal+viewObject[0][monthKey].total;
 			}
 
 			//chart 1의 데이터
