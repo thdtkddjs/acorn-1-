@@ -97,12 +97,14 @@ public class ShopController {
 			Map<String, Object> PVDayCount = Esservice.searchDayPV(index, field, LocalDate.now());
 			Map<String, Object> PVTotalCount = Esservice.getCountOfIdsFromIndex(index);
 			Map<String, Object> PVMaxCount = Esservice.searchByDateRange3(index, field, dateStart, dateEnd);
+			Map<String, Object> PageCount = Esservice.aggregateByPageType(index);
 			
 			List<Map<String, Object>> resultList = new ArrayList<>();
 			resultList.add(PVMonthCount);
 			resultList.add(PVDayCount);
 			resultList.add(PVTotalCount);
 			resultList.add(PVMaxCount);
+			resultList.add(PageCount);
 			
 			return resultList;
 //			return Esservice.searchPV(index);
