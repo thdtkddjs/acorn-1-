@@ -41,8 +41,6 @@ public class ShopController {
 	private ShopService service;
 	@Autowired
 	private ElasticsearchService Esservice;
-	@Autowired
-	private ElasticUtil elautil;
 	
 	@Value("${file.location}")
 	private String fileLocation;
@@ -87,7 +85,7 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "testlog3";
+		String index = "ygtest3";
 		String field = "date";
 		int Month = 3;
 		LocalDate dateStart = LocalDate.of(2023, Month ,1);
@@ -118,8 +116,6 @@ public class ShopController {
 	@RequestMapping("/es/test2")
 	@ResponseBody
 	public List<Map<String, Object>> test2(){
-		String index = "test3";
-		
 		try {
 			return Esservice.searchError();
 		} catch (IOException e) {
