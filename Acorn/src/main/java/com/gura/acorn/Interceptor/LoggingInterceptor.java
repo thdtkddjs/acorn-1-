@@ -45,6 +45,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
     	int storeId = 0;
     	String pageType = null;
     	String storeName = null;
+    	String category = null;
     	
     	if(str.length == 3) {
     		pageId = 1;
@@ -85,8 +86,30 @@ public class LoggingInterceptor implements HandlerInterceptor {
     			ShopDto dto = dao.getData(Integer.parseInt(request.getParameter("num")));
     			storeName = dto.getTitle();
     			storeId = dto.getNum();
+    			switch(dto.getCategorie()) {
+    			case "한식":
+    				category = "cate1";
+    				break;
+    			case "중식":
+    				category = "cate2";
+    				break;
+    			case "일식":
+    				category = "cate3";
+    				break;
+    			case "분식":
+    				category = "cate4";
+    				break;
+    			case "양식":
+    				category = "cate5";
+    				break;
+    			case "패스트푸드":
+    				category = "cate6";
+    				break;
+    			case "기타":
+    				category = "cate7";
+    				break;
+    			}
     			break;
-
     		case "list":
     			if(pageId == 2) {
     				pageType = "SHOPLIST";
@@ -103,6 +126,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
 		map.put("pageType", pageType);
 		map.put("storeName", storeName);
 		map.put("storeId", storeId);		
+		map.put("category", category);
 		
 		return true;
     }
@@ -119,7 +143,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
 		map2.put("errorMsg", null);
 		
 		try {
-			ElasticUtil.getInstance().create("test3", map);
+			ElasticUtil.getInstance().create("test4", map);
 			ElasticUtil.getInstance().create("error2", map2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
