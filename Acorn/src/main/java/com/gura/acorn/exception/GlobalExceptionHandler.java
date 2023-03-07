@@ -40,13 +40,14 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
 	public String handleException(Exception ex, HttpServletRequest request) {
-		String msg = "이럴수가! ";
+		String msg = "error";
+		String exMsg = ex.toString();
+		String errorMsg = exMsg.substring(0, exMsg.indexOf(":"));
 		Map<String, Object> map = new HashMap<>();
 		map.put("errorCode", "NG");
 		map.put("time", LocalDateTime.now().toString());
 		map.put("elapsedTime", System.currentTimeMillis() - (Long) request.getAttribute("startTime"));
-		map.put("errorMsg", ex.toString());
-		logger.info(map.toString());
+		map.put("errorMsg", errorMsg.toString());
 		try {
 			ElasticUtil.getInstance().create("error2", map);
 		} catch (IOException e) {

@@ -5,7 +5,8 @@ CREATE TABLE users(
     email VARCHAR2(100),
     profile VARCHAR2(100), --프로필 이미지 경로를 저장할 칼럼
     regdate DATE,
-    ban VARCHAR2(25)
+    ban VARCHAR2(25),
+    loggedIn VARCHAR2(3) DEFAULT 'no'
 );
 
 -- 가게 리스트 테이블

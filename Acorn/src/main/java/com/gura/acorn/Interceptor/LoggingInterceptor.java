@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.gura.acorn.es.ElasticUtil;
@@ -28,20 +29,23 @@ public class LoggingInterceptor implements HandlerInterceptor {
 	
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     
+    private Map<String, Object> map = new HashMap<>();
+    private Map<String, Object> map2 = new HashMap<>();
+    
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     	String requesturl = request.getRequestURL().toString();
     	HttpSession session = request.getSession();
+    	request.setAttribute("startTime", System.currentTimeMillis());
     	String id = (String)session.getAttribute("id");
     	
     	String[] str = requesturl.split("/");
-    	
-    	String index = "test3";
     	
     	int pageId = 0;
     	int storeId = 0;
     	String pageType = null;
     	String storeName = null;
+    	String category = null;
     	
     	if(str.length == 3) {
     		pageId = 1;
@@ -82,8 +86,30 @@ public class LoggingInterceptor implements HandlerInterceptor {
     			ShopDto dto = dao.getData(Integer.parseInt(request.getParameter("num")));
     			storeName = dto.getTitle();
     			storeId = dto.getNum();
+    			switch(dto.getCategorie()) {
+    			case "한식":
+    				category = "cate1";
+    				break;
+    			case "중식":
+    				category = "cate2";
+    				break;
+    			case "일식":
+    				category = "cate3";
+    				break;
+    			case "분식":
+    				category = "cate4";
+    				break;
+    			case "양식":
+    				category = "cate5";
+    				break;
+    			case "패스트푸드":
+    				category = "cate6";
+    				break;
+    			case "기타":
+    				category = "cate7";
+    				break;
+    			}
     			break;
-
     		case "list":
     			if(pageId == 2) {
     				pageType = "SHOPLIST";
@@ -92,29 +118,36 @@ public class LoggingInterceptor implements HandlerInterceptor {
     			}
     			break;
     		}
-    	}
+    	}		
 		
-		Map<String, Object> map = new HashMap<>();
 		map.put("userId", id);
 		map.put("date", LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toString());
 		map.put("pageId", pageId);
 		map.put("pageType", pageType);
 		map.put("storeName", storeName);
-		map.put("storeId", storeId);
+		map.put("storeId", storeId);		
+		map.put("category", category);
 		
-		Map<String, Object> map2 = new HashMap<>();
+		return true;
+    }
+    
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        long startTime = (long) request.getAttribute("startTime");
+        long endTime = System.currentTimeMillis();
+        long executeTime = endTime - startTime;     
+        
 		map2.put("errorCode", "OK");
 		map2.put("time", LocalDateTime.now().toString());
-		map2.put("elapsedTime", 0);
+		map2.put("elapsedTime", executeTime);
 		map2.put("errorMsg", null);
-
+		
 		try {
-			ElasticUtil.getInstance().create(index, map);
+			ElasticUtil.getInstance().create("test4", map);
 			ElasticUtil.getInstance().create("error2", map2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return true;
     }
 }

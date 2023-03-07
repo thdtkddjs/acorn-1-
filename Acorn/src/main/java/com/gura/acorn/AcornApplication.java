@@ -9,7 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import com.gura.acorn.websocket.WebSocketService;
 
 
-
 @SpringBootApplication
 @EnableScheduling
 public class AcornApplication {
