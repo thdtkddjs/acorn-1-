@@ -492,7 +492,7 @@ public int count() {
 //      return dataList;
 //  }
   
-  //기간내의 모든 데이터 검색
+  //기간내의 모든 Error 데이터 검색
   public List<Map<String, Object>> searchError() throws IOException {
       SearchRequest searchRequest = new SearchRequest("error2");
       SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -508,6 +508,9 @@ public int count() {
 
       searchSourceBuilder.query(rangeQuery);
       searchSourceBuilder.size(1000);
+      
+      searchSourceBuilder.sort(new FieldSortBuilder("time").order(SortOrder.ASC));
+      
       searchRequest.source(searchSourceBuilder);
 
       SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);

@@ -64,6 +64,12 @@ public class UsersDaoImpl implements UsersDao{
 		
 		return session.selectList("users.getList", dto);
 	}
+	
+	@Override
+	public List<UsersDto> getList2(UsersDto dto) {
+		
+		return session.selectList("users.getList2", dto);
+	}
 
 	@Override
 	public int getCount(UsersDto dto) {
