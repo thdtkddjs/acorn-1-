@@ -43,7 +43,6 @@ public class GlobalExceptionHandler {
 		String msg = "error";
 		String exMsg = ex.toString();
 		String errorMsg = exMsg.substring(0, exMsg.indexOf(":"));
-		System.out.println(errorMsg);
 		Map<String, Object> map = new HashMap<>();
 		map.put("errorCode", "NG");
 		map.put("time", LocalDateTime.now().toString());
