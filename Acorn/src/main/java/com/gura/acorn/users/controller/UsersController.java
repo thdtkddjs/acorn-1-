@@ -134,7 +134,6 @@ public class UsersController {
 		}
 		
 		service.getInfo(session, mView);
-		service.loggedInReset();
 		
 		mView.setViewName("users/info");
 		return mView;
