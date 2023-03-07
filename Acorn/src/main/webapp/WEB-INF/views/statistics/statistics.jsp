@@ -143,7 +143,7 @@
 		    				<td class="pvt_val" id="dpv"></td>
 		    			</tr>		
 		    			<tr>
-		    				<td class="pvt_cont">일일 페이지뷰 1위 </td>
+		    				<td class="pvt_cont">월간 페이지뷰 1위 </td>
 		    				<td class="pvt_val"><a href="" id="pvTopTitle"> 음식점명</a></td>
 		    			</tr>
     			</table>
@@ -196,7 +196,10 @@ const app = Vue.createApp({
  */
 		document.getElementById("tpv").innerText = viewObject[2].PVTotalCount;
 		document.getElementById("dpv").innerText = viewObject[1].PVDayCount;
-		document.getElementById("pvTopTitle").innerText = viewObject[3].maxStore;
+		document.getElementById("pvTopTitle").innerText = Object.keys(viewObject[0][Object.keys(viewObject[0])[0]])[0];
+		console.log(Object.keys(viewObject[0])[0]);
+		console.log(viewObject[0][Object.keys(viewObject[0])[0]].storeId);
+		document.getElementById("pvTopTitle").setAttribute("href", "http://localhost:9000/shop/detail?num=" + viewObject[0][Object.keys(viewObject[0])[0]].storeId + "&keyword=");
 
 		const data=[];
 		const data2=[];
@@ -451,14 +454,17 @@ const app = Vue.createApp({
 		var secData=[];
 		var timeData=[];
 		var timeObj = {};
+		var errorObj = [];
 		var currTime= dayjs().valueOf()-90000;
-	
+		
 		if(viewObject4.length==0){
 			console.log("아무 것도 없다")
 		}else{
 			//response4를 활용해서 "time" ket의 초 부분을 뽑아서 배열에 저장한다
  			for (var k = 0; k < viewObject4.length; k++) {
  				  objTime = viewObject4[k].time;
+ 				  console.log(viewObject4[k].errorMsg)
+ 				  errorObj[dayjs(objTime).$s]= viewObject4[k].errorMsg
  				  timeObj[dayjs(objTime).$s] = dayjs(objTime).valueOf();
  				  timeData.push(timeObj);
  				  secData[k] = dayjs(objTime).$s;
@@ -467,18 +473,20 @@ const app = Vue.createApp({
 		
 		for(var n=0; n<90 ;n++){
 			const currList=[];
+			
 			const resTime = Math.random() *10;
 			if(secData.includes(n)){
-				currList.push({x: timeObj[n], y:resTime, rslt: (n%3==0) ? "success" : "failure"})
+				currList.push({x: timeObj[n], y:resTime, rslt: (n%3==0) ? "success" : "failure", msg:errorObj[n]})
 			}
 			else{
-				currList.push({x: currTime, y:null, rslt:null})
+				currList.push({x: currTime, y:null, rslt:null, msg:null})
 			}
 			currTime=currTime+1000;
 			dataRST.push(currList);
 			
 		}
-		
+
+		console.log(errorObj)
 
 		
 		function manfData(dataArr) {
@@ -522,7 +530,8 @@ const app = Vue.createApp({
 						    },
 						    afterLabel: function(tooltipItem, data) {
 						    	console.log(tooltipItem.dataset.data[0])
-						      return 'Response Time : '+ tooltipItem.dataset.data[0].y.toFixed(2) + "(ms)";
+						      return 'Response Time : '+ tooltipItem.dataset.data[0].y.toFixed(2) + "(ms)"
+						      		+ ((tooltipItem.dataset.data[0].msg != null) ? "\nError Code : "+tooltipItem.dataset.data[0].msg : "");
 						    }
 						  }
 						},
@@ -629,10 +638,10 @@ const app = Vue.createApp({
  				const currList=[];
  				const resTime = Math.random() *10;
  				if(secData.includes(n)){
- 					currList.push({x: timeObj[n], y:resTime, rslt:"success"})
+ 					currList.push({x: timeObj[n], y:resTime, rslt: (n%3==0) ? "success" : "failure",  msg:errorObj[n]})
  				}
  				else{
- 					currList.push({x: currTime, y:null, rslt:null})
+ 					currList.push({x: currTime, y:null, rslt:null, msg:null})
  					currTime = currTime+1000;
  				}
 				dataRST.push(currList);
