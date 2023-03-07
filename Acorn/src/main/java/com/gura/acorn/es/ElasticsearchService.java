@@ -88,7 +88,7 @@ public class ElasticsearchService {
             String formattedDate = date.format(formatter);
             long docCount = bucket.getDocCount();
             
-            Map<String, Object> pvCounts = new HashMap<>();
+            TreeMap<String, Object> pvCounts = new TreeMap<>();
             pvCounts.put("total", docCount);
             Terms storeAgg = bucket.getAggregations().get("store_count");
             if (storeAgg.getBuckets().size() > 0) {
