@@ -113,44 +113,44 @@ public class RandomData {
 				pageId = 3;
     			pageType = "USERS";
 				break;
-			default:  // 0 또는 1~25 사이의 값인 경우
-		        if (ran2 == 0) {
-		            pageId = 1;
-		            pageType = "INDEX";
-		        } else if (ran2 >= 1 && ran2 <= 25) {
-		        	pageId = 2;
-	    			if(ran3 == 0) {
-	    				pageType = "DETAIL";
-	    				storeId = ran4;
-	    				storeName = "store"+ran4;
-	    				switch(ran5) {
-	    				case 0:
-	    					category = "한식";
-	    					break;
-	    				case 1:
-	    					category = "일식";
-	    					break;
-	    				case 2: 
-	    					category = "양식";
-	    					break;
-	    				case 3:
-	    					category = "중식";
-	    					break;
-	    				case 4:
-	    					category = "분식";
-	    					break;
-	    				case 5:
-	    					category = "패스트푸드";
-	    					break;
-	    				case 6: 
-	    					category = "기타";
-	    					break;
-	    				}
-	    			}else {
-	    				pageType = "SHOPLIST";
-	    			}
-		        }
-		        break;
+			case 25:
+				pageId = 1;
+	    		pageType = "INDEX";
+				break;
+			default:
+				pageId = 2;
+				pageType = "DETAIL";
+    			if(ran3 == 0) {
+    				pageType = "DETAIL";
+    				storeId = ran4;
+    				storeName = "store"+ran4;
+    				switch(ran5) {
+    				case 0:
+    					category = "한식";
+    					break;
+    				case 1:
+    					category = "일식";
+    					break;
+    				case 2: 
+    					category = "양식";
+    					break;
+    				case 3:
+    					category = "중식";
+    					break;
+    				case 4:
+    					category = "분식";
+    					break;
+    				case 5:
+    					category = "패스트푸드";
+    					break;
+    				case 6: 
+    					category = "기타";
+    					break;
+    				}
+    			}else {
+    				pageType = "SHOPLIST";
+    			}
+				break;
 		}
 			
 			
@@ -167,7 +167,7 @@ public class RandomData {
 			//데이터를 {"index":{"_index":"testlog"}
 			//		 {"id": xx, "url" : xx, "date" : xx}
 			//형식으로 만들어 bulkrequest에 입력한다.
-			rq.add(new IndexRequest("ygtest3").source(map2));
+			rq.add(new IndexRequest("dktest4").source(map2));
 		}
 		
 		
