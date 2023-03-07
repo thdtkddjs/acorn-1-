@@ -54,16 +54,15 @@ public class RandomData {
 			String time = LocalTime.of((int)(Math.random()*24), 0).toString();
 			String date= LocalDate.ofEpochDay((long) (LocalDate.now().toEpochDay()+Math.random()*365)).toString();
 			//7개의 id 중 하나를 랜덤으로 정하는데 필요한 값
-			int ran1=(int)(Math.random()*7);
+			int ran1 = (int)(Math.random()*7);
 			//pageId 및 Type을 정하는 값
-			int ran2=(int)(Math.random()*30); // 0 ~ 29
+			int ran2 = (int)(Math.random()*30);
 			//pageType이 Shop일 경우 list 인지 detail인지를 구분
-			int ran3=(int)(Math.random()*2);
+			int ran3 = (int)(Math.random()*2);
 			//storeId 및 storeName을 정하는 값
-			int ran4=(int)(Math.random()*55)+1;
-
+			int ran4 = (int)(Math.random()*55) + 1;
 			//7개의 카테고리를 정하는 값
-			int ran5=(int)(Math.random()*7);
+			int ran5 = (int)(Math.random()*7);
 			
 			String userId = null;
 			String pageType = null;
@@ -97,7 +96,7 @@ public class RandomData {
 					break;
 			}
 			
-			switch (ran2) { // 0 ~ 24 DETAIL
+			switch (ran2) {
 			case 29:
 				pageId = 6;
     			pageType = "ERROR";

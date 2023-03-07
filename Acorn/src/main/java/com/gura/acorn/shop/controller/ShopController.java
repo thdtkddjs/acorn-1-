@@ -41,8 +41,6 @@ public class ShopController {
 	private ShopService service;
 	@Autowired
 	private ElasticsearchService Esservice;
-	@Autowired
-	private ElasticUtil elautil;
 	
 	@Value("${file.location}")
 	private String fileLocation;
@@ -120,7 +118,6 @@ public class ShopController {
 	@RequestMapping("/es/test2")
 	@ResponseBody
 	public List<Map<String, Object>> test2(){
-		
 		try {
 			return Esservice.searchError();
 		} catch (IOException e) {

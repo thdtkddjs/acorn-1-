@@ -12,6 +12,7 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 <title>statistics.jsp</title>
 <style>
 .category_bar>.row{
@@ -187,7 +188,6 @@ const app = Vue.createApp({
 			}
 		});
 		const viewObject = await response.json();
-		console.log(viewObject);
 		
 		//받아온 데이터 중 어떤 데이터를 사용할지  부분
 /* 		const monthPvCount = viewObject.filter(item => {
@@ -197,26 +197,28 @@ const app = Vue.createApp({
 		document.getElementById("tpv").innerText = viewObject[2].PVTotalCount;
 		document.getElementById("dpv").innerText = viewObject[1].PVDayCount;
 		document.getElementById("pvTopTitle").innerText = viewObject[3].maxStore;
-		
-		
-	    const data = [
-	        { month: '24년 1월', pvMonth : viewObject[0].PVMonthCount+5 },
-	        { month: '24년 2월', pvMonth: viewObject[0].PVMonthCount+13 },
-	        { month: '24년 3월', pvMonth: viewObject[0].PVMonthCount },
-	        { month: '23년 4월', pvMonth: viewObject[0].PVMonthCount+3 },
-	        { month: '23년 5월', pvMonth: viewObject[0].PVMonthCount+1 },
-	        { month: '23년 6월', pvMonth: viewObject[0].PVMonthCount+12 },
-	        { month: '23년 7월', pvMonth: viewObject[0].PVMonthCount-3 },
-	        { month: '23년 8월', pvMonth: viewObject[0].PVMonthCount-8 },
-	        { month: '23년 9월', pvMonth: viewObject[0].PVMonthCount+9 },
-	        { month: '23년 10월', pvMonth: viewObject[0].PVMonthCount-11 },
-	        { month: '23년 11월', pvMonth: viewObject[0].PVMonthCount+12 },
-	        { month: '23년 12월', pvMonth: viewObject[0].PVMonthCount-33 },	        
-	    ];
 
-		console.log(data);
+		const data=[];
+		const data2=[];
+		var pvTotalVal = 0;
+		
+		for(var i=0; i<12; i++){
+			var monthKey = Object.keys(viewObject[0])[i];
+			if(monthKey != null){
+				pvMonthVal = viewObject[0][monthKey];
+				pvTotalVal = pvTotalVal+viewObject[0][monthKey];
+			}
+
+			//chart 1의 데이터
+			data.push({month:monthKey, pvMonth:pvMonthVal});
+			//chart 2의 데이터
+			data2.push({month:monthKey, totalPv : pvTotalVal});
+			
+			monthKey, pvMonthVal = 0;
+			
+		}
+		
 		const ctx = document.getElementById("myChart").getContext("2d");
-
 		const myChart = new Chart(ctx, {
 			type: "bar",
 	        data: {
@@ -288,32 +290,8 @@ const app = Vue.createApp({
 		
 		
 		//chart2 값
-	    const tPv=[];
+
 		
-	    for(var i=0; i<12; i++){
-	    	if(i==0){
-	    		tPv[i] = viewObject[0].PVMonthCount;
-	    	}else{
-	    		tPv[i] = tPv[i-1]+viewObject[0].PVMonthCount - 5*(12-i);
-	    	}
-	    	
-	    }
-	    const data2 = [
-	        { month: '23년 4월', totalPv: tPv[0] },
-	        { month: '23년 5월', totalPv: tPv[1] },
-	        { month: '23년 6월', totalPv: tPv[2] },
-	        { month: '23년 7월', totalPv: tPv[3] },
-	        { month: '23년 8월', totalPv: tPv[4] },
-	        { month: '23년 9월', totalPv: tPv[5] },
-	        { month: '23년 10월', totalPv: tPv[6] },
-	        { month: '23년 11월', totalPv: tPv[7] },
-	        { month: '23년 12월', totalPv: tPv[8] },
-	        { month: '24년 1월', totalPv : tPv[9] },
-	        { month: '24년 2월', totalPv: tPv[10]},
-	        { month: '24년 3월', totalPv: 3000 },
-	    ];
-		
-		console.log(data2);
 		const ctx2 = document.getElementById("myChart2").getContext("2d");
 		const myChart2 = new Chart(ctx2, {
 			type: "line",
@@ -459,44 +437,79 @@ const app = Vue.createApp({
 		
 		
 		//chart4 
-		const dataRST =[]
-		const dataFRST=[]
-
-		//x는 시간(날짜 1일 ~ 365일)
-		//y는 응답시간*날짜
-		//정상 응답시간이 보통 0.1 ms로 찍히는데, 테스트 데이터에서는 편의상 1로 표기한다, y값을 계산식을 저렇게 했으므로 날짜가 증가함에 따라 우상향하는 점그래프가 그려진다
-		for(var i=0; i<365; i++){
-				if(i%10==0){
-					dataRST.push({num:i, rst:Math.random()*0.3, frst:Math.random()*1.3, rslt:"timeout"})
-				}else 
-					dataRST.push({num:i , rst:Math.random()*0.3})
-					dataRST.push({num:i , rst:Math.random()*0.3})
+		
+		var dataRST =[];
+		const response4 = await fetch('http://localhost:9000/es/test2', {
+			method : 'GET',
+			headers : {
+				'Content-Type' : 'application/json',
+			}
+		});
+			
+		const viewObject4 = await response4.json();
+		for(var k=0; k<viewObject4.length; k++){
+			const currList=[]
+			const currTime= viewObject4[k].time.slice(11,19);
+			// resTime 테스트용 랜덤함수 추가
+			const resTime = (viewObject4[k].elapsedTime+Math.random()*1000) * 0.01;
+			const isSuccess = viewObject4[k].errorCode=="OK" ? true : false;
+			if(isSuccess){
+				currList.push({x:currTime, y:resTime, rslt:"success"})
+			}else{
+				currList.push({x:currTime, y:resTime, rslt:"failure"})
+			}
+			
+			dataRST.push(currList);
 		}
-		console.log(dataRST);
-		console.log(dataFRST);
-		console.log(dataRST[0].rslt ? dataRST[0].rslt : '비정상');
+
+		
+		function manfData(dataArr) {
+			return dataArr.map(d => {
+				return {
+					data: d,
+					label: d[0].x,
+					backgroundColor: function(context) {
+					    var responseType = context.dataset.data[context.dataIndex].rslt;
+					    var responseTime = context.dataset.data[context.dataIndex].y;
+					    return responseType === "success" && responseTime > 6 ? 'orange' : (responseType === "success" ? 'skyblue' : 'red');
+					}
+				}
+			})
+		}
+		
+		
 		const ctx4 = document.getElementById("myChart4").getContext("2d");
 		const myChart4 = new Chart(ctx4, {
 			type: "scatter",
 	        data: {
-	            labels: dataRST.map(row=>row.num),
-	            datasets: [
-	              {
-	                label: '정상',
-	                data: dataRST.map(row=>row.rst),
-	              },	              
-	              {
-	                label: dataRST[1].rslt ? dataRST[1].rslt : this.labels,
-	                data: dataRST.map(row=>row.frst),
-	              },
-	            ]
+	            datasets: manfData(dataRST),
 	          },
 			plugins : [ChartDataLabels],
 			options: {
 				plugins: {
+					tooltip: {
+						  callbacks: {
+						    title: function(tooltipItem, data) {
+						    	if(tooltipItem[0].dataset.data[0].rslt != "success"){
+						    		return 'Abnormal Response';
+						    	}
+						    	else if(tooltipItem[0].dataset.data[0].y>6){
+						    		return 'Pending Response';
+						    	}else{
+						    		return 'Normal Response';
+						    	}
+						    },
+						    label: function(tooltipItem, data) {
+						      return 'Request Time : ' + tooltipItem.dataset.data[0].x + "(HH:MM:SS)";
+						    },
+						    afterLabel: function(tooltipItem, data) {
+						      return 'Response Time : '+ tooltipItem.dataset.data[0].y.toFixed(2) + "(ms)";
+						    }
+						  }
+						},
 					legend: {
 						display: false
-						},
+					},
 					datalabels: {
 			            font: {
 			              size: 0,
@@ -510,13 +523,17 @@ const app = Vue.createApp({
 			            formatter: function(value, context) {
 			              return value;
 			            }
-					}
+					},
+				},
+				animation : {
+					duration : 0,
 				},
 				scales: {
 					x:{
+						type : 'category',
 				    	ticks: {
 							display: true,
-							stepSize: 1,
+					        maxTicksLimit: 10,
 				        },
 			            grid: {display: false},
 					},
@@ -535,11 +552,45 @@ const app = Vue.createApp({
 				responsive: true,
 
 			},
+			
 		});
 		window.addEventListener('resize', function() {
 			myChart.resize();
 		});
 		
+ 		setInterval(async function (){
+ 			var dataRST =[];
+ 			const response4 = await fetch('http://localhost:9000/es/test2', {
+ 				method : 'GET',
+ 				headers : {
+ 					'Content-Type' : 'application/json',
+ 				}
+ 			});
+ 				
+ 			const viewObject4 = await response4.json();
+ 			for(var k=0; k<viewObject4.length; k++){
+ 				const currList=[];
+ 				const currTime= viewObject4[k].time.slice(11,19);
+ 				// resTime 테스트용 랜덤함수 추가
+ 				const resTime = (viewObject4[k].elapsedTime+Math.random()*1000) * 0.01;
+ 				const isSuccess = viewObject4[k].errorCode=="OK" ? true : false;
+ 				if(isSuccess){
+ 					currList.push({x:currTime, y:resTime, rslt:"success"})
+ 				}else{
+ 					currList.push({x:currTime, y:resTime, rslt:"failure"})
+ 				}
+ 				
+ 				dataRST.push(currList);
+ 				
+ 				
+ 			}
+ 			
+			myChart4.data.datasets = manfData(dataRST)
+			
+			
+			myChart4.update();
+		
+		} ,1000);
 	},
 	
 

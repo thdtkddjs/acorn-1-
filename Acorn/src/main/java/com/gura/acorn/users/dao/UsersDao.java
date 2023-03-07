@@ -19,6 +19,7 @@ public interface UsersDao {
 	public void delete(String id);
 	//회원 목록
 	public List<UsersDto> getList(UsersDto dto);
+	public List<UsersDto> getList2(UsersDto dto);
 	//회원 수
 	public int getCount(UsersDto dto);
 	//회원정보

@@ -12,6 +12,7 @@ public class UsersDto {
 	private String regdate;
 	private String ban;
 	private String newPwd;
+	private String loggedIn;
 	private String isSave;
     private int startRowNum;
     private int endRowNum;
@@ -21,8 +22,7 @@ public class UsersDto {
 	//디폴트 생성자
 	public UsersDto() {}
 
-	public UsersDto(String id, String pwd, String email, String profile, String regdate, String ban, String newPwd,
-			String isSave, int startRowNum, int endRowNum, int prevNum, int nextNum) {
+	public UsersDto(String id, String pwd, String email, String profile, String regdate, String ban, String newPwd, String isSave, String loggedIn, int startRowNum, int endRowNum, int prevNum, int nextNum) {
 		super();
 		this.id = id;
 		this.pwd = pwd;
@@ -32,10 +32,27 @@ public class UsersDto {
 		this.ban = ban;
 		this.newPwd = newPwd;
 		this.isSave = isSave;
+		this.loggedIn = loggedIn;
 		this.startRowNum = startRowNum;
 		this.endRowNum = endRowNum;
 		this.prevNum = prevNum;
 		this.nextNum = nextNum;
+	}
+
+	public String getIsSave() {
+		return isSave;
+	}
+
+	public void setIsSave(String isSave) {
+		this.isSave = isSave;
+	}
+
+	public String getLoggedIn() {
+		return loggedIn;
+	}
+
+	public void setLoggedIn(String loggedIn) {
+		this.loggedIn = loggedIn;
 	}
 
 	public String getId() {
@@ -92,14 +109,6 @@ public class UsersDto {
 
 	public void setNewPwd(String newPwd) {
 		this.newPwd = newPwd;
-	}
-
-	public String getIsSave() {
-		return isSave;
-	}
-
-	public void setIsSave(String isSave) {
-		this.isSave = isSave;
 	}
 
 	public int getStartRowNum() {
