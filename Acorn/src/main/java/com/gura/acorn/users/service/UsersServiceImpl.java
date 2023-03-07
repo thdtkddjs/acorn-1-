@@ -81,9 +81,7 @@ public class UsersServiceImpl implements UsersService{
 		if(isValid) {
 			//로그인 처리를 한다.
 			session.setAttribute("id", resultDto.getId());
-			System.out.println(resultDto.getLoggedIn());
 			if(!resultDto.getLoggedIn().equals("yes")) {
-				System.out.println("호출");
 				resultDto.setLoggedIn("yes");
 				dao.update(resultDto);
 				
@@ -320,7 +318,7 @@ public class UsersServiceImpl implements UsersService{
 	@Override
 	public void loggedInReset() {
 		UsersDto dto = new UsersDto();
-		List<UsersDto> list = dao.getList(dto);
+		List<UsersDto> list = dao.getList2(dto);
 		
 		for(UsersDto tmp: list) {
 			tmp.setLoggedIn("no");

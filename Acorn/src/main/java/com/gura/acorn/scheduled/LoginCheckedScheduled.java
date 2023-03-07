@@ -12,7 +12,7 @@ public class LoginCheckedScheduled {
 	@Autowired
 	private UsersService service;
 	
-	@Scheduled(cron = "0 4 18 1/1 * ? *") // 매일 자정에 실행
+	@Scheduled(cron = "0 0 0 1/1 * ?") // 매일 자정에 실행
     public void resetLoginChecked() {
         service.loggedInReset();
     }

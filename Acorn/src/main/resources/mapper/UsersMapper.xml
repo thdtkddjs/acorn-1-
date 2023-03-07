@@ -54,6 +54,12 @@
             ORDER BY regdate DESC) result1)
       WHERE rnum BETWEEN #{startRowNum} AND #{endRowNum}
 	</select>
+	
+	<select id="getList2" parameterType="usersDto" resultType="usersDto">
+		SELECT id, pwd, email, regdate, ban, loggedIn
+		FROM users
+	</select>
+	
 	<select id="getCount" parameterType="usersDto" resultType="int">
       SELECT NVL(MAX(ROWNUM), 0)
       FROM users
