@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.gura.acorn.es.ElasticUtil;
@@ -28,15 +29,17 @@ public class LoggingInterceptor implements HandlerInterceptor {
 	
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     
+    private Map<String, Object> map = new HashMap<>();
+    private Map<String, Object> map2 = new HashMap<>();
+    
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     	String requesturl = request.getRequestURL().toString();
     	HttpSession session = request.getSession();
+    	request.setAttribute("startTime", System.currentTimeMillis());
     	String id = (String)session.getAttribute("id");
     	
     	String[] str = requesturl.split("/");
-    	
-    	String index = "test3";
     	
     	int pageId = 0;
     	int storeId = 0;
@@ -92,29 +95,35 @@ public class LoggingInterceptor implements HandlerInterceptor {
     			}
     			break;
     		}
-    	}
+    	}		
 		
-		Map<String, Object> map = new HashMap<>();
 		map.put("userId", id);
 		map.put("date", LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toString());
 		map.put("pageId", pageId);
 		map.put("pageType", pageType);
 		map.put("storeName", storeName);
-		map.put("storeId", storeId);
+		map.put("storeId", storeId);		
 		
-		Map<String, Object> map2 = new HashMap<>();
+		return true;
+    }
+    
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        long startTime = (long) request.getAttribute("startTime");
+        long endTime = System.currentTimeMillis();
+        long executeTime = endTime - startTime;     
+        
 		map2.put("errorCode", "OK");
 		map2.put("time", LocalDateTime.now().toString());
-		map2.put("elapsedTime", 0);
+		map2.put("elapsedTime", executeTime);
 		map2.put("errorMsg", null);
-
+		
 		try {
-			ElasticUtil.getInstance().create(index, map);
+			ElasticUtil.getInstance().create("test3", map);
 			ElasticUtil.getInstance().create("error2", map2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return true;
     }
 }
