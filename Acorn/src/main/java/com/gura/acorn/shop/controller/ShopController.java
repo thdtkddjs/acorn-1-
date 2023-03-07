@@ -41,8 +41,6 @@ public class ShopController {
 	private ShopService service;
 	@Autowired
 	private ElasticsearchService Esservice;
-	@Autowired
-	private ElasticUtil elautil;
 	
 	@Value("${file.location}")
 	private String fileLocation;
@@ -87,7 +85,7 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "ygtest2";
+		String index = "dktest4";
 		String field = "date";
 		int Month = 3;
 		LocalDate dateStart = LocalDate.of(2023, Month ,1);
@@ -99,12 +97,14 @@ public class ShopController {
 			Map<String, Object> PVDayCount = Esservice.searchDayPV(index, field, LocalDate.now());
 			Map<String, Object> PVTotalCount = Esservice.getCountOfIdsFromIndex(index);
 			Map<String, Object> PVMaxCount = Esservice.searchByDateRange3(index, field, dateStart, dateEnd);
+			Map<String, Object> PageCount = Esservice.aggregateByPageType(index);
 			
 			List<Map<String, Object>> resultList = new ArrayList<>();
 			resultList.add(PVMonthCount);
 			resultList.add(PVDayCount);
 			resultList.add(PVTotalCount);
 			resultList.add(PVMaxCount);
+			resultList.add(PageCount);
 			
 			return resultList;
 //			return Esservice.searchPV(index);
@@ -118,7 +118,6 @@ public class ShopController {
 	@RequestMapping("/es/test2")
 	@ResponseBody
 	public List<Map<String, Object>> test2(){
-		
 		try {
 			return Esservice.searchError();
 		} catch (IOException e) {

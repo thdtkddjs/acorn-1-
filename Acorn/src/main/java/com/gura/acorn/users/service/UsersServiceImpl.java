@@ -1,7 +1,10 @@
 package com.gura.acorn.users.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URLEncoder;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gura.acorn.es.ElasticUtil;
 import com.gura.acorn.exception.loginException;
 import com.gura.acorn.users.dao.UsersDao;
 import com.gura.acorn.users.dto.UsersDto;
@@ -77,6 +81,21 @@ public class UsersServiceImpl implements UsersService{
 		if(isValid) {
 			//로그인 처리를 한다.
 			session.setAttribute("id", resultDto.getId());
+			if(!resultDto.getLoggedIn().equals("yes")) {
+				resultDto.setLoggedIn("yes");
+				dao.update(resultDto);
+				
+				Map<String, Object> map = new HashMap<>();
+				map.put("userId", resultDto.getId());
+				map.put("date", LocalDate.now().toString());
+				
+				try {
+					ElasticUtil.getInstance().create("uvtest", map);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 		// 로그인 정보를 저장하기로 했는지 확인해서 저장하기로 했다면 쿠키로 응답한다.
 		String isSave = dto.getIsSave();
@@ -286,13 +305,8 @@ public class UsersServiceImpl implements UsersService{
 		   request.setAttribute("encodedK", encodedK);
 		   request.setAttribute("totalRow", totalRow);
 		   request.setAttribute("condition", condition);
-		
 	}
-	@Override
-	public void getData(HttpServletRequest request) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 	@Override
 	public void banUser(HttpServletRequest request) {
 		//수정할 회원의 아이디
@@ -301,4 +315,14 @@ public class UsersServiceImpl implements UsersService{
 		dao.ban(id);
 	}
 	
+	@Override
+	public void loggedInReset() {
+		UsersDto dto = new UsersDto();
+		List<UsersDto> list = dao.getList2(dto);
+		
+		for(UsersDto tmp: list) {
+			tmp.setLoggedIn("no");
+			dao.update(tmp);
+		}
+	}
 }

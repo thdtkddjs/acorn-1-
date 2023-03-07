@@ -54,15 +54,15 @@ public class RandomData {
 			String time = LocalTime.of((int)(Math.random()*24), 0).toString();
 			String date= LocalDate.ofEpochDay((long) (LocalDate.now().toEpochDay()+Math.random()*365)).toString();
 			//7개의 id 중 하나를 랜덤으로 정하는데 필요한 값
-			int ran1=(int)(Math.random()*7);
+			int ran1 = (int)(Math.random()*7);
 			//pageId 및 Type을 정하는 값
-			int ran2=(int)(Math.random()*30);
+			int ran2 = (int)(Math.random()*30);
 			//pageType이 Shop일 경우 list 인지 detail인지를 구분
-			int ran3=(int)(Math.random()*2);
+			int ran3 = (int)(Math.random()*2);
 			//storeId 및 storeName을 정하는 값
-			int ran4=(int)(Math.random()*55);
+			int ran4 = (int)(Math.random()*55) + 1;
 			//7개의 카테고리를 정하는 값
-			int ran5=(int)(Math.random()*7);
+			int ran5 = (int)(Math.random()*7);
 			
 			String userId = null;
 			String pageType = null;
@@ -97,24 +97,29 @@ public class RandomData {
 			}
 			
 			switch (ran2) {
-			case 5:
+			case 29:
 				pageId = 6;
     			pageType = "ERROR";
 				break;
-			case 4:
+			case 28:
 				pageId = 5;
     			pageType = "STATISTICS";
 				break;
-			case 3:
+			case 27:
 				pageId = 4;
     			pageType = "SEARCH";
 				break;
-			case 2:
+			case 26:
 				pageId = 3;
     			pageType = "USERS";
 				break;
-			case 1:
+			case 25:
+				pageId = 1;
+	    		pageType = "INDEX";
+				break;
+			default:
 				pageId = 2;
+				pageType = "DETAIL";
     			if(ran3 == 0) {
     				pageType = "DETAIL";
     				storeId = ran4;
@@ -146,10 +151,6 @@ public class RandomData {
     				pageType = "SHOPLIST";
     			}
 				break;
-			case 0:
-				pageId = 1;
-	    		pageType = "INDEX";
-				break;
 		}
 			
 			
@@ -166,7 +167,7 @@ public class RandomData {
 			//데이터를 {"index":{"_index":"testlog"}
 			//		 {"id": xx, "url" : xx, "date" : xx}
 			//형식으로 만들어 bulkrequest에 입력한다.
-			rq.add(new IndexRequest("ygtest2").source(map2));
+			rq.add(new IndexRequest("dktest4").source(map2));
 		}
 		
 		
