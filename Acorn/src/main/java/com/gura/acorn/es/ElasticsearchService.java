@@ -73,9 +73,14 @@ public class ElasticsearchService {
                 .field("category.keyword")
                 .size(7) 
                 .order(BucketOrder.count(false));
-        	    
+    	
+    	AggregationBuilder storeIdAggregation = AggregationBuilders.terms("store_id")
+    			.field("storeId")
+    			.size(1)
+    			.order(BucketOrder.count(false));
+    	
+    	storeAggregation.subAggregation(storeIdAggregation);
     	dateAggregation.subAggregation(categoryAggregation);
-         
     	dateAggregation.subAggregation(storeAggregation);
         sourceBuilder.aggregation(dateAggregation);
         
@@ -102,7 +107,14 @@ public class ElasticsearchService {
             	String storeName = storeAgg.getBuckets().get(0).getKeyAsString();
                 long maxCount = storeAgg.getBuckets().get(0).getDocCount();
                 pvCounts.put(storeName, maxCount);
+                
+                Terms storeIdAgg = storeAgg.getBuckets().get(0).getAggregations().get("store_id");
+                if (storeIdAgg.getBuckets().size() > 0) {
+                    int storeId = storeIdAgg.getBuckets().get(0).getKeyAsNumber().intValue();
+                    pvCounts.put("storeId", storeId);
+                }
         	}
+            
             
 			Terms categoryAgg = bucket.getAggregations().get("category_count");
             for (Terms.Bucket categoryBucket : categoryAgg.getBuckets()) {
