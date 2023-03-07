@@ -74,7 +74,8 @@ public class ShopController {
 		service.getReviewList(request);
 		return "search/search";
 	}
-	
+	//웹소켓에 연결된 채팅방
+	//임시이며 나중에 매립하거나 할 예정
 	@RequestMapping("/chatRoom")
 	public String chatRoomTest() {
 		return "chatRoom";

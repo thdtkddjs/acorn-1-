@@ -16,7 +16,7 @@ import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 
 import com.gura.acorn.es.ElasticsearchService;
-
+//만들다 포기한 거
 @Controller
 public class WebsocketController {
 	

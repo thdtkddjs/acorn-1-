@@ -50,17 +50,17 @@
     const ws = new WebSocket('ws://34.125.190.255:8011/');
 	//const ws = new WebSocket('ws://localhost:8011/');
 	
-	//연결 성공 시에 띄워준다.
+	//연결 성공 시에 실행되는 function
     ws.onopen = function() {
       console.log('Connected to server!');
       addChatRoom('Connected to server!');
     };
-    
+    //데이터를 받아올 때 실행되는 function
     ws.onmessage = function(event) {
 	    console.log('Received message: ' + event.data);
 
 //	    const data = JSON.stringify(result);
-	    
+	    //받아온 데이터가 JSON 데이터이므로 parsing 해준다.
 	    event.data.text().then((jsonString) => {
 	        const jsonObj = JSON.parse(jsonString);
 	        if(jsonObj.type=="message"){
@@ -90,7 +90,10 @@
   	document.querySelector("#msg_process").addEventListener("click", function(){
   		sendMessages();
   	});
-    
+    //type = chatting에 참여한 client임을 알림
+    //text = 메시지 데이터
+    //id = 아이디
+    //date = 혹시 필요할지 몰라서 시간 정보도 포함
   	function sendMessages() {
         const msg = document.querySelector("#msg").value;
         var clientID = sessionStorage.getItem("clientID");
@@ -102,9 +105,11 @@
         	  };
         
         ws.send(JSON.stringify(msg1))
+        //메시지를 보낸 후 msg 인풋을 초기화.
         document.querySelector("#msg").value="";
     }
-	
+	//chatRoom, 즉 채팅창에 메시지를 띄운다.
+	//현재는 자신의 정보를 별도로 표기하고 있지는 않다.
 	function addChatRoom(text){
 		const chatBox = document.querySelector('#chat_box');
         const messageElement = document.createElement('div');

@@ -20,8 +20,9 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class NodeWebSocketClient extends AbstractWebSocketHandler implements DisposableBean {
     private static final Logger logger = LoggerFactory.getLogger(NodeWebSocketClient.class);
-
+    //로컬 주소
 //  private static final String SERVER_URI = "ws://localhost:8011/";
+    //클라우드 서버에 올라가 있는 주소
     private static final String SERVER_URI = "ws://34.125.190.255:8011/";
     
     private final StandardWebSocketClient webSocketClient;
@@ -37,7 +38,7 @@ public class NodeWebSocketClient extends AbstractWebSocketHandler implements Dis
     @PostConstruct
     public void connect() throws InterruptedException {
         logger.info("Connecting to {}", SERVER_URI);
-
+        //websocket과 handshake한다. 즉 소켓에 접속한다.
         this.webSocketClient.doHandshake(this, SERVER_URI);
         this.connectLatch.await(10, TimeUnit.SECONDS);
     }
