@@ -85,7 +85,6 @@ public class ElasticUtil {
 		Cancellable response = client.indexAsync(indexRequest, RequestOptions.DEFAULT, listener = new ActionListener<IndexResponse>() {
 		    @Override
 		    public void onResponse(IndexResponse indexResponse) {
-		        System.out.println("성공!");
 		    }
 
 		    @Override

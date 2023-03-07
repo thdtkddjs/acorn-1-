@@ -3,7 +3,6 @@ package com.gura.acorn.es;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -12,14 +11,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.elasticsearch.action.search.ClearScrollRequest;
+import org.elasticsearch.action.search.ClearScrollResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchScrollRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.CountRequest;
 import org.elasticsearch.client.core.CountResponse;
 import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
@@ -71,8 +72,8 @@ public class ElasticsearchService {
     	
     	AggregationBuilder categoryAggregation = AggregationBuilders.terms("category_count")
                 .field("category.keyword")
-                .size(7) 
-                .order(BucketOrder.count(false));
+                .size(10) 
+                .order(BucketOrder.key(false));
     	
     	AggregationBuilder storeIdAggregation = AggregationBuilders.terms("store_id")
     			.field("storeId")
@@ -124,38 +125,6 @@ public class ElasticsearchService {
         	}
             
             groupCounts.put(formattedDate, pvCounts);        
-        }
-
-        return groupCounts;
-    }
-    
-    
-    
-    public Map<String, Object> aggregateByPageType(String indexName) throws IOException {
-    	// date_histogram 집계 쿼리를 작성합니다.
-    	SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-    	SearchRequest searchRequest = new SearchRequest(indexName);
-    	
-    	AggregationBuilder cateAggregation = AggregationBuilders.terms("page_count") // 텀 안에  인자는 내가 임의로 지정하는 메소드명같은것
-                .field("pageType.keyword"); // 텀스는 keyword 가 붙음
-                
-
-        sourceBuilder.aggregation(cateAggregation);
-        
-        searchRequest.source(sourceBuilder);
-
-        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-
-        // 그룹별 개수를 저장할 Map 객체 생성
-        Map<String, Object> groupCounts = new HashMap<>();
-
-        // aggregation 결과 파싱
-        Terms pageCount = searchResponse.getAggregations().get("page_count");
-        
-        for (Terms.Bucket bucket : pageCount.getBuckets()) {
-            String groupKey = bucket.getKeyAsString(); // getkeyasstring 이 예를들어 카테고리 끼리 분류해주는 코드
-            long docCount = bucket.getDocCount(); // keyasstring을 통해 얻은 값을 저장해 놓은곳
-            groupCounts.put(groupKey, docCount);
         }
 
         return groupCounts;
@@ -381,57 +350,6 @@ public int count() {
 		return (int) response.getCount();
 	}
     
-    //지정일로부터 1년 전까지의 PV를 배열 형태로 가져오는 메소드
-    //CountRequest를 쓰고있지만, 둘 다 써본 결과
-    //SearchRequest를 쓰고 Hit로 추출한 값을 size()로 하는것과 속도차이는 크지 않다.
-    //date를 오늘로 하면 오늘부터 1년 전까지의 PV를 가져온다.
-    public List<Map<String, Object>> dailyChart(String index, LocalDate date){
-		List<Map<String, Object>> resultList=new ArrayList<>();
-    	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-        CountRequest CR = new CountRequest(index); 
-        //오늘로부터 365일 전까지의 Data를 가져온다.
-        //여기서는 내림차순이지만, 원한다면 i의 값을 바꿔서 오름차순으로 쓸 수 도 있다.
-        for(int i=0; i <366; i++) {
-        	//
-	        LocalDate dateStart=LocalDate.ofEpochDay(LocalDate.now().toEpochDay()-i);
-//	        LocalDate dateEnd=date;
-	        RangeQueryBuilder rangeQuery = QueryBuilders
-	                .rangeQuery("date")
-	                .gte(dateStart)
-	                .lte(dateStart)
-	                .format("yyyy-MM-dd");
-	        //ID를 추가로 search할 필요는 없으므로 뺐다.
-//     		TermQueryBuilder termQuery = QueryBuilders.termQuery("id", "admin");
-	        
-	        QueryBuilder query=QueryBuilders.boolQuery()
-//	        		.must(termQuery)
-	        		.must(rangeQuery);
-	
-	        searchSourceBuilder.query(query);
-	        searchSourceBuilder.size(10000);
-	        CR.source(searchSourceBuilder);
-	
-	        System.out.println(searchSourceBuilder);
-	
-	        CountResponse SR=null;
-			try {
-				//Count의 결과로 나온 값을 적절한 date key값으로 매핑해준다.
-				Map<String, Object> tmp = new HashMap<>();
-				SR = client.count(CR, RequestOptions.DEFAULT);
-				tmp.put(dateStart.toString(), SR.getCount());
-				//Map을 List에 차곡차곡 담는다.
-				resultList.add(tmp);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        }
-        
-    	
-    	return resultList;
-    }
     //Aggregation
     //집계라고 번역되며, Metrics/Bucket 두 종류로 데이터를 조작한다.
     //이 메소드에서는 Bucket 방식의 조작만 진행한다.
@@ -484,44 +402,44 @@ public int count() {
     
 
     //index의 모든 id별 data 추출
-//  public List<Map<String, Object>> getAllDataFromIndex(String indexName) throws IOException {
-//  	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
-//  	
-//      List<Map<String, Object>> dataList = new ArrayList<>();
-//
-//      SearchRequest searchRequest = new SearchRequest(indexName);
-//      searchRequest.scroll(TimeValue.timeValueMinutes(1L));
-//
-//      SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//      searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-//      searchSourceBuilder.size(1000); // 한 번에 가져올 문서 개수
-//
-//      searchRequest.source(searchSourceBuilder);
-//
-//      SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-//      String scrollId = searchResponse.getScrollId();
-//      SearchHit[] searchHits = searchResponse.getHits().getHits();
-//
-//      while (searchHits != null && searchHits.length > 0) {
-//          for (SearchHit hit : searchHits) {
-//              Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-//              dataList.add(sourceAsMap);
-//          }
-//
-//          SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
-//          scrollRequest.scroll(TimeValue.timeValueMinutes(1L));
-//          SearchResponse scrollResponse = client.scroll(scrollRequest, RequestOptions.DEFAULT);
-//          scrollId = scrollResponse.getScrollId();
-//          searchHits = scrollResponse.getHits().getHits();
-//      }
-//
-//      ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
-//      clearScrollRequest.addScrollId(scrollId);
-//      ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
-//      
-//      
-//      return dataList;
-//  }
+  public List<Map<String, Object>> getAllDataFromIndex(String indexName) throws IOException {
+  	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+  	
+      List<Map<String, Object>> dataList = new ArrayList<>();
+
+      SearchRequest searchRequest = new SearchRequest(indexName);
+      searchRequest.scroll(TimeValue.timeValueMinutes(1L));
+
+      SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+      searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+      searchSourceBuilder.size(1000); // 한 번에 가져올 문서 개수
+
+      searchRequest.source(searchSourceBuilder);
+
+      SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+      String scrollId = searchResponse.getScrollId();
+      SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+      while (searchHits != null && searchHits.length > 0) {
+          for (SearchHit hit : searchHits) {
+              Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+              dataList.add(sourceAsMap);
+          }
+
+          SearchScrollRequest scrollRequest = new SearchScrollRequest(scrollId);
+          scrollRequest.scroll(TimeValue.timeValueMinutes(1L));
+          SearchResponse scrollResponse = client.scroll(scrollRequest, RequestOptions.DEFAULT);
+          scrollId = scrollResponse.getScrollId();
+          searchHits = scrollResponse.getHits().getHits();
+      }
+
+      ClearScrollRequest clearScrollRequest = new ClearScrollRequest();
+      clearScrollRequest.addScrollId(scrollId);
+      ClearScrollResponse clearScrollResponse = client.clearScroll(clearScrollRequest, RequestOptions.DEFAULT);
+      
+      
+      return dataList;
+  }
   
   //기간내의 모든 Error 데이터 검색
   public List<Map<String, Object>> searchError() throws IOException {
