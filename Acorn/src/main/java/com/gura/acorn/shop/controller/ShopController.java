@@ -74,6 +74,11 @@ public class ShopController {
 		service.getReviewList(request);
 		return "search/search";
 	}
+	
+	@RequestMapping("/chatRoom")
+	public String chatRoomTest() {
+		return "chatRoom";
+	}
 
 	
 	//index 페이지에서 가게리스트 출력
@@ -91,7 +96,7 @@ public class ShopController {
 		int Month = 3;
 		LocalDate dateStart = LocalDate.of(2023, Month ,1);
         LocalDate dateEnd = LocalDate.of(2023, Month ,dateStart.lengthOfMonth());
-        
+        String index=null;
 		
 		try {
 			Map<String, Object> PVMonthCount = Esservice.aggregateByMonth1(index);
