@@ -68,7 +68,19 @@ public class ElasticsearchService {
                 .field("storeName.keyword")
                 .size(1)
                 .order(BucketOrder.count(false));
-        	    
+    	
+    	AggregationBuilder categoryAggregation = AggregationBuilders.terms("category_count")
+                .field("category.keyword")
+                .size(10) 
+                .order(BucketOrder.key(false));
+    	
+    	AggregationBuilder storeIdAggregation = AggregationBuilders.terms("store_id")
+    			.field("storeId")
+    			.size(1)
+    			.order(BucketOrder.count(false));
+    	
+    	storeAggregation.subAggregation(storeIdAggregation);
+    	dateAggregation.subAggregation(categoryAggregation);
     	dateAggregation.subAggregation(storeAggregation);
         sourceBuilder.aggregation(dateAggregation);
         
@@ -95,6 +107,20 @@ public class ElasticsearchService {
             	String storeName = storeAgg.getBuckets().get(0).getKeyAsString();
                 long maxCount = storeAgg.getBuckets().get(0).getDocCount();
                 pvCounts.put(storeName, maxCount);
+                
+                Terms storeIdAgg = storeAgg.getBuckets().get(0).getAggregations().get("store_id");
+                if (storeIdAgg.getBuckets().size() > 0) {
+                    int storeId = storeIdAgg.getBuckets().get(0).getKeyAsNumber().intValue();
+                    pvCounts.put("storeId", storeId);
+                }
+        	}
+            
+            
+			Terms categoryAgg = bucket.getAggregations().get("category_count");
+            for (Terms.Bucket categoryBucket : categoryAgg.getBuckets()) {
+            	String category = categoryBucket.getKeyAsString();
+                long count = categoryBucket.getDocCount();
+                pvCounts.put(category, count);
         	}
             
             groupCounts.put(formattedDate, pvCounts);        
@@ -102,6 +128,39 @@ public class ElasticsearchService {
 
         return groupCounts;
     }
+    
+    
+    
+    public Map<String, Object> aggregateByPageType(String indexName) throws IOException {
+    	// date_histogram 집계 쿼리를 작성합니다.
+    	SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+    	SearchRequest searchRequest = new SearchRequest(indexName);
+    	
+    	AggregationBuilder cateAggregation = AggregationBuilders.terms("page_count") // 텀 안에  인자는 내가 임의로 지정하는 메소드명같은것
+                .field("pageType.keyword"); // 텀스는 keyword 가 붙음
+                
+
+        sourceBuilder.aggregation(cateAggregation);
+        
+        searchRequest.source(sourceBuilder);
+
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+
+        // 그룹별 개수를 저장할 Map 객체 생성
+        Map<String, Object> groupCounts = new HashMap<>();
+
+        // aggregation 결과 파싱
+        Terms pageCount = searchResponse.getAggregations().get("page_count");
+        
+        for (Terms.Bucket bucket : pageCount.getBuckets()) {
+            String groupKey = bucket.getKeyAsString(); // getkeyasstring 이 예를들어 카테고리 끼리 분류해주는 코드
+            long docCount = bucket.getDocCount(); // keyasstring을 통해 얻은 값을 저장해 놓은곳
+            groupCounts.put(groupKey, docCount);
+        }
+
+        return groupCounts;
+    }
+    
     
     public Map<String, Object> aggregateByMonth(String indexName) throws IOException {
     	// date_histogram 집계 쿼리를 작성합니다.

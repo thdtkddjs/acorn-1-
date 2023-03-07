@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,12 +86,11 @@ public class ShopController {
 	@RequestMapping("/es/test")
 	@ResponseBody
 	public List<Map<String, Object>> test(){
-		String index = "test3";
+		String index = "testlog6";
 		String field = "date";
 		int Month = 3;
 		LocalDate dateStart = LocalDate.of(2023, Month ,1);
-        LocalDate dateEnd = LocalDate.of(2023, Month ,dateStart.lengthOfMonth());
-        
+        LocalDate dateEnd = LocalDate.of(2023, Month ,dateStart.lengthOfMonth());       
 		
 		try {
 			Map<String, Object> PVMonthCount = Esservice.aggregateByMonth1(index);
