@@ -382,8 +382,7 @@ public int count() {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime fiveMinutesAgo = now.minus(5, ChronoUnit.MINUTES);
-        
+        LocalDateTime fiveMinutesAgo = now.minus(100 , ChronoUnit.SECONDS);
         RangeQueryBuilder rangeQuery = QueryBuilders
               .rangeQuery("time")
               .gte(fiveMinutesAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))

@@ -445,22 +445,40 @@ const app = Vue.createApp({
 				'Content-Type' : 'application/json',
 			}
 		});
-			
+		
 		const viewObject4 = await response4.json();
-		for(var k=0; k<viewObject4.length; k++){
-			const currList=[]
-			const currTime= viewObject4[k].time.slice(11,19);
-			// resTime 테스트용 랜덤함수 추가
-			const resTime = (viewObject4[k].elapsedTime+Math.random()*1000) * 0.01;
-			const isSuccess = viewObject4[k].errorCode=="OK" ? true : false;
-			if(isSuccess){
-				currList.push({x:currTime, y:resTime, rslt:"success"})
-			}else{
-				currList.push({x:currTime, y:resTime, rslt:"failure"})
-			}
-			
-			dataRST.push(currList);
+		var currTime2 = 0;
+		var secData=[];
+		var timeData=[];
+		var timeObj = {};
+		var currTime= dayjs().valueOf()-90000;
+	
+		if(viewObject4.length==0){
+			console.log("아무 것도 없다")
+		}else{
+			//response4를 활용해서 "time" ket의 초 부분을 뽑아서 배열에 저장한다
+ 			for (var k = 0; k < viewObject4.length; k++) {
+ 				  objTime = viewObject4[k].time;
+ 				  timeObj[dayjs(objTime).$s] = dayjs(objTime).valueOf();
+ 				  timeData.push(timeObj);
+ 				  secData[k] = dayjs(objTime).$s;
+ 			}
 		}
+		
+		for(var n=0; n<90 ;n++){
+			const currList=[];
+			const resTime = Math.random() *10;
+			if(secData.includes(n)){
+				currList.push({x: timeObj[n], y:resTime, rslt: (n%3==0) ? "success" : "failure"})
+			}
+			else{
+				currList.push({x: currTime, y:null, rslt:null})
+			}
+			currTime=currTime+1000;
+			dataRST.push(currList);
+			
+		}
+		
 
 		
 		function manfData(dataArr) {
@@ -477,14 +495,14 @@ const app = Vue.createApp({
 			})
 		}
 		
-		
 		const ctx4 = document.getElementById("myChart4").getContext("2d");
+		const dataLabels = [];
+
 		const myChart4 = new Chart(ctx4, {
 			type: "scatter",
 	        data: {
 	            datasets: manfData(dataRST),
 	          },
-			plugins : [ChartDataLabels],
 			options: {
 				plugins: {
 					tooltip: {
@@ -500,9 +518,10 @@ const app = Vue.createApp({
 						    	}
 						    },
 						    label: function(tooltipItem, data) {
-						      return 'Request Time : ' + tooltipItem.dataset.data[0].x + "(HH:MM:SS)";
+						      return 'Request Time : ' + dayjs(tooltipItem.dataset.data[0].x).$d;
 						    },
 						    afterLabel: function(tooltipItem, data) {
+						    	console.log(tooltipItem.dataset.data[0])
 						      return 'Response Time : '+ tooltipItem.dataset.data[0].y.toFixed(2) + "(ms)";
 						    }
 						  }
@@ -530,11 +549,34 @@ const app = Vue.createApp({
 				},
 				scales: {
 					x:{
-						type : 'category',
-				    	ticks: {
+			    	ticks: {
+				    		font : {
+				    			size : 12,
+				    		},
 							display: true,
-					        maxTicksLimit: 10,
-				        },
+							maxTicksLimit: 40,	
+							stepSize: 100,
+							// 눈금 값 설정
+					        callback: function(value, index, values) {
+					        	/* 
+					            var currH = dayjs().hour();
+					            var currM = dayjs().minute();
+					            var currS = dayjs().second();
+					            var currTime = dayjs().startOf('day').add(currH, 'hour').add(currM, 'minute').add(currS, 'second');
+					            var tickTime = currTime;
+					            var ticks = [];
+					            for (var i = 10; i > 0; i--) {
+									tickTime = currTime.subtract(30 * (i-1), 'second');
+									ticks.push(Number(tickTime.format('HHmmss')));
+									//values[i] = tickTime.format('HH:mm:ss');
+					            }
+					            console.log("======")
+					            console.log(ticks);
+					            */
+					            return dayjs(value).$H+":"+dayjs(value).$m+":"+dayjs(value).$s;
+					          },
+					         
+				        }, 
 			            grid: {display: false},
 					},
 					y:{
@@ -545,7 +587,7 @@ const app = Vue.createApp({
 					  	},
 					    ticks: {
 					        color: '#ffc107',
-					    	stepSize: 10, // 레이블의 높이를 줄이기 위해 값을 높임
+					    	stepSize: 1, // 레이블의 높이를 줄이기 위해 값을 높임
 					    },
 					},
 				},
@@ -559,38 +601,46 @@ const app = Vue.createApp({
 		});
 		
  		setInterval(async function (){
- 			var dataRST =[];
+ 			const dataRST = []
+ 			var secData=[];
+ 			var timeData=[];
+ 			var timeObj = {};
  			const response4 = await fetch('http://localhost:9000/es/test2', {
  				method : 'GET',
  				headers : {
  					'Content-Type' : 'application/json',
  				}
  			});
- 				
  			const viewObject4 = await response4.json();
- 			for(var k=0; k<viewObject4.length; k++){
- 				const currList=[];
- 				const currTime= viewObject4[k].time.slice(11,19);
- 				// resTime 테스트용 랜덤함수 추가
- 				const resTime = (viewObject4[k].elapsedTime+Math.random()*1000) * 0.01;
- 				const isSuccess = viewObject4[k].errorCode=="OK" ? true : false;
- 				if(isSuccess){
- 					currList.push({x:currTime, y:resTime, rslt:"success"})
- 				}else{
- 					currList.push({x:currTime, y:resTime, rslt:"failure"})
- 				}
- 				
- 				dataRST.push(currList);
- 				
- 				
+ 			
+ 			if(viewObject4.length==0){
+ 				console.log("아무 것도 없다")
+ 			}else{
+ 	 			for (var k = 0; k < viewObject4.length; k++) {
+ 	 				  objTime = viewObject4[k].time;
+ 	 				  timeObj[dayjs(objTime).$s] = dayjs(objTime).valueOf();
+ 	 				  timeData.push(timeObj);
+ 	 				  secData[k] = dayjs(objTime).$s;
+ 	 			}
  			}
  			
+ 			var currTime= dayjs().valueOf()-90000;
+ 			for(var n=0; n<90 ;n++){
+ 				const currList=[];
+ 				const resTime = Math.random() *10;
+ 				if(secData.includes(n)){
+ 					currList.push({x: timeObj[n], y:resTime, rslt:"success"})
+ 				}
+ 				else{
+ 					currList.push({x: currTime, y:null, rslt:null})
+ 					currTime = currTime+1000;
+ 				}
+				dataRST.push(currList);
+ 			}
 			myChart4.data.datasets = manfData(dataRST)
-			
-			
 			myChart4.update();
 		
-		} ,1000);
+		} , 5000);
 	},
 	
 
