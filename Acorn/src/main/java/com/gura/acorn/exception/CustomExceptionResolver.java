@@ -1,4 +1,4 @@
-package com.gura.acorn.es;
+package com.gura.acorn.exception;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.gura.acorn.es.ElasticUtil;
 
 @Component
 public class CustomExceptionResolver implements HandlerExceptionResolver {
@@ -37,7 +39,7 @@ public class CustomExceptionResolver implements HandlerExceptionResolver {
 		map.put("elapsedTime", System.currentTimeMillis() - (Long) request.getAttribute("startTime"));
 		map.put("errorMsg", ex.toString());
         try {
-            ElasticUtil.getInstance().create("error80", map);
+            ElasticUtil.getInstance().create("error2", map);
         } catch (IOException e) {
             e.printStackTrace();
         }
