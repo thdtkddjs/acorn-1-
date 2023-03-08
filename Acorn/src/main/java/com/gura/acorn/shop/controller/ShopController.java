@@ -70,6 +70,12 @@ public class ShopController {
 		service.getReviewList(request);
 		return "search/search";
 	}
+	//웹소켓에 연결된 채팅방
+	//임시이며 나중에 매립하거나 할 예정
+	@RequestMapping("/chatRoom")
+	public String chatRoomTest() {
+		return "chatRoom";
+	}
 
 	
 	//index 페이지에서 가게리스트 출력

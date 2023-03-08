@@ -473,6 +473,38 @@ public int count() {
       return resultList;
   }
   
+  //Websocket에 보낼 pv를 수집한다.
+  public int PVforWebSocket() throws IOException {
+	int Count = 0;
+    SearchRequest searchRequest = new SearchRequest("test3");
+    SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+    
+    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime fiveMinutesAgo = now.minus(5, ChronoUnit.DAYS);
+    
+    RangeQueryBuilder rangeQuery = QueryBuilders
+  		  .rangeQuery("date")
+  		  .gte(fiveMinutesAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+  		  .lte(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
+  		  .format("strict_date_optional_time||epoch_millis");
+
+    searchSourceBuilder.query(rangeQuery);
+    searchSourceBuilder.size(1000);
+    searchRequest.source(searchSourceBuilder);
+
+    SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+    SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+    List<Map<String, Object>> resultList = new ArrayList<>();
+    for (SearchHit hit : searchHits) {
+        Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+        resultList.add(sourceAsMap);
+        Count++;
+    }
+
+    return Count;
+}
+  
   
   //기간내의 데이터 검색 + 그 안의 storeId 로 검색
 //  public List<Map<String, Object>> searchByDateRange2(String indexName, String field, Object start, Object end) throws IOException {
