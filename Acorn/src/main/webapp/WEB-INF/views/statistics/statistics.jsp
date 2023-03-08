@@ -107,16 +107,7 @@
 	</jsp:include>
 	<div data-bs-spy="scroll" data-bs-target="#simple-list-example" data-bs-offset="0" data-bs-smooth-scroll="true" class="scrollspy-example" tabindex="0">
     <div id="simple-list-item-1" class="block_content_top"></div>
-    <div class="category_bar">
-    	<div class="row">
-				<a href="">메인</a>
-				<a href="">주제1</a>
-				<a href="">주제2</a>
-				<a href="">주제3</a>
-				<a href="">주제4</a>
-    	</div>
 
-    </div>
     
 	<div class="container">
     	<div class="statistics_top">
@@ -156,6 +147,23 @@
    		 	<br />
    		 	<canvas id="myChart2" ref="acquisitions2" width="600" height="600"></canvas>
    		 	<br />
+   		 	<select name="" id="mCateChart">
+   		 		<option value="" disabled selected hidden>월간 순위 차트</option>
+   		 		<option value="1" id="op1"></option>
+   		 		<option value="2" id="op2"></option>
+   		 		<option value="3" id="op3"></option>
+   		 		<option value="4" id="op4"></option>
+   		 		<option value="5" id="op5"></option>
+   		 		<option value="6" id="op6"></option>
+   		 		<option value="7" id="op7"></option>
+   		 		<option value="8" id="op8"></option>
+   		 		<option value="9" id="op9"></option>
+   		 		<option value="10" id="op10"></option>
+   		 		<option value="11" id="op11"></option>
+   		 		<option value="12" id="op12"></option>
+   		 	</select>
+   		 	
+   		 	
    		 	<canvas id="myChart3" ref="acquisitions3" width="600" height="600"></canvas>
    		 	<br />
 			<canvas id="myChart4" ref="acquisitions4" width="600" height="600"></canvas>
@@ -196,13 +204,19 @@ const app = Vue.createApp({
  */
 		document.getElementById("tpv").innerText = viewObject[2].PVTotalCount;
 		document.getElementById("dpv").innerText = viewObject[1].PVDayCount;
-		document.getElementById("pvTopTitle").innerText = Object.keys(viewObject[0][Object.keys(viewObject[0])[0]])[0];
-		console.log(Object.keys(viewObject[0])[0]);
-		console.log(viewObject[0][Object.keys(viewObject[0])[0]].storeId);
-		document.getElementById("pvTopTitle").setAttribute("href", "http://localhost:9000/shop/detail?num=" + viewObject[0][Object.keys(viewObject[0])[0]].storeId + "&keyword=");
-
+		document.getElementById("pvTopTitle").innerText = Object.keys(viewObject[0][Object.keys(viewObject[0])[0]])[7];
+		document.getElementById("pvTopTitle").setAttribute("href", "http://localhost:9000/shop/detail?num=" + viewObject[0][Object.keys(viewObject[0])[11]].storeId + "&keyword=");
+		console.log(Object.keys(viewObject[0]))
+		console.log(Object.keys(viewObject[0])[11])
+		
+		for(var i=0; i<12; i++){
+			document.getElementById("op"+(i+1)).innerText = Object.keys(viewObject[0])[11-i];
+		}
+		
+		Object.keys(viewObject[0])[11]
 		const data=[];
 		const data2=[];
+		const data3=[];
 		var pvTotalVal = 0;
 		
 		for(var i=0; i<12; i++){
@@ -211,7 +225,37 @@ const app = Vue.createApp({
 				pvMonthVal = viewObject[0][monthKey].total;
 				pvTotalVal = pvTotalVal+viewObject[0][monthKey].total;
 			}
-
+			if(i==11){
+				for(var j=0; j<7; j++){
+					const cateItem = viewObject[0][monthKey]["cate"+(j+1)];
+					let cateName = "";
+				    switch(j){
+				      case 0:
+				        cateName = "한식";
+				        break;
+				      case 1:
+				        cateName = "중식";
+				        break;
+				      case 2:
+				        cateName = "일식";
+				        break;
+				      case 3:
+				        cateName = "분식";
+				        break;
+				      case 4:
+				        cateName = "양식";
+				        break;
+				      case 5:
+				        cateName = "패스트푸드";
+				        break;
+				      default:
+				        cateName = "기타";
+				        break;
+				    }
+					data3.push({category: cateName , count:cateItem })
+					
+				}
+			}
 			//chart 1의 데이터
 			data.push({month:monthKey, pvMonth:pvMonthVal});
 			//chart 2의 데이터
@@ -366,21 +410,12 @@ const app = Vue.createApp({
 		
 		
 		//chart3
-		
-	    const data3 = [
-	        { category: '한식', count: 10 },
-	        { category: '중식', count: 20 },
-	        { category: '일식', count: 15 },
-	        { category: '양식', count: 25 },
-	        { category: '분식', count: 22 },
-	        { category: '패스트푸드', count: 30 },
-	        { category: '기타', count: 28 },
-	      ];
+
 	  	const ctx3 = document.getElementById("myChart3").getContext("2d");
 	  	
 	  	const myChart3 = new Chart(ctx3, {
 	  		type: "doughnut",
-	          data: {
+	        data: {
 	              labels: data3.map(row => row.category),
 	              datasets: [
 	                {
@@ -394,7 +429,7 @@ const app = Vue.createApp({
 	  			plugins: {
 					title: {
 						display: true,
-						text: '월간 카테고리 별 점유율',
+						text: Object.keys(viewObject[0])[11]+' 월간 카테고리 별 점유율',
 						font:{
 							size: 20,
 						},
@@ -407,7 +442,10 @@ const app = Vue.createApp({
 	  						  size: 12,
 	  						},
 	  						boxWidth: 30
-	  					}
+	  					},
+	  					formatter: function(value, context) {
+	  		                return percentage;
+	  		            },
 	  				},
 	  				datalabels: {
 	  		            font: {
@@ -438,9 +476,22 @@ const app = Vue.createApp({
 			myChart3.resize();
 		});
 		
+		const mCateChart = document.getElementById("mCateChart");
+		mCateChart.addEventListener("change", function() {
+			const selectedValue = mCateChart.value; // 선택된 옵션의 값
+			var monthKey = Object.keys(viewObject[0])[12-selectedValue];
+
+			for(var j=0; j<7; j++){
+				const cateItem = viewObject[0][monthKey]["cate"+(j+1)];
+				myChart3.data.datasets[0].data[j]=cateItem;
+				myChart3.options.plugins.title.text = monthKey+ ' 월간 카테고리 별 점유율'
+			}
+			
+			myChart3.update();
+		});
+		
 		
 		//chart4 
-		
 		var dataRST =[];
 		const response4 = await fetch('http://localhost:9000/es/test2', {
 			method : 'GET',
@@ -448,47 +499,42 @@ const app = Vue.createApp({
 				'Content-Type' : 'application/json',
 			}
 		});
-		
 		const viewObject4 = await response4.json();
 		var currTime2 = 0;
 		var secData=[];
 		var timeData=[];
-		var timeObj = {};
+		var timeObj = [];
+		var resObj = [];
 		var errorObj = [];
-		var currTime= dayjs().valueOf()-90000;
+		var codeObj = [];
+		var currTime= dayjs().valueOf()-65000;
+		var count = 0;
 		
 		if(viewObject4.length==0){
 			console.log("아무 것도 없다")
 		}else{
 			//response4를 활용해서 "time" ket의 초 부분을 뽑아서 배열에 저장한다
  			for (var k = 0; k < viewObject4.length; k++) {
+ 				const currList=[];
  				  objTime = viewObject4[k].time;
- 				  console.log(viewObject4[k].errorMsg)
+ 				  resObj[dayjs(objTime).$s] = viewObject4[k].elapsedTime * 0.001
+ 				  codeObj[dayjs(objTime).$s] = viewObject4[k].errorCode
  				  errorObj[dayjs(objTime).$s]= viewObject4[k].errorMsg
  				  timeObj[dayjs(objTime).$s] = dayjs(objTime).valueOf();
  				  timeData.push(timeObj);
  				  secData[k] = dayjs(objTime).$s;
+ 					currList.push({x: timeObj[dayjs(objTime).$s], y:resObj[dayjs(objTime).$s], rslt: (codeObj[dayjs(objTime).$s]=="OK") ? "success" : "failure", msg:errorObj[dayjs(objTime).$s]})
+ 					dataRST.push(currList);
+ 					count++;
  			}
 		}
 		
-		for(var n=0; n<90 ;n++){
+		for(var n=0; n<60 ;n++){
 			const currList=[];
-			
-			const resTime = Math.random() *10;
-			if(secData.includes(n)){
-				currList.push({x: timeObj[n], y:resTime, rslt: (n%3==0) ? "success" : "failure", msg:errorObj[n]})
-			}
-			else{
-				currList.push({x: currTime, y:null, rslt:null, msg:null})
-			}
+			currList.push({x: currTime, y:null, rslt:null, msg:null})
 			currTime=currTime+1000;
 			dataRST.push(currList);
-			
 		}
-
-		console.log(errorObj)
-
-		
 		function manfData(dataArr) {
 			return dataArr.map(d => {
 				return {
@@ -497,10 +543,10 @@ const app = Vue.createApp({
 					backgroundColor: function(context) {
 					    var responseType = context.dataset.data[context.dataIndex].rslt;
 					    var responseTime = context.dataset.data[context.dataIndex].y;
-					    return responseType === "success" && responseTime > 6 ? 'orange' : (responseType === "success" ? 'skyblue' : 'red');
+					    return responseType === "success" && responseTime > 1 ? 'orange' : (responseType === "success" ? 'skyblue' : 'red');
 					}
-				}
-			})
+				};
+			});
 		}
 		
 		const ctx4 = document.getElementById("myChart4").getContext("2d");
@@ -519,7 +565,7 @@ const app = Vue.createApp({
 						    	if(tooltipItem[0].dataset.data[0].rslt != "success"){
 						    		return 'Abnormal Response';
 						    	}
-						    	else if(tooltipItem[0].dataset.data[0].y>6){
+						    	else if(tooltipItem[0].dataset.data[0].y>1){
 						    		return 'Pending Response';
 						    	}else{
 						    		return 'Normal Response';
@@ -529,8 +575,7 @@ const app = Vue.createApp({
 						      return 'Request Time : ' + dayjs(tooltipItem.dataset.data[0].x).$d;
 						    },
 						    afterLabel: function(tooltipItem, data) {
-						    	console.log(tooltipItem.dataset.data[0])
-						      return 'Response Time : '+ tooltipItem.dataset.data[0].y.toFixed(2) + "(ms)"
+						      return 'Response Time : '+ tooltipItem.dataset.data[0].y.toFixed(3) + " sec"
 						      		+ ((tooltipItem.dataset.data[0].msg != null) ? "\nError Code : "+tooltipItem.dataset.data[0].msg : "");
 						    }
 						  }
@@ -563,28 +608,12 @@ const app = Vue.createApp({
 				    			size : 12,
 				    		},
 							display: true,
-							maxTicksLimit: 40,	
+							maxTicksLimit: 30,	
 							stepSize: 100,
 							// 눈금 값 설정
 					        callback: function(value, index, values) {
-					        	/* 
-					            var currH = dayjs().hour();
-					            var currM = dayjs().minute();
-					            var currS = dayjs().second();
-					            var currTime = dayjs().startOf('day').add(currH, 'hour').add(currM, 'minute').add(currS, 'second');
-					            var tickTime = currTime;
-					            var ticks = [];
-					            for (var i = 10; i > 0; i--) {
-									tickTime = currTime.subtract(30 * (i-1), 'second');
-									ticks.push(Number(tickTime.format('HHmmss')));
-									//values[i] = tickTime.format('HH:mm:ss');
-					            }
-					            console.log("======")
-					            console.log(ticks);
-					            */
 					            return dayjs(value).$H+":"+dayjs(value).$m+":"+dayjs(value).$s;
 					          },
-					         
 				        }, 
 			            grid: {display: false},
 					},
@@ -595,25 +624,23 @@ const app = Vue.createApp({
 						    display: false
 					  	},
 					    ticks: {
+					    	max : 1,
+					    	min : 0,
 					        color: '#ffc107',
-					    	stepSize: 1, // 레이블의 높이를 줄이기 위해 값을 높임
+					    	stepSize: 0.05, // 레이블의 높이를 줄이기 위해 값을 높임
 					    },
 					},
 				},
 				responsive: true,
-
 			},
-			
 		});
 		window.addEventListener('resize', function() {
 			myChart.resize();
 		});
-		
+		//Chart 4를 5초마다 갱신하는 함수
  		setInterval(async function (){
  			const dataRST = []
- 			var secData=[];
- 			var timeData=[];
- 			var timeObj = {};
+ 			
  			const response4 = await fetch('http://localhost:9000/es/test2', {
  				method : 'GET',
  				headers : {
@@ -621,40 +648,48 @@ const app = Vue.createApp({
  				}
  			});
  			const viewObject4 = await response4.json();
+ 			var currTime2 = 0;
+ 			var secData=[];
+ 			var timeData=[];
+ 			var timeObj = [];
+ 			var resObj = [];
+ 			var errorObj = [];
+ 			var codeObj = [];
+ 			var currTime= dayjs().valueOf()-65000;
+ 			var count = 0;
  			
  			if(viewObject4.length==0){
  				console.log("아무 것도 없다")
  			}else{
+ 				//response4를 활용해서 "time" ket의 초 부분을 뽑아서 배열에 저장한다
  	 			for (var k = 0; k < viewObject4.length; k++) {
- 	 				  objTime = viewObject4[k].time;
- 	 				  timeObj[dayjs(objTime).$s] = dayjs(objTime).valueOf();
- 	 				  timeData.push(timeObj);
- 	 				  secData[k] = dayjs(objTime).$s;
+ 	 				const currList=[];
+					objTime = viewObject4[k].time;
+					resObj[dayjs(objTime).$s] = viewObject4[k].elapsedTime * 0.001
+					codeObj[dayjs(objTime).$s] = viewObject4[k].errorCode
+					errorObj[dayjs(objTime).$s]= viewObject4[k].errorMsg
+					timeObj[dayjs(objTime).$s] = dayjs(objTime).valueOf();
+					timeData.push(timeObj);
+					secData[k] = dayjs(objTime).$s;
+ 					currList.push({x: timeObj[dayjs(objTime).$s], y:resObj[dayjs(objTime).$s], rslt: (codeObj[dayjs(objTime).$s]=="OK") ? "success" : "failure", msg:errorObj[dayjs(objTime).$s]})
+ 					dataRST.push(currList);
+ 					count++;
  	 			}
  			}
  			
- 			var currTime= dayjs().valueOf()-90000;
- 			for(var n=0; n<90 ;n++){
+ 			for(var n=0; n<60 ;n++){
  				const currList=[];
- 				const resTime = Math.random() *10;
- 				if(secData.includes(n)){
- 					currList.push({x: timeObj[n], y:resTime, rslt: (n%3==0) ? "success" : "failure",  msg:errorObj[n]})
- 				}
- 				else{
- 					currList.push({x: currTime, y:null, rslt:null, msg:null})
- 					currTime = currTime+1000;
- 				}
-				dataRST.push(currList);
+ 				currList.push({x: currTime, y:null, rslt:null, msg:null})
+ 				currTime=currTime+1000;
+ 				dataRST.push(currList);
  			}
 			myChart4.data.datasets = manfData(dataRST)
 			myChart4.update();
-		
 		} , 5000);
 	},
-	
-
 });
 app.mount(".statistics");
 
 </script>
+
 </html>
