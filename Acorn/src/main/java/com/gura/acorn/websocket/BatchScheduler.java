@@ -2,8 +2,10 @@ package com.gura.acorn.websocket;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
@@ -42,9 +44,11 @@ public class BatchScheduler {
 	@Scheduled(fixedDelay = 300000)
 	public void testSchedule() {
 		int num = 0;
+		List<Map<String, Object>> resultList = new ArrayList<>();
     	try {
     		//PV를 얻어온다. 현재는 5일 전까지 긁어옴.
-			num = Esservice.PVforWebSocket();
+    		resultList = Esservice.PVforWebSocket();
+			num = resultList.size();
 			System.out.println(num);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -57,8 +61,7 @@ public class BatchScheduler {
 		msg1.put("type", "data");
 		msg1.put("text", message);
 		msg1.put("id", clientID);
-		msg1.put("date", LocalDateTime.now().toString());
-		System.out.println(msg1);
+		msg1.put("date", LocalDateTime.now().getMinute());
 		//아래와 같은 형태의 데이터.
 //        var msg1 = {
 //        	    type: "message",

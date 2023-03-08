@@ -27,16 +27,33 @@
 </head>
 <body>
 
+  <div id="indexPage">
+    {{ message }}
+    <br />
+    <input type="text" class="border w-64 h-12" id="ClientID" v-model="message">
+    <div style="width: 800px;"><canvas ref="acquisitions"></canvas></div>
+  </div>
+
 <div id="chat_box"></div>
     <input type="text" id="msg">
     <button id="msg_process">전송</button>
+<footer>
+	<p>저작권 정보</p>
+	<input type="text" id="ID"/>
+	<button id="ID_change">변경</button>
+</footer>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
+
 	//ClientID를
 	//ID가 있다면 읽어오고
 	//없다면 후보군 중 랜덤한 하나를 지정한다.
 	sessionStorage.setItem("clientID", "Tom");
 	const guests = ['Tom', 'Jerry', 'Mickey', 'Donald', 'Goofy', 'Snoopy'];
+	
 
 	if(sessionStorage.getItem("id") != null){
         sessionStorage.setItem("clientID", sessionStorage.getItem("id"));
@@ -46,6 +63,15 @@
 	}
 
 	console.log(sessionStorage.getItem("clientID"));	
+	//id를 임의로 변경한다.
+	document.querySelector("#ID_change").addEventListener("click", function(){
+		const id = document.querySelector("#ID").value;
+		sessionStorage.setItem("clientID", id);
+		console.log(id);
+		
+  	});
+	
+	
     //웹소켓을 연결
     const ws = new WebSocket('ws://34.125.190.255:8011/');
 	//const ws = new WebSocket('ws://localhost:8011/');
@@ -116,6 +142,94 @@
         messageElement.innerText = text;
         chatBox.appendChild(messageElement);
 	}
+	
+	const { createApp } = Vue
+
+	createApp({
+	  data() {
+	    return {
+	      message: 'Hello Vue!',
+	      }
+	  },
+	  async mounted() {
+		  //data의 length가 곧 graph의 최대 사이즈이다. 이보다 커질 경우 오래된 순서대로 자른다.
+		  var data = [
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	          { time: 0, count: 0 },
+	        ];
+		 
+	    const chart = new Chart(
+	      this.$refs.acquisitions,
+	      {
+	        type: 'bar',
+	        data: {
+	            labels: data.map(row => row.time),
+	            datasets: [
+	              {
+	                label: 'Acquisitions by time',
+	                data: data.map(row => row.count)
+	              }
+	            ]
+	          }
+	      }
+	    );
+	    //내부에서 쓰기 위해 웹소켓에 연결
+	    const ws = new WebSocket('ws://34.125.190.255:8011/');
+	    ws.onmessage = function(event) {
+	        //받아온 데이터를 parsing하여 그래프의 data에 넣어준다.
+	        event.data.text().then((jsonString) => {
+	            const jsonObj = JSON.parse(jsonString);
+	            console.log('Received json: ' + jsonObj);
+	            if(jsonObj.type=="data"){
+	            	const newdata = {
+	    	                time: jsonObj.date,
+	    	                count: jsonObj.text
+	    	              };
+	            	console.log(chart.data.labels.length);
+// 	            	if(chart.data.labels.length >= 3){
+	              	  data = data.slice(1);
+// 	            	  chart.data.labels.push(newdata.time);
+// 		              chart.data.datasets[0].data.push(newdata.count);
+					  data.push(newdata);
+		              chart.data.labels = data.map(row => row.time);
+		              chart.data.datasets[0].data = data.map(row => row.count);
+		              chart.update();
+// 	            	}else{
+// 	            	  chart.data.labels.push(newdata.time);
+// 		              chart.data.datasets[0].data.push(newdata.count);
+// 		              chart.update();
+// 	            	}
+	            }
+	        })
+	    }.bind(this);
+		
+		
+	  }
+	}).mount('#indexPage');
 </script>
 
 </body>

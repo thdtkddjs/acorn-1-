@@ -474,13 +474,13 @@ public int count() {
   }
   
   //Websocket에 보낼 pv를 수집한다.
-  public int PVforWebSocket() throws IOException {
+  public List<Map<String, Object>> PVforWebSocket() throws IOException {
 	int Count = 0;
-    SearchRequest searchRequest = new SearchRequest("test3");
+    SearchRequest searchRequest = new SearchRequest("test4");
     SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
     
     LocalDateTime now = LocalDateTime.now();
-    LocalDateTime fiveMinutesAgo = now.minus(5, ChronoUnit.DAYS);
+    LocalDateTime fiveMinutesAgo = now.minus(1, ChronoUnit.HOURS);
     
     RangeQueryBuilder rangeQuery = QueryBuilders
   		  .rangeQuery("date")
@@ -502,7 +502,7 @@ public int count() {
         Count++;
     }
 
-    return Count;
+    return resultList;
 }
   
   
