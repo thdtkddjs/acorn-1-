@@ -65,3 +65,5 @@ imagePath varchar(200)-- 이미지 경로(카메라로 찍은 파일을 바로 �
 
 -- orderNum을 얻어낼 시퀀스
 CREATE SEQUENCE board_shop_view_seq;
+
+ALTER TABLE Users ADD(loggedIn CHAR(3) DEFAULT 'no');

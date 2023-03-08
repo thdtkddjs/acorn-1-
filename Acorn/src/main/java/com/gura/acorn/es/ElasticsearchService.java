@@ -400,6 +400,7 @@ public int count() {
     	return example;
     }
     
+
     //index의 모든 id별 data 추출
   public List<Map<String, Object>> getAllDataFromIndex(String indexName) throws IOException {
   	RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
@@ -446,7 +447,7 @@ public int count() {
       SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
       
       LocalDateTime now = LocalDateTime.now();
-      LocalDateTime fiveMinutesAgo = now.minus(5, ChronoUnit.MINUTES);
+      LocalDateTime fiveMinutesAgo = now.minus(1, ChronoUnit.MINUTES);
       
       RangeQueryBuilder rangeQuery = QueryBuilders
     		  .rangeQuery("time")
