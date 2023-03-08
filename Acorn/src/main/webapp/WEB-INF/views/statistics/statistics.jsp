@@ -91,14 +91,27 @@
 	display:flex;
 	margin : auto;
 }
-.statistics> canvas{
+.chart{
+	width : 100%;
+	margin : auto;
+	position : relative;
+}
+canvas{
 	display: block;
 	border : 1px solid #cecece;
 	border-radius : 10px;
 	padding : 50px;
 	margin : auto;
 }
-
+select{
+	position: absolute;
+    font-size: 12px;
+    left: 20%;
+    top: 2%;
+}
+option{
+	font-size: 12px;
+}
 </style>
 </head>
 <body>
@@ -143,30 +156,36 @@
     	</div>
     	<br />
   	    <div class="statistics">
-   		 	<canvas id="myChart" ref="acquisitions" width="600" height="600"></canvas>
+  	    	<div class="chart">
+	   		 	<canvas id="myChart" ref="acquisitions" width="600" height="600"></canvas>
+	   		 	<br />
+   		 	</div>
+   		 	<div class="chart">
+	   		 	<canvas id="myChart2" ref="acquisitions2" width="600" height="600"></canvas>
+	   		 	<br />
+   		 	</div>
+   		 	<div class="chart">
+	   		 	<select name="" id="mCateChart">
+	   		 		<option value="" disabled selected hidden>월간 순위 차트</option>
+	   		 		<option value="1" id="op1"></option>
+	   		 		<option value="2" id="op2"></option>
+	   		 		<option value="3" id="op3"></option>
+	   		 		<option value="4" id="op4"></option>
+	   		 		<option value="5" id="op5"></option>
+	   		 		<option value="6" id="op6"></option>
+	   		 		<option value="7" id="op7"></option>
+	   		 		<option value="8" id="op8"></option>
+	   		 		<option value="9" id="op9"></option>
+	   		 		<option value="10" id="op10"></option>
+	   		 		<option value="11" id="op11"></option>
+	   		 		<option value="12" id="op12"></option>
+	   		 	</select>
+   		 		<canvas id="myChart3" ref="acquisitions3" width="600" height="600"></canvas>
+  		 	</div>
    		 	<br />
-   		 	<canvas id="myChart2" ref="acquisitions2" width="600" height="600"></canvas>
-   		 	<br />
-   		 	<select name="" id="mCateChart">
-   		 		<option value="" disabled selected hidden>월간 순위 차트</option>
-   		 		<option value="1" id="op1"></option>
-   		 		<option value="2" id="op2"></option>
-   		 		<option value="3" id="op3"></option>
-   		 		<option value="4" id="op4"></option>
-   		 		<option value="5" id="op5"></option>
-   		 		<option value="6" id="op6"></option>
-   		 		<option value="7" id="op7"></option>
-   		 		<option value="8" id="op8"></option>
-   		 		<option value="9" id="op9"></option>
-   		 		<option value="10" id="op10"></option>
-   		 		<option value="11" id="op11"></option>
-   		 		<option value="12" id="op12"></option>
-   		 	</select>
-   		 	
-   		 	
-   		 	<canvas id="myChart3" ref="acquisitions3" width="600" height="600"></canvas>
-   		 	<br />
-			<canvas id="myChart4" ref="acquisitions4" width="600" height="600"></canvas>
+   		 	<div class="chart">
+				<canvas id="myChart4" ref="acquisitions4" width="600" height="600"></canvas>
+			</div>
     	</div>
     	
     	<div class="statistics_mid">
