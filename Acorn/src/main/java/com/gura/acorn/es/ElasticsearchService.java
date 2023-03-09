@@ -236,14 +236,17 @@ public class ElasticsearchService {
         return resultMap;
     }
     
-    public Map<String, Object> searchDayPV(String indexName, String field, Object start) throws IOException {
+    public Map<String, Object> searchDayPV(String indexName, String field) throws IOException {
+    	
+    	LocalDate yesterday = LocalDate.now().minusDays(1);
+    	
         SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         RangeQueryBuilder rangeQuery = QueryBuilders
                 .rangeQuery(field)
-                .gte(start)
-                .lte(start)
+                .gte(yesterday)
+                .lte(yesterday)
                 .format("yyyy-MM-dd");
 
         searchSourceBuilder.query(rangeQuery);
@@ -477,14 +480,14 @@ public int count() {
   //Websocket에 보낼 pv를 수집한다.
   public List<Map<String, Object>> PVforWebSocket() throws IOException {
 	int Count = 0;
-    SearchRequest searchRequest = new SearchRequest("test4");
+    SearchRequest searchRequest = new SearchRequest("error2");
     SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
     
     LocalDateTime now = LocalDateTime.now();
     LocalDateTime fiveMinutesAgo = now.minus(24, ChronoUnit.HOURS);
     
     RangeQueryBuilder rangeQuery = QueryBuilders
-  		  .rangeQuery("date")
+  		  .rangeQuery("time")
   		  .gte(fiveMinutesAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
   		  .lte(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
   		  .format("strict_date_optional_time||epoch_millis");

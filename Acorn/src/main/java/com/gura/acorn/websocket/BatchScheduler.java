@@ -3,29 +3,13 @@ package com.gura.acorn.websocket;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonNumber;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import javax.json.JsonString;
-import javax.json.JsonValue;
-import javax.json.JsonValue.ValueType;
-import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.gura.acorn.es.ElasticsearchService;
 
@@ -42,7 +26,11 @@ public class BatchScheduler {
     }
 	//표기된 숫자 milisecond마다 PV를 얻어내서 websocket으로 쏴준다.
 	//지금은 테스트용으로 10초지만, 멘토님은 5분을 요구하심.
+<<<<<<< HEAD
 	@Scheduled(fixedDelay = 300000)
+=======
+	@Scheduled(fixedDelay = 2000)
+>>>>>>> refs/remotes/Upstream/master
 	public void testSchedule() {
 		int num = 0;
 		List<Map<String, Object>> resultList = new ArrayList<>();
