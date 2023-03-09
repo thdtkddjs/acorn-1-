@@ -76,11 +76,6 @@ public class ShopController {
 	public String chatRoomTest() {
 		return "chatRoom";
 	}
-<<<<<<< HEAD
-	//비슷한 이유로 만든 차트방
-=======
-	
->>>>>>> refs/remotes/Upstream/master
 	@RequestMapping("/chartRoom")
 	public String ChartRoomTest() {
 		return "chartRoom"; 
