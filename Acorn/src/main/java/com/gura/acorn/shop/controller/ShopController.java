@@ -133,19 +133,22 @@ public class ShopController {
 		return null;
 	}
 	
-//	@RequestMapping("/es/test3")
-//	@ResponseBody
-//	public List<Map<String, Object>> test3(){
-//		String index = "testlog6";
-//		
-//		try {
-//			return Esservice.getAllDataFromIndex(index);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}	
-//		return null;
-//	}
+	@RequestMapping("/es/test3")
+	@ResponseBody
+	public List<Map<String, Object>> test3(){
+		try {
+			Map<String, Object> UVMonthCount = Esservice.aggregateByMonthUV();
+			
+			List<Map<String, Object>> resultList = new ArrayList<>();
+			resultList.add(UVMonthCount);
+			
+			return resultList;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return null;
+	}
 	
 	@RequestMapping("/index")
 	public String index2(HttpServletRequest request) {
