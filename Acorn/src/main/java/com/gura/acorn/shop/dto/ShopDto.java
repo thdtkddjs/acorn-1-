@@ -9,6 +9,7 @@ public class ShopDto {
 	private String content;
 	private String imagePath;
 	private String categorie;
+	private int viewCount;
 	private int rCount;
 	private double grade;
 	private String startTime;
@@ -21,7 +22,7 @@ public class ShopDto {
 	public ShopDto() {
 	}
 
-	public ShopDto(int num, String title, String content, String imagePath, String categorie, int rCount,
+	public ShopDto(int num, String title, String content, String imagePath, String categorie, int viewCount, int rCount,
 			double grade, String startTime, String endTime, String telNum, String addr, int startRowNum,
 			int endRowNum) {
 		super();
@@ -30,6 +31,7 @@ public class ShopDto {
 		this.content = content;
 		this.imagePath = imagePath;
 		this.categorie = categorie;
+		this.viewCount = viewCount;
 		this.rCount = rCount;
 		this.grade = grade;
 		this.startTime = startTime;
@@ -42,14 +44,6 @@ public class ShopDto {
 
 	public int getNum() {
 		return num;
-	}
-
-	public double getGrade() {
-		return grade;
-	}
-
-	public void setGrade(double grade) {
-		this.grade = grade;
 	}
 
 	public void setNum(int num) {
@@ -88,12 +82,28 @@ public class ShopDto {
 		this.categorie = categorie;
 	}
 
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
+	}
+
 	public int getrCount() {
 		return rCount;
 	}
 
 	public void setrCount(int rCount) {
 		this.rCount = rCount;
+	}
+
+	public double getGrade() {
+		return grade;
+	}
+
+	public void setGrade(double grade) {
+		this.grade = grade;
 	}
 
 	public String getStartTime() {
@@ -143,5 +153,7 @@ public class ShopDto {
 	public void setEndRowNum(int endRowNum) {
 		this.endRowNum = endRowNum;
 	}
+
+	
 
 }

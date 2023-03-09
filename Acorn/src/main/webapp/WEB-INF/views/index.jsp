@@ -124,7 +124,7 @@
 			   						<li class="shop_item_content_detail"><img src="${pageContext.request.contextPath}/resources/images/shop_info/address.png" alt="주소" class="shop_info_icon" title="주소"/>${tmp.addr }</li>
 			   						<li class="shop_item_content_detail">${tmp.content }</li>
 			   						<li class="shop_item_content_detail">${tmp.categorie}, ${tmp.startTime}~ ${tmp.endTime}, ${tmp.telNum}</li>
-			   						<li class="shop_item_content_detail">👀 페이지 뷰 : <b style="color:black;">999+</b>, ✏️ 리뷰 : <b style="color:black;">${tmp.rCount}</b></li>
+			   						<li class="shop_item_content_detail">👀 페이지 뷰 : <b style="color:black;">${tmp.viewCount }</b>, ✏️ 리뷰 : <b style="color:black;">${tmp.rCount}</b></li>
 			   					</ul>
 			   				</div>	 
 						</a>
