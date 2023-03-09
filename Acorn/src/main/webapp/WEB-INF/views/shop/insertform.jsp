@@ -172,7 +172,7 @@ body::-webkit-scrollbar-thumb {
 		});
 		
 		$("#insertForm").on("submit", function(){
-			const isNull = ($("#title").val()!="") && ($("#categorie").val()!="") && ($("#telNum").val()!="") && ($("#addr").val()!="") && ($("#startTime").val()!="") && ($("#endTime").val()!="") && isImageNull;
+			const isNull = ($("#title").val()!="") && ($("#categorie").val()!="") && ($("#telNum").val()!="") && ($("#addr").val()!="") && ($("#startTime").val()!="") && ($("#endTime").val()!="") && isImageValid;
 			if(!isNull){
 			     return false;
 			}
