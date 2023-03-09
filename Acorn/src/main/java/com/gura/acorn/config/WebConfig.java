@@ -2,18 +2,27 @@ package com.gura.acorn.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 
 import com.gura.acorn.Interceptor.LoggingInterceptor;
 
-//설정과 관련된 java파일에는 @Configuration 어노테이션을 ㅊ가한다.
 @Configuration
+@EnableWebSocketMessageBroker
 public class WebConfig implements WebMvcConfigurer{
-
+	
+	
 	@Autowired
     LoggingInterceptor loggingInterceptor;
+	
 	
 	@Override
     public void addInterceptors(InterceptorRegistry registry) {

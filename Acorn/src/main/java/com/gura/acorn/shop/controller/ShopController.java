@@ -76,6 +76,11 @@ public class ShopController {
 	public String chatRoomTest() {
 		return "chatRoom";
 	}
+	//비슷한 이유로 만든 차트방
+	@RequestMapping("/chartRoom")
+	public String ChartRoomTest() {
+		return "chartRoom"; 
+	}
 
 	
 	//index 페이지에서 가게리스트 출력

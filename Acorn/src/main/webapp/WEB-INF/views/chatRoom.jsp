@@ -26,14 +26,6 @@
 
 </head>
 <body>
-
-  <div id="indexPage">
-    {{ message }}
-    <br />
-    <input type="text" class="border w-64 h-12" id="ClientID" v-model="message">
-    <div style="width: 800px;"><canvas ref="acquisitions"></canvas></div>
-  </div>
-
 <div id="chat_box"></div>
     <input type="text" id="msg">
     <button id="msg_process">전송</button>
@@ -73,29 +65,28 @@
 	
 	
     //웹소켓을 연결
-    const ws = new WebSocket('ws://34.125.190.255:8011/');
-	//const ws = new WebSocket('ws://localhost:8011/');
+    //const ws = new WebSocket('ws://34.125.190.255:8011/');
+	const ws = new WebSocket('ws://localhost:8011/');
 	
 	//연결 성공 시에 실행되는 function
     ws.onopen = function() {
       console.log('Connected to server!');
+      //채팅창에도 알려준다.
       addChatRoom('Connected to server!');
     };
     //데이터를 받아올 때 실행되는 function
     ws.onmessage = function(event) {
-	    console.log('Received message: ' + event.data);
-
-//	    const data = JSON.stringify(result);
 	    //받아온 데이터가 JSON 데이터이므로 parsing 해준다.
 	    event.data.text().then((jsonString) => {
 	        const jsonObj = JSON.parse(jsonString);
+	        //채팅에 필요한 타입의 데이터
 	        if(jsonObj.type=="message"){
-		        console.log(jsonObj.text);
+		        console.log('message타입을 받았습니다.');
 		        const text = jsonObj.text;
 		        const id = jsonObj.id;
 		        addChatRoom(id+": "+text);
-		    }else if(jsonObj.type=="data"){
-		    	console.log(jsonObj.text);
+		    }else if(jsonObj.type=="data"){//차트 제작용. 여기서는 쓸모없음.
+		    	console.log('data타입을 받았습니다.');
 		    }
 	    }).catch((error) => {
 	        console.error('Error parsing message as JSON:', error);
@@ -120,6 +111,7 @@
     //text = 메시지 데이터
     //id = 아이디
     //date = 혹시 필요할지 몰라서 시간 정보도 포함
+    //channel = 채널 분류용으로 만들었는데 잘 작동을 안한다. 나중에 고치고 나면 그때 다시 첨언
   	function sendMessages() {
         const msg = document.querySelector("#msg").value;
         var clientID = sessionStorage.getItem("clientID");
@@ -127,110 +119,22 @@
         	    type: "message",
         	    text: msg,
         	    id:   clientID,
-        	    date: Date.now()
+        	    date: Date.now(),
+        	    channel : "general"
         	  };
-        
+        //제이슨 형태로 만들어서 쏴준다.
         ws.send(JSON.stringify(msg1))
         //메시지를 보낸 후 msg 인풋을 초기화.
         document.querySelector("#msg").value="";
     }
 	//chatRoom, 즉 채팅창에 메시지를 띄운다.
-	//현재는 자신의 정보를 별도로 표기하고 있지는 않다.
+	//나중에 자기 아이디인 경우에는 별도 표시가 되도록 변경하는 것이 목표
 	function addChatRoom(text){
 		const chatBox = document.querySelector('#chat_box');
         const messageElement = document.createElement('div');
         messageElement.innerText = text;
         chatBox.appendChild(messageElement);
 	}
-	
-	const { createApp } = Vue
-
-	createApp({
-	  data() {
-	    return {
-	      message: 'Hello Vue!',
-	      }
-	  },
-	  async mounted() {
-		  //data의 length가 곧 graph의 최대 사이즈이다. 이보다 커질 경우 오래된 순서대로 자른다.
-		  var data = [
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	          { time: 0, count: 0 },
-	        ];
-		 
-	    const chart = new Chart(
-	      this.$refs.acquisitions,
-	      {
-	        type: 'bar',
-	        data: {
-	            labels: data.map(row => row.time),
-	            datasets: [
-	              {
-	                label: 'Acquisitions by time',
-	                data: data.map(row => row.count)
-	              }
-	            ]
-	          }
-	      }
-	    );
-	    //내부에서 쓰기 위해 웹소켓에 연결
-	    const ws = new WebSocket('ws://34.125.190.255:8011/');
-	    ws.onmessage = function(event) {
-	        //받아온 데이터를 parsing하여 그래프의 data에 넣어준다.
-	        event.data.text().then((jsonString) => {
-	            const jsonObj = JSON.parse(jsonString);
-	            console.log('Received json: ' + jsonObj);
-	            if(jsonObj.type=="data"){
-	            	const newdata = {
-	    	                time: jsonObj.date,
-	    	                count: jsonObj.text
-	    	              };
-	            	console.log(chart.data.labels.length);
-// 	            	if(chart.data.labels.length >= 3){
-	              	  data = data.slice(1);
-// 	            	  chart.data.labels.push(newdata.time);
-// 		              chart.data.datasets[0].data.push(newdata.count);
-					  data.push(newdata);
-		              chart.data.labels = data.map(row => row.time);
-		              chart.data.datasets[0].data = data.map(row => row.count);
-		              chart.update();
-// 	            	}else{
-// 	            	  chart.data.labels.push(newdata.time);
-// 		              chart.data.datasets[0].data.push(newdata.count);
-// 		              chart.update();
-// 	            	}
-	            }
-	        })
-	    }.bind(this);
-		
-		
-	  }
-	}).mount('#indexPage');
 </script>
-
 </body>
 </html>

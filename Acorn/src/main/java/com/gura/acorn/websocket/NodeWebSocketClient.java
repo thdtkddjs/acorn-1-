@@ -21,9 +21,9 @@ import java.util.concurrent.TimeUnit;
 public class NodeWebSocketClient extends AbstractWebSocketHandler implements DisposableBean {
     private static final Logger logger = LoggerFactory.getLogger(NodeWebSocketClient.class);
     //로컬 주소
-//  private static final String SERVER_URI = "ws://localhost:8011/";
+    private static final String SERVER_URI = "ws://localhost:8011/data";
     //클라우드 서버에 올라가 있는 주소
-    private static final String SERVER_URI = "ws://34.125.190.255:8011/";
+//    private static final String SERVER_URI = "ws://34.125.190.255:8011/";
     
     private final StandardWebSocketClient webSocketClient;
     private WebSocketSession webSocketSession;
@@ -42,7 +42,7 @@ public class NodeWebSocketClient extends AbstractWebSocketHandler implements Dis
         this.webSocketClient.doHandshake(this, SERVER_URI);
         this.connectLatch.await(10, TimeUnit.SECONDS);
     }
-
+    //websocket의 기능을 통해 메시지를 send한다.
     public void send(String message) throws IOException {
         if (this.webSocketSession != null && this.webSocketSession.isOpen()) {
             logger.info("Sending message: {}", message);

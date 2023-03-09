@@ -1,7 +1,6 @@
 package com.gura.acorn.es;
 
 import java.io.IOException;
-import java.net.http.HttpClient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
