@@ -76,6 +76,11 @@ public class ShopController {
 	public String chatRoomTest() {
 		return "chatRoom";
 	}
+	
+	@RequestMapping("/chartRoom")
+	public String ChartRoomTest() {
+		return "chartRoom"; 
+	}
 
 	
 	//index 페이지에서 가게리스트 출력
@@ -121,7 +126,7 @@ public class ShopController {
 	@ResponseBody
 	public List<Map<String, Object>> test2(){
 		try {
-			return Esservice.searchError();
+			return Esservice.PVforWebSocket();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

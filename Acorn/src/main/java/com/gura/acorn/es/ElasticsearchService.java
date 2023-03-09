@@ -477,14 +477,14 @@ public int count() {
   //Websocket에 보낼 pv를 수집한다.
   public List<Map<String, Object>> PVforWebSocket() throws IOException {
 	int Count = 0;
-    SearchRequest searchRequest = new SearchRequest("test4");
+    SearchRequest searchRequest = new SearchRequest("error2");
     SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
     
     LocalDateTime now = LocalDateTime.now();
     LocalDateTime fiveMinutesAgo = now.minus(1, ChronoUnit.HOURS);
     
     RangeQueryBuilder rangeQuery = QueryBuilders
-  		  .rangeQuery("date")
+  		  .rangeQuery("time")
   		  .gte(fiveMinutesAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
   		  .lte(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
   		  .format("strict_date_optional_time||epoch_millis");
