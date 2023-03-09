@@ -116,7 +116,7 @@ button{
 					<label class="form-label" for="startTime">OPEN</label>			
 				</div>
 				<div class = "col-8">
-					<input	class="form-control" type="time" name="startTime" value="${dto.startTime }"/>
+					<input	class="form-control" type="time" name="startTime" id="startTime" value="${dto.startTime }"/>
 				</div>
 			</div>
 			<br/>
@@ -125,7 +125,7 @@ button{
 					<label	class="form-label" for="endTime">CLOSE</label> 	
 				</div>
 				<div class = "col-8">
-					<input	class="form-control" type="time" name="endTime" value="${dto.endTime }" />
+					<input	class="form-control" type="time" name="endTime" id="endTime" value="${dto.endTime }" />
 				</div>
 			</div>
 			<br />
@@ -169,14 +169,14 @@ button{
 		</form>
 	</div>
 	</div>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
 
 	<script>
-		src = "${pageContext.request.contextPath }/resources/js/gura_util.js" >
-	</script>
-	<script>
+	
+	isImageValid = false;
+	
 		//프로필 이미지 링크를 클릭하면 
 		document.querySelector("#profileLink").addEventListener("click",
 				function() {
@@ -211,7 +211,29 @@ button{
 												document
 														.querySelector("#profileLink").innerHTML = img;
 											});
+							isImageValid=true;
 						});
+		$("#updateForm").on("submit", function(){
+			const isNull = ($("#title").val()!="") && ($("#categorie").val()!="") && ($("#telNum").val()!="") && ($("#addr").val()!="") && ($("#startTime").val()!="") && ($("#endTime").val()!="") && isImageNull;
+			if(!isNull){
+			     return false;
+			}
+		});
 	</script>
+	
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script>
+		window.onload = function() {
+			document.getElementById("addr").addEventListener("click", function() { //주소입력칸을 클릭하면
+				//카카오 주소 창 오픈
+				new daum.Postcode({oncomplete : function(data) { //선택시 입력값 세팅
+					document.getElementById("addr").value = data.address; // 주소 넣기
+					document.querySelector("input[name=addr]").focus(); //상세입력 포커싱
+				}
+			}).open();
+			});
+		}
+	</script>
+	
 </body>
 </html>

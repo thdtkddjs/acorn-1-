@@ -86,7 +86,7 @@ textarea {
 			method="get" id="insertForm">
 			
 			<!-- 실제 폼에 제출될 이미지 값 -->
-			<input type="hidden" name="imagePath" value="empty" /> 
+			<input type="hidden" name="imagePath" value="empty" id="image2"/> 
 			
 			<input type="hidden" name="num" value="${param.num }" />
 
@@ -131,9 +131,17 @@ textarea {
 	</div>
 
 	<script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<!-- 이미지 등록 script -->
 	<script>
+	
+	//유효성 여부를 저장할 변수를 만들고 초기값 대입 
+// 	let isMenuValid=false;
+// 	let isPriceValid=false;
+// 	let isContentValid=false;
+// 	let isImageValid=false;
+	let isImageNull=false;
+		
 		document.querySelector("#thumbnailLink").addEventListener("click", function() {
 			document.querySelector("#image").click();
 		});
@@ -149,6 +157,49 @@ textarea {
 				let img = `<img class="upload_img" src="${pageContext.request.contextPath }/shop/images/\${data.imagePath}">`;
 				document.querySelector("#thumbnailLink").innerHTML = img;
 			});
+// 			isImageValid=true;
+			isImageNull=true;
+		});
+		
+		//console log들은 작동 Test용 코드. 필요하면 주석 해제.
+// 		$("#name").on("input", function(){
+// 			if($(this).val()!=null){
+// 				isMenuValid=true;
+// 			}
+// 			//console.log(isMenuValid +"&&"+ isPriceValid +"&&"+ isContentValid+ "&&" +isImageValid);
+// 		});
+// 		$("#price").on("input", function(){
+// 			if($(this).val()!=null){
+// 				isPriceValid=true;
+// 			}
+// 			//console.log(isMenuValid +"&&"+ isPriceValid +"&&"+ isContentValid+ "&&" +isImageValid);
+// 		});
+// 		$("#content").on("input", function(){
+// 			if($(this).val()!=null){
+// 				isContentValid=true;
+// 			}
+// 			//console.log(isMenuValid +"&&"+ isPriceValid +"&&"+ isContentValid+ "&&" +isImageValid);
+// 		});
+// 		$("#image2").on("input", function(){
+// 			if($(this).val()!="empty"){
+// 				isImageValid=true;
+				
+// 			}
+// 			//console.log(isMenuValid +"&&"+ isPriceValid +"&&"+ isContentValid+ "&&" +isImageValid);
+// 		});
+// 		console.log(isMenuValid +"&&"+ isPriceValid +"&&"+ isContentValid+ "&&" +isImageValid);
+		$("#insertForm").on("submit", function(){
+// 		  const isFormValid = isMenuValid && isPriceValid && isContentValid && isImageValid;
+		  const isNull = ($("#name").val()!="") && ($("#price").val()!="") && ($("#content").val()!="") && isImageNull;
+		  
+// 		  console.log($("#name").val()=="");
+// 		  console.log($("#price").val()=="");
+// 		  console.log($("#content").val()=="");
+// 		  console.log($("#image2").val()=="empty");
+// 		  console.log(isNull);
+		  if(!isNull){
+		     return false;
+		  }
 		});
 	</script>
 </body>
