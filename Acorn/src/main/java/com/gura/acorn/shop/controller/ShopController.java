@@ -99,11 +99,10 @@ public class ShopController {
 		
 		LocalDate dateStart = LocalDate.now().minusMonths(1).withDayOfMonth(1);
         LocalDate dateEnd = LocalDate.of(2023, dateStart.getMonth() ,dateStart.lengthOfMonth());
-        LocalDate yesterday = LocalDate.now().minusDays(1);
 		
 		try {
 			Map<String, Object> PVMonthCount = Esservice.aggregateByMonth1(index);
-			Map<String, Object> PVDayCount = Esservice.searchDayPV(index, field, yesterday);
+			Map<String, Object> PVDayCount = Esservice.searchDayPV(index, field);
 			Map<String, Object> PVTotalCount = Esservice.getCountOfIdsFromIndex(index);
 			Map<String, Object> PVMaxCount = Esservice.searchByDateRange3(index, field, dateStart, dateEnd);
 			
