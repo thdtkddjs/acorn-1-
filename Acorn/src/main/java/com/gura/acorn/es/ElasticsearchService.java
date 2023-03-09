@@ -55,6 +55,37 @@ public class ElasticsearchService {
     
     RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
     
+    public Map<String, Object> aggregateByMonthUV() throws IOException {
+    	// date_histogram 집계 쿼리를 작성합니다.
+    	SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+    	SearchRequest searchRequest = new SearchRequest("uvtest");
+    	
+    	AggregationBuilder dateAggregation = AggregationBuilders.dateHistogram("date_count")
+                .field("date")
+                .calendarInterval(DateHistogramInterval.MONTH)
+                .order(BucketOrder.key(true));
+    	
+        sourceBuilder.aggregation(dateAggregation);    
+        searchRequest.source(sourceBuilder);
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+
+        // 그룹별 개수를 저장할 Map 객체 생성
+        TreeMap<String, Object> groupCounts = new TreeMap<>();
+
+        // aggregation 결과 파싱
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        Histogram agg = searchResponse.getAggregations().get("date_count");
+        for (Histogram.Bucket bucket : agg.getBuckets()) {
+            String groupKey = bucket.getKeyAsString();
+            LocalDateTime date = LocalDateTime.parse(groupKey, DateTimeFormatter.ISO_DATE_TIME);
+            String formattedDate = date.format(formatter);
+            long docCount = bucket.getDocCount();
+            
+            groupCounts.put(formattedDate, docCount);        
+        }
+        return groupCounts;
+    }
+    
     public Map<String, Object> aggregateByMonth1(String indexName) throws IOException {
     	// date_histogram 집계 쿼리를 작성합니다.
     	SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
