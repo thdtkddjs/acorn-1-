@@ -17,7 +17,6 @@
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <link rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;,">
 </head>
-
 <body>
 	<jsp:include page="../views/include/navbar.jsp">
 		<jsp:param value="index" name="thisPage"/>

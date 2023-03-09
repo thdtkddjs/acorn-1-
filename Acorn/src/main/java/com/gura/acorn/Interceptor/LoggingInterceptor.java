@@ -144,6 +144,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
 		
 		try {
 			ElasticUtil.getInstance().create("test4", map);
+			ElasticUtil.getInstance().create("testlog6", map);
 			ElasticUtil.getInstance().create("error2", map2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

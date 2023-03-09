@@ -9,18 +9,57 @@
 <title>chatRoom</title>
 
 <style>
-#chat_box {
-    width: 800px;
-    min-width: 800px;
-    height: 500px;
-    min-height: 500px;
+.chat_area{
+	background-color : white;
+	position : fixed;
+	z-index : 5;
+	left : 0; 
+	bottom : 0; 
+}
+.chat{
+	width : 300px;
+	height : 500px;
+    position:relative;
     border: 1px solid black;
 }
+#chat_box {
+    width: 300px;
+    height: 470px;
+    overflow: scroll;
+}
+
+.msg_box{
+	width : 300px;
+	height : 30px;
+	border-top : 1px solid #c9c9c9;
+	display : block;
+	position : absolute;
+}
 #msg {
-    width: 700px;
+    width: 266px;
+    height: 25px;
+    font-size: 15px;
+    border: none;
+}
+#msg:focus {
+  outline: none;
 }
 #msg_process {
-    width: 90px;
+    position: absolute;
+    top: 0;
+    right: 0%;
+    color : white;
+    background-color: #1E90FF;
+    width: 29px;
+    height: 29px;
+}
+#chat_box::-webkit-scrollbar {
+	width: 5px;
+	height: 0px;
+}
+#chat_box::-webkit-scrollbar-thumb {
+	background-color: #2f3542;
+	border-radius: 10px;
 }
 </style>
 
@@ -33,10 +72,20 @@
     <input type="text" class="border w-64 h-12" id="ClientID" v-model="message">
     <div style="width: 800px;"><canvas ref="acquisitions"></canvas></div>
   </div>
+  
+<div class="chat_area">
+	<div class="chat">
+		<div id="chat_box">
+		</div>
+		<div class="msg_box">
+		    <input type="text" id="msg">
+		   	<svg id="msg_process" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+				<path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
+			</svg>
+		</div>
+	</div>
+</div>
 
-<div id="chat_box"></div>
-    <input type="text" id="msg">
-    <button id="msg_process">전송</button>
 <footer>
 	<p>저작권 정보</p>
 	<input type="text" id="ID"/>
