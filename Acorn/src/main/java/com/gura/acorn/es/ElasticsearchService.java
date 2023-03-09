@@ -236,14 +236,17 @@ public class ElasticsearchService {
         return resultMap;
     }
     
-    public Map<String, Object> searchDayPV(String indexName, String field, Object start) throws IOException {
+    public Map<String, Object> searchDayPV(String indexName, String field) throws IOException {
+    	
+    	LocalDate yesterday = LocalDate.now().minusDays(1);
+    	
         SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         RangeQueryBuilder rangeQuery = QueryBuilders
                 .rangeQuery(field)
-                .gte(start)
-                .lte(start)
+                .gte(yesterday)
+                .lte(yesterday)
                 .format("yyyy-MM-dd");
 
         searchSourceBuilder.query(rangeQuery);
