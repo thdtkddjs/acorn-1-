@@ -55,6 +55,37 @@ public class ElasticsearchService {
     
     RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
     
+    public Map<String, Object> aggregateByMonthUV() throws IOException {
+    	// date_histogram 집계 쿼리를 작성합니다.
+    	SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+    	SearchRequest searchRequest = new SearchRequest("uvtest");
+    	
+    	AggregationBuilder dateAggregation = AggregationBuilders.dateHistogram("date_count")
+                .field("date")
+                .calendarInterval(DateHistogramInterval.MONTH)
+                .order(BucketOrder.key(true));
+    	
+        sourceBuilder.aggregation(dateAggregation);    
+        searchRequest.source(sourceBuilder);
+        SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+
+        // 그룹별 개수를 저장할 Map 객체 생성
+        TreeMap<String, Object> groupCounts = new TreeMap<>();
+
+        // aggregation 결과 파싱
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+        Histogram agg = searchResponse.getAggregations().get("date_count");
+        for (Histogram.Bucket bucket : agg.getBuckets()) {
+            String groupKey = bucket.getKeyAsString();
+            LocalDateTime date = LocalDateTime.parse(groupKey, DateTimeFormatter.ISO_DATE_TIME);
+            String formattedDate = date.format(formatter);
+            long docCount = bucket.getDocCount();
+            
+            groupCounts.put(formattedDate, docCount);        
+        }
+        return groupCounts;
+    }
+    
     public Map<String, Object> aggregateByMonth1(String indexName) throws IOException {
     	// date_histogram 집계 쿼리를 작성합니다.
     	SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
@@ -236,14 +267,17 @@ public class ElasticsearchService {
         return resultMap;
     }
     
-    public Map<String, Object> searchDayPV(String indexName, String field, Object start) throws IOException {
+    public Map<String, Object> searchDayPV(String indexName, String field) throws IOException {
+    	
+    	LocalDate yesterday = LocalDate.now().minusDays(1);
+    	
         SearchRequest searchRequest = new SearchRequest(indexName);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         RangeQueryBuilder rangeQuery = QueryBuilders
                 .rangeQuery(field)
-                .gte(start)
-                .lte(start)
+                .gte(yesterday)
+                .lte(yesterday)
                 .format("yyyy-MM-dd");
 
         searchSourceBuilder.query(rangeQuery);
@@ -477,14 +511,14 @@ public int count() {
   //Websocket에 보낼 pv를 수집한다.
   public List<Map<String, Object>> PVforWebSocket() throws IOException {
 	int Count = 0;
-    SearchRequest searchRequest = new SearchRequest("test4");
+    SearchRequest searchRequest = new SearchRequest("error2");
     SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
     
     LocalDateTime now = LocalDateTime.now();
     LocalDateTime fiveMinutesAgo = now.minus(1, ChronoUnit.HOURS);
     
     RangeQueryBuilder rangeQuery = QueryBuilders
-  		  .rangeQuery("date")
+  		  .rangeQuery("time")
   		  .gte(fiveMinutesAgo.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
   		  .lte(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")))
   		  .format("strict_date_optional_time||epoch_millis");
