@@ -254,8 +254,13 @@
         	messageElement.innerText = text;
             chatBox.appendChild(messageElement);
         }
+        scrollToBottom();
 	}
-
+	//채팅 입력 시 가장 마지막 채팅으로 스크롤을 내려주는 함수
+	function scrollToBottom() {
+		const chatBox = document.getElementById("chat_box");
+		chatBox.scrollTop = chatBox.scrollHeight;;
+	}
 </script>
 	<script>
     	let isLogin=${ not empty id };
