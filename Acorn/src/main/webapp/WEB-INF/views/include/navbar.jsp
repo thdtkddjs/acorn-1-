@@ -110,6 +110,15 @@
     
     
 <div class="chat_area">
+	<div class="chatTop">
+	<p style="padding-top: 2%;margin-left: 2%;color: white;">CHAT</p>
+		<svg id="min_process" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-down-left-square" viewBox="0 0 16 16">
+			<path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm10.096 3.146a.5.5 0 1 1 .707.708L6.707 9.95h2.768a.5.5 0 1 1 0 1H5.5a.5.5 0 0 1-.5-.5V6.475a.5.5 0 1 1 1 0v2.768l4.096-4.097z"/>
+		</svg>
+		<svg id="max_process" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-arrow-up-right-square" viewBox="0 0 16 16">
+			<path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm5.854 8.803a.5.5 0 1 1-.708-.707L9.243 6H6.475a.5.5 0 1 1 0-1h3.975a.5.5 0 0 1 .5.5v3.975a.5.5 0 1 1-1 0V6.707l-4.096 4.096z"/>
+		</svg>
+	</div>
 	<div class="chat">
 		<div id="chat_box">
 		</div>
@@ -122,22 +131,18 @@
 	</div>
 </div>
 
-    
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.umd.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
 	//ClientID를
 	//ID가 있다면 읽어오고
 	//없다면 후보군 중 랜덤한 하나를 지정한다.
-	var id = "${id}"
-	if(id == ""){
+	var myId = "${id}"
+	if(myId == ""){
 		console.log("실행")
-		document.getElementById("msg").value = " 채팅 참여를 위해서는 로그인이 필요합니다.";
+		document.getElementById("msg").value = " 로그인이 필요합니다.";
 		document.getElementById("msg").setAttribute("style", "color : #c9c9c9");
 		document.getElementsByClassName("msg_box")[0].setAttribute("style", "pointer-events: none;");
 	}else{
-        sessionStorage.setItem("clientID", id);
+        sessionStorage.setItem("clientID", myId);
 	}
 
 /* 	console.log(sessionStorage.getItem("clientID"));	
@@ -156,12 +161,10 @@
 	
 	//연결 성공 시에 실행되는 function
     ws.onopen = function() {
-      console.log('Connected to server!');
       addChatRoom('Connected to server!');
     };
     //데이터를 받아올 때 실행되는 function
     ws.onmessage = function(event) {
-	    console.log('Received message: ' + event.data);
 
 //	    const data = JSON.stringify(result);
 	    //받아온 데이터가 JSON 데이터이므로 parsing 해준다.
@@ -195,6 +198,19 @@
   	document.querySelector("#msg_process").addEventListener("click", function(){
   		sendMessages();
   	});
+  	
+  	//채팅방 최소화
+  	document.querySelector("#min_process").addEventListener("click", function(){
+  		document.getElementsByClassName("chat")[0].setAttribute("style", "display : none");
+  		document.getElementById("min_process").setAttribute("style", "display : none");
+  		document.getElementById("max_process").setAttribute("style", "display : inline");
+  	});
+  	//채팅방 최대화
+  	document.querySelector("#max_process").addEventListener("click", function(){
+  		document.getElementsByClassName("chat")[0].setAttribute("style", "display : block");
+  		document.getElementById("min_process").setAttribute("style", "display : inline");
+  		document.getElementById("max_process").setAttribute("style", "display : none");
+  	});
     //type = chatting에 참여한 client임을 알림
     //text = 메시지 데이터
     //id = 아이디
@@ -217,9 +233,27 @@
 	//현재는 자신의 정보를 별도로 표기하고 있지는 않다.
 	function addChatRoom(text){
 		const chatBox = document.querySelector('#chat_box');
-        const messageElement = document.createElement('div');
-        messageElement.innerText = text;
-        chatBox.appendChild(messageElement);
+        
+        console.log (text)
+        
+        if(text == 'Connected to server!'){
+        	const messageElement = document.createElement('div');
+        	messageElement.setAttribute("style", "text-align: center;");
+        	messageElement.innerText = text;
+            chatBox.appendChild(messageElement);
+
+        }else if(text.includes(myId+':')){
+        	const messageElement = document.createElement('div');
+        	messageElement.setAttribute("class",  "chatUser_"+myId);
+        	messageElement.setAttribute("style", "background-color:#FFFED7 ;border: 1px solid #c9c9c9;padding: 5px;text-align: left;border-radius: 5px;padding-top: 5px;width: 200px;float: right;display: block;margin-bottom: 10px;");
+        	messageElement.innerText = text;
+            chatBox.appendChild(messageElement);
+        }else{
+        	const messageElement = document.createElement('div');
+        	messageElement.setAttribute("style", "background-color:#E0FFDB; margin-left:5px;border: 1px solid #c9c9c9;padding: 5px;text-align: left;border-radius: 5px;padding-top: 5px;width: 200px;float: left;display: block;margin-bottom: 10px;");
+        	messageElement.innerText = text;
+            chatBox.appendChild(messageElement);
+        }
 	}
 
 </script>

@@ -35,19 +35,6 @@ body {
     overflow: hidden;
     height: 450px;
 }
-.footer {
-	height :50px;
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-top: 0px;
-	background-color: white;
-	grid-area: footer;
-	bottom: 0px;
-	width: 100%;
-	position: fixed;
-	z-index: 5;
-}
-
 /* top menu */
 .logo{
 	height:40px;
@@ -411,30 +398,46 @@ a{
 	position : fixed;
 	z-index : 5;
 	left : 0; 
-	bottom : 50px;
+	bottom : 0;
     border: 1px solid #c9c9c9;
-    border-bottom : none;
+}
+.chatTop{
+    background-color: #1E90FF;
+    height: 30px;
+    width : 250px;
+}
+#min_process{
+    top: 0;
+    position: absolute;
+    width: 29px;
+    height: 29px;
+    color: white;
+    float: right;
+    right: 0;
 }
 .chat{
-	width : 300px;
+	width : 250px;
 	height : 500px;
     position:relative;
 }
 #chat_box {
-    width: 300px;
-    height: 470px;
+    position: absolute;
+    display: block;
+    width: 250px;
+    height: 500px;
     overflow: scroll;
 }
 
 .msg_box{
-	width : 300px;
+	bottom : 0;
+	width : 250px;
 	height : 30px;
 	border-top : 1px solid #c9c9c9;
 	display : block;
 	position : absolute;
 }
 #msg {
-    width: 266px;
+    width: 216px;
     height: 25px;
     font-size: 15px;
     border: none;
@@ -451,6 +454,16 @@ a{
     width: 29px;
     height: 29px;
 }
+#max_process{
+	display:none;
+    position: absolute;
+    top: 0;
+    right: 0%;
+    color : white;
+    background-color: #1E90FF;
+    width: 29px;
+    height: 29px;	
+}
 #chat_box::-webkit-scrollbar {
 	width: 5px;
 	height: 0px;
@@ -459,7 +472,6 @@ a{
 	background-color: #2f3542;
 	border-radius: 10px;
 }
-
 
 @keyframes cloudLink {     
  0% { color: #FFA7A7; }

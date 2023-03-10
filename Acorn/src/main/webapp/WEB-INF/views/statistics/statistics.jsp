@@ -214,19 +214,36 @@ const app = Vue.createApp({
 				'Content-Type' : 'application/json',
 			}
 		});
+		const responseUv = await fetch('http://localhost:9000/es/test3', {
+			method : 'GET',
+			headers : {
+				'Content-Type' : 'application/json',
+			}
+		});
 		const viewObject = await response.json();
-		
+		const viewObject2 = await responseUv.json();
 		//받아온 데이터 중 어떤 데이터를 사용할지  부분
 /* 		const monthPvCount = viewObject.filter(item => {
 		    return item.date.startsWith("2024-01");
 		});
  */
+ 		console.log(Object.keys(viewObject2[0]).length)
+ 		console.log(viewObject2[0][Object.keys(viewObject2[0])[0]])
+ 		var totalUv = 0;
+ 		var uvobjSize = Object.keys(viewObject2[0]).length;
+ 		var uvobjkeyArr = Object.keys(viewObject2[0]);
+ 		for(var i=0; i<uvobjSize; i++){
+ 			totalUv = totalUv + viewObject2[0][uvobjkeyArr[i]];
+ 		}
+ 		//total Uv, 이번달 Uv
+ 		document.getElementById("tuv").innerText = totalUv;
+ 		document.getElementById("muv").innerText = viewObject2[0][uvobjkeyArr[uvobjSize -1]];
+ 
 		document.getElementById("tpv").innerText = viewObject[2].PVTotalCount;
 		document.getElementById("dpv").innerText = viewObject[1].PVDayCount;
 		document.getElementById("pvTopTitle").innerText = Object.keys(viewObject[0][Object.keys(viewObject[0])[0]])[7];
 		document.getElementById("pvTopTitle").setAttribute("href", "http://localhost:9000/shop/detail?num=" + viewObject[0][Object.keys(viewObject[0])[11]].storeId + "&keyword=");
-		console.log(Object.keys(viewObject[0]))
-		console.log(Object.keys(viewObject[0])[11])
+
 		
 		for(var i=0; i<12; i++){
 			document.getElementById("op"+(i+1)).innerText = Object.keys(viewObject[0])[11-i];
