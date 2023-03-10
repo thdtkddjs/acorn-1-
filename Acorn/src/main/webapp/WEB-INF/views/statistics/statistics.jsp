@@ -1,4 +1,4 @@
-@<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -196,13 +196,13 @@ option{
 const app = Vue.createApp({
 
 	async mounted() {
-		const response = await fetch('http://localhost:9000/es/test', {
+		const response = await fetch('${pageContext.request.contextPath}/es/test', {
 			method : 'GET',
 			headers : {
 				'Content-Type' : 'application/json',
 			}
 		});
-		const responseUv = await fetch('http://localhost:9000/es/test3', {
+		const responseUv = await fetch('${pageContext.request.contextPath}/es/test3', {
 			method : 'GET',
 			headers : {
 				'Content-Type' : 'application/json',
@@ -519,7 +519,7 @@ const app = Vue.createApp({
 		var dataRST =[];
 		let viewObject4 = {};
 		
-		const response4 = await fetch('http://localhost:9000/es/test2', {
+		const response4 = await fetch('${pageContext.request.contextPath}/es/test2', {
 			method : 'GET',
 			headers : {
 				'Content-Type' : 'application/json',
