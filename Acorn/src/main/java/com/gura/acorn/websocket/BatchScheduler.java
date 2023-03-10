@@ -25,7 +25,7 @@ public class BatchScheduler {
     }
 	//표기된 숫자 milisecond마다 PV를 얻어내서 websocket으로 쏴준다.
 	//지금은 테스트용으로 10초지만, 멘토님은 5분을 요구하심.
-	@Scheduled(fixedDelay = 60000) 
+	@Scheduled(fixedDelay = 10000) 
 	public void testSchedule() {
 		List<Map<String, Object>> resultList = new ArrayList<>();
     	try {
