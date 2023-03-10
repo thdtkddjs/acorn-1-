@@ -722,7 +722,7 @@ const app = Vue.createApp({
  			}
 			myChart4.data.datasets = manfData(dataRST)
 			myChart4.update();
-	    }, 5000);
+	    }, 60000);
 	},
 });
 app.mount(".statistics");

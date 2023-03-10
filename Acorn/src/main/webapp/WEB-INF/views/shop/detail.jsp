@@ -107,7 +107,7 @@
 								<li class="menu_item">
 									<div class="menu_name_price">
 										<img src="${pageContext.request.contextPath}${tmp.imagePath}" id="${tmp.menuNum }" class="gallery" height="50px" alt="small_image" hidden/>
-										<span class="menu_name" id="${pageContext.request.contextPath}${tmp.imagePath}" data-image="${tmp.content}" >${tmp.name}</span>
+										<span class="menu_name" id="/shop/images/${tmp.imagePath}" data-image="${tmp.content}" >${tmp.name}</span>
 										<span class="menu_price">${tmp.price}</span>
 										
 									</div>

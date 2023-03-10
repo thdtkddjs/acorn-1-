@@ -125,7 +125,7 @@ public class ShopController {
 	@ResponseBody
 	public List<Map<String, Object>> test2(){
 		try {
-			return Esservice.PVforWebSocket();
+			return Esservice.searchError();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -407,6 +407,7 @@ a{
     width : 250px;
 }
 #min_process{
+	display:none;
     top: 0;
     position: absolute;
     width: 29px;
@@ -416,6 +417,7 @@ a{
     right: 0;
 }
 .chat{
+	display:none;
 	width : 250px;
 	height : 500px;
     position:relative;
@@ -456,7 +458,6 @@ a{
     height: 29px;
 }
 #max_process{
-	display:none;
     position: absolute;
     top: 0;
     right: 0%;

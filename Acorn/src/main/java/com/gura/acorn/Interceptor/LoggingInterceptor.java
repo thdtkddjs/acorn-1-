@@ -1,9 +1,9 @@
 package com.gura.acorn.Interceptor;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.gura.acorn.es.ElasticUtil;
@@ -34,9 +33,9 @@ public class LoggingInterceptor implements HandlerInterceptor {
     
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    	request.setAttribute("iStartTime", System.currentTimeMillis());
     	String requesturl = request.getRequestURL().toString();
     	HttpSession session = request.getSession();
-    	request.setAttribute("startTime", System.currentTimeMillis());
     	String id = (String)session.getAttribute("id");
     	
     	String[] str = requesturl.split("/");
@@ -133,13 +132,13 @@ public class LoggingInterceptor implements HandlerInterceptor {
     
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        long startTime = (long) request.getAttribute("startTime");
-        long endTime = System.currentTimeMillis();
-        long executeTime = endTime - startTime;     
+    	long startTime = (Long) request.getAttribute("iStartTime");
+		long endTime = System.currentTimeMillis();
+		long elapsedTime = endTime - startTime;
         
 		map2.put("errorCode", "OK");
 		map2.put("time", LocalDateTime.now().toString());
-		map2.put("elapsedTime", executeTime);
+		map2.put("elapsedTime", elapsedTime);
 		map2.put("errorMsg", null);
 		
 		try {

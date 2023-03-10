@@ -21,7 +21,7 @@
 .container {
 	width: 624px;
 	height: 650px;
-	border : 1px solid #CECECE;
+	border: 1px solid #CECECE;
 	padding-top: 50px;
 }
 
@@ -75,44 +75,42 @@ textarea {
 </head>
 <body class="text-center">
 	<jsp:include page="../../views/include/navbar.jsp">
-		<jsp:param value="admin04" name="thisPage"/>
+		<jsp:param value="admin04" name="thisPage" />
 	</jsp:include>
 	<div class="container">
-		<br />
-		<br />
+		<br /> <br />
 		<h1>INSERT MENU</h1>
 		<br />
 		<form action="${pageContext.request.contextPath}/shop/menu_insert"
 			method="get" id="insertForm">
-			
+
 			<!-- 실제 폼에 제출될 이미지 값 -->
-			<input type="hidden" name="imagePath" value="empty" /> 
-			
-			<input type="hidden" name="num" value="${param.num }" />
+			<input type="hidden" name="imagePath" value="empty" id="image2" /> <input
+				type="hidden" name="num" value="${param.num }" />
 
 			<!-- 메뉴명 input -->
 			<div class="mb-3">
-				<label class="form-label" for="name">MENU</label> 
-				<input class="form-control" type="text" name="name" id="name" />
+				<label class="form-label" for="name">MENU</label> <input
+					class="form-control" type="text" name="name" id="name" />
 			</div>
 			<br />
 
 			<!-- 가격 input -->
 			<div class="mb-3">
-				<label class="form-label" for="price">PRICE</label> 
-				<input class="form-control" type="text" name="price" id="price" />
+				<label class="form-label" for="price">PRICE</label> <input
+					class="form-control" type="text" name="price" id="price" />
 			</div>
 			<br />
 
 			<!-- 사진 및 메뉴소개 -->
 			<div class="mb-3" style="position: relative;">
 				<label class="form-label" for="content"
-					style="top: -130px; position: relative;">EXPLAIN</label> 
-				
+					style="top: -130px; position: relative;">EXPLAIN</label>
+
 				<!-- 섬네일 등록을 위해 클릭할 이미지 -->
-				<a id="thumbnailLink" href="javascript:"> 
-					<img src="${pageContext.request.contextPath}/resources/images/photo.png"
-						alt="" class="upload_img" />
+				<a id="thumbnailLink" href="javascript:"> <img
+					src="${pageContext.request.contextPath}/resources/images/photo.png"
+					alt="" class="upload_img" />
 				</a>
 
 				<textarea class="form-control" name="content" id="content"></textarea>
@@ -130,10 +128,15 @@ textarea {
 		</form>
 	</div>
 
-	<script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
 	<!-- 이미지 등록 script -->
 	<script>
+		let isImageNull=false;
+		
 		document.querySelector("#thumbnailLink").addEventListener("click", function() {
 			document.querySelector("#image").click();
 		});
@@ -149,6 +152,16 @@ textarea {
 				let img = `<img class="upload_img" src="${pageContext.request.contextPath }/shop/images/\${data.imagePath}">`;
 				document.querySelector("#thumbnailLink").innerHTML = img;
 			});
+			isImageNull=true;
+		});
+		
+		
+		$("#insertForm").on("submit", function(){
+		  const isNull = ($("#name").val()!="") && ($("#price").val()!="") && ($("#content").val()!="") && isImageNull;
+		  
+		  if(!isNull){
+		     return false;
+		  }
 		});
 	</script>
 </body>

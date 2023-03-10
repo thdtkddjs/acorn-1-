@@ -25,12 +25,12 @@ public class BatchScheduler {
     }
 	//표기된 숫자 milisecond마다 PV를 얻어내서 websocket으로 쏴준다.
 	//지금은 테스트용으로 10초지만, 멘토님은 5분을 요구하심.
-	@Scheduled(fixedDelay = 5000) 
+	@Scheduled(fixedDelay = 60000) 
 	public void testSchedule() {
 		List<Map<String, Object>> resultList = new ArrayList<>();
     	try {
     		//PV의 대상이 될 데이터를 얻어온다. 현재는 24시간 전까지 긁어옴.
-    		resultList = Esservice.PVforWebSocket();
+    		resultList = Esservice.searchError();
     		ObjectMapper objectMapper = new ObjectMapper();
         	String json = objectMapper.writeValueAsString(resultList);
         	service.sendMessage(json);

@@ -481,7 +481,7 @@ public int count() {
       SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
       
       LocalDateTime now = LocalDateTime.now();
-      LocalDateTime fiveMinutesAgo = now.minus(1, ChronoUnit.MINUTES);	
+      LocalDateTime fiveMinutesAgo = now.minus(5, ChronoUnit.MINUTES);	
       
       RangeQueryBuilder rangeQuery = QueryBuilders
     		  .rangeQuery("time")
@@ -491,7 +491,6 @@ public int count() {
 
       searchSourceBuilder.query(rangeQuery);
       searchSourceBuilder.size(1000);
-      
       searchSourceBuilder.sort(new FieldSortBuilder("time").order(SortOrder.ASC));
       
       searchRequest.source(searchSourceBuilder);
@@ -510,7 +509,6 @@ public int count() {
   
   //Websocket에 보낼 pv를 수집한다.
   public List<Map<String, Object>> PVforWebSocket() throws IOException {
-	int Count = 0;
     SearchRequest searchRequest = new SearchRequest("error2");
     SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
     
@@ -534,7 +532,6 @@ public int count() {
     for (SearchHit hit : searchHits) {
         Map<String, Object> sourceAsMap = hit.getSourceAsMap();
         resultList.add(sourceAsMap);
-        Count++;
     }
 
     return resultList;
