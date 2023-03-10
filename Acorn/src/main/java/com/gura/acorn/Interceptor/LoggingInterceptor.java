@@ -121,7 +121,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
     	}		
 		
 		map.put("userId", id);
-		map.put("date", LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toString());
+		map.put("date", LocalDate.now().toString());
 		map.put("pageId", pageId);
 		map.put("pageType", pageType);
 		map.put("storeName", storeName);
