@@ -201,7 +201,7 @@ p{
 								<li class="content_info">
 									<span class="info_style">평점 </span>${tmp.grade }점
 									<span class="info_style">리뷰 </span>${tmp.rCount }개
-									<span class="info_style">페이지뷰 </span>PV 회
+									<span class="info_style">페이지뷰 </span>${tmp.viewCount}회
 								</li>
 							
 							</ul>

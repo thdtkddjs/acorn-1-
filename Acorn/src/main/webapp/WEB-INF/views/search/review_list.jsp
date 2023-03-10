@@ -94,7 +94,7 @@
 									<li id="reli${tmp.num }">
 								</c:if>
 
-								<dl>
+								<dl style="border-bottom : 1px solid #c9c9c9">
 									<dt class="row">
 										<div class="comment_box">
 											<!-- 유저 프로필 -->
