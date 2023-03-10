@@ -188,18 +188,6 @@ option{
 			</div>
     	</div>
     	
-    	<div class="statistics_mid">
-    	<div class="row">
-		    <div class="statistics_topic">
-		    	<a href="${pageContext.request.contextPath}/statistics/sample">
-	    			<img src="${pageContext.request.contextPath}/resources/images/month.jpg" alt="" />
-	    			<br />
-	    			<b style="display: flex; place-content: center;">월간 카테고리 통계</b>
-	    		</a>
-	    	</div>
-    	</div>
-    	</div>
-    	
 
 	</div>
 </body>
