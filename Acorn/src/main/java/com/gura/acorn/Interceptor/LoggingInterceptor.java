@@ -121,7 +121,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
     	}		
 		
 		map.put("userId", id);
-		map.put("date", LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toString());
+		map.put("date", LocalDate.now().toString());
 		map.put("pageId", pageId);
 		map.put("pageType", pageType);
 		map.put("storeName", storeName);
@@ -144,6 +144,7 @@ public class LoggingInterceptor implements HandlerInterceptor {
 		
 		try {
 			ElasticUtil.getInstance().create("test4", map);
+			ElasticUtil.getInstance().create("testlog6", map);
 			ElasticUtil.getInstance().create("error2", map2);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

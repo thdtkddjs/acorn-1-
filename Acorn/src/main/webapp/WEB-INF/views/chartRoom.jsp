@@ -76,25 +76,23 @@
 	    const ws = new WebSocket('ws://34.125.190.255:8011/data');
 	    //테스트용 로컬 웹소켓
 	    //const ws = new WebSocket('ws://localhost:8011/data');
+	    
 	    ws.onmessage = function(event) {
+	    	const blob = event.data;
+	    	const reader = new FileReader();
+	    	reader.onload = function(event) {
+	    	  const buffer = event.target.result;
+	    	  console.log(buffer); // Output: ArrayBuffer(5) {}
+	    	  const arrayBuffer = buffer;
+	    	  const dataView = new DataView(arrayBuffer);
+	    	  const decoder = new TextDecoder();
+	    	  const text = decoder.decode(dataView);
+	    	  const json = JSON.parse(text);
+			  console.log(json);
+	    	};
+	    	reader.readAsArrayBuffer(blob);
 	        //받아온 데이터를 parsing하여 그래프의 data에 넣어준다.
-	        event.data.text().then((jsonString) => {
-	            const jsonObj = JSON.parse(jsonString);
-	            if(jsonObj.type=="data"){
-	            	const newdata = {
-	    	                time: jsonObj.date,
-	    	                count: jsonObj.text
-	    	              };
-	            	//너무 길어지는 경우(위에서 data 파일의 length만큼. 아마 25일 것)
-	            	//삭제하고 그래프를 shifting한다.
-	            	data = data.slice(1);
-					data.push(newdata);
-		            chart.data.labels = data.map(row => row.time);
-		            chart.data.datasets[0].data = data.map(row => row.count);
-		            //작업이 끝났으니 차트를 업데이트해준다.
-		            chart.update();
-	            }
-	        })
+	       
 	    }.bind(this);
 	  }
 	}).mount('#indexPage');

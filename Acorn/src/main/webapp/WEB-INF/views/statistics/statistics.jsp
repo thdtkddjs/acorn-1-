@@ -512,13 +512,16 @@ const app = Vue.createApp({
 		
 		//chart4 
 		var dataRST =[];
+		let viewObject4 = {};
+		
 		const response4 = await fetch('http://localhost:9000/es/test2', {
 			method : 'GET',
 			headers : {
 				'Content-Type' : 'application/json',
 			}
 		});
-		const viewObject4 = await response4.json();
+		viewObject4 = await response4.json();
+
 		var currTime2 = 0;
 		var secData=[];
 		var timeData=[];
@@ -656,17 +659,27 @@ const app = Vue.createApp({
 		window.addEventListener('resize', function() {
 			myChart.resize();
 		});
-		//Chart 4를 5초마다 갱신하는 함수
- 		setInterval(async function (){
- 			const dataRST = []
+		
+		const ws = new WebSocket('ws://34.125.190.255:8011/data');
+
+	    ws.onmessage = function(event) {
+			const blob = event.data;
+	    	const reader = new FileReader();
+	    	reader.onload = function(event) {
+				const buffer = event.target.result;
+				const arrayBuffer = buffer;
+				const dataView = new DataView(arrayBuffer);
+				const decoder = new TextDecoder();
+				const text = decoder.decode(dataView);
+				const json = JSON.parse(text);
+				viewObject4 = json;
+	    	};
+	    	reader.readAsArrayBuffer(blob);
+	    }
+	    
+		setInterval(function() {
+			const dataRST = []
  			
- 			const response4 = await fetch('http://localhost:9000/es/test2', {
- 				method : 'GET',
- 				headers : {
- 					'Content-Type' : 'application/json',
- 				}
- 			});
- 			const viewObject4 = await response4.json();
  			var currTime2 = 0;
  			var secData=[];
  			var timeData=[];
@@ -704,7 +717,7 @@ const app = Vue.createApp({
  			}
 			myChart4.data.datasets = manfData(dataRST)
 			myChart4.update();
-		} , 5000);
+	    }, 5000);
 	},
 });
 app.mount(".statistics");
