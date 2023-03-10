@@ -97,7 +97,7 @@
 	position : relative;
 }
 canvas{
-	display: block;
+	display: inline !important;
 	border : 1px solid #cecece;
 	border-radius : 10px;
 	padding : 50px;
@@ -659,7 +659,7 @@ const app = Vue.createApp({
 			},
 		});
 		window.addEventListener('resize', function() {
-			myChart.resize();
+			myChart4.resize();
 		});
 		//Chart 4를 5초마다 갱신하는 함수
  		setInterval(async function (){
