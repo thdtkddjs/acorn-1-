@@ -52,4 +52,9 @@ public class ShopDaoImpl implements ShopDao{
 	public List<ShopDto> getTopList(ShopDto dto) {
 		return session.selectList("shop.getTopList", dto);
 	}
+
+	@Override
+	public void addViewCount(int num) {
+		session.update("shop.addViewCount", num);
+	}
 }

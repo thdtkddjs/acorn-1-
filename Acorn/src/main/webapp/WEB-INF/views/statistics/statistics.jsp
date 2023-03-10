@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+@<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -97,7 +97,7 @@
 	position : relative;
 }
 canvas{
-	display: block;
+	display: inline !important;
 	border : 1px solid #cecece;
 	border-radius : 10px;
 	padding : 50px;
@@ -188,18 +188,6 @@ option{
 			</div>
     	</div>
     	
-    	<div class="statistics_mid">
-    	<div class="row">
-		    <div class="statistics_topic">
-		    	<a href="${pageContext.request.contextPath}/statistics/sample">
-	    			<img src="${pageContext.request.contextPath}/resources/images/month.jpg" alt="" />
-	    			<br />
-	    			<b style="display: flex; place-content: center;">월간 카테고리 통계</b>
-	    		</a>
-	    	</div>
-    	</div>
-    	</div>
-    	
 
 	</div>
 </body>
@@ -214,19 +202,36 @@ const app = Vue.createApp({
 				'Content-Type' : 'application/json',
 			}
 		});
+		const responseUv = await fetch('http://localhost:9000/es/test3', {
+			method : 'GET',
+			headers : {
+				'Content-Type' : 'application/json',
+			}
+		});
 		const viewObject = await response.json();
-		
+		const viewObject2 = await responseUv.json();
 		//받아온 데이터 중 어떤 데이터를 사용할지  부분
 /* 		const monthPvCount = viewObject.filter(item => {
 		    return item.date.startsWith("2024-01");
 		});
  */
+ 		console.log(Object.keys(viewObject2[0]).length)
+ 		console.log(viewObject2[0][Object.keys(viewObject2[0])[0]])
+ 		var totalUv = 0;
+ 		var uvobjSize = Object.keys(viewObject2[0]).length;
+ 		var uvobjkeyArr = Object.keys(viewObject2[0]);
+ 		for(var i=0; i<uvobjSize; i++){
+ 			totalUv = totalUv + viewObject2[0][uvobjkeyArr[i]];
+ 		}
+ 		//total Uv, 이번달 Uv
+ 		document.getElementById("tuv").innerText = totalUv;
+ 		document.getElementById("muv").innerText = viewObject2[0][uvobjkeyArr[uvobjSize -1]];
+ 
 		document.getElementById("tpv").innerText = viewObject[2].PVTotalCount;
 		document.getElementById("dpv").innerText = viewObject[1].PVDayCount;
 		document.getElementById("pvTopTitle").innerText = Object.keys(viewObject[0][Object.keys(viewObject[0])[0]])[7];
 		document.getElementById("pvTopTitle").setAttribute("href", "http://localhost:9000/shop/detail?num=" + viewObject[0][Object.keys(viewObject[0])[11]].storeId + "&keyword=");
-		console.log(Object.keys(viewObject[0]))
-		console.log(Object.keys(viewObject[0])[11])
+
 		
 		for(var i=0; i<12; i++){
 			document.getElementById("op"+(i+1)).innerText = Object.keys(viewObject[0])[11-i];
@@ -657,7 +662,7 @@ const app = Vue.createApp({
 			},
 		});
 		window.addEventListener('resize', function() {
-			myChart.resize();
+			myChart4.resize();
 		});
 		
 		const ws = new WebSocket('ws://34.125.190.255:8011/data');
