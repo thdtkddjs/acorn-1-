@@ -129,6 +129,9 @@ public class ShopServiceImpl implements ShopService{
 		//보여줄 글 번호를 읽어오기
 		int num = Integer.parseInt(request.getParameter("num"));
 		
+		// 조회수 올리기
+		shopDao.addViewCount(num);
+		
 		String keyword = request.getParameter("keyword");
 		String condition = request.getParameter("condition");
 		//만일 키워드가 넘어오지 않는다면 
@@ -615,8 +618,6 @@ public class ShopServiceImpl implements ShopService{
 	@Override
 	public void test(HttpServletRequest request) {
 		int num = Integer.parseInt(request.getParameter("num"));
-		
-		System.out.println(num);
 		List<ShopReviewDto> list = shopReviewDao.test(num);
 
 		request.setAttribute("testList", list);

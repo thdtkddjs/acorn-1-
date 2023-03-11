@@ -106,8 +106,8 @@ canvas{
 select{
 	position: absolute;
     font-size: 12px;
-    left: 20%;
-    top: 2%;
+	left: 46%;
+    top: 3%;
 }
 option{
 	font-size: 12px;
@@ -188,18 +188,6 @@ option{
 			</div>
     	</div>
     	
-    	<div class="statistics_mid">
-    	<div class="row">
-		    <div class="statistics_topic">
-		    	<a href="${pageContext.request.contextPath}/statistics/sample">
-	    			<img src="${pageContext.request.contextPath}/resources/images/month.jpg" alt="" />
-	    			<br />
-	    			<b style="display: flex; place-content: center;">월간 카테고리 통계</b>
-	    		</a>
-	    	</div>
-    	</div>
-    	</div>
-    	
 
 	</div>
 </body>
@@ -208,25 +196,42 @@ option{
 const app = Vue.createApp({
 
 	async mounted() {
-		const response = await fetch('http://localhost:9000/es/test', {
+		const response = await fetch('${pageContext.request.contextPath}/es/test', {
+			method : 'GET',
+			headers : {
+				'Content-Type' : 'application/json',
+			}
+		});
+		const responseUv = await fetch('${pageContext.request.contextPath}/es/test3', {
 			method : 'GET',
 			headers : {
 				'Content-Type' : 'application/json',
 			}
 		});
 		const viewObject = await response.json();
-		
+		const viewObject2 = await responseUv.json();
 		//받아온 데이터 중 어떤 데이터를 사용할지  부분
 /* 		const monthPvCount = viewObject.filter(item => {
 		    return item.date.startsWith("2024-01");
 		});
  */
+ 		console.log(Object.keys(viewObject2[0]).length)
+ 		console.log(viewObject2[0][Object.keys(viewObject2[0])[0]])
+ 		var totalUv = 0;
+ 		var uvobjSize = Object.keys(viewObject2[0]).length;
+ 		var uvobjkeyArr = Object.keys(viewObject2[0]);
+ 		for(var i=0; i<uvobjSize; i++){
+ 			totalUv = totalUv + viewObject2[0][uvobjkeyArr[i]];
+ 		}
+ 		//total Uv, 이번달 Uv
+ 		document.getElementById("tuv").innerText = totalUv;
+ 		document.getElementById("muv").innerText = viewObject2[0][uvobjkeyArr[uvobjSize -1]];
+ 
 		document.getElementById("tpv").innerText = viewObject[2].PVTotalCount;
 		document.getElementById("dpv").innerText = viewObject[1].PVDayCount;
 		document.getElementById("pvTopTitle").innerText = Object.keys(viewObject[0][Object.keys(viewObject[0])[0]])[7];
 		document.getElementById("pvTopTitle").setAttribute("href", "http://localhost:9000/shop/detail?num=" + viewObject[0][Object.keys(viewObject[0])[11]].storeId + "&keyword=");
-		console.log(Object.keys(viewObject[0]))
-		console.log(Object.keys(viewObject[0])[11])
+
 		
 		for(var i=0; i<12; i++){
 			document.getElementById("op"+(i+1)).innerText = Object.keys(viewObject[0])[11-i];
@@ -512,13 +517,16 @@ const app = Vue.createApp({
 		
 		//chart4 
 		var dataRST =[];
-		const response4 = await fetch('http://localhost:9000/es/test2', {
+		let viewObject4 = {};
+		
+		const response4 = await fetch('${pageContext.request.contextPath}/es/test2', {
 			method : 'GET',
 			headers : {
 				'Content-Type' : 'application/json',
 			}
 		});
-		const viewObject4 = await response4.json();
+		viewObject4 = await response4.json();
+
 		var currTime2 = 0;
 		var secData=[];
 		var timeData=[];
@@ -654,19 +662,29 @@ const app = Vue.createApp({
 			},
 		});
 		window.addEventListener('resize', function() {
-			myChart.resize();
+			myChart4.resize();
 		});
-		//Chart 4를 5초마다 갱신하는 함수
- 		setInterval(async function (){
- 			const dataRST = []
+		
+		const ws = new WebSocket('ws://34.125.190.255:8011/data');
+
+	    ws.onmessage = function(event) {
+			const blob = event.data;
+	    	const reader = new FileReader();
+	    	reader.onload = function(event) {
+				const buffer = event.target.result;
+				const arrayBuffer = buffer;
+				const dataView = new DataView(arrayBuffer);
+				const decoder = new TextDecoder();
+				const text = decoder.decode(dataView);
+				const json = JSON.parse(text);
+				viewObject4 = json;
+	    	};
+	    	reader.readAsArrayBuffer(blob);
+	    }
+	    
+		setInterval(function() {
+			const dataRST = []
  			
- 			const response4 = await fetch('http://localhost:9000/es/test2', {
- 				method : 'GET',
- 				headers : {
- 					'Content-Type' : 'application/json',
- 				}
- 			});
- 			const viewObject4 = await response4.json();
  			var currTime2 = 0;
  			var secData=[];
  			var timeData=[];
@@ -704,7 +722,7 @@ const app = Vue.createApp({
  			}
 			myChart4.data.datasets = manfData(dataRST)
 			myChart4.update();
-		} , 5000);
+	    }, 10000);
 	},
 });
 app.mount(".statistics");

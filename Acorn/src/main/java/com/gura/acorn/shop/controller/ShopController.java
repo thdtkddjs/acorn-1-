@@ -70,18 +70,6 @@ public class ShopController {
 		service.getReviewList(request);
 		return "search/search";
 	}
-	//웹소켓에 연결된 채팅방
-	//임시이며 나중에 매립하거나 할 예정
-	@RequestMapping("/chatRoom")
-	public String chatRoomTest() {
-		return "chatRoom";
-	}
-	
-	@RequestMapping("/chartRoom")
-	public String ChartRoomTest() {
-		return "chartRoom"; 
-	}
-
 	
 	//index 페이지에서 가게리스트 출력
 	@RequestMapping("/")
@@ -97,14 +85,13 @@ public class ShopController {
 		String index = "testlog6";
 		String field = "date";
 		
-		LocalDate dateStart = LocalDate.now().minusMonths(1).withDayOfMonth(1);
-        LocalDate dateEnd = LocalDate.of(2023, dateStart.getMonth() ,dateStart.lengthOfMonth());
+		
 		
 		try {
-			Map<String, Object> PVMonthCount = Esservice.aggregateByMonth1(index);
+			Map<String, Object> PVMonthCount = Esservice.aggregateByMonth();
 			Map<String, Object> PVDayCount = Esservice.searchDayPV(index, field);
-			Map<String, Object> PVTotalCount = Esservice.getCountOfIdsFromIndex(index);
-			Map<String, Object> PVMaxCount = Esservice.searchByDateRange3(index, field, dateStart, dateEnd);
+			Map<String, Object> PVTotalCount = Esservice.getTotalPV();
+			Map<String, Object> PVMaxCount = Esservice.searchByDateRange3();
 			
 			List<Map<String, Object>> resultList = new ArrayList<>();
 			resultList.add(PVMonthCount);
@@ -125,7 +112,7 @@ public class ShopController {
 	@ResponseBody
 	public List<Map<String, Object>> test2(){
 		try {
-			return Esservice.PVforWebSocket();
+			return Esservice.searchError();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

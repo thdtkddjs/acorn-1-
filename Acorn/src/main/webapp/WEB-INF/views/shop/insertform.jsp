@@ -102,7 +102,7 @@ body::-webkit-scrollbar-thumb {
 					<label class=" form-label" for="startTime">OPEN</label>			
 				</div>
 				<div class = "col-8">
-					<input	class="form-control" type="time" name="startTime" value="00:00" max="12:59"/>
+					<input	class="form-control" type="time" name="startTime" id="startTime" value="00:00" max="12:59"/>
 				</div>
 			</div>
 			<br/>
@@ -111,7 +111,7 @@ body::-webkit-scrollbar-thumb {
 					<label	class="form-label" for="endTime">CLOSE</label> 	
 				</div>
 				<div class = "col-8">
-					<input	class="form-control" type="time" name="endTime" value="00:00" max="12:59" />
+					<input	class="form-control" type="time" name="endTime" id="endTime" value="00:00" max="12:59" />
 				</div>
 			</div>
 			<br />
@@ -145,11 +145,14 @@ body::-webkit-scrollbar-thumb {
 		</form>
 	</div>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 	<script src="${pageContext.request.contextPath }/resources/js/gura_util.js"></script>
 
 
 	<!-- 섬네일 등록 script -->
 	<script>
+	isImageValid = false;
+	
 		document.querySelector("#thumbnailLink").addEventListener("click", function() {
 			document.querySelector("#image").click();
 		});
@@ -165,6 +168,14 @@ body::-webkit-scrollbar-thumb {
 				let img = `<img class="upload_img" src="${pageContext.request.contextPath }/shop/images/\${data.imagePath}">`;
 				document.querySelector("#thumbnailLink").innerHTML = img;
 			});
+			isImageValid = true;
+		});
+		
+		$("#insertForm").on("submit", function(){
+			const isNull = ($("#title").val()!="") && ($("#categorie").val()!="") && ($("#telNum").val()!="") && ($("#addr").val()!="") && ($("#startTime").val()!="") && ($("#endTime").val()!="") && isImageValid;
+			if(!isNull){
+			     return false;
+			}
 		});
 	</script>
 
